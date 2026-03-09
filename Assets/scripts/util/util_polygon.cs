@@ -23,6 +23,30 @@ public class util_polygoncomponent
 
 public class util_polygon
 {
+    public static Vector2[] Vector3ToVector2(Vector3[] raw)
+    {
+        Vector2[] result = new Vector2[raw.Length];
+
+        for (int i = 0; i < raw.Length; i++)
+        {
+            result[i] = new Vector2(raw[i].x, raw[i].z);
+        }
+
+        return result;
+    }
+    public static Vector3[] Vector2ToVector3(Vector2[] raw)
+    {
+        Vector3[] result = new Vector3[raw.Length];
+
+        for (int i = 0; i < raw.Length; i++)
+        {
+            result[i] = new Vector3(raw[i].x, 0, raw[i].y);
+        }
+
+        return result;
+    }
+
+
     // my own custom triangulation algorithm
 
     // * cut up the concave shape into a bunch of convex shapes
@@ -34,11 +58,7 @@ public class util_polygon
     {
         // gotta convert to 3D for our little angle-detection trick
         // pretty much everything up until the very end will reference this
-        Vector3[] verts3D = new Vector3[verts.Length];
-        for (int i = 0; i < verts.Length; i++)
-        {
-            verts3D[i] = new Vector3(verts[i].x, 0, verts[i].y);
-        }
+        Vector3[] verts3D = Vector2ToVector3(verts);
 
         // to be filled with all of the convex pieces of our concave shape
         // think of these as 'fully processed'
@@ -46,6 +66,7 @@ public class util_polygon
 
         List<int[]> concaveSlices = new List<int[]>();
         // we add the shape as a whole as a concave slice, and begin
+        concaveSlices.Add(GenerateAscending(verts.Length));
 
         Vector3 normal = Vector3.up;
 
@@ -92,7 +113,7 @@ public class util_polygon
                 {
                     // here we have to cut the thing
                     // each slice contains original vertex indices
-                    List<int>[] slices = CutPolygon(bisector, verts, concaveSlices[n]);
+                    List<int>[] slices = CutPolygon(bisector, GrabVertexSet(verts, concaveSlices[n]), concaveSlices[n]);
                     
                     concaveSlices.Add(slices[0].ToArray());
                     concaveSlices.Add(slices[1].ToArray());
@@ -131,6 +152,18 @@ public class util_polygon
         }
 
         // temp
+        return result;
+    }
+
+    public static Vector2[] GrabVertexSet(Vector2[] allVerts, int[] toGrab)
+    {
+        Vector2[] result = new Vector2[toGrab.Length];
+
+        for (int i = 0; i < result.Length; i++)
+        {
+            result[i] = allVerts[toGrab[i]];
+        }
+
         return result;
     }
 
@@ -204,6 +237,8 @@ public class util_polygon
 
         // two pieces, never more
         List<int>[] result = new List<int>[2];
+        result[0] = new List<int>();
+        result[1] = new List<int>();
 
         for (int i = 0; i < verts.Length; i++)
         {

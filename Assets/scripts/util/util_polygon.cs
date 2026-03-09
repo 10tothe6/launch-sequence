@@ -108,6 +108,27 @@ public class util_polygon
         return result;
     }
 
+    // same data format as a mesh
+    public static float CalculateArea(Mesh m)
+    {
+        return CalculateArea(m.vertices, m.triangles);
+    }
+    public static float CalculateArea(Vector3[] verts, int[] tris)
+    {
+        float sum = 0;
+
+        for (int i = 0; i < tris.Length; i+=3)
+        {
+            Vector3 a = verts[tris[0]] - verts[tris[1]];
+            Vector3 b = verts[tris[2]] - verts[tris[1]];
+
+            float area = Vector3.Cross(a, b).magnitude / 2f;
+            sum += area;
+        }
+
+        return sum;
+    }
+
 
     // my own custom triangulation algorithm
 
@@ -135,7 +156,7 @@ public class util_polygon
         Vector3 normal = Vector3.up;
 
         int iterationCount = 0;
-        int safeIterations = 4;
+        int safeIterations = 10;
         while (concaveSlices.Count > 0 && iterationCount < safeIterations)
         {
             iterationCount++;
@@ -182,37 +203,41 @@ public class util_polygon
                 }
                 //Debug.Log(iterationCount + "    " + reflexIndex);
 
-                if (reflexIndex == -1)
+                if (concaveSlices[n].Length > 2)
                 {
-                    // the slice is already convex so we just add it
-                    convexSlices.Add(concaveSlices[n]);
-                } else
-                {
-                    // Debug.Log("[-1]");
-                    // LogArray(concaveSlices[n]);
-
-                    // here we have to cut the thing
-                    // each slice contains original vertex indices
-                    List<int>[] slices = CutPolygon(bisector, verts[concaveSlices[n][reflexIndex]], GrabVertexSet(verts, concaveSlices[n]), concaveSlices[n]);
-                    // if we hit a line segment, we need another triangle
-                    int[] extraTriangle = GetCutTriangle(bisector, concaveSlices[n][reflexIndex], verts[concaveSlices[n][reflexIndex]], GrabVertexSet(verts, concaveSlices[n]), concaveSlices[n]);
-                    for (int i = 0; i < extraTriangle.Length; i++) {additionalTriangles.Add(extraTriangle[i]);}
-
-                    if (extraTriangle.Length > 0)
+                    if (reflexIndex == -1)
                     {
-                        Debug.Log(extraTriangle[0]);
-                        Debug.Log(extraTriangle[1]);
-                        Debug.Log(extraTriangle[2]);
-                    }
-                    
-                    // Debug.Log("[0]");
-                    // LogArray(slices[0].ToArray());
-                    // Debug.Log("[1]");
-                    // LogArray(slices[1].ToArray());
+                        // the slice is already convex so we just add it
+                        convexSlices.Add(concaveSlices[n]);
+                    } else
+                    {
+                        // Debug.Log("[-1]");
+                        // LogArray(concaveSlices[n]);
 
-                    concaveSlices.Add(slices[0].ToArray());
-                    concaveSlices.Add(slices[1].ToArray());
+                        // here we have to cut the thing
+                        // each slice contains original vertex indices
+                        List<int>[] slices = CutPolygon(bisector, verts[concaveSlices[n][reflexIndex]], GrabVertexSet(verts, concaveSlices[n]), concaveSlices[n]);
+                        // if we hit a line segment, we need another triangle
+                        int[] extraTriangle = GetCutTriangle(bisector, concaveSlices[n][reflexIndex], verts[concaveSlices[n][reflexIndex]], GrabVertexSet(verts, concaveSlices[n]), concaveSlices[n]);
+                        for (int i = 0; i < extraTriangle.Length; i++) {additionalTriangles.Add(extraTriangle[i]);}
+
+                        // if (extraTriangle.Length > 0)
+                        // {
+                        //     Debug.Log(extraTriangle[0]);
+                        //     Debug.Log(extraTriangle[1]);
+                        //     Debug.Log(extraTriangle[2]);
+                        // }
+                        
+                        // Debug.Log("[0]");
+                        // LogArray(slices[0].ToArray());
+                        // Debug.Log("[1]");
+                        // LogArray(slices[1].ToArray());
+
+                        concaveSlices.Add(slices[0].ToArray());
+                        concaveSlices.Add(slices[1].ToArray());
+                    }
                 }
+                
                 // again, we delete the concave slice in either case
                 concaveSlices.RemoveAt(n);
             }

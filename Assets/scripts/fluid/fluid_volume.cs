@@ -11,6 +11,7 @@ public class fluid_volume : MonoBehaviour
     public Transform t_model;
     public MeshFilter mf;
     public MeshRenderer mr;
+    public MeshCollider mc;
 
     [Header("CONFIG")]
     public bool showScanPoints;
@@ -49,7 +50,9 @@ public class fluid_volume : MonoBehaviour
         float height = GetFluidHeight();
 
         t_model.position = basePoint + Vector3.up * height;
-        mf.sharedMesh = GetAppropriateMesh();
+        Mesh current = GetAppropriateMesh();
+        mf.mesh = current;
+        mc.sharedMesh = current;
     }
 
     public Mesh GetAppropriateMesh()
@@ -101,6 +104,12 @@ public class fluid_volume : MonoBehaviour
         float lerpPercent = (volumeAmt - floor) / (stagedVolumeAreas[min+1] - floor);
 
         return (min+1) * volumeSliceSpacing + lerpPercent * volumeSliceSpacing;
+    }
+
+    public void ModifyVolume(float amt)
+    {
+        volumeAmt += amt;
+        if (volumeAmt < 0) {volumeAmt = 0;}
     }
     
     void RecalculateVolume()

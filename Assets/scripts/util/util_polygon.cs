@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // struct representing a piece of a polygon,
@@ -127,6 +128,53 @@ public class util_polygon
         }
 
         return sum;
+    }
+
+    public static int[] GetCollinears(Vector3[] points)
+    {
+        List<int> result = new List<int>();
+
+        for (int i = 0; i < points.Length; i++)
+        {
+            Vector3 primary = points[i]; // just for readability
+
+            for (int j = 0; j < points.Length; j++)
+            {
+                if (i != j) // can't be the same point
+                {
+                    Vector3 secondary = points[j]; // just for readability
+
+                    for (int k = 0; k < points.Length; k++)
+                    {
+                        if (k != i && k != j)
+                        {
+                            if (!result.Contains(k) && Vector3.Dot((primary - points[k]).normalized, (secondary - points[k]).normalized) < -0.95f)
+                            {
+                                result.Add(k);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return result.ToArray();
+    }
+
+    public static Vector3[] RemoveCollinears(Vector3[] rawVerts)
+    {
+        List<Vector3> result = new List<Vector3>();
+
+        int[] collinears = GetCollinears(rawVerts);
+        for (int i = 0; i < rawVerts.Length; i++)
+        {
+            if (!collinears.Contains(i))
+            {
+                result.Add(rawVerts[i]);
+            }
+        }
+
+        return result.ToArray();
     }
 
 

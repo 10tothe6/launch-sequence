@@ -1,16 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+// similar to dragprofile, but instead of scalar drag coefficients we have a vector3 lift force
 
 public class aero_bernoulliprofile : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public List<Vector3> directionVectors;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<Vector3> liftForces;
 }

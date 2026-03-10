@@ -3,6 +3,7 @@ using UnityEngine;
 public class test_fluidmodifier : MonoBehaviour
 {
     [Header("CONFIG")]
+    public bool showPath;
     public float speed;
     public bool addFluid;
     public bool suckFluid;
@@ -11,6 +12,10 @@ public class test_fluidmodifier : MonoBehaviour
 
     void Update()
     {
+        if (showPath)
+        {
+            Debug.DrawLine(transform.position, transform.position - Vector3.up * 25f);
+        }
         if (addFluid)
         {
             ModifyFluidBelow(speed * Time.deltaTime);

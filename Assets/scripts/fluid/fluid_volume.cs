@@ -49,7 +49,7 @@ public class fluid_volume : MonoBehaviour
         // first, we figure out the fluid height
         float height = GetFluidHeight();
 
-        t_model.position = basePoint + Vector3.up * height;
+        t_model.position = Vector3.up * (height + basePoint.y);
         Mesh current = GetAppropriateMesh();
         mf.mesh = current;
         mc.sharedMesh = current;
@@ -79,6 +79,11 @@ public class fluid_volume : MonoBehaviour
         {
             return volumeSlices[min];
         }
+    }
+
+    public float GetGlobalFluidHeight()
+    {
+        return basePoint.y + GetFluidHeight();
     }
 
     // sort of a cv from above but eh whatever

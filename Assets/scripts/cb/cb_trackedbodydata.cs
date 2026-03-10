@@ -12,6 +12,7 @@ public class cb_trackedbodydata
     public Color mapViewColor;
     public int iconIndex;
 
+    // configs
     public cbp_config pConfig;
     public cbt_config tConfig;
 

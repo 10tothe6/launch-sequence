@@ -4,16 +4,19 @@ using UnityEngine;
 
 // TODO: transfer some values over to cbp_orbit.cs
 
-public class cbp_config : MonoBehaviour
+[System.Serializable]
+public class cbp_config
 {
     public bool isGrandparent; // sun don't move 
     public int parentIndex;
 
-    public cbp_config parentConfig; // (parent), grabbing parents data from here (namely mass and position) instead of having dupe variables
-    public trackedbody_mono data;
+    public cb_trackedbody parent; // (parent), grabbing parents data from here (namely mass and position) instead of having dupe variables
+    public cb_trackedbody generic;
 
 
     public cbp_orbit orbit;
+    public cbp_poseinfo pose;
+
     // i for initial
     public Vector3 iPosition;
     public Vector3 iVelocity;

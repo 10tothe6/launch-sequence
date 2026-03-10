@@ -8,7 +8,7 @@ using UnityEngine;
 
 // this script is actually updated in-game, as things like atmospheric composition can change thanks to the player
 [System.Serializable]
-public class cbt_config : MonoBehaviour
+public class cbt_config
 {
     // **************** BASIC ****************
     // sizes

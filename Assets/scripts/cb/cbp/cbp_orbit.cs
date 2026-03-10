@@ -2,7 +2,8 @@ using UnityEngine;
 
 // for any object that has an orbit
 
-public class cbp_orbit : MonoBehaviour
+[System.Serializable]
+public class cbp_orbit
 {
     // unused so far *****
     public float semiMajorAxis;

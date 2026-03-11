@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum cb_bodytype
@@ -38,6 +39,13 @@ public class cb_solarsystem : MonoBehaviour
     {
         Instance = this;
     }
+
+    // it would be boring if all the planets started out in a line like how they're generated,
+    // so after generation we advance time by a random amount
+    // this creates two time-frames: 'math-time' and 'game-time'
+    
+    // this varaiable is the offset that game-time has from math-time
+    public float temporalOffset;
 
     public LootTableEntry[] terranMoonCounts;
     public LootTableEntry[] jovianMoonCounts;
@@ -85,6 +93,25 @@ public class cb_solarsystem : MonoBehaviour
     {
         // first, we make sure to overwrite old data
         this.data = data;
+    }
+
+    public void SetRawTimeOffset(float time)
+    {
+        SetTimeOffset(time - temporalOffset);
+    }
+    // before, I had one class that would update all of the bodies (TrackingManager)
+    // this was back when I was obsessed with ___Manager.cs scripts
+    // this time, bc it makes more sense to me, I'm putting the time/position control in here
+    // though I may move it later
+    public void SetTimeOffset(float time)
+    {
+        for (int i = 0; i < monoBodies.Count; i++)
+        {
+            // temp
+            if (i == 0 || i == 1) {continue;}
+            monoBodies[i].data.pConfig.pose.localPosition = monoBodies[i].data.pConfig.GetPositionAtTime(time + temporalOffset, 10000);
+            monoBodies[i].transform.position = monoBodies[monoBodies[i].data.pConfig.parentIndex].data.pConfig.pose.localPosition.ToVector3() +  monoBodies[i].data.pConfig.pose.localPosition.ToVector3();
+        }
     }
 
     // makes more sense to throw this function inside the class itself... i think
@@ -188,6 +215,9 @@ public class cb_solarsystem : MonoBehaviour
                 }
             }
         }
+
+        temporalOffset = Random.Range(10f, 30f);
+        SetTimeOffset(0);
     }
 
     public float PercentChanceForJovian(float distanceFromCOM)

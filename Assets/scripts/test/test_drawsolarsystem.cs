@@ -30,5 +30,7 @@ public class test_drawsolarsystem : MonoBehaviour
             regenerate = false;
             DrawSolarSystem();
         }
+
+        ss.SetTimeOffset(Time.time / 1000f);
     }
 }

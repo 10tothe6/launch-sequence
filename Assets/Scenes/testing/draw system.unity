@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f941d75bfea5f4419c60a383cfab874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cb_solarsystem
+  temporalOffset: 0
   terranMoonCounts:
   - itemIndex: 0
     weight: 100
@@ -182,8 +183,8 @@ MonoBehaviour:
   maximumSystemRadius: 10
   minimumMoonSpacing: 0.01
   maximumMoonSpacing: 0.04
-  minimumPlanetarySystemRadius: 0.01
-  maximumPlanetarySystemRadius: 0.1
+  minimumPlanetarySystemRadius: 0.1
+  maximumPlanetarySystemRadius: 0.2
   data:
     bodies: []
     starCount: 0

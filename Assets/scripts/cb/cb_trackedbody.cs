@@ -11,7 +11,14 @@ public class cb_trackedbody : MonoBehaviour
         gameObject.name = name;
 
         data = new cb_trackedbodydata();
-
+        
+        if (bodyType == (ushort)cb_bodytype.Stellar || bodyType == (ushort)cb_bodytype.Null)
+        {
+            data.mass = 1000000f;
+        } else
+        {
+            data.mass = 10f;
+        }
         data.pConfig.isGrandparent = data.bodyType == (ushort)cb_bodytype.Null;
         data.pConfig.parentIndex = parentIndex;
         data.pConfig.selfIndex = cb_solarsystem.Instance.monoBodies.Count - 1;
@@ -32,6 +39,11 @@ public class cb_trackedbody : MonoBehaviour
         // we can know that the parent body's data will always be available
         if (data.pConfig.parentIndex == -1)
         {
+            data.pConfig.iPosition = Vector3.zero;
+            data.pConfig.iVelocity = Vector3.zero;
+
+            data.pConfig.pose.localPosition = new DoubleVector3(data.pConfig.iPosition);
+            data.pConfig.pose.velocity = new DoubleVector3(data.pConfig.iVelocity);
             return;
         }
         float orbitalVelocity = Mathf.Sqrt(cb_solarsystem.gravConstant * cb_solarsystem.Instance.monoBodies[data.pConfig.parentIndex].data.mass / baseRadius);

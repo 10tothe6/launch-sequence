@@ -28,6 +28,10 @@ public class Plotter : MonoBehaviour
         lr.positionCount = points.Length;
         lr.SetPositions(points);
 
+        lr.startWidth = lineWidth;
+        lr.endWidth = lineWidth;
+        
+
         lr.material = m_line;
 
         if (useColor)

@@ -177,14 +177,14 @@ MonoBehaviour:
   monoBodies: []
   minimumPlanetCount: 1
   maximumPlanetCount: 6
-  minimumPlanetSpacing: 0.5
-  maximumPlanetSpacing: 1
-  minimumSystemRadius: 1
-  maximumSystemRadius: 10
-  minimumMoonSpacing: 0.01
-  maximumMoonSpacing: 0.04
-  minimumPlanetarySystemRadius: 0.1
-  maximumPlanetarySystemRadius: 0.2
+  minimumPlanetSpacing: 5000
+  maximumPlanetSpacing: 10000
+  minimumSystemRadius: 10000
+  maximumSystemRadius: 100000
+  minimumMoonSpacing: 0.1
+  maximumMoonSpacing: 0.4
+  minimumPlanetarySystemRadius: 1
+  maximumPlanetarySystemRadius: 7.5
   data:
     bodies: []
     starCount: 0
@@ -203,9 +203,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e806bca4a722f94e86c75c643054426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::test_drawsolarsystem
+  m_orbitLine: {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
+  orbitLineWidth: 0.01
+  tx_cbIcons:
+  - {fileID: 2800000, guid: 0d4040f77c05bfe4c9951d25e8278c8d, type: 3}
+  - {fileID: 2800000, guid: 3cc6e51a63007834592253a66293c447, type: 3}
+  - {fileID: 2800000, guid: 2d11a92c10169a348bf71a84fc205752, type: 3}
+  - {fileID: 2800000, guid: 5927d5ded48b5f240beafff47e587dc9, type: 3}
+  - {fileID: 2800000, guid: 241301e053e0e4141ba6ea7f40201d41, type: 3}
+  - {fileID: 2800000, guid: 241301e053e0e4141ba6ea7f40201d41, type: 3}
   ss: {fileID: 155187300}
-  timeScale: 0.0005
-  scaleFactor: 1
+  plotters: []
+  focusIndex: 0
+  showOrbitLines: 0
+  timeScale: 0.005
+  scaleFactor: 0.0001
   regenerate: 0
   playSimulation: 0
   time: 0

@@ -108,7 +108,7 @@ public class cbp_config
         return new DoubleVector3(result);
     }
 
-    public Vector3[] SampleFullOrbit(int pointCount)
+    public Vector3[] SampleFullOrbit(float scaleFactor, int pointCount)
     {
         Vector3[] result = new Vector3[pointCount];
 
@@ -116,7 +116,7 @@ public class cbp_config
         {
             float currentTime = orbit.orbitalPeriod / ((float)pointCount - 1f) * (float)i;
 
-            result[i] = GetPositionAtTime(currentTime, 1000).ToVector3();
+            result[i] = GetPositionAtTime(currentTime, 1000).ToVector3() * scaleFactor;
         }
 
         return result;

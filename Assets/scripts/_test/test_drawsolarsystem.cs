@@ -1,36 +1,66 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class test_drawsolarsystem : MonoBehaviour
 {
     public cb_solarsystem ss;
+    public List<Plotter> plotters;
     [Header("CONFIG")]
+    public int focusIndex;
+    public bool showOrbitLines;
+    private bool orbitLinesShowing;
+
+    public float timeScale;
+    public float scaleFactor;
     public bool regenerate;
+
+    public bool playSimulation;
+    public float time;
 
     void Start()
     {
-        DrawSolarSystem();
+        focusIndex = 0;
+        MakeSolarSystem();
+    }
+
+    void MakeSolarSystem()
+    {
+        ss.Generate();
     }
 
     void DrawSolarSystem()
     {
-        ss.Generate();
-        for (int i = 0; i < ss.monoBodies.Count; i++)
+        Vector3[] p = ss.GetBodyPositions(scaleFactor);
+
+        for (int i = 0; i < p.Length; i++)
         {
-            if (ss.monoBodies[i].data.bodyType == 0) {ss.monoBodies[i].transform.position = Vector3.zero; continue;}
-            ss.monoBodies[i].transform.position = 
-            ss.monoBodies[ss.monoBodies[i].data.pConfig.parentIndex].data.pConfig.iPosition + 
-            ss.monoBodies[i].data.pConfig.iPosition;
+            ss.monoBodies[i].transform.position = p[i] - p[focusIndex];
         }
     }
 
     void Update()
     {
+        if (playSimulation)
+        {
+            time += Time.deltaTime * timeScale;
+        }
+
         if (regenerate)
         {
             regenerate = false;
-            DrawSolarSystem();
+            MakeSolarSystem();
         }
 
-        ss.SetTimeOffset(Time.time / 100f);
+        if (showOrbitLines != orbitLinesShowing)
+        {
+            orbitLinesShowing = showOrbitLines;
+            for (int i = 0; i < plotters.Count; i++)
+            {
+                plotters[i].isShowing = orbitLinesShowing;
+            }
+        }
+
+        ss.SetTimeOffset(time);
+        DrawSolarSystem();
     }
 }

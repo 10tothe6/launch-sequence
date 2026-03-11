@@ -7,6 +7,7 @@ public class Plotter : MonoBehaviour
     public LineRenderer lr;
 
     [Header("CONFIG")]
+    public bool isShowing;
     public Material m_line;
 
     public bool useColor;

@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class DoubleVector3
 {
+    public static DoubleVector3 zero = new DoubleVector3(0,0,0);
     public double x;
     public double y;
     public double z;

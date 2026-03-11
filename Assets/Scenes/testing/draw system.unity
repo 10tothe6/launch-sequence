@@ -204,7 +204,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::test_drawsolarsystem
   ss: {fileID: 155187300}
+  timeScale: 0.0005
+  scaleFactor: 1
   regenerate: 0
+  playSimulation: 0
+  time: 0
 --- !u!4 &155187302
 Transform:
   m_ObjectHideFlags: 0

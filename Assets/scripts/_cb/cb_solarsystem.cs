@@ -107,11 +107,37 @@ public class cb_solarsystem : MonoBehaviour
     {
         for (int i = 0; i < monoBodies.Count; i++)
         {
-            // temp
-            if (i == 0 || i == 1) {continue;}
+            if (i == 0 || i == 1) {monoBodies[i].data.pConfig.pose.localPosition = DoubleVector3.zero; continue;}
             monoBodies[i].data.pConfig.pose.localPosition = monoBodies[i].data.pConfig.GetPositionAtTime(time + temporalOffset, 1000);
-            monoBodies[i].transform.position = monoBodies[monoBodies[i].data.pConfig.parentIndex].data.pConfig.pose.localPosition.ToVector3() +  monoBodies[i].data.pConfig.pose.localPosition.ToVector3();
         }
+    }
+
+    public Vector3[] GetBodyPositions(float scaleFactor)
+    {
+        Vector3[] positions = new Vector3[monoBodies.Count];
+
+        for (int i = 0; i < positions.Length; i++)
+        {
+            if (i == 0 || i == 1) {positions[i] = Vector3.zero; continue;}
+            positions[i] = monoBodies[monoBodies[i].data.pConfig.parentIndex].data.pConfig.pose.localPosition.ToVector3() +  monoBodies[i].data.pConfig.pose.localPosition.ToVector3();
+            positions[i] *= scaleFactor;
+        }
+
+        return positions;
+    }
+
+    public Vector3[] GetBodyVelocities(float scaleFactor)
+    {
+        Vector3[] velocities = new Vector3[monoBodies.Count];
+
+        for (int i = 0; i < velocities.Length; i++)
+        {
+            if (i == 0 || i == 1) {velocities[i] = Vector3.zero; continue;}
+            velocities[i] = monoBodies[monoBodies[i].data.pConfig.parentIndex].data.pConfig.pose.velocity.ToVector3() +  monoBodies[i].data.pConfig.pose.velocity.ToVector3();
+            velocities[i] *= scaleFactor;
+        }
+
+        return velocities;
     }
 
     // makes more sense to throw this function inside the class itself... i think
@@ -119,6 +145,7 @@ public class cb_solarsystem : MonoBehaviour
     {
         // getting rid of any existing body objects
         ui_canvasutils.DestroyChildren(t_bodyContainer.gameObject);
+        monoBodies = new List<cb_trackedbody>();
 
         // quick note - all celestial bodies have orbits
         // including stars

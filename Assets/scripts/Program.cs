@@ -44,8 +44,38 @@ public class Program : MonoBehaviour
         startMode = ins_startMode;
     }
 
+    // should almost be the ONLY use of the start function
+    void Start()
+    {
+        Boot();
+    }
+
+    public void Boot()
+    {
+        if (buildMode == ProgramBuildMode.HybridBuild)
+        {
+            if (startMode == ProgramStartMode.FullGame)
+            {
+                UIManager.Instance.SwitchMenu("main menu");
+            } else if (startMode == ProgramStartMode.Sandbox)
+            {
+                
+            } else if (startMode == ProgramStartMode.InstantGame)
+            {
+                
+            }
+        } 
+        else if (buildMode == ProgramBuildMode.ServerBuild) {/* not really relevant rn*/}
+    }
+
     public ProgramBuildMode ins_buildMode;
     public static ProgramBuildMode buildMode;
     public ProgramStartMode ins_startMode;
     public static ProgramStartMode startMode;
+
+    // forget exiting to main, just quit the damn program
+    public void HardQuit()
+    {
+        Application.Quit();
+    }
 }

@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
         int index = -1;
         for (int i = 0; i < menuNames.Count; i++)
         {
-            t_canvas.GetChild(i).gameObject.SetActive(true);
+            t_canvas.GetChild(i).gameObject.SetActive(false);
             if (menuNames[i] == name)
             {
                 index = i;

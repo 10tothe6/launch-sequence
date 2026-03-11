@@ -174,12 +174,16 @@ MonoBehaviour:
   p_body: {fileID: 8460234261487516770, guid: 77671e185128bab48a484bce14cea17f, type: 3}
   t_bodyContainer: {fileID: 155187302}
   monoBodies: []
-  minimumPlanetCount: 0
-  maximumPlanetCount: 0
-  minimumPlanetSpacing: 0
-  maximumPlanetSpacing: 0
-  minimumSystemRadius: 0
-  maximumSystemRadius: 0
+  minimumPlanetCount: 1
+  maximumPlanetCount: 6
+  minimumPlanetSpacing: 0.5
+  maximumPlanetSpacing: 1
+  minimumSystemRadius: 1
+  maximumSystemRadius: 10
+  minimumMoonSpacing: 0.01
+  maximumMoonSpacing: 0.04
+  minimumPlanetarySystemRadius: 0.01
+  maximumPlanetarySystemRadius: 0.1
   data:
     bodies: []
     starCount: 0
@@ -199,6 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::test_drawsolarsystem
   ss: {fileID: 155187300}
+  regenerate: 0
 --- !u!4 &155187302
 Transform:
   m_ObjectHideFlags: 0
@@ -208,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 155187299}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.52204, y: 0, z: 0.14206}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

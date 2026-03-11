@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: cb_generic
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::cb_trackedbody
   data:
     name: 
+    bodyType: 0
     mass: 0
     hasSurface: 0
     mapViewColor: {r: 0, g: 0, b: 0, a: 0}
@@ -95,3 +96,4 @@ MonoBehaviour:
       scatterFactor: 0
       scatterStrength: 0
       waveLengths: {x: 0, y: 0, z: 0}
+  epsilon: 0.01

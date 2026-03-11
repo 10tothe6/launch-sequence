@@ -17,4 +17,10 @@ public class cb_trackedbodydata
     public cbp_config pConfig;
     public cbt_config tConfig;
 
+    public cb_trackedbodydata()
+    {
+        pConfig = new cbp_config();
+        tConfig = new cbt_config();
+    }
+
 }

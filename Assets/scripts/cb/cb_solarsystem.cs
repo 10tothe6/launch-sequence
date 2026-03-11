@@ -90,13 +90,16 @@ public class cb_solarsystem : MonoBehaviour
     // makes more sense to throw this function inside the class itself... i think
     public void Generate()
     {
+        // getting rid of any existing body objects
+        ui_canvasutils.DestroyChildren(t_bodyContainer.gameObject);
+
         // quick note - all celestial bodies have orbits
         // including stars
         // they all orbit the "center of mass" of the solar system, which is itself a body
         // this is to allow for multiple stars later
 
         // type 0 body is a non-visible one
-        AddBodyToSystem("COM", -1,(ushort)cb_bodytype.Null); // Center Of Mass
+        AddBodyToSystem("COM", -1,(ushort)cb_bodytype.Null,0); // Center Of Mass
         // ^ this will occupy index 0, always
 
         // we don't need binary star systems rn
@@ -107,7 +110,7 @@ public class cb_solarsystem : MonoBehaviour
         {
             // type 1 body is stellar
             // I'll name them later
-            AddBodyToSystem("Star", 0, (ushort)cb_bodytype.Stellar); // parent them all to COM
+            AddBodyToSystem("Star", 0, (ushort)cb_bodytype.Stellar,0); // parent them all to COM
         }
 
         // systems can't have no planets, but they CAN have one
@@ -142,7 +145,7 @@ public class cb_solarsystem : MonoBehaviour
                 }
 
                 // spawn the planet itself
-                addedPlanets.Add(AddBodyToSystem(i.ToString(), 0, bodyType)); // again, parent to COM
+                addedPlanets.Add(AddBodyToSystem(i.ToString(), 0, bodyType,currentRadius)); // again, parent to COM
             }
         }
 
@@ -180,7 +183,8 @@ public class cb_solarsystem : MonoBehaviour
                     (ushort)cb_bodytype.TerranMoon : 
                     (ushort)cb_bodytype.JovianMoon;
 
-                    AddBodyToSystem("m" + j.ToString(), 0, bodyType);
+                    // plus 2 bc of COM and star
+                    AddBodyToSystem("m" + i.ToString() + "   " + j.ToString(), i+2, bodyType,currentRadius);
                 }
             }
         }
@@ -193,12 +197,12 @@ public class cb_solarsystem : MonoBehaviour
 
     // regardless of type (planet, star, etc.)
     // returns the mono so we can do more stuff with it later
-    public cb_trackedbody AddBodyToSystem(string name, int parentIndex, ushort bodyType)
+    public cb_trackedbody AddBodyToSystem(string name, int parentIndex, ushort bodyType,float baseRadius)
     {
         cb_trackedbody newBody = Instantiate(p_body, t_bodyContainer).GetComponent<cb_trackedbody>();
         // we need to define the 'type' of body so the script knows where to pull data from
-        newBody.Initialize(name, parentIndex, bodyType);
         monoBodies.Add(newBody);
+        newBody.Initialize(name, parentIndex, bodyType,baseRadius);
         
         return newBody;
     }

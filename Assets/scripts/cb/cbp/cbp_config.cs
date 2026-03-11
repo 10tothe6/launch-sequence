@@ -26,6 +26,12 @@ public class cbp_config
     public float iM;
     public float iN;
 
+    public cbp_config()
+    {
+        orbit = new cbp_orbit();
+        pose = new cbp_poseinfo();
+    }
+
     // using physics stuff to move the planets is better for short timespans
     public void StepNewtonian(float delta)
     {

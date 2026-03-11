@@ -119,6 +119,101 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &155187299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 155187302}
+  - component: {fileID: 155187301}
+  - component: {fileID: 155187300}
+  m_Layer: 0
+  m_Name: draw test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &155187300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155187299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f941d75bfea5f4419c60a383cfab874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cb_solarsystem
+  terranMoonCounts:
+  - itemIndex: 0
+    weight: 100
+  - itemIndex: 1
+    weight: 65
+  - itemIndex: 2
+    weight: 30
+  - itemIndex: 3
+    weight: 5
+  jovianMoonCounts:
+  - itemIndex: 0
+    weight: 10
+  - itemIndex: 1
+    weight: 20
+  - itemIndex: 2
+    weight: 30
+  - itemIndex: 3
+    weight: 40
+  - itemIndex: 4
+    weight: 50
+  - itemIndex: 5
+    weight: 50
+  p_body: {fileID: 8460234261487516770, guid: 77671e185128bab48a484bce14cea17f, type: 3}
+  t_bodyContainer: {fileID: 155187302}
+  monoBodies: []
+  minimumPlanetCount: 0
+  maximumPlanetCount: 0
+  minimumPlanetSpacing: 0
+  maximumPlanetSpacing: 0
+  minimumSystemRadius: 0
+  maximumSystemRadius: 0
+  data:
+    bodies: []
+    starCount: 0
+    starIndices: 
+    planetCount: 0
+    planetIndices: 
+--- !u!114 &155187301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155187299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e806bca4a722f94e86c75c643054426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::test_drawsolarsystem
+  ss: {fileID: 155187300}
+--- !u!4 &155187302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155187299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.52204, y: 0, z: 0.14206}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1011097873
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,3 +409,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1011097876}
   - {fileID: 1958153106}
+  - {fileID: 155187302}

@@ -8,11 +8,8 @@ using UnityEngine;
 public class cbp_config
 {
     public bool isGrandparent; // sun don't move 
-    public int parentIndex;
-
-    public cb_trackedbody parent; // (parent), grabbing parents data from here (namely mass and position) instead of having dupe variables
-    public cb_trackedbody generic;
-
+    public int parentIndex; // -1 if no parent
+    public int selfIndex; // because I'm not putting mono refs in a data class, this is how things will be referenced
 
     public cbp_orbit orbit;
     public cbp_poseinfo pose;
@@ -28,6 +25,28 @@ public class cbp_config
     public float iPhaseShift;
     public float iM;
     public float iN;
+
+    // using physics stuff to move the planets is better for short timespans
+    public void StepNewtonian(float delta)
+    {
+        pose.localPosition = pose.localPosition.Add(pose.velocity.Mul(delta));
+
+        pose.velocity = pose.velocity.Add(pose.localPosition.Mul(-1).Norm().Mul(delta).Mul(cb_solarsystem.gravConstant).Mul(cb_solarsystem.Instance.monoBodies[parentIndex].data.mass).Div(pose.localPosition.Mag()).Div(pose.localPosition.Mag()));
+    }
+
+    public DoubleVector3 GetPosition()
+    {
+        if (parentIndex != -1)
+        {
+            // god i hate this line of code
+            // TODO: improve structure
+            return pose.localPosition.Add(cb_solarsystem.Instance.monoBodies[parentIndex].data.pConfig.GetPosition());
+        }
+        else
+        {
+            return pose.localPosition;
+        }
+    }
 
 
     // everything below here is the really complicated orbital math that I REALLY never want to do it again

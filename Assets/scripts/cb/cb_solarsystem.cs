@@ -1,4 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum cb_bodytype
+{
+    Null=0,
+    Stellar=1, // (stars)
+    Terran=2, // (rocky planets)
+    Jovian=3, // (gas giants) could also have a 'neptunian' category for ice giants but eh
+    TerranMoon=4, // (moons of rocky planets)
+    JovianMoon=5, // (moons of gas giants) these are larger than terran ones and have a chance of having atmospheres
+}
+
+// TODO: planet names of some kind
 
 public class cb_solarsystem : MonoBehaviour
 {
@@ -26,6 +39,13 @@ public class cb_solarsystem : MonoBehaviour
         Instance = this;
     }
 
+    public LootTableEntry[] terranMoonCounts;
+    public LootTableEntry[] jovianMoonCounts;
+
+    public GameObject p_body; // and sherman
+    public Transform t_bodyContainer;
+    public List<cb_trackedbody> monoBodies;
+
     // proper constants
     public static float gravConstant = 0.1f;
 
@@ -35,16 +55,169 @@ public class cb_solarsystem : MonoBehaviour
     public int minimumPlanetCount;
     public int maximumPlanetCount;
 
+    // ******************** full solar system scaling ********************
+
+    // TODO: make this a function of distance
     public float minimumPlanetSpacing;
+    public float maximumPlanetSpacing;
+
+
     // there is no maximum planet spacing
+    public float minimumSystemRadius; // as close to the sun as it gets
     public float maximumSystemRadius; // solar systems can only be so big
+
+    // ****************************************
+
+    // ******************** planetary system scaling ********************
+
+    public float minimumMoonSpacing;
+    public float maximumMoonSpacing;
+
+    // how big/small a single planetary system can be
+    public float minimumPlanetarySystemRadius;
+    public float maximumPlanetarySystemRadius;
+
+    // ****************************************
 
     public cb_solarsystemdata data;
 
-    // makes more sense to throw this function inside the class itself... i think
-    public static void Generate()
+    public void LoadFromData(cb_solarsystemdata data)
     {
+        // first, we make sure to overwrite old data
+        this.data = data;
+    }
+
+    // makes more sense to throw this function inside the class itself... i think
+    public void Generate()
+    {
+        // quick note - all celestial bodies have orbits
+        // including stars
+        // they all orbit the "center of mass" of the solar system, which is itself a body
+        // this is to allow for multiple stars later
+
+        // type 0 body is a non-visible one
+        AddBodyToSystem("COM", -1,(ushort)cb_bodytype.Null); // Center Of Mass
+        // ^ this will occupy index 0, always
+
+        // we don't need binary star systems rn
+        // got too many fuckin problems and this aint gonna be one
+        int starCap = 1;
+
+        for (int i = 0; i < starCap; i++)
+        {
+            // type 1 body is stellar
+            // I'll name them later
+            AddBodyToSystem("Star", 0, (ushort)cb_bodytype.Stellar); // parent them all to COM
+        }
+
         // systems can't have no planets, but they CAN have one
         int planetCap = Random.Range(Instance.minimumPlanetCount,Instance.maximumPlanetCount);
+
+        float currentRadius = minimumSystemRadius - minimumPlanetSpacing;
+
+        // keeping track so we can add moons later
+        // in theory this is not necessary bc we can just make due with index math,
+        // but I don't want to do that
+        List<cb_trackedbody> addedPlanets = new List<cb_trackedbody>();
+
+        for (int i = 0; i < planetCap; i++)
+        {
+            currentRadius += Random.Range(minimumPlanetSpacing, maximumPlanetSpacing);
+
+            if (currentRadius >= maximumSystemRadius)
+            {
+                // system got too big, regardless of whether we hit our planet cap or not
+                break;
+            } else
+            {
+                ushort bodyType = (ushort)cb_bodytype.Terran;
+
+                // the reason we calculate the jovian chance based on distance is because
+                // planets further out should be more likely to be gas giants
+                float jovianChance = PercentChanceForJovian(currentRadius);
+
+                if (Random.Range(0f, 1000f) < 1000f * jovianChance)
+                {
+                    bodyType = (ushort)cb_bodytype.Jovian;
+                }
+
+                // spawn the planet itself
+                addedPlanets.Add(AddBodyToSystem(i.ToString(), 0, bodyType)); // again, parent to COM
+            }
+        }
+
+        // adding moons
+        for (int i = 0; i < addedPlanets.Count; i++)
+        {
+            int moonCap = 0;
+
+            // moons, unlike planets and stars (at least for now) are counted via a loot table
+            // this means we can bias things toward no moons, or a median amount of moons
+            if (addedPlanets[i].data.bodyType == (ushort)cb_bodytype.Jovian)
+            {
+                moonCap = int.Parse(LootTableEntry.Get(jovianMoonCounts));
+            } else if (addedPlanets[i].data.bodyType == (ushort)cb_bodytype.Terran)
+            {
+                moonCap = int.Parse(LootTableEntry.Get(terranMoonCounts));
+            }
+            // not sure how we could hit neither of those, but if we do then no moons
+
+            currentRadius = minimumPlanetarySystemRadius - minimumMoonSpacing;
+
+            for (int j = 0; j < moonCap; j++)
+            {
+                // like planets, moons stop either when we reach the cap or the max radius
+
+                currentRadius += Random.Range(minimumMoonSpacing, maximumMoonSpacing);
+
+                if (currentRadius >= maximumPlanetarySystemRadius)
+                {
+                    break;
+                } else
+                {
+                    ushort bodyType = 
+                    addedPlanets[i].data.bodyType == (ushort)cb_bodytype.Terran ? 
+                    (ushort)cb_bodytype.TerranMoon : 
+                    (ushort)cb_bodytype.JovianMoon;
+
+                    AddBodyToSystem("m" + j.ToString(), 0, bodyType);
+                }
+            }
+        }
+    }
+
+    public float PercentChanceForJovian(float distanceFromCOM)
+    {
+        return 0.5f;
+    }
+
+    // regardless of type (planet, star, etc.)
+    // returns the mono so we can do more stuff with it later
+    public cb_trackedbody AddBodyToSystem(string name, int parentIndex, ushort bodyType)
+    {
+        cb_trackedbody newBody = Instantiate(p_body, t_bodyContainer).GetComponent<cb_trackedbody>();
+        // we need to define the 'type' of body so the script knows where to pull data from
+        newBody.Initialize(name, parentIndex, bodyType);
+        monoBodies.Add(newBody);
+        
+        return newBody;
+    }
+
+    public cb_trackedbody GetBody(string name)
+    {
+        return data.bodies[GetBodyIndex(name)];
+    }
+
+    public int GetBodyIndex(string name)
+    {
+        for (int i = 0; i < data.bodies.Count; i++)
+        {
+            if (data.bodies[i].name == name)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

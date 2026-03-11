@@ -4,6 +4,7 @@ using UnityEngine;
 public class cb_trackedbodydata
 {
     public string name;
+    public ushort bodyType;
     
     public float mass;
 

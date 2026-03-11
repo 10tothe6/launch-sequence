@@ -31,6 +31,6 @@ public class test_drawsolarsystem : MonoBehaviour
             DrawSolarSystem();
         }
 
-        ss.SetTimeOffset(Time.time / 1000f);
+        ss.SetTimeOffset(Time.time / 100f);
     }
 }

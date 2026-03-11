@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // 2nd in command, basically, after Program.cs
@@ -27,7 +28,44 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        
+        LoadMenuObjects();
     }
 
     public Transform t_canvas;
+
+    public List<string> menuNames;
+    public List<int> menuSiblingIndices;
+
+    public void LoadMenuObjects()
+    {
+        for (int i = 0; i < t_canvas.childCount; i++)
+        {
+            if (t_canvas.GetChild(i).name[0] != '[') {continue;}
+
+            char tag = t_canvas.GetChild(i).name[1];
+            if (tag == 'm')
+            {
+                menuSiblingIndices.Add(i);
+                menuNames.Add(t_canvas.GetChild(i).name.Substring(4));
+            }
+        }
+    }
+
+    public void SwitchMenu(string name)
+    {
+        int index = -1;
+        for (int i = 0; i < menuNames.Count; i++)
+        {
+            t_canvas.GetChild(i).gameObject.SetActive(true);
+            if (menuNames[i] == name)
+            {
+                index = i;
+            }
+        }
+
+        if (index == -1) {Debug.Log("Menu name not found!"); return;}
+
+        t_canvas.GetChild(index).gameObject.SetActive(true);
+    }
 }

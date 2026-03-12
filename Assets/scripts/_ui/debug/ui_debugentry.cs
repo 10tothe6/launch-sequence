@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,10 +7,10 @@ using UnityEngine.Events;
 public class ui_debugentry
 {
     public string title;
-    public UnityAction<string> dataSource;
+    public Func<string> dataSource;
 
     public ui_debugentry() {}
-    public ui_debugentry(string title, UnityAction<string> dataSource)
+    public ui_debugentry(string title, Func<string> dataSource)
     {
         this.title = title;
         this.dataSource = dataSource;

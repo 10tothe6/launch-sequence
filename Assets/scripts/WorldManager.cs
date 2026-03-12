@@ -31,6 +31,8 @@ public class WorldManager : MonoBehaviour
         Instance = this;
     }
 
+    public Sprite[] cbIcons;
+
     public Transform t_bodyContainer;
     public Transform t_mapBodyContainer;
     public GameObject p_mapBody; // maybe move all this 'map body' stuff into cb_solarsystem??
@@ -84,6 +86,9 @@ public class WorldManager : MonoBehaviour
             RegenerateMapBodies();
         }
 
+        ui_debugmenu.Instance.AddEntry("dist from focus", 
+        () => Vector3.Distance(CameraController.t_cam.position, t_mapBodyContainer.GetChild(mapFocusIndex).position).ToString());
+
         RefreshMap();
     }
 
@@ -106,6 +111,12 @@ public class WorldManager : MonoBehaviour
         for (int i = 0; i < ss.monoBodies.Count; i++)
         {
             GameObject g_newMapBody = Instantiate(p_mapBody, t_mapBodyContainer);
+
+            // handling the screenspace icon thing
+            ui_screenspaceicon comp = g_newMapBody.GetComponent<ui_screenspaceicon>();
+
+            // just pass it to the ui script atp
+            ui_mapview.Instance.SetupBody(ss.monoBodies[i],comp);
         }
     }
 

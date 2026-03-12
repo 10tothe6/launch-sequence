@@ -1,25 +1,65 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ui_debugmenu : MonoBehaviour
 {
+    private static ui_debugmenu _instance;
+
+    public static ui_debugmenu Instance
+    {
+        get => _instance;
+        private set
+        {
+            if (_instance == null)
+            {
+                _instance = value;
+            }
+            else if (_instance != value)
+            {
+                Debug.Log("You messed up buddy.");
+                Destroy(value);
+            }
+        }
+    }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     public List<ui_debugentry> entries;
     public GameObject p_entry;
 
     public Transform t_entryContainer;
+    public List<ui_monodebugentry> monoEntries;
 
     public float entrySpacing;
 
-    public void AddEntry(string title, UnityAction<string> dataSource)
+    public void AddEntry(string title, Func<string> dataSource)
     {
         AddEntry(new ui_debugentry(title, dataSource));
     }
 
     public void AddEntry(ui_debugentry entry)
     {
+        if (HasEntryWithName(entry.title)) {return;}
         entries.Add(entry);
         SpawnEntryObject(entry);
+    }
+
+    public bool HasEntryWithName(string name)
+    {
+        for (int i = 0; i < entries.Count;i ++)
+        {
+            if (entries[i].title == name)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void RemoveEntryByName(string name)
@@ -46,10 +86,16 @@ public class ui_debugmenu : MonoBehaviour
         {
             RefreshEntryList();
         }
+
+        for (int i = 0; i < entries.Count; i++)
+        {
+            monoEntries[i].UpdateData();
+        }
     }
 
     public void RefreshEntryList()
     {
+        monoEntries = new List<ui_monodebugentry>();
         ui_canvasutils.DestroyChildren(t_entryContainer.gameObject);
 
         for (int i = 0; i < entries.Count;i++)
@@ -61,13 +107,17 @@ public class ui_debugmenu : MonoBehaviour
     // assuming last in list
     public void SpawnEntryObject(ui_debugentry entry)
     {
-        SpawnEntryObject(entry, entries.Count);
+        SpawnEntryObject(entry, entries.Count - 1);
     }
     public void SpawnEntryObject(ui_debugentry entry, int indexInList)
     {
         GameObject g_newEntry = Instantiate(p_entry, t_entryContainer);
         g_newEntry.name = entry.title;
 
-        g_newEntry.transform.localPosition = -Vector3.up * entries.Count * entrySpacing;
+        g_newEntry.transform.localPosition = -Vector3.up * indexInList * entrySpacing;
+
+        ui_monodebugentry comp = g_newEntry.GetComponent<ui_monodebugentry>();
+        monoEntries.Add(comp);
+        comp.Initialize(entry.title, entry.dataSource);
     }
 }

@@ -50,6 +50,17 @@ public class WorldManager : MonoBehaviour
 
     // *********
 
+    // ************ TIME-RELATED STUFF ************
+
+    public float currentTimewarpFactor;
+
+    // ****************************
+
+    public void UpdateWorld()
+    {
+        
+    }
+
     public void StartGame(TMP_InputField input)
     {
         int parsed = -1;

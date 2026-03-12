@@ -1,18 +1,34 @@
 using UnityEngine;
 
+// ************
 // the highest script in the script heirarchy
+// ************
 
+
+
+// this is a very, very forward-thinking feature for when I decide to add dedicated servers
+// changing this will affect how the build works, avoiding all client code if set to 'ServerBuild'
 public enum ProgramBuildMode
 {
     HybridBuild,
     ServerBuild,
 }
 
+// how the game should boot
+// saves me a lot of time that would have been wasted hanging around the main menu
 public enum ProgramStartMode
 {
     FullGame,
     Sandbox,
     InstantGame,
+}
+
+// used so that very high-level scripts like the WorldManagr can only run certain logic when in-game
+// essentially the updated version of the inGame variable all the way back from Tempest
+public enum GameState
+{
+    InMenu,
+    InGame,
 }
 
 public class Program : MonoBehaviour
@@ -44,6 +60,16 @@ public class Program : MonoBehaviour
         startMode = ins_startMode;
     }
 
+    public ProgramBuildMode ins_buildMode;
+    public static ProgramBuildMode buildMode;
+    public ProgramStartMode ins_startMode;
+    public static ProgramStartMode startMode;
+    // unlike the other two, the static one is the one that scripts look for
+    // the ins_ variable is just so that I can see
+    [Header("READ ONLY")]
+    public GameState ins_gameState;
+    public static GameState gameState;
+
     // should almost be the ONLY use of the start function
     void Start()
     {
@@ -67,11 +93,6 @@ public class Program : MonoBehaviour
         } 
         else if (buildMode == ProgramBuildMode.ServerBuild) {/* not really relevant rn*/}
     }
-
-    public ProgramBuildMode ins_buildMode;
-    public static ProgramBuildMode buildMode;
-    public ProgramStartMode ins_startMode;
-    public static ProgramStartMode startMode;
 
     // forget exiting to main, just quit the damn program
     public void HardQuit()

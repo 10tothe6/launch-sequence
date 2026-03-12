@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class mcu_noisetest : MonoBehaviour
+public class test_mcunoise : MonoBehaviour
 {
     private Perlin p = new Perlin();
     public float offset;

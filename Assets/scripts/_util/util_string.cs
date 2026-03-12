@@ -1,18 +1,47 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class util_string
-{
-    public static int FindFirstOccurance(string input, char toLookFor)
+{   
+    // uses spaces ' ' as the split character, doesn't include them in the result
+    public static string[] SplitIntoWords(string raw)
     {
-        for (int i = 0; i < input.Length; i++)
+        List<string> results = new List<string>();
+
+        // could just do this with a string, I realized
+        // dont care enough to change it
+        List<char> currentWord = new List<char>();
+
+        for (int i = 0; i < raw.Length; i++)
         {
-            if (input[i] == toLookFor)
+            if (raw[i] == ' ')
             {
-                return i;
+                results.Add(CharsToString(currentWord.ToArray()));
+                currentWord = new List<char>();
+            } else
+            {
+                currentWord.Add(raw[i]);
             }
         }
 
-        return -1; // because fuck you
+        return results.ToArray();
+    }
+
+    public static string CharsToString(char[] chars)
+    {
+        string result = "";
+
+        for (int i = 0; i < chars.Length; i++)
+        {
+            result+=chars[i];
+        }
+
+        return result;
+    }
+
+    public static int FindFirstOccurance(string input, char toLookFor)
+    {
+        return FindOccurance(input, toLookFor, 0);
     }
 
     public static int FindOccurance(string input, char toLookFor, int numSkips)
@@ -32,6 +61,6 @@ public class util_string
             }
         }
 
-        return -1; // because fuck you
+        return -1;
     }
 }

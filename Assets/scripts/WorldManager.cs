@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 // the return of WorldManager.cs!
@@ -30,15 +31,98 @@ public class WorldManager : MonoBehaviour
         Instance = this;
     }
 
+    public Transform t_bodyContainer;
+    public Transform t_mapBodyContainer;
+    public GameObject p_mapBody; // maybe move all this 'map body' stuff into cb_solarsystem??
+
     // for safekeeping, basically
     public int worldSeed;
 
     public cb_solarsystem ss;
+    // simple parse check for now, may eventually make a more modular system
+
+    // **** map view ****
+    
+    public float mapScaleFactor; // from real scale to how it appears, usually very low value
+    public int mapFocusIndex; // what cb to focus on
+
+    // *********
+
+    public void StartGame(TMP_InputField input)
+    {
+        int parsed = -1;
+        if (int.TryParse(input.text, out parsed))
+        {
+            StartGame(parsed);
+        } else
+        {
+            StartGame(-1); // will generate a random seed
+        }
+    }
 
     // generates a new solar system
     public void StartGame(int worldSeed)
     {
+        // -1 means random seed
+        if (worldSeed == -1) {worldSeed = util_math.GetRandomInt();}
+
         this.worldSeed = worldSeed;
         ss.Generate(worldSeed);
+
+        UIManager.Instance.EnterMapView();
+    }
+
+    // just putting this here for now
+    public void SetupMap()
+    {
+        // for the actual game, there are 2 different lists of objects
+        // 'bodies' are the actual planet objects
+        // 'map bodies' are specifically for the map view
+
+        if (t_mapBodyContainer.childCount != ss.monoBodies.Count)
+        {
+            RegenerateMapBodies();
+        }
+
+        RefreshMap();
+    }
+
+    public void RefreshMap()
+    {
+        Vector3[] p = ss.GetBodyPositions(GetMapScaleFromFocusedBody());
+
+        for (int i = 0; i < t_mapBodyContainer.childCount; i++)
+        {
+            // subtracting the position of the center body focuses on it
+            // easier than moving the camera ig?
+            t_mapBodyContainer.GetChild(i).GetComponent<cb_mapobject>().Initialize(p[i]);
+        }
+    }
+
+    public void RegenerateMapBodies()
+    {
+        ui_canvasutils.DestroyChildren(t_mapBodyContainer.gameObject);
+
+        for (int i = 0; i < ss.monoBodies.Count; i++)
+        {
+            GameObject g_newMapBody = Instantiate(p_mapBody, t_mapBodyContainer);
+        }
+    }
+
+    // like pressing tab in ksp
+    public void CycleMapFocus()
+    {
+        mapFocusIndex++;
+        if (mapFocusIndex >= t_mapBodyContainer.childCount)
+        {
+            mapFocusIndex = 0;
+        }
+
+        RefreshMap();
+    }
+
+    public float GetMapScaleFromFocusedBody()
+    {
+        return mapFocusIndex < 2 ? mapScaleFactor : mapScaleFactor * 100f;
     }
 }

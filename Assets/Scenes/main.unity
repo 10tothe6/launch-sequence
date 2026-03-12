@@ -610,6 +610,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70995252}
   m_CullTransparentMesh: 1
+--- !u!1 &76737350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 76737351}
+  m_Layer: 5
+  m_Name: timewarp console
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &76737351
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76737350}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1610836386}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &87622858
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,7 +2346,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d51a2fa97f00d247af3d07a0bf1c60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldManager
+  t_bodyContainer: {fileID: 1663306513}
+  t_mapBodyContainer: {fileID: 872245802}
+  p_mapBody: {fileID: 8460234261487516770, guid: a745fca30ee4e6a4888bb5ebdecb9e4b, type: 3}
+  worldSeed: 0
   ss: {fileID: 1931110687}
+  mapScaleFactor: 0.01
+  mapFocusIndex: 0
 --- !u!4 &314687046
 Transform:
   m_ObjectHideFlags: 0
@@ -3886,7 +3927,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 645047622}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314687045}
+        m_TargetAssemblyTypeName: WorldManager, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1493324382}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_InputField, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &645047622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4152,6 +4205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2632e93faac34ca4f92540a3e1e54bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cam_mapview
+  viewDistance: 1
 --- !u!114 &751265229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4164,6 +4218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe44eb6d29444844a83ddcde5af0948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  ins_t_cam: {fileID: 2044790576}
+  ins_controlMode: 0
 --- !u!4 &751265230
 Transform:
   m_ObjectHideFlags: 0
@@ -5008,6 +5064,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &872245801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 872245802}
+  m_Layer: 7
+  m_Name: map bodies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &872245802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872245801}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1931110686}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &925947811
 GameObject:
   m_ObjectHideFlags: 0
@@ -7497,7 +7584,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 76737351}
   m_Father: {fileID: 1146640996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -7946,6 +8034,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1663306512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1663306513}
+  m_Layer: 0
+  m_Name: bodies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1663306513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663306512}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1931110686}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1683129428
 GameObject:
   m_ObjectHideFlags: 0
@@ -9194,7 +9313,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1663306513}
+  - {fileID: 872245802}
   m_Father: {fileID: 314687046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1931110687
@@ -9210,21 +9331,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cb_solarsystem
   temporalOffset: 0
-  terranMoonCounts: []
-  jovianMoonCounts: []
-  p_body: {fileID: 0}
-  t_bodyContainer: {fileID: 0}
+  terranMoonCounts:
+  - itemIndex: 0
+    weight: 100
+  - itemIndex: 1
+    weight: 65
+  - itemIndex: 2
+    weight: 30
+  - itemIndex: 3
+    weight: 5
+  jovianMoonCounts:
+  - itemIndex: 0
+    weight: 10
+  - itemIndex: 1
+    weight: 20
+  - itemIndex: 2
+    weight: 30
+  - itemIndex: 3
+    weight: 40
+  - itemIndex: 4
+    weight: 50
+  - itemIndex: 5
+    weight: 50
+  p_body: {fileID: 8460234261487516770, guid: b19feb79c66c92e44b20b6ea0576d233, type: 3}
+  t_bodyContainer: {fileID: 1663306513}
   monoBodies: []
-  minimumPlanetCount: 0
-  maximumPlanetCount: 0
-  minimumPlanetSpacing: 0
-  maximumPlanetSpacing: 0
-  minimumSystemRadius: 0
-  maximumSystemRadius: 0
-  minimumMoonSpacing: 0
-  maximumMoonSpacing: 0
-  minimumPlanetarySystemRadius: 0
-  maximumPlanetarySystemRadius: 0
+  minimumPlanetCount: 1
+  maximumPlanetCount: 6
+  minimumPlanetSpacing: 5000
+  maximumPlanetSpacing: 10000
+  minimumSystemRadius: 10000
+  maximumSystemRadius: 100000
+  minimumMoonSpacing: 0.1
+  maximumMoonSpacing: 0.4
+  minimumPlanetarySystemRadius: 1
+  maximumPlanetarySystemRadius: 7.5
   data:
     bodies: []
     starCount: 0
@@ -9724,7 +9865,7 @@ Transform:
   m_GameObject: {fileID: 2044790573}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -160.06793, y: 1, z: -6.3087514e+9}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10163,6 +10304,7 @@ GameObject:
   - component: {fileID: 2144568379}
   - component: {fileID: 2144568380}
   - component: {fileID: 2144568381}
+  - component: {fileID: 2144568382}
   m_Layer: 0
   m_Name: sys
   m_TagString: Untagged
@@ -10198,7 +10340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Program
   ins_buildMode: 0
-  ins_startMode: 0
+  ins_startMode: 2
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10214,6 +10356,19 @@ MonoBehaviour:
   t_canvas: {fileID: 1146640996}
   menuNames: []
   menuSiblingIndices: 
+--- !u!114 &2144568382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144568378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a114f53c6b9b643b6f774f203dcb2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Input
+  axisSpringAmount: 0.01
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

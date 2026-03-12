@@ -37,6 +37,16 @@ public class UIManager : MonoBehaviour
     public List<string> menuNames;
     public List<int> menuSiblingIndices;
 
+    // some functions, like  this one, build off of the SwitchMenu() function
+    public void EnterMapView()
+    {
+        SwitchMenu("map view");
+        WorldManager.Instance.SetupMap();
+        CameraController.SetControlMode(CameraControlMode.MapView);
+
+        Debug.Log("Entered map view.");
+    }
+
     public void LoadMenuObjects()
     {
         for (int i = 0; i < t_canvas.childCount; i++)

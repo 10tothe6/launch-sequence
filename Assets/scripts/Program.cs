@@ -62,7 +62,7 @@ public class Program : MonoBehaviour
                 
             } else if (startMode == ProgramStartMode.InstantGame)
             {
-                
+                WorldManager.Instance.StartGame(-1);
             }
         } 
         else if (buildMode == ProgramBuildMode.ServerBuild) {/* not really relevant rn*/}

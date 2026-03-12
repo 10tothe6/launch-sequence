@@ -1,5 +1,10 @@
 using UnityEngine;
 
+public enum CameraControlMode
+{
+    MapView,
+}
+
 public class CameraController : MonoBehaviour
 {
     private static CameraController _instance;
@@ -24,5 +29,24 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         Instance = this;
+
+        t_cam = ins_t_cam;
+    }
+
+    public Transform ins_t_cam;
+    public static Transform t_cam;
+
+    public ushort ins_controlMode;
+    public static ushort controlMode;
+
+
+    public static void SetControlMode(CameraControlMode newMode)
+    {
+        SetControlMode((ushort)newMode);
+    }
+    public static void SetControlMode(ushort newMode)
+    {
+        controlMode = newMode;
+        Instance.ins_controlMode = controlMode;
     }
 }

@@ -139,9 +139,14 @@ public class cb_solarsystem : MonoBehaviour
         return velocities;
     }
 
+    public void Generate() {Generate(0);}
+
     // makes more sense to throw this function inside the class itself... i think
-    public void Generate()
-    {
+    public void Generate(int worldSeed)
+    {   
+        // TODO: make the world seed actually work
+
+
         // getting rid of any existing body objects
         ui_canvasutils.DestroyChildren(t_bodyContainer.gameObject);
         monoBodies = new List<cb_trackedbody>();

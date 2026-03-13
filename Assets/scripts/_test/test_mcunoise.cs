@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class test_mcunoise : MonoBehaviour
 {
     private Perlin p = new Perlin();
@@ -44,6 +45,6 @@ public class test_mcunoise : MonoBehaviour
             }
         }
 
-        GetComponent<mcu_drawmesh>().Initialize(noiseGrid, size,size,size);
+        GetComponent<mcu_drawmesh>().Initialize(noiseGrid, size,size,size,size,size,size);
     }
 }

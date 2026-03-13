@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditorInternal;
-using Unity.VisualScripting;
 
-// literally just takes in a 3D array of points and draws a mesh using marching cubes
-// nothing else, yet
+// ************  INFO ON THIS CLASS: ************
+
+// just takes in a 3D array of points and draws a mesh using marching cubes
+// does NOT calculate the points, that information is given to it
+
+// the mesh is ALWAYS generated relative to the bottom-left corner of the object,
+// extending in the +x,+y and +z directions
+
 public class mcu_drawmesh : MonoBehaviour
 {
     [Header("Config")]
@@ -12,11 +16,22 @@ public class mcu_drawmesh : MonoBehaviour
     public bool showGridLines;
 
     public MeshFilter mf;
-    
+
+    // these are more like resolutions
     public int xSize;
     public int ySize;
     public int zSize;
     public float[,,] points;
+
+    // these are the actual sizes
+    public float xSizeActual;
+    public float ySizeActual;
+    public float zSizeActual;
+    public float xScaleFactor;
+
+    public float yScaleFactor;
+
+    public float zScaleFactor;
 
     // THESE INDICES ARE ALL ONE GREATER THAN THE ACTUAL INDEX
     // the first index is the beginning point,
@@ -31,25 +46,33 @@ public class mcu_drawmesh : MonoBehaviour
     void Awake()
     {
         mf = GetComponent<MeshFilter>();
-
-        // float[] test = new float[] {0,0,0,0,0,0,0,0};
-        // Debug.Log(GetConfigIndex(test));
     }
 
-    public void Initialize(float[,,] points, int xSize, int ySize, int zSize)
+    public void Initialize(float[,,] points, 
+    int xSize, int ySize, int zSize, 
+    float xSizeActual, float ySizeActual, float zSizeActual)
     {
         this.xSize = xSize;
         this.ySize = ySize;
         this.zSize = zSize;
         this.points = points;
 
+        this.xSizeActual = xSizeActual;
+        this.ySizeActual = ySizeActual;
+        this.zSizeActual = zSizeActual;
+
+        xScaleFactor = xSizeActual / ((float)xSize-1);
+        yScaleFactor = ySizeActual / ((float)ySize-1);
+        zScaleFactor = zSizeActual / ((float)zSize-1);
+
         DrawMesh();
     }
     
     // just making all the points 0
-    public void InitializeEmpty(int xSize, int ySize, int zSize)
+    public void InitializeEmpty(int xSize, int ySize, int zSize,
+    float xSizeActual, float ySizeActual, float zSizeActual)
     {
-        Initialize(new float[xSize,ySize,zSize], xSize, ySize, zSize);
+        Initialize(new float[xSize,ySize,zSize], xSize, ySize, zSize, xSizeActual,ySizeActual,zSizeActual);
     }
 
     void OnDrawGizmos()
@@ -67,44 +90,44 @@ public class mcu_drawmesh : MonoBehaviour
     // draws the lines between each point in the 3D grid, aka. the bounds for each cell
     public void DrawCellLines()
     {
-        for (int x = 0; x < xSize - 1; x++)
-        {
-            for (int y = 0; y < ySize - 1; y++)
-            {
-                for (int z = 0; z < zSize - 1; z++)
-                {
-                    float s = 1;
+        // for (int x = 0; x < xSize - 1; x++)
+        // {
+        //     for (int y = 0; y < ySize - 1; y++)
+        //     {
+        //         for (int z = 0; z < zSize - 1; z++)
+        //         {
+        //             float s = 1;
 
-                    // really hoping these lines are right
+        //             // really hoping these lines are right
 
-                    // 0 --> 1
-                    Gizmos.DrawLine(new Vector3(x,y,z),new Vector3(x+s,y,z));
-                    // 0 --> 3
-                    Gizmos.DrawLine(new Vector3(x,y,z),new Vector3(x,y+s,z));
-                    // 0 --> 4
-                    Gizmos.DrawLine(new Vector3(x,y,z),new Vector3(x,y,z+s));
-                    // 1 --> 2
-                    Gizmos.DrawLine(new Vector3(x+s,y,z),new Vector3(x+s,y+s,z));
-                    // 1 --> 5
-                    Gizmos.DrawLine(new Vector3(x+s,y,z),new Vector3(x+s,y,z+s));
-                    // 2 --> 3
-                    Gizmos.DrawLine(new Vector3(x,y+s,z),new Vector3(x+s,y+s,z));
-                    // 3 --> 7
-                    Gizmos.DrawLine(new Vector3(x,y+s,z),new Vector3(x,y+s,z+s));
-                    // 2 --> 6
-                    Gizmos.DrawLine(new Vector3(x+s,y+s,z),new Vector3(x+s,y+s,z+s));
+        //             // 0 --> 1
+        //             Gizmos.DrawLine(new Vector3(x,y,z)*xScaleFactor,new Vector3(x+s,y,z)*xScaleFactor);
+        //             // 0 --> 3
+        //             Gizmos.DrawLine(new Vector3(x,y,z)*xScaleFactor,new Vector3(x,y+s,z)*xScaleFactor);
+        //             // 0 --> 4
+        //             Gizmos.DrawLine(new Vector3(x,y,z)*xScaleFactor,new Vector3(x,y,z+s)*xScaleFactor);
+        //             // 1 --> 2
+        //             Gizmos.DrawLine(new Vector3(x+s,y,z)*xScaleFactor,new Vector3(x+s,y+s,z)*xScaleFactor);
+        //             // 1 --> 5
+        //             Gizmos.DrawLine(new Vector3(x+s,y,z)*xScaleFactor,new Vector3(x+s,y,z+s)*xScaleFactor);
+        //             // 2 --> 3
+        //             Gizmos.DrawLine(new Vector3(x,y+s,z)*xScaleFactor,new Vector3(x+s,y+s,z)*xScaleFactor);
+        //             // 3 --> 7
+        //             Gizmos.DrawLine(new Vector3(x,y+s,z)*xScaleFactor,new Vector3(x,y+s,z+s)*xScaleFactor);
+        //             // 2 --> 6
+        //             Gizmos.DrawLine(new Vector3(x+s,y+s,z)*xScaleFactor,new Vector3(x+s,y+s,z+s)*xScaleFactor);
                     
-                    // 4 --> 5
-                    Gizmos.DrawLine(new Vector3(x,y,z+s),new Vector3(x+s,y,z+s));
-                    // 4 --> 7
-                    Gizmos.DrawLine(new Vector3(x,y,z+s),new Vector3(x,y+s,z+s));
-                    // 5 --> 6
-                    Gizmos.DrawLine(new Vector3(x+s,y,z+s),new Vector3(x+s,y+s,z+s));
-                    // 6 --> 7
-                    Gizmos.DrawLine(new Vector3(x+s,y+s,z+s),new Vector3(x,y+s,z+s));
-                }
-            }
-        }
+        //             // 4 --> 5
+        //             Gizmos.DrawLine(new Vector3(x,y,z+s)*xScaleFactor,new Vector3(x+s,y,z+s)*xScaleFactor);
+        //             // 4 --> 7
+        //             Gizmos.DrawLine(new Vector3(x,y,z+s)*xScaleFactor,new Vector3(x,y+s,z+s)*xScaleFactor);
+        //             // 5 --> 6
+        //             Gizmos.DrawLine(new Vector3(x+s,y,z+s)*xScaleFactor,new Vector3(x+s,y+s,z+s)*xScaleFactor);
+        //             // 6 --> 7
+        //             Gizmos.DrawLine(new Vector3(x+s,y+s,z+s)*xScaleFactor,new Vector3(x,y+s,z+s)*xScaleFactor);
+        //         }
+        //     }
+        // }
     }
 
     // draws the 3D grid of points that represents the area taken up by this component
@@ -119,7 +142,7 @@ public class mcu_drawmesh : MonoBehaviour
                 for (int z = 0; z < zSize; z++)
                 {
                     // TODO: offset this properly
-                    Gizmos.DrawSphere(new Vector3(x,y,z), rad);
+                    Gizmos.DrawSphere(transform.position + new Vector3(x,y,z)*xScaleFactor, rad);
                 }
             }
         }
@@ -127,6 +150,7 @@ public class mcu_drawmesh : MonoBehaviour
 
     public void DrawMesh()
     {
+
         Mesh result = new Mesh();
 
         tris = new List<int>();
@@ -158,14 +182,14 @@ public class mcu_drawmesh : MonoBehaviour
 
                     Vector3[] cellVertices = new Vector3[]
                     {
-                        new Vector3(x,y,z),
-                        new Vector3(x+1,y,z),
-                        new Vector3(x+1,y+1,z),
-                        new Vector3(x,y+1,z),
-                        new Vector3(x,y,z+1),
-                        new Vector3(x+1,y,z+1),
-                        new Vector3(x+1,y+1,z+1),
-                        new Vector3(x,y+1,z+1),
+                        new Vector3(x,y,z)*xScaleFactor,
+                        new Vector3(x+1,y,z)*xScaleFactor,
+                        new Vector3(x+1,y+1,z)*xScaleFactor,
+                        new Vector3(x,y+1,z)*xScaleFactor,
+                        new Vector3(x,y,z+1)*xScaleFactor,
+                        new Vector3(x+1,y,z+1)*xScaleFactor,
+                        new Vector3(x+1,y+1,z+1)*xScaleFactor,
+                        new Vector3(x,y+1,z+1)*xScaleFactor,
                     };
 
                     int configurationIndex = GetConfigIndex(cellValues);
@@ -226,7 +250,7 @@ public class mcu_drawmesh : MonoBehaviour
 
         Vector3 vi = GetPositionFromPointIndex(initial);
         Vector3 vf = GetPositionFromPointIndex(final);
-        verts.Add(Vector3.Lerp(vi,vf, GetZero(points[Mathf.RoundToInt(vi.x),Mathf.RoundToInt(vi.y),Mathf.RoundToInt(vi.z)],points[Mathf.RoundToInt(vf.x),Mathf.RoundToInt(vf.y),Mathf.RoundToInt(vf.z)])));
+        verts.Add(Vector3.Lerp(vi,vf, GetZero(points[Mathf.RoundToInt(vi.x),Mathf.RoundToInt(vi.y),Mathf.RoundToInt(vi.z)],points[Mathf.RoundToInt(vf.x),Mathf.RoundToInt(vf.y),Mathf.RoundToInt(vf.z)]))*xScaleFactor);
     }
 
     public Vector3 GetPositionFromPointIndex(int pointIndex)
@@ -239,7 +263,7 @@ public class mcu_drawmesh : MonoBehaviour
 
     public int GetPointIndexFromPosition(Vector3 pos)
     {
-        return Mathf.RoundToInt(pos.x) + Mathf.RoundToInt(pos.y) * xSize + Mathf.RoundToInt(pos.z) * xSize * ySize;
+        return Mathf.RoundToInt(pos.x/xScaleFactor) + Mathf.RoundToInt(pos.y/xScaleFactor) * xSize + Mathf.RoundToInt(pos.z/xScaleFactor) * xSize * ySize;
     }
 
     public int GetConfigIndex(float[] cellValues)

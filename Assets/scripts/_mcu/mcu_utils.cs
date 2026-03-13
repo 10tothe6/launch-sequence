@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 
 public class mcu_utils
-{ 
+{   
+    // how many vertices per side of a chunk
+    public static int chunkResolution = 3;
+
     // conventions for all below: https://paulbourke.net/geometry/polygonise/polygonise1.gif
 
     //       z
@@ -24,6 +27,15 @@ public class mcu_utils
     //         | /             | /           | /             | /           | /             | /
     //         |/              |/            |E3             |E1           |/              |/
     //         +--------E2-----+             +---------------+             +---------------+
+
+    //       z
+    //       |
+    //       |
+    //       |
+    //       o-------> x
+    //      /
+    //     /
+    //   y
 
     // vertices
     //            4---------------5 

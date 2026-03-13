@@ -58,6 +58,15 @@ public class cbt_config
     public Vector3 waveLengths;
     // ********************************
 
+    public void ApplyDefaultAtmosphericComposition()
+    {
+        for (int i = 0; i < defaultAtmosphereGasAmounts.Count; i++)
+        {
+            currentAtmosphereGasAmounts.Add(defaultAtmosphereGasAmounts[i]);
+            currentAtmosphereGasTypes.Add(defaultAtmosphereGasTypes[i]);
+        }
+    }
+
     public float GetGasPercent(int type)
     {
         for (int i = 0; i < currentAtmosphereGasTypes.Count; i++)
@@ -94,6 +103,20 @@ public class cbt_config
         }
 
         RecalculateTotalAtmosphereSize();
+    }
+
+    // computing the volume the atmosphere takes up,
+    // assuming two perfect spheres (surface radius and atmosphere radius)
+    // (4/3) * pi * r^3
+
+    // TODO: make this depend on the gravity of the planet, 
+    // because in theory the gas is at a higher pressure
+    public float IdealTotalAtmosphereSize()
+    {
+        float surfaceVolume = Mathf.Pow(equitorialRadius,3) * Mathf.PI * 4f / 3f;
+        float atmosphereVolume = Mathf.Pow(atmosphericRadius,3) * Mathf.PI * 4f / 3f;
+
+        return atmosphereVolume - surfaceVolume;
     }
 
     public void RecalculateTotalAtmosphereSize()

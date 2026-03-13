@@ -8,7 +8,9 @@ public class cb_trackedbodydata
     
     public float mass;
 
+    // quick-and-easy checks
     public bool hasSurface;
+    public bool hasAtmosphere;
 
     public Color mapViewColor;
     public int iconIndex;

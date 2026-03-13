@@ -29,6 +29,145 @@ public class cb_trackedbody : MonoBehaviour
         FillDataBasedOnBodyType(bodyType);
     }
 
+    // handles: 
+    // * min and max cloud radius
+    // * default gas types and amounts
+    
+    // there are some rules for what resources appear in planet atmospheres:
+    // terran planets have a CHANCE for an exotic gas, but NEVER MORE THAN ONE
+    // jovian plantes ALWAYS HAVE 2 EXOTIC GASSES, chance to have 3 or 4
+    //      this is because collecting gas from a jovian planet's atmosphere and bringing it back is incredibly hard
+    // moons, of course, have no atmosphere
+    public void BuildAtmosphereBasedOnBodyType(ushort type)
+    {
+        int exoticGasCount = 0;
+        int totalGasCount = 0;
+
+        if (type == (ushort)cb_bodytype.Jovian)
+        {
+            totalGasCount = Random.Range(
+                cb_solarsystem.Instance.minimumJovianGasCount,
+                cb_solarsystem.Instance.maximumJovianGasCount
+            );
+
+            exoticGasCount = 2;
+            
+            if (util_math.DiceRoll(cb_solarsystem.Instance.jovianThirdExoticGasChance))
+            {
+                exoticGasCount = 3;
+            }
+            if (util_math.DiceRoll(cb_solarsystem.Instance.jovianFourthExoticGasChance))
+            {
+                exoticGasCount = 4;
+            }
+            if (util_math.DiceRoll(cb_solarsystem.Instance.jovianFifthExoticGasChance))
+            {
+                exoticGasCount = 5;
+            }
+        } 
+        else if (type == (ushort)cb_bodytype.Terran)
+        {
+            totalGasCount = Random.Range(
+                cb_solarsystem.Instance.minimumTerranGasCount,
+                cb_solarsystem.Instance.maximumTerranGasCount
+            );
+
+            exoticGasCount = 0;
+
+            if (util_math.DiceRoll(cb_solarsystem.Instance.terranExoticGasChance))
+            {
+                exoticGasCount = 1;
+            }
+        }
+
+        // here is the part where we actually create the exotic gasses
+        for (int i = 0; i < exoticGasCount; i++)
+        {
+            // the thing about exotic gases is that they are not programmed by me
+            // so we actually have to make up one right here on the spot
+
+            // exotic gases, to keep things interesting, are only found on a single body
+            // they are never re-used over multiple bodies
+
+            data.tConfig.defaultAtmosphereGasTypes.Add(WorldData.Instance.CreateExoticGas());
+
+        }
+
+        // with the exotic gases out of the way, we now do the 'normal' gases
+        // like (nitrogen, oxygen, whatever)
+
+        for (int i = 0; i < totalGasCount - exoticGasCount; i++)
+        {
+            
+        }
+    }
+
+    public void FillDataBasedOnBodyType(ushort type)
+    {
+        data.bodyType = type;
+        data.hasSurface = !(type == (ushort)cb_bodytype.Jovian);
+
+        // sizes are based on ranges for each planet type
+        if (type == (ushort)cb_bodytype.Terran)
+        {
+            data.tConfig.equitorialRadius = Random.Range(
+                cb_solarsystem.Instance.minimumTerranSurfaceRadius,
+                cb_solarsystem.Instance.maximumTerranSurfaceRadius
+            );
+
+            data.hasAtmosphere = util_math.DiceRoll(cb_solarsystem.Instance.chanceForTerrainAtmosphere);
+
+            if (data.hasAtmosphere)
+            {
+                data.tConfig.atmosphericRadius = Random.Range(
+                    cb_solarsystem.Instance.minimumTerranAtmosphereRadius,
+                    cb_solarsystem.Instance.maximumTerranAtmosphereRadius
+                );
+
+                BuildAtmosphereBasedOnBodyType(type);
+            } else
+            {
+                data.tConfig.atmosphericRadius = -1;
+            }
+        } 
+        else if (type == (ushort)cb_bodytype.Jovian)
+        {
+            data.tConfig.equitorialRadius = Random.Range(
+                cb_solarsystem.Instance.minimumJovianSurfaceRadius,
+                cb_solarsystem.Instance.maximumJovianSurfaceRadius
+            );
+
+            data.hasAtmosphere = true; // if you think about it, the planet is ONLY atmosphere
+
+            data.tConfig.atmosphericRadius = Random.Range(
+                cb_solarsystem.Instance.minimumJovianAtmosphereRadius,
+                cb_solarsystem.Instance.maximumJovianAtmosphereRadius
+            );
+
+            BuildAtmosphereBasedOnBodyType(type);
+        } 
+        else if (type == (ushort)cb_bodytype.TerranMoon)
+        {
+            data.tConfig.equitorialRadius = Random.Range(
+                cb_solarsystem.Instance.minimumTerranLunarSurfaceRadius,
+                cb_solarsystem.Instance.maximumTerranLunarSurfaceRadius
+            );
+
+            data.hasAtmosphere = false;
+            data.tConfig.atmosphericRadius = -1;
+        } 
+        else if (type == (ushort)cb_bodytype.JovianMoon)
+        {
+            data.tConfig.equitorialRadius = Random.Range(
+                cb_solarsystem.Instance.minimumJovianLunarSurfaceRadius,
+                cb_solarsystem.Instance.maximumJovianLunarSurfaceRadius
+            );
+
+            data.hasAtmosphere = false;
+            data.tConfig.atmosphericRadius = -1;
+        }
+    }
+
     // coming up with all the orbital params from the one base radius
     // this is actually all the data we need
     public void GenerateOrbit(float baseRadius)
@@ -83,11 +222,5 @@ public class cb_trackedbody : MonoBehaviour
 
         data.pConfig.pose.localPosition = new DoubleVector3(data.pConfig.iPosition);
         data.pConfig.pose.velocity = new DoubleVector3(data.pConfig.iVelocity);
-    }
-
-    public void FillDataBasedOnBodyType(ushort type)
-    {
-        data.bodyType = type;
-        data.hasSurface = !(type == (ushort)cb_bodytype.Jovian);
     }
 }

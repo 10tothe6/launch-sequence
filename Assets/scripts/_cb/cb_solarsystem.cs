@@ -56,6 +56,8 @@ public class cb_solarsystem : MonoBehaviour
     // proper constants
     public static float gravConstant = 0.1f;
 
+    [Header("System Configs")]
+
     // constants-ish
     // these I can change quickly as a dev,
     // might move them into some other sort of class later if this script balloons too much
@@ -84,8 +86,52 @@ public class cb_solarsystem : MonoBehaviour
     public float minimumPlanetarySystemRadius;
     public float maximumPlanetarySystemRadius;
 
-    // ****************************************
+    // ****************************************'
 
+    [Header("Basic Body Configs")]
+
+    // terran
+    public float minimumTerranSurfaceRadius;
+    public float maximumTerranSurfaceRadius;
+
+    public float chanceForTerrainAtmosphere;
+    public float minimumTerranAtmosphereRadius;
+    public float maximumTerranAtmosphereRadius;
+
+    // jovian
+    public float minimumJovianSurfaceRadius; // no "surface" but you get the idea
+    public float maximumJovianSurfaceRadius;
+
+    public float minimumJovianAtmosphereRadius;
+    public float maximumJovianAtmosphereRadius;
+
+    // terran lunar (these can't have atmospheres, ever)
+    public float minimumTerranLunarSurfaceRadius;
+    public float maximumTerranLunarSurfaceRadius;
+
+    // jovian lunar (these can't have atmospheres, either, for now)
+    public float minimumJovianLunarSurfaceRadius;
+    public float maximumJovianLunarSurfaceRadius;
+
+    [Header("Body Atmosphere Configs")]
+
+    // how many TYPES of gasses can appear in each atmosphere
+    public int minimumTerranGasCount;
+    public int maximumTerranGasCount;
+
+    public int minimumJovianGasCount;
+    public int maximumJovianGasCount;
+
+
+    public float terranExoticGasChance;
+
+
+    public float jovianThirdExoticGasChance;
+    public float jovianFourthExoticGasChance;
+    public float jovianFifthExoticGasChance;
+    // six is impossible
+
+    [Header("ACTUAL DATA")]
     public cb_solarsystemdata data;
 
     public void LoadFromData(cb_solarsystemdata data)

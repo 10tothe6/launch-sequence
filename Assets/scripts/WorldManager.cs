@@ -83,6 +83,8 @@ public class WorldManager : MonoBehaviour
         ss.Generate(worldSeed);
 
         UIManager.Instance.EnterMapView();
+
+        Program.gameState = GameState.InGame;
     }
 
     // just putting this here for now

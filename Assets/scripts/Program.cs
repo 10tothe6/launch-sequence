@@ -94,6 +94,14 @@ public class Program : MonoBehaviour
         else if (buildMode == ProgramBuildMode.ServerBuild) {/* not really relevant rn*/}
     }
 
+    void Update()
+    {
+        if (gameState == GameState.InGame)
+        {
+            UIManager.Instance.InGameUpdate();
+        }
+    }
+
     // forget exiting to main, just quit the damn program
     public void HardQuit()
     {

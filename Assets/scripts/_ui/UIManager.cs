@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // 2nd in command, basically, after Program.cs
 
@@ -34,8 +35,25 @@ public class UIManager : MonoBehaviour
 
     public Transform t_canvas;
 
+    public GameObject g_console;
+
     public List<string> menuNames;
     public List<int> menuSiblingIndices;
+
+
+    // not just 'update', because i only want to run this sometimes
+    public void InGameUpdate()
+    {
+        if (Keyboard.current.backquoteKey.wasPressedThisFrame)
+        {
+            ToggleConsole();
+        }
+    }
+
+    public void ToggleConsole()
+    {
+        g_console.SetActive(!g_console.activeSelf);
+    }
 
     // some functions, like  this one, build off of the SwitchMenu() function
     public void EnterMapView()

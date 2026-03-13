@@ -22,6 +22,12 @@ public class util_string
             {
                 currentWord.Add(raw[i]);
             }
+
+            if (i == raw.Length - 1)
+            {
+                results.Add(CharsToString(currentWord.ToArray()));
+                currentWord = new List<char>();
+            }
         }
 
         return results.ToArray();

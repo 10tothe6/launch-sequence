@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -30,4 +31,24 @@ public class ui_console : MonoBehaviour
     }
 
     public TMP_InputField consoleInput;
+    
+    public GameObject p_msg;
+    public Transform t_messageContainer;
+
+    // for now, just a simple spacing system will do
+    public float messageSpacing;
+
+    public void PostMessage(string msg)
+    {
+        // first, move all existing messages up
+        for (int i = 0; i < t_messageContainer.childCount; i++)
+        {
+            t_messageContainer.GetChild(i).position += Vector3.up * messageSpacing;
+        }
+
+        ui_consolemsg newMsg = Instantiate(p_msg, t_messageContainer).GetComponent<ui_consolemsg>();
+        newMsg.transform.localPosition = Vector3.zero;
+
+        newMsg.SetData(msg);
+    }
 }

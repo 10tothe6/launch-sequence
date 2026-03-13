@@ -38,6 +38,8 @@ public class cmd_consolecommand
 
 public class cmd_console : MonoBehaviour
 {
+    public ui_console menu;
+
     public static cmd_consolecommand[] possibleCommands = new cmd_consolecommand[]
     {
         new cmd_consolecommand(new string[]{"teleport","tp"}), // instantly move the player to a coordinate
@@ -57,6 +59,8 @@ public class cmd_console : MonoBehaviour
 
     public void ProcessMessage(string text)
     {
+        Debug.Log("Processing console message...");
+        
         string[] items = util_string.SplitIntoWords(text);
 
         // the command type is the first word, hence items[0]
@@ -89,6 +93,9 @@ public class cmd_console : MonoBehaviour
         else if (possibleCommands[5].IsValid(items[0])) // ban
         {
             
+        } else
+        {
+            PostToConsole(items[0]);
         }
     }
 
@@ -117,6 +124,6 @@ public class cmd_console : MonoBehaviour
 
     public void PostToConsole(string msg)
     {
-        
+        menu.PostMessage(msg);
     }
 }

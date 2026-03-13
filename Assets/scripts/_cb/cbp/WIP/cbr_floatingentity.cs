@@ -3,14 +3,14 @@ using UnityEngine;
 // Data class for any object being rendered with floating origin + scale
 // the player, planets, ships
 [System.Serializable]
-public class cbr_floatingentity {
+public class cbp_floatingentity {
     public Transform reference;
     public DoubleVector3 position;
     public DoubleVector3 rotation;
     public DoubleVector3 velocity;
     public float defaultScale; // the scale the object should be at
 
-    public cbr_floatingentity(Transform _ref) {
+    public cbp_floatingentity(Transform _ref) {
         reference = _ref;
         position = new DoubleVector3(_ref.position);
         rotation = new DoubleVector3(_ref.eulerAngles);
@@ -18,7 +18,7 @@ public class cbr_floatingentity {
         Refresh();
     }
 
-    public cbr_floatingentity(Transform _ref, DoubleVector3 _pos, DoubleVector3 _rot) {
+    public cbp_floatingentity(Transform _ref, DoubleVector3 _pos, DoubleVector3 _rot) {
         reference = _ref;
         position = _pos;
         rotation = _rot;
@@ -26,7 +26,7 @@ public class cbr_floatingentity {
         Refresh();
     }
 
-    public cbr_floatingentity(Transform _ref, DoubleVector3 _pos, float _scl) {
+    public cbp_floatingentity(Transform _ref, DoubleVector3 _pos, float _scl) {
         reference = _ref;
         position = _pos;
         rotation = new DoubleVector3( _ref.eulerAngles);
@@ -57,28 +57,28 @@ public class cbr_floatingentity {
 
         // }
         
-        if (RenderingManager.Instance.entityInControl.reference != null) {
-            reference.position = position.Add(RenderingManager.Instance.worldOffset).ToVector3();
-            DoubleVector3 camPosition = RenderingManager.Instance.entityInControl.position.Add(RenderingManager.Instance.GetCameraOffset());
+        if (cbp_renderingmanager.Instance.entityInControl.reference != null) {
+            reference.position = position.Add(cbp_renderingmanager.Instance.worldOffset).ToVector3();
+            DoubleVector3 camPosition = cbp_renderingmanager.Instance.entityInControl.position.Add(cbp_renderingmanager.Instance.GetCameraOffset());
 
-            if ((camPosition.Sub(position)).Mag() > RenderingManager.Instance.renderRadius + 1)
+            if ((camPosition.Sub(position)).Mag() > cbp_renderingmanager.Instance.renderRadius + 1)
             {
                 if ((camPosition.Sub(position)).Mag() < 1100f)
                 {
                     // inflate
                     reference.localScale = Vector3.one * defaultScale;
-                    reference.position = (position.Sub(camPosition)).Add(RenderingManager.Instance.entityInControl.reference.position + RenderingManager.Instance.GetCameraOffset()).ToVector3();
+                    reference.position = (position.Sub(camPosition)).Add(cbp_renderingmanager.Instance.entityInControl.reference.position + cbp_renderingmanager.Instance.GetCameraOffset()).ToVector3();
                 }
                 else
                 { // far from planet
-                    reference.localScale = Vector3.one * defaultScale * (RenderingManager.Instance.renderRadius / (float)(camPosition.Sub(position)).Mag());
-                    reference.position = (position.Sub(camPosition)).Norm().Mul(RenderingManager.Instance.renderRadius).Add(RenderingManager.Instance.entityInControl.reference.position + RenderingManager.Instance.GetCameraOffset()).ToVector3();
+                    reference.localScale = Vector3.one * defaultScale * (cbp_renderingmanager.Instance.renderRadius / (float)(camPosition.Sub(position)).Mag());
+                    reference.position = (position.Sub(camPosition)).Norm().Mul(cbp_renderingmanager.Instance.renderRadius).Add(cbp_renderingmanager.Instance.entityInControl.reference.position + cbp_renderingmanager.Instance.GetCameraOffset()).ToVector3();
                 }
             }
             else
             {
                 reference.localScale = Vector3.one * defaultScale;
-                reference.position = (position.Sub(camPosition)).Add(RenderingManager.Instance.entityInControl.reference.position + RenderingManager.Instance.GetCameraOffset()).ToVector3();
+                reference.position = (position.Sub(camPosition)).Add(cbp_renderingmanager.Instance.entityInControl.reference.position + cbp_renderingmanager.Instance.GetCameraOffset()).ToVector3();
             }
         }
 

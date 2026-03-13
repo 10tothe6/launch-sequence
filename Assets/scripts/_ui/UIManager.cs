@@ -65,6 +65,12 @@ public class UIManager : MonoBehaviour
         Debug.Log("Entered map view.");
     }
 
+    public void ExitMapView()
+    {
+        CameraController.SetControlMode(CameraController.previousControlMode); // easy way to toggle back to whatever
+        Debug.Log("Map view off.");
+    }
+
     public void LoadMenuObjects()
     {
         for (int i = 0; i < t_canvas.childCount; i++)

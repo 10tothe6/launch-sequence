@@ -3,6 +3,9 @@ using UnityEngine;
 public enum CameraControlMode
 {
     MapView,
+    PlayerFirstPerson,
+    ShipFirstPerson,
+    ShipThirdPerson,
 }
 
 public class CameraController : MonoBehaviour
@@ -39,6 +42,15 @@ public class CameraController : MonoBehaviour
     public ushort ins_controlMode;
     public static ushort controlMode;
 
+    public static ushort previousControlMode;
+
+    public Vector3 positionRelativeToControlEntity;
+
+    public Vector3 PositionRelativeToControlEntity()
+    {
+        return positionRelativeToControlEntity;
+    }
+
 
     public static void SetControlMode(CameraControlMode newMode)
     {
@@ -46,6 +58,7 @@ public class CameraController : MonoBehaviour
     }
     public static void SetControlMode(ushort newMode)
     {
+        previousControlMode = controlMode;
         controlMode = newMode;
         Instance.ins_controlMode = controlMode;
     }

@@ -57,28 +57,28 @@ public class cbp_floatingentity {
 
         // }
         
-        if (cbp_renderingmanager.Instance.entityInControl.reference != null) {
-            reference.position = position.Add(cbp_renderingmanager.Instance.worldOffset).ToVector3();
-            DoubleVector3 camPosition = cbp_renderingmanager.Instance.entityInControl.position.Add(cbp_renderingmanager.Instance.GetCameraOffset());
+        if (cb_renderingmanager.Instance.entityInControl.reference != null) {
+            reference.position = position.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
+            DoubleVector3 camPosition = cb_renderingmanager.Instance.entityInControl.position.Add(CameraController.Instance.PositionRelativeToControlEntity());
 
-            if ((camPosition.Sub(position)).Mag() > cbp_renderingmanager.Instance.renderRadius + 1)
+            if ((camPosition.Sub(position)).Mag() > cb_renderingmanager.Instance.renderRadius + 1)
             {
                 if ((camPosition.Sub(position)).Mag() < 1100f)
                 {
                     // inflate
                     reference.localScale = Vector3.one * defaultScale;
-                    reference.position = (position.Sub(camPosition)).Add(cbp_renderingmanager.Instance.entityInControl.reference.position + cbp_renderingmanager.Instance.GetCameraOffset()).ToVector3();
+                    reference.position = (position.Sub(camPosition)).Add(cb_renderingmanager.Instance.entityInControl.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
                 }
                 else
                 { // far from planet
-                    reference.localScale = Vector3.one * defaultScale * (cbp_renderingmanager.Instance.renderRadius / (float)(camPosition.Sub(position)).Mag());
-                    reference.position = (position.Sub(camPosition)).Norm().Mul(cbp_renderingmanager.Instance.renderRadius).Add(cbp_renderingmanager.Instance.entityInControl.reference.position + cbp_renderingmanager.Instance.GetCameraOffset()).ToVector3();
+                    reference.localScale = Vector3.one * defaultScale * (cb_renderingmanager.Instance.renderRadius / (float)(camPosition.Sub(position)).Mag());
+                    reference.position = (position.Sub(camPosition)).Norm().Mul(cb_renderingmanager.Instance.renderRadius).Add(cb_renderingmanager.Instance.entityInControl.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
                 }
             }
             else
             {
                 reference.localScale = Vector3.one * defaultScale;
-                reference.position = (position.Sub(camPosition)).Add(cbp_renderingmanager.Instance.entityInControl.reference.position + cbp_renderingmanager.Instance.GetCameraOffset()).ToVector3();
+                reference.position = (position.Sub(camPosition)).Add(cb_renderingmanager.Instance.entityInControl.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
             }
         }
 

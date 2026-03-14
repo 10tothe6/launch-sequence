@@ -5,17 +5,20 @@ using UnityEngine;
 public class ui_monodebugentry : MonoBehaviour
 {
     public TextMeshProUGUI tx;
-    public string title;
-    public Func<string> data;
+    public ui_debugentry data;
 
-    public void Initialize(string title, Func<string> data)
+    public void Initialize(ui_debugentry data)
     {
-        this.title = title;
         this.data = data;
     }
 
     public void UpdateData()
     {
-        tx.text = title + ":  " + data.Invoke();
+        if (ui_debugmenu.Instance.IsTabActive(data.tab))
+        {
+            tx.gameObject.SetActive(true);
+        } else {tx.gameObject.SetActive(false);}
+        
+        tx.text = data.title + ":  " + data.dataSource.Invoke();
     }
 }

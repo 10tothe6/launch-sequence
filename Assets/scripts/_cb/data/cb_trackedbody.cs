@@ -4,6 +4,7 @@ using UnityEngine;
 public class cb_trackedbody : MonoBehaviour
 {
     public cb_trackedbodydata data;
+    public Transform t_model;
     public float epsilon;
 
     public void Initialize(string name, int parentIndex, ushort bodyType,float baseRadius)
@@ -11,22 +12,26 @@ public class cb_trackedbody : MonoBehaviour
         gameObject.name = name;
 
         data = new cb_trackedbodydata();
-        
+        // basic data
         if (bodyType == (ushort)cb_bodytype.Stellar || bodyType == (ushort)cb_bodytype.Null)
         {
             data.mass = 1000000f;
-        } else
-        {
-            data.mass = 10f;
-        }
+        } else {data.mass = 10f;}
         data.pConfig.isGrandparent = data.bodyType == (ushort)cb_bodytype.Null;
         data.pConfig.parentIndex = parentIndex;
         data.pConfig.selfIndex = cb_solarsystem.Instance.monoBodies.Count - 1;
         data.name = name;
 
         GenerateOrbit(baseRadius);
-
         FillDataBasedOnBodyType(bodyType);
+        // this generates the actual object mesh
+        GenerateModel();
+    }
+
+    // the physical mesh that the body will use
+    public void GenerateModel()
+    {
+        
     }
 
     // handles: 

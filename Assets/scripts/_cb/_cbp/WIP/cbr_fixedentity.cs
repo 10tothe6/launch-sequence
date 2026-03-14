@@ -13,7 +13,7 @@ public class cbp_fixedentity {
     public cbp_fixedentity(Transform _ref, int _body) {
         reference = _ref;
         bodyIndex = _body;
-        Transform planetTransform = cbp_renderingmanager.Instance.bodyEntities[bodyIndex].reference;
+        Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].reference;
         defaultPosition = (_ref.position - planetTransform.position) / planetTransform.localScale.x; // difference in position relative to planet
         defaultRotation = _ref.eulerAngles - planetTransform.eulerAngles; // difference in rotation relative to planet
         defaultScale = _ref.localScale.x;
@@ -21,19 +21,19 @@ public class cbp_fixedentity {
 
     public void Refresh() {
         // for now just set the unity position to game position
-        Transform planetTransform = cbp_renderingmanager.Instance.bodyEntities[bodyIndex].reference;
-        reference.position = planetTransform.position + cbp_renderingmanager.Instance.AdjustVector(defaultPosition, 0) * planetTransform.localScale.x;
+        Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].reference;
+        reference.position = planetTransform.position + cb_renderingmanager.Instance.AdjustVector(defaultPosition, 0) * planetTransform.localScale.x;
         reference.eulerAngles = planetTransform.eulerAngles + defaultRotation;
-        reference.localScale = Vector3.one * defaultScale * (planetTransform.localScale.x / cbp_renderingmanager.Instance.bodyEntities[bodyIndex].defaultScale);
+        reference.localScale = Vector3.one * defaultScale * (planetTransform.localScale.x / cb_renderingmanager.Instance.bodyEntities[bodyIndex].defaultScale);
     }
 
     public Vector3 GetPosition() {
-        Transform planetTransform = cbp_renderingmanager.Instance.bodyEntities[bodyIndex].reference;
+        Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].reference;
         return planetTransform.position + defaultPosition * planetTransform.localScale.x;
     }
 
     public Vector3 GetRotation() {
-        Transform planetTransform = cbp_renderingmanager.Instance.bodyEntities[bodyIndex].reference;
+        Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].reference;
         return reference.eulerAngles = planetTransform.eulerAngles + defaultRotation;
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // could have put this code inside of WorldManager or cb_solarsystem,
@@ -29,12 +31,114 @@ public class cb_renderingmanager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        worldOffset = Vector3.zero;
     }
 
     public Transform t_bodyContainer; // could access from cb_solarsystem, but a shortcut feels better
 
+    public Camera cam;
+    public cbp_floatingentity[] bodyEntities;
+
+    public float originRadius; // how far from the origin can the player get before they get "corrected"
+    public float renderRadius; // how far can objects be before they're squished
+
+    public Vector3 worldOffset; // the current offset of the world
+
+    public cbp_floatingentity player;
+    public cbp_floatingentity entityInControl;
+
+    public void SetupEntities()
+    {
+        bodyEntities = new cbp_floatingentity[cb_solarsystem.Instance.monoBodies.Count];
+        t_bodyContainer = cb_solarsystem.Instance.monoBodies[0].transform.parent;
+
+        for (int i = 0; i < bodyEntities.Length; i++)
+        {
+            bodyEntities[i] = new cbp_floatingentity(cb_solarsystem.Instance.monoBodies[i].transform.GetChild(0));
+            bodyEntities[i].defaultScale = 1;
+        }
+
+        // 'player' IS actually a gameObject
+        player = new cbp_floatingentity(GameObject.Find("player").transform);
+    }
+
     public void UpdateAllBodyPositions()
     {
-        
+        // update all the planet positions, by grabbing their position from the pConfig
+        for (int i = 0; i < bodyEntities.Length; i++)
+        {
+            bodyEntities[i].position = cb_solarsystem.Instance.monoBodies[i].data.pConfig.GetPosition();
+            bodyEntities[i].Refresh();
+        }
+
+        // player
+        player.Refresh();
+
+        if (entityInControl.reference != null)
+        {
+            // this is the code that "corrects" the world when you get too far from the origin
+            // ofc this doesn't apply if there's no controlling entity
+            if (entityInControl.reference.position.magnitude > originRadius)
+            {
+                Vector3 shoveFactor = -entityInControl.reference.position;
+                // player is too far from (0, 0, 0) so shove em' back
+                worldOffset += shoveFactor;
+
+                // same with the spacecrafts, but this is unused rn
+                // for (int i = 0; i < spacecraft.Count; i++)
+                // {
+                //     spacecraft[i].reference.position += shoveFactor;
+                // }
+
+                player.reference.position += shoveFactor;
+            }
+        }
     }
+
+    // where is (0,0,0) in the unity engine, in game space?
+    public Vector3 GetOriginInGameSpace() {
+        return worldOffset;
+    }
+
+    public void SwitchToPlayer() {
+        entityInControl = player;
+    }
+
+    public bool EntityInsideRenderRadius(cbp_floatingentity _entity) {
+        return true; // TODO: change this
+    }
+
+    // ******** helpers *********
+    public Vector3 AdjustVector(Vector3 _v, int _id) {
+        return new Vector3(_v.z * Mathf.Sin((float)bodyEntities[_id].rotation.y * (Mathf.PI / 180)) + _v.x * Mathf.Cos((float)bodyEntities[_id].rotation.y * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos((float)bodyEntities[_id].rotation.y * (Mathf.PI / 180)) + _v.x * -Mathf.Sin((float)bodyEntities[_id].rotation.y * (Mathf.PI / 180)));
+    }
+    public Vector3 AdjustVectorReverse(Vector3 _v, int _id) {
+        return new Vector3(_v.z * Mathf.Sin((float)-bodyEntities[_id].rotation.y * (Mathf.PI / 180)) + _v.x * Mathf.Cos((float)-bodyEntities[_id].rotation.y * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos((float)-bodyEntities[_id].rotation.y * (Mathf.PI / 180)) + _v.x * -Mathf.Sin((float)-bodyEntities[_id].rotation.y * (Mathf.PI / 180)));
+    }
+    public Vector3 AdjustVector(Vector3 _v, float _amount) {
+        return new Vector3(_v.z * Mathf.Sin(_amount * (Mathf.PI / 180)) + _v.x * Mathf.Cos(_amount * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos(_amount * (Mathf.PI / 180)) + _v.x * -Mathf.Sin(_amount * (Mathf.PI / 180)));
+    }
+
+    // what even is this?
+    public List<float> GetAngles() {
+        float[] toReturn = new float[bodyEntities.Length];
+        for (int i = 0; i < toReturn.Length; i++) {
+            toReturn[i] = (float)bodyEntities[i].rotation.y;
+        }
+        return toReturn.ToList();
+    }
+    // public List<float> GetScaleFactors() {
+    //     float[] toReturn = new float[celestialBodies.Length];
+    //     for (int i = 0; i < toReturn.Length; i++) {
+    //         toReturn[i] = GameUtils.planets[i].transform.localScale.x;
+    //     }
+    //     return toReturn.ToList();
+    // }
+    // public List<D> GetPositions() {
+    //     Vector4[] toReturn = new Vector3[celestialBodies.Length];
+    //     for (int i = 0; i < toReturn.Length; i++) {
+    //         toReturn[i] = celestialBodies[i].position.Sub(player.position);
+    //     }
+    //     return toReturn.ToList();
+    // }
 }

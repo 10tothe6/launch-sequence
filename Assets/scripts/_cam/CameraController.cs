@@ -36,6 +36,11 @@ public class CameraController : MonoBehaviour
         t_cam = ins_t_cam;
     }
 
+    // what layers should be rendered for each view
+    // (allows us to use the same scene for both)
+    public LayerMask normalView;
+    public LayerMask mapView;
+
     public Transform ins_t_cam;
     public static Transform t_cam;
 
@@ -49,6 +54,16 @@ public class CameraController : MonoBehaviour
     public Vector3 PositionRelativeToControlEntity()
     {
         return positionRelativeToControlEntity;
+    }
+
+    public static void SetToMapView()
+    {
+        Camera.main.cullingMask = Instance.mapView;
+    }
+
+    public static void SetToGameView()
+    {
+        Camera.main.cullingMask = Instance.normalView;
     }
 
 

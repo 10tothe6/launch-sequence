@@ -60,6 +60,9 @@ public class cbt_config
 
     public void ApplyDefaultAtmosphericComposition()
     {
+        currentAtmosphereGasAmounts = new List<float>();
+        currentAtmosphereGasTypes = new List<int>();
+        
         for (int i = 0; i < defaultAtmosphereGasAmounts.Count; i++)
         {
             currentAtmosphereGasAmounts.Add(defaultAtmosphereGasAmounts[i]);

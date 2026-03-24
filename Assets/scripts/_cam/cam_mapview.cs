@@ -27,7 +27,7 @@ public class cam_mapview : MonoBehaviour
                 transform.Rotate(Vector3.up * Input.mouseMovement.x + transform.right * -Input.mouseMovement.y, Space.World);
             }
 
-            viewDistance += Input.scrollWheelAxis * viewDistanceSensitivity;
+            viewDistance -= Input.scrollWheelAxis * viewDistanceSensitivity;
 
             CameraController.t_cam.position = basePosition - transform.forward * viewDistance;
         }

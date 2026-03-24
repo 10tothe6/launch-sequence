@@ -815,7 +815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &76737351
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2655,6 +2655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 314687046}
   - component: {fileID: 314687045}
+  - component: {fileID: 314687047}
   m_Layer: 0
   m_Name: world
   m_TagString: Untagged
@@ -2705,6 +2706,18 @@ Transform:
   - {fileID: 1931110686}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &314687047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314687044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3a2749bdc90fa4cb7f776f10b645a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldData
 --- !u!1 &320312107
 GameObject:
   m_ObjectHideFlags: 0
@@ -5604,6 +5617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598439f2aa19b024d85f1dc03ac72881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_debugmenu
+  tabs: []
   entries: []
   p_entry: {fileID: 325579002622698583, guid: da6595195bd6df94bbe42fc3cd6369cf, type: 3}
   t_entryContainer: {fileID: 1112927509}
@@ -8929,7 +8943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1663306513
 Transform:
   m_ObjectHideFlags: 0
@@ -10294,21 +10308,21 @@ MonoBehaviour:
   monoBodies: []
   minimumPlanetCount: 1
   maximumPlanetCount: 6
-  minimumPlanetSpacing: 5000
-  maximumPlanetSpacing: 10000
-  minimumSystemRadius: 10000
-  maximumSystemRadius: 100000
-  minimumMoonSpacing: 0.1
-  maximumMoonSpacing: 0.4
-  minimumPlanetarySystemRadius: 1
-  maximumPlanetarySystemRadius: 7.5
-  minimumTerranSurfaceRadius: 0
-  maximumTerranSurfaceRadius: 0
+  minimumPlanetSpacing: 500000
+  maximumPlanetSpacing: 1000000
+  minimumSystemRadius: 1000000
+  maximumSystemRadius: 10000000
+  minimumMoonSpacing: 10
+  maximumMoonSpacing: 40
+  minimumPlanetarySystemRadius: 100
+  maximumPlanetarySystemRadius: 750
+  minimumTerranSurfaceRadius: 1
+  maximumTerranSurfaceRadius: 1
   chanceForTerrainAtmosphere: 0
   minimumTerranAtmosphereRadius: 0
   maximumTerranAtmosphereRadius: 0
-  minimumJovianSurfaceRadius: 0
-  maximumJovianSurfaceRadius: 0
+  minimumJovianSurfaceRadius: 1
+  maximumJovianSurfaceRadius: 1
   minimumJovianAtmosphereRadius: 0
   maximumJovianAtmosphereRadius: 0
   minimumTerranLunarSurfaceRadius: 0

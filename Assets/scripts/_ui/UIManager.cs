@@ -58,6 +58,9 @@ public class UIManager : MonoBehaviour
     // some functions, like  this one, build off of the SwitchMenu() function
     public void EnterMapView()
     {
+        ui_debugmenu.Instance.SetTabActive("map", true);
+        ui_debugmenu.Instance.SetTabActive("game_main", false);
+
         SwitchMenu("map view");
         WorldManager.Instance.SetupMap();
         CameraController.SetControlMode(CameraControlMode.MapView);
@@ -67,6 +70,9 @@ public class UIManager : MonoBehaviour
 
     public void ExitMapView()
     {
+        ui_debugmenu.Instance.SetTabActive("map", false);
+        ui_debugmenu.Instance.SetTabActive("game_main", true);
+
         CameraController.SetControlMode(CameraController.previousControlMode); // easy way to toggle back to whatever
         Debug.Log("Map view off.");
     }

@@ -122,6 +122,16 @@ public class cmd_console : MonoBehaviour
         }
     }
 
+    // replaces "debug.log", making it so messages appear in the in-game console as well as the unity one
+    public void DebugLog(string msg)
+    {
+        // our console
+        PostToConsole("[DEBUG] " + msg);
+
+        // unity console
+        Debug.Log(msg);
+    }
+
     public void PostToConsole(string msg)
     {
         menu.PostMessage(msg);

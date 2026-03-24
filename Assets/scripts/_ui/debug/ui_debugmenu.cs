@@ -40,9 +40,25 @@ public class ui_debugmenu : MonoBehaviour
 
     public float entrySpacing;
 
+    public void SetTabActive(string tabName, bool active)
+    {
+        for (int i = 0; i < tabs.Count; i++)
+        {
+            if (tabs[i].name == tabName)
+            {
+                tabs[i].isActive = active;
+            }
+        }
+    }
+
     public void AddEntry(string title, Func<string> dataSource)
     {
         AddEntry(new ui_debugentry(title, dataSource));
+        UpdateListOfTabs();
+    }
+    public void AddEntry(string title, Func<string> dataSource, string tab)
+    {
+        AddEntry(new ui_debugentry(title, dataSource,tab));
         UpdateListOfTabs();
     }
 

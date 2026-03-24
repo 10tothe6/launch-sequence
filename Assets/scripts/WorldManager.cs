@@ -90,6 +90,7 @@ public class WorldManager : MonoBehaviour
     // just putting this here for now
     public void SetupMap()
     {
+        mapFocusIndex = 1;
         // for the actual game, there are 2 different lists of objects
         // 'bodies' are the actual planet objects
         // 'map bodies' are specifically for the map view
@@ -100,7 +101,8 @@ public class WorldManager : MonoBehaviour
         }
 
         ui_debugmenu.Instance.AddEntry("dist from focus", 
-        () => Vector3.Distance(CameraController.t_cam.position, t_mapBodyContainer.GetChild(mapFocusIndex).position).ToString());
+        () => Vector3.Distance(CameraController.t_cam.position, t_mapBodyContainer.GetChild(mapFocusIndex).position).ToString(),
+        "map");
 
         RefreshMap();
     }
@@ -114,6 +116,10 @@ public class WorldManager : MonoBehaviour
             // subtracting the position of the center body focuses on it
             // easier than moving the camera ig?
             t_mapBodyContainer.GetChild(i).GetComponent<cb_mapobject>().Initialize(p[i]);
+        }
+        for (int i = 0; i < t_mapBodyContainer.childCount; i++)
+        {
+            t_mapBodyContainer.GetChild(i).localPosition = p[i] - p[mapFocusIndex];
         }
     }
 
@@ -139,7 +145,7 @@ public class WorldManager : MonoBehaviour
         mapFocusIndex++;
         if (mapFocusIndex >= t_mapBodyContainer.childCount)
         {
-            mapFocusIndex = 0;
+            mapFocusIndex = 1;
         }
 
         RefreshMap();
@@ -147,6 +153,6 @@ public class WorldManager : MonoBehaviour
 
     public float GetMapScaleFromFocusedBody()
     {
-        return mapFocusIndex < 2 ? mapScaleFactor : mapScaleFactor * 100f;
+        return mapFocusIndex < 2 ? mapScaleFactor / 10000f : mapScaleFactor * 10f;
     }
 }

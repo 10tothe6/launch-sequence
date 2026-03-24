@@ -1,7 +1,10 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class cb_mapobject : MonoBehaviour
 {
+    public Transform t_model;
+
     public Plotter orbitLine;
 
     public int selfIndex;
@@ -36,6 +39,16 @@ public class cb_mapobject : MonoBehaviour
 
             orbitLine.lr.transform.localPosition = t_parent.position - transform.position;
         }
+
+        // this generates the actual object mesh
+        GenerateModel();
+    }
+
+    // the physical mesh that the body will use
+    public void GenerateModel()
+    {
+        t_model.GetChild(0).localScale = 
+        Vector3.one * cb_solarsystem.Instance.monoBodies[selfIndex].data.tConfig.equitorialRadius * 2 * WorldManager.Instance.GetMapScaleFromFocusedBody();
     }
 
     public void UpdatePosition()

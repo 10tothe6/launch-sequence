@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ public class cb_trackedbody : MonoBehaviour
     // the physical mesh that the body will use
     public void GenerateModel()
     {
-        
+        t_model.GetChild(0).localScale = Vector3.one * data.tConfig.equitorialRadius * 2;
     }
 
     // handles: 
@@ -45,6 +46,9 @@ public class cb_trackedbody : MonoBehaviour
     // moons, of course, have no atmosphere
     public void BuildAtmosphereBasedOnBodyType(ushort type)
     {
+        data.tConfig.defaultAtmosphereGasTypes = new List<int>();
+        data.tConfig.defaultAtmosphereGasAmounts = new List<float>();
+
         int exoticGasCount = 0;
         int totalGasCount = 0;
 

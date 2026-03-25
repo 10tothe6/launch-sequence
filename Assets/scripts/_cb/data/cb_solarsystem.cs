@@ -15,6 +15,19 @@ public enum cb_bodytype
 
 public class cb_solarsystem : MonoBehaviour
 {
+    // i would normally have an issue with this, but we're not adding to this list often
+    public static string BodyType(int index)
+    {
+        if (index == 0) {return "Null";}
+
+        if (index == 1) {return "Stellar";}
+        if (index == 2) {return "Terran";}
+        if (index == 3) {return "Jovian";}
+        if (index == 4) {return "TerranMoon";}
+        if (index == 5) {return "JovianMoon";}
+
+        return "[Unknown]";
+    }
     private static cb_solarsystem _instance;
 
     public static cb_solarsystem Instance

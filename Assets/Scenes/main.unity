@@ -5602,7 +5602,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 75.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &852821188
@@ -5622,7 +5622,7 @@ MonoBehaviour:
   p_entry: {fileID: 325579002622698583, guid: da6595195bd6df94bbe42fc3cd6369cf, type: 3}
   t_entryContainer: {fileID: 1112927509}
   monoEntries: []
-  entrySpacing: 120
+  entrySpacing: 60
 --- !u!1 &861397046
 GameObject:
   m_ObjectHideFlags: 0
@@ -10312,23 +10312,23 @@ MonoBehaviour:
   maximumPlanetSpacing: 1000000
   minimumSystemRadius: 1000000
   maximumSystemRadius: 10000000
-  minimumMoonSpacing: 10
-  maximumMoonSpacing: 40
-  minimumPlanetarySystemRadius: 100
+  minimumMoonSpacing: 7
+  maximumMoonSpacing: 100
+  minimumPlanetarySystemRadius: 25
   maximumPlanetarySystemRadius: 750
-  minimumTerranSurfaceRadius: 1
-  maximumTerranSurfaceRadius: 1
+  minimumTerranSurfaceRadius: 0.8
+  maximumTerranSurfaceRadius: 0.8
   chanceForTerrainAtmosphere: 0
   minimumTerranAtmosphereRadius: 0
   maximumTerranAtmosphereRadius: 0
-  minimumJovianSurfaceRadius: 1
-  maximumJovianSurfaceRadius: 1
+  minimumJovianSurfaceRadius: 8
+  maximumJovianSurfaceRadius: 8
   minimumJovianAtmosphereRadius: 0
   maximumJovianAtmosphereRadius: 0
-  minimumTerranLunarSurfaceRadius: 0
-  maximumTerranLunarSurfaceRadius: 0
-  minimumJovianLunarSurfaceRadius: 0
-  maximumJovianLunarSurfaceRadius: 0
+  minimumTerranLunarSurfaceRadius: 0.15
+  maximumTerranLunarSurfaceRadius: 0.15
+  minimumJovianLunarSurfaceRadius: 0.6
+  maximumJovianLunarSurfaceRadius: 0.6
   minimumTerranGasCount: 0
   maximumTerranGasCount: 0
   minimumJovianGasCount: 0

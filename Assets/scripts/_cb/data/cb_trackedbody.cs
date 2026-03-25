@@ -29,6 +29,19 @@ public class cb_trackedbody : MonoBehaviour
         GenerateModel();
     }
 
+    public int GetMoonCount()
+    {
+        int sum = 0;
+        for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
+        {
+            if (cb_solarsystem.Instance.monoBodies[i].data.pConfig.parentIndex == data.pConfig.selfIndex)
+            {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
     // the physical mesh that the body will use
     public void GenerateModel()
     {

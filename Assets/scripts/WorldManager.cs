@@ -100,8 +100,34 @@ public class WorldManager : MonoBehaviour
             RegenerateMapBodies();
         }
 
+        // the title of the tab
+        ui_debugmenu.Instance.AddEntry("[map]", 
+        () => "",
+        "map");
+
         ui_debugmenu.Instance.AddEntry("dist from focus", 
         () => Vector3.Distance(CameraController.t_cam.position, t_mapBodyContainer.GetChild(mapFocusIndex).position).ToString(),
+        "map");
+
+        ui_debugmenu.Instance.AddEntry("name", 
+        () => cb_solarsystem.Instance.monoBodies[mapFocusIndex].data.name,
+        "map");
+        ui_debugmenu.Instance.AddEntry("planet index", 
+        () => mapFocusIndex.ToString(),
+        "map");
+
+        ui_debugmenu.Instance.AddEntry("body type", 
+        () => cb_solarsystem.BodyType(cb_solarsystem.Instance.monoBodies[mapFocusIndex].data.bodyType),
+        "map");
+        ui_debugmenu.Instance.AddEntry("moon count", 
+        () => cb_solarsystem.Instance.monoBodies[mapFocusIndex].GetMoonCount().ToString(),
+        "map");
+
+        ui_debugmenu.Instance.AddEntry("has surface", 
+        () => cb_solarsystem.Instance.monoBodies[mapFocusIndex].data.hasSurface ? "Yes" : "No",
+        "map");
+        ui_debugmenu.Instance.AddEntry("has atmo", 
+        () => cb_solarsystem.Instance.monoBodies[mapFocusIndex].data.hasAtmosphere ? "Yes" : "No",
         "map");
 
         RefreshMap();

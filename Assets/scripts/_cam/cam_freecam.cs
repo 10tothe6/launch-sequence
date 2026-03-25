@@ -38,10 +38,11 @@ public class cam_freecam : MonoBehaviour
                 t_player.transform.Rotate(Vector3.up * -Input.mouseMovement.x + transform.right * Input.mouseMovement.y, Space.World);
             }
 
-            t_player.transform.position += 
-            transform.forward * Input.inputAxisForward +
-            transform.right * Input.inputAxisHorizontal + 
-            transform.up * Input.inputAxisVertical;
+            // TODO: run the position changes THROUGH THE RENDERING MANAGER!
+            // t_player.transform.position += 
+            // transform.forward * Input.inputAxisForward +
+            // transform.right * Input.inputAxisHorizontal + 
+            // transform.up * Input.inputAxisVertical;
         }
     }
 }

@@ -42,6 +42,16 @@ public class cb_mapobject : MonoBehaviour
 
         // this generates the actual object mesh
         GenerateModel();
+
+        CameraController.Instance.onChangeControlMode.AddListener(ShowHideIcon);
+    }
+
+    public void ShowHideIcon()
+    {
+        if (CameraController.controlMode == (ushort)CameraControlMode.MapView)
+        {
+            GetComponent<ui_screenspaceicon>().Show();
+        } else {GetComponent<ui_screenspaceicon>().Hide();}
     }
 
     // the physical mesh that the body will use

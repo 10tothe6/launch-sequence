@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum CameraControlMode
 {
     MapView,
+    Freecam,
     PlayerFirstPerson,
     ShipFirstPerson,
     ShipThirdPerson,
@@ -34,6 +36,7 @@ public class CameraController : MonoBehaviour
         Instance = this;
 
         t_cam = ins_t_cam;
+        cam_main = ins_cam_main;
     }
 
     // what layers should be rendered for each view
@@ -44,12 +47,18 @@ public class CameraController : MonoBehaviour
     public Transform ins_t_cam;
     public static Transform t_cam;
 
+    public static Camera cam_main;
+    public Camera ins_cam_main;
+
     public ushort ins_controlMode;
     public static ushort controlMode;
 
     public static ushort previousControlMode;
 
     public Vector3 positionRelativeToControlEntity;
+
+    // to help with transitions
+    public UnityEvent onChangeControlMode;
 
     public Vector3 PositionRelativeToControlEntity()
     {
@@ -76,5 +85,7 @@ public class CameraController : MonoBehaviour
         previousControlMode = controlMode;
         controlMode = newMode;
         Instance.ins_controlMode = controlMode;
+        
+        Instance.onChangeControlMode.Invoke();
     }
 }

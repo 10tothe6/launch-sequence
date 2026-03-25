@@ -40,6 +40,9 @@ public class UIManager : MonoBehaviour
     public List<string> menuNames;
     public List<int> menuSiblingIndices;
 
+    // for convinience
+    public bool isInMapView;
+
 
     // not just 'update', because i only want to run this sometimes
     public void InGameUpdate()
@@ -47,6 +50,22 @@ public class UIManager : MonoBehaviour
         if (Keyboard.current.backquoteKey.wasPressedThisFrame)
         {
             ToggleConsole();
+        }
+
+        // map-related keypress checks
+        if (isInMapView)
+        {
+            if (Keyboard.current.mKey.wasPressedThisFrame)
+            {
+                ExitMapView();
+            }
+        }
+        else
+        {
+            if (Keyboard.current.mKey.wasPressedThisFrame)
+            {
+                EnterMapView();
+            }
         }
     }
 
@@ -66,6 +85,7 @@ public class UIManager : MonoBehaviour
         CameraController.SetControlMode(CameraControlMode.MapView);
 
         Debug.Log("Entered map view.");
+        isInMapView = true;
     }
 
     public void ExitMapView()
@@ -75,6 +95,7 @@ public class UIManager : MonoBehaviour
 
         CameraController.SetControlMode(CameraController.previousControlMode); // easy way to toggle back to whatever
         Debug.Log("Map view off.");
+        isInMapView = false;
     }
 
     public void LoadMenuObjects()

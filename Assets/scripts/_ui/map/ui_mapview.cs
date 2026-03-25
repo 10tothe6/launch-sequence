@@ -33,6 +33,39 @@ public class ui_mapview : MonoBehaviour
 
     public Transform t_mapIcons;
 
+    public void SetupDebugInfo()
+    {
+        // the title of the tab
+        ui_debugmenu.Instance.AddEntry("[map]", 
+        () => "",
+        "map");
+
+        ui_debugmenu.Instance.AddEntry("dist from focus", 
+        () => Vector3.Distance(CameraController.t_cam.position, WorldManager.Instance.t_mapBodyContainer.GetChild(WorldManager.Instance.mapFocusIndex).position).ToString(),
+        "map");
+
+        ui_debugmenu.Instance.AddEntry("name", 
+        () => cb_solarsystem.Instance.monoBodies[WorldManager.Instance.mapFocusIndex].data.name,
+        "map");
+        ui_debugmenu.Instance.AddEntry("planet index", 
+        () => WorldManager.Instance.mapFocusIndex.ToString(),
+        "map");
+
+        ui_debugmenu.Instance.AddEntry("body type", 
+        () => cb_solarsystem.BodyType(cb_solarsystem.Instance.monoBodies[WorldManager.Instance.mapFocusIndex].data.bodyType),
+        "map");
+        ui_debugmenu.Instance.AddEntry("moon count", 
+        () => cb_solarsystem.Instance.monoBodies[WorldManager.Instance.mapFocusIndex].GetMoonCount().ToString(),
+        "map");
+
+        ui_debugmenu.Instance.AddEntry("has surface", 
+        () => cb_solarsystem.Instance.monoBodies[WorldManager.Instance.mapFocusIndex].data.hasSurface ? "Yes" : "No",
+        "map");
+        ui_debugmenu.Instance.AddEntry("has atmo", 
+        () => cb_solarsystem.Instance.monoBodies[WorldManager.Instance.mapFocusIndex].data.hasAtmosphere ? "Yes" : "No",
+        "map");
+    }
+
     public void SetupBody(cb_trackedbody body, ui_screenspaceicon comp)
     {
         comp.icon = WorldManager.Instance.cbIcons[body.data.bodyType];

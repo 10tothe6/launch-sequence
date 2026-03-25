@@ -6,6 +6,31 @@ public class cam_mapview : MonoBehaviour
     public float viewDistance;
     public float viewDistanceSensitivity;
 
+    public LayerMask mapCullingMask;
+
+    void Start()
+    {
+        CameraController.Instance.onChangeControlMode.AddListener(ProcessChangeInControlMode);
+    }
+
+    public void ProcessChangeInControlMode()
+    {
+        if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.MapView)
+        {
+            EnterControl();
+        } else {ExitControl();}
+    }
+
+    public void EnterControl()
+    {
+        CameraController.cam_main.cullingMask = mapCullingMask;
+        transform.SetParent(null);
+    }
+    public void ExitControl()
+    {
+        
+    }
+
     void Update()
     {
         // this script only does anything if the camera is in map view mode

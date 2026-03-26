@@ -43,6 +43,8 @@ public class cmd_console : MonoBehaviour
     public static cmd_consolecommand[] possibleCommands = new cmd_consolecommand[]
     {
         new cmd_consolecommand(new string[]{"teleport","tp"}), // instantly move the player to a coordinate
+        new cmd_consolecommand(new string[]{"systp"}),
+
         new cmd_consolecommand(new string[]{"timeset","t"}), // set the time of the solar system
 
         new cmd_consolecommand(new string[]{"whitelist","wl"}), // allow a player on a server
@@ -74,29 +76,11 @@ public class cmd_console : MonoBehaviour
                 // TODO: the processing logic
             }
         } 
-        else if (possibleCommands[1].IsValid(items[0])) // timeset
+        else if (possibleCommands[1].IsValid(items[0])) // system teleport
         {
-            
+            cb_renderingmanager.Instance.player.data.localPosition = cb_solarsystem.Instance.monoBodies[int.Parse(items[1]) + 2].pose.data.localPosition.Add(Vector3.right * 25f);
+            PostToConsole("Teleported to system " + items[1]);
         } 
-        else if (possibleCommands[2].IsValid(items[0])) // whitelist
-        {
-            
-        } 
-        else if (possibleCommands[3].IsValid(items[0])) // blacklist
-        {
-            
-        } 
-        else if (possibleCommands[4].IsValid(items[0])) // kick
-        {
-            
-        } 
-        else if (possibleCommands[5].IsValid(items[0])) // ban
-        {
-            
-        } else
-        {
-            PostToConsole(items[0]);
-        }
     }
 
 

@@ -20,7 +20,13 @@ public class cb_trackedbody : MonoBehaviour
         if (bodyType == (ushort)cb_bodytype.Stellar || bodyType == (ushort)cb_bodytype.Null)
         {
             data.mass = 1000000f;
-        } else {data.mass = 10f;}
+        } else if (bodyType == (ushort)cb_bodytype.Jovian || bodyType == (ushort)cb_bodytype.Terran)
+        {
+            data.mass = 20f;
+        } else
+        {
+            data.mass = 1f;
+        }
         data.pConfig.isGrandparent = data.bodyType == (ushort)cb_bodytype.Null;
         data.pConfig.parentIndex = parentIndex;
         data.pConfig.selfIndex = cb_solarsystem.Instance.monoBodies.Count - 1;

@@ -74,8 +74,13 @@ public class WorldManager : MonoBehaviour
         
         for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
         {
-            // TODO: all of this
-            float force = 0;
+            float dist = Vector3.Distance(
+                cb_solarsystem.Instance.monoBodies[i].pose.data.GetPosition().ToVector3(), 
+            cb_renderingmanager.Instance.entityInControl.data.GetPosition().ToVector3());
+            // big G times big M divided by distance^2
+            float force = cb_solarsystem.gravConstant * cb_solarsystem.Instance.monoBodies[i].data.mass / (dist * dist);
+
+            gravForces[i] = force;
         }
 
         int kingIndex = 0;

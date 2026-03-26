@@ -46,7 +46,8 @@ public class WorldManager : MonoBehaviour
 
     // **** map view ****
     
-    public float mapScaleFactor; // from real scale to how it appears, usually very low value
+    public float mapScaleFactorSolar; // from real scale to how it appears, usually very low value
+    public float mapScaleFactorPlanetary;
     public int mapFocusIndex; // what cb to focus on
 
     // *********
@@ -62,6 +63,15 @@ public class WorldManager : MonoBehaviour
     public void UpdateWorld()
     {
         cb_renderingmanager.Instance.UpdateAllBodyPositions();
+    }
+
+    public static float SeaLevelRadius()
+    {
+        return cb_solarsystem.Instance.monoBodies[Instance.GetSOIIndex()].data.tConfig.equitorialRadius;
+    }
+    public static float SeaLevelRadius(int index)
+    {
+        return cb_solarsystem.Instance.monoBodies[index].data.tConfig.equitorialRadius;
     }
 
     public int GetSOIIndex()
@@ -98,6 +108,17 @@ public class WorldManager : MonoBehaviour
         return kingIndex;
     }
 
+    public float GetSeaLevelAltitude()
+    {
+        Debug.Log(GetCoreAltitude() + "     " + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius);
+        return GetCoreAltitude() - cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius;
+    }
+
+    public float GetCoreAltitude()
+    {
+        return Vector3.Distance(cb_renderingmanager.Instance.player.data.GetPosition().ToVector3(), cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition().ToVector3());
+    }
+
     public void StartGame(TMP_InputField input)
     {
         int parsed = -1;
@@ -113,6 +134,8 @@ public class WorldManager : MonoBehaviour
     // generates a new solar system
     public void StartGame(int worldSeed)
     {
+        UIManager.Instance.HideConsole();
+
         // -1 means random seed
         if (worldSeed == -1) {worldSeed = util_math.GetRandomInt();}
 
@@ -127,7 +150,7 @@ public class WorldManager : MonoBehaviour
         cb_renderingmanager.Instance.SetupEntities();
 
         // VERY MUCH TEMP
-        cb_renderingmanager.Instance.player.data.localPosition = ss.monoBodies[2].pose.data.localPosition.Add(Vector3.right * 25f);
+        LocalPlayer.Instance.SystemTeleport(0);
 
         onNewWorldGenerate.Invoke();
     }
@@ -196,6 +219,8 @@ public class WorldManager : MonoBehaviour
 
     public float GetMapScaleFromFocusedBody()
     {
-        return mapFocusIndex < 2 ? mapScaleFactor / 10000f : mapScaleFactor * 10f;
+        float rawScl = mapFocusIndex < 2 ? mapScaleFactorSolar : mapScaleFactorPlanetary;
+
+        return rawScl * WorldData.universalScaleFactor;
     }
 }

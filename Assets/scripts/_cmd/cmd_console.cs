@@ -43,7 +43,9 @@ public class cmd_console : MonoBehaviour
     public static cmd_consolecommand[] possibleCommands = new cmd_consolecommand[]
     {
         new cmd_consolecommand(new string[]{"teleport","tp"}), // instantly move the player to a coordinate
+
         new cmd_consolecommand(new string[]{"systp"}),
+        new cmd_consolecommand(new string[]{"fspeed"}),
 
         new cmd_consolecommand(new string[]{"timeset","t"}), // set the time of the solar system
 
@@ -78,9 +80,17 @@ public class cmd_console : MonoBehaviour
         } 
         else if (possibleCommands[1].IsValid(items[0])) // system teleport
         {
-            cb_renderingmanager.Instance.player.data.localPosition = cb_solarsystem.Instance.monoBodies[int.Parse(items[1]) + 2].pose.data.localPosition.Add(Vector3.right * 25f);
-            PostToConsole("Teleported to system " + items[1]);
+            LocalPlayer.Instance.SystemTeleport(int.Parse(items[1]));
+            PostToConsole("[CONSOLE] Teleported to system " + items[1]);
         } 
+        else if (possibleCommands[2].IsValid(items[0])) // system teleport
+        {
+            CameraController.Instance.GetComponent<cam_freecam>().moveSpeed = float.Parse(items[1]);
+            PostToConsole("[CONSOLE] Set freecam speed to " + items[1]);
+        } else
+        {
+            PostToConsole(items[0]);
+        }
     }
 
 

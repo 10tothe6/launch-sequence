@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class utils_audio
+public class util_audio
 {
     // returns a default clip if no match is found
     public static AudioClip GetClipFromMaterial(Material mat, audio_soundmaterial[] materials, audio_soundset defaultSet)

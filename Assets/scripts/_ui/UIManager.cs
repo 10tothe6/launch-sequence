@@ -69,6 +69,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ShowConsole()
+    {
+        g_console.SetActive(true);
+    }
+
+    public void HideConsole()
+    {
+        g_console.SetActive(false);
+    }
+
     public void ToggleConsole()
     {
         g_console.SetActive(!g_console.activeSelf);

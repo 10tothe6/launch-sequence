@@ -45,5 +45,20 @@ public class ui_playerhud : MonoBehaviour
         ui_debugmenu.Instance.AddEntry("current SOI", 
         () => (WorldManager.Instance.GetSOIIndex() - 2).ToString(),
         "game_main");
+
+        // ksp's "sea level alt"
+        ui_debugmenu.Instance.AddEntry("sea level altitude", 
+        () => util_game.FormatRawDistance(WorldManager.Instance.GetSeaLevelAltitude()),
+        "game_main");
+        ui_debugmenu.Instance.AddEntry("backend sea level altitude", 
+        () => util_game.FormatDistance(WorldManager.Instance.GetSeaLevelAltitude()),
+        "game_main");
+        // similar, but distance to center
+        ui_debugmenu.Instance.AddEntry("core altitude", 
+        () => util_game.FormatRawDistance(WorldManager.Instance.GetCoreAltitude()),
+        "game_main");
+        ui_debugmenu.Instance.AddEntry("backend core altitude", 
+        () => util_game.FormatDistance(WorldManager.Instance.GetCoreAltitude()),
+        "game_main");
     }
 }

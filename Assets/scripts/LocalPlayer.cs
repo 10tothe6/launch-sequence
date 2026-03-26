@@ -35,4 +35,9 @@ public class LocalPlayer : MonoBehaviour
     {
         pose.data.localPosition = pose.data.localPosition.Add(new DoubleVector3(amt));
     }
+
+    public void SystemTeleport(int index)
+    {
+        cb_renderingmanager.Instance.player.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
+    }
 }

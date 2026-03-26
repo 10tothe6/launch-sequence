@@ -46,6 +46,8 @@ public class cb_renderingmanager : MonoBehaviour
     // (secondary < primary)
     // see the entities README for more info!
 
+    public float inflationRadius;
+
     public Transform t_bodyContainer; // could access from cb_solarsystem, but a shortcut feels better
 
     // another shortcut

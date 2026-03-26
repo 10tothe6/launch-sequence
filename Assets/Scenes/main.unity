@@ -2687,7 +2687,8 @@ MonoBehaviour:
   p_mapBody: {fileID: 8460234261487516770, guid: a745fca30ee4e6a4888bb5ebdecb9e4b, type: 3}
   worldSeed: 0
   ss: {fileID: 1931110687}
-  mapScaleFactor: 0.01
+  mapScaleFactorSolar: 0.0000001
+  mapScaleFactorPlanetary: 0.001
   mapFocusIndex: 0
   currentTimewarpFactor: 0
   onNewWorldGenerate:
@@ -2721,6 +2722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3a2749bdc90fa4cb7f776f10b645a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldData
+  ins_universalScaleFactor: 0.01
 --- !u!1 &320312107
 GameObject:
   m_ObjectHideFlags: 0
@@ -7074,11 +7076,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1721601047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -169.80002, y: -147.44}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -158, y: -147.44}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &1251284072
 GameObject:
   m_ObjectHideFlags: 0
@@ -9561,7 +9563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1721601047
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9599,7 +9601,7 @@ MonoBehaviour:
   consoleInput: {fileID: 39304274}
   p_msg: {fileID: 325579002622698583, guid: d22482cf76590fe47afc182edb2cb935, type: 3}
   t_messageContainer: {fileID: 1250287243}
-  messageSpacing: 50
+  messageSpacing: 20
 --- !u!1 &1740297698
 GameObject:
   m_ObjectHideFlags: 0
@@ -10436,27 +10438,27 @@ MonoBehaviour:
   monoBodies: []
   minimumPlanetCount: 1
   maximumPlanetCount: 6
-  minimumPlanetSpacing: 500000
-  maximumPlanetSpacing: 1000000
-  minimumSystemRadius: 1000000
-  maximumSystemRadius: 10000000
-  minimumMoonSpacing: 7
-  maximumMoonSpacing: 100
-  minimumPlanetarySystemRadius: 25
-  maximumPlanetarySystemRadius: 750
-  minimumTerranSurfaceRadius: 0.8
-  maximumTerranSurfaceRadius: 0.8
-  chanceForTerrainAtmosphere: 0
+  minimumPlanetSpacing: 2.5e+11
+  maximumPlanetSpacing: 7e+11
+  minimumSystemRadius: 1e+11
+  maximumSystemRadius: 3e+12
+  minimumMoonSpacing: 30000000
+  maximumMoonSpacing: 100000000
+  minimumPlanetarySystemRadius: 5000000
+  maximumPlanetarySystemRadius: 1e+9
+  minimumTerranSurfaceRadius: 200000
+  maximumTerranSurfaceRadius: 800000
+  chanceForTerrainAtmosphere: 0.5
   minimumTerranAtmosphereRadius: 0
   maximumTerranAtmosphereRadius: 0
-  minimumJovianSurfaceRadius: 8
-  maximumJovianSurfaceRadius: 8
+  minimumJovianSurfaceRadius: 3000000
+  maximumJovianSurfaceRadius: 10000000
   minimumJovianAtmosphereRadius: 0
   maximumJovianAtmosphereRadius: 0
-  minimumTerranLunarSurfaceRadius: 0.15
-  maximumTerranLunarSurfaceRadius: 0.15
-  minimumJovianLunarSurfaceRadius: 0.6
-  maximumJovianLunarSurfaceRadius: 0.6
+  minimumTerranLunarSurfaceRadius: 20000
+  maximumTerranLunarSurfaceRadius: 100000
+  minimumJovianLunarSurfaceRadius: 80000
+  maximumJovianLunarSurfaceRadius: 650000
   minimumTerranGasCount: 0
   maximumTerranGasCount: 0
   minimumJovianGasCount: 0
@@ -10484,8 +10486,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cb_renderingmanager
   originSnapBackRadius: 50
-  primaryCullingRadius: 100
-  secondaryCullingRadius: 50
+  primaryCullingRadius: 100000
+  secondaryCullingRadius: 900
+  inflationRadius: 0
   t_bodyContainer: {fileID: 1663306513}
   bodyEntities: []
   worldOffset: {x: 0, y: 0, z: 0}

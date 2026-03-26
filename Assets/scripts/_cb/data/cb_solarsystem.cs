@@ -233,7 +233,7 @@ public class cb_solarsystem : MonoBehaviour
         // systems can't have no planets, but they CAN have one
         int planetCap = Random.Range(Instance.minimumPlanetCount,Instance.maximumPlanetCount);
 
-        float currentRadius = minimumSystemRadius - minimumPlanetSpacing;
+        float currentRadius = minimumSystemRadius * WorldData.universalScaleFactor - minimumPlanetSpacing * WorldData.universalScaleFactor;
 
         // keeping track so we can add moons later
         // in theory this is not necessary bc we can just make due with index math,
@@ -242,9 +242,9 @@ public class cb_solarsystem : MonoBehaviour
 
         for (int i = 0; i < planetCap; i++)
         {
-            currentRadius += Random.Range(minimumPlanetSpacing, maximumPlanetSpacing);
+            currentRadius += Random.Range(minimumPlanetSpacing * WorldData.universalScaleFactor, maximumPlanetSpacing * WorldData.universalScaleFactor);
 
-            if (currentRadius >= maximumSystemRadius)
+            if (currentRadius >= maximumSystemRadius * WorldData.universalScaleFactor)
             {
                 // system got too big, regardless of whether we hit our planet cap or not
                 break;
@@ -282,15 +282,15 @@ public class cb_solarsystem : MonoBehaviour
             }
             // not sure how we could hit neither of those, but if we do then no moons
 
-            currentRadius = minimumPlanetarySystemRadius - minimumMoonSpacing;
+            currentRadius = minimumPlanetarySystemRadius * WorldData.universalScaleFactor - minimumMoonSpacing * WorldData.universalScaleFactor;
 
             for (int j = 0; j < moonCap; j++)
             {
                 // like planets, moons stop either when we reach the cap or the max radius
 
-                currentRadius += Random.Range(minimumMoonSpacing, maximumMoonSpacing);
+                currentRadius += Random.Range(minimumMoonSpacing * WorldData.universalScaleFactor, maximumMoonSpacing * WorldData.universalScaleFactor);
 
-                if (currentRadius >= maximumPlanetarySystemRadius)
+                if (currentRadius >= maximumPlanetarySystemRadius * WorldData.universalScaleFactor)
                 {
                     break;
                 } else

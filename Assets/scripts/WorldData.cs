@@ -28,7 +28,12 @@ public class WorldData : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        universalScaleFactor = ins_universalScaleFactor;
     }
+
+    // how many unity units are we saying equals 1 meter?
+    public float ins_universalScaleFactor;
+    public static float universalScaleFactor;
 
     
     // returns the index of the newly created gas so it can be easily referenced

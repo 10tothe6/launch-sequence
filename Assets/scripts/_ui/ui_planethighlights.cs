@@ -17,7 +17,7 @@ public class ui_planethighlights : MonoBehaviour
             Transform t_newIcon = Instantiate(p_icon, t_iconContainer).transform;
 
             ui_worldspaceelement comp = t_newIcon.GetComponent<ui_worldspaceelement>();
-            comp.distanceLimit = 20000f;
+            comp.distanceLimit = Mathf.Infinity;
 
             int j = i;
 

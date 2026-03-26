@@ -60,7 +60,7 @@ public class cb_trackedbody : MonoBehaviour
     // the physical mesh that the body will use
     public void GenerateModel()
     {
-        t_model.GetChild(0).localScale = Vector3.one * data.tConfig.equitorialRadius * 2;
+        t_model.GetChild(0).localScale = Vector3.one * data.tConfig.equitorialRadius;
     }
 
     // handles: 
@@ -150,7 +150,7 @@ public class cb_trackedbody : MonoBehaviour
             data.tConfig.equitorialRadius = Random.Range(
                 cb_solarsystem.Instance.minimumTerranSurfaceRadius,
                 cb_solarsystem.Instance.maximumTerranSurfaceRadius
-            );
+            ) * WorldData.universalScaleFactor;
 
             data.hasAtmosphere = util_math.DiceRoll(cb_solarsystem.Instance.chanceForTerrainAtmosphere);
 
@@ -159,7 +159,7 @@ public class cb_trackedbody : MonoBehaviour
                 data.tConfig.atmosphericRadius = Random.Range(
                     cb_solarsystem.Instance.minimumTerranAtmosphereRadius,
                     cb_solarsystem.Instance.maximumTerranAtmosphereRadius
-                );
+                ) * WorldData.universalScaleFactor;
 
                 BuildAtmosphereBasedOnBodyType(type);
             } else
@@ -172,14 +172,14 @@ public class cb_trackedbody : MonoBehaviour
             data.tConfig.equitorialRadius = Random.Range(
                 cb_solarsystem.Instance.minimumJovianSurfaceRadius,
                 cb_solarsystem.Instance.maximumJovianSurfaceRadius
-            );
+            ) * WorldData.universalScaleFactor;
 
             data.hasAtmosphere = true; // if you think about it, the planet is ONLY atmosphere
 
             data.tConfig.atmosphericRadius = Random.Range(
                 cb_solarsystem.Instance.minimumJovianAtmosphereRadius,
                 cb_solarsystem.Instance.maximumJovianAtmosphereRadius
-            );
+            ) * WorldData.universalScaleFactor;
 
             BuildAtmosphereBasedOnBodyType(type);
         } 
@@ -188,7 +188,7 @@ public class cb_trackedbody : MonoBehaviour
             data.tConfig.equitorialRadius = Random.Range(
                 cb_solarsystem.Instance.minimumTerranLunarSurfaceRadius,
                 cb_solarsystem.Instance.maximumTerranLunarSurfaceRadius
-            );
+            ) * WorldData.universalScaleFactor;
 
             data.hasAtmosphere = false;
             data.tConfig.atmosphericRadius = -1;
@@ -198,7 +198,7 @@ public class cb_trackedbody : MonoBehaviour
             data.tConfig.equitorialRadius = Random.Range(
                 cb_solarsystem.Instance.minimumJovianLunarSurfaceRadius,
                 cb_solarsystem.Instance.maximumJovianLunarSurfaceRadius
-            );
+            ) * WorldData.universalScaleFactor;
 
             data.hasAtmosphere = false;
             data.tConfig.atmosphericRadius = -1;

@@ -16,6 +16,6 @@ public class e_floatingentity : MonoBehaviour
     public void Setup()
     {
         data = new e_floatingentitydata(transform);
-        data.defaultScale = 1;
+        data.defaultScale = 2;
     }
 }

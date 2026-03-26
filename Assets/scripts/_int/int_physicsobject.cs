@@ -49,7 +49,7 @@ public class int_physicsobject : MonoBehaviour
         if (enableImpactSounds)
         {
             Vector3 v = GetComponent<Rigidbody>().linearVelocity;
-            Material impactMaterial = utils_audio.GetMaterialFromRay(transform.position, v, 10f, 0);
+            Material impactMaterial = util_audio.GetMaterialFromRay(transform.position, v, 10f, 0);
             //AudioManager.Instance.PlaySound(utils_audio.GetClipFromMaterial(impactMaterial, InteractionHandler3D.Instance.impactSounds, InteractionHandler3D.Instance.defaultImpactSound));
         }
     }

@@ -75,6 +75,12 @@ public class CameraController : MonoBehaviour
         Camera.main.cullingMask = Instance.normalView;
     }
 
+    public static void ZeroOut()
+    {
+        Instance.transform.localPosition = Vector3.zero;
+        t_cam.localPosition = Vector3.zero;
+    }
+
 
     public static void SetControlMode(CameraControlMode newMode)
     {

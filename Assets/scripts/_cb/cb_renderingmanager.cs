@@ -34,32 +34,41 @@ public class cb_renderingmanager : MonoBehaviour
         worldOffset = Vector3.zero;
     }
 
+    // **** NEW VARIABLES ****
+    public float originSnapBackRadius; // how far from the origin can the player get before they get "corrected"
+
+    // aka. "hard" culling radius, where mimic and floating objects un-render (apart from celestial objs)
+    public float primaryCullingRadius;
+    // aka. "soft" culling radius, where fixed entities un-render and mimic objects (including planets) start scaling
+    public float secondaryCullingRadius;
+    // (secondary < primary)
+    // see the entities README for more info!
+
     public Transform t_bodyContainer; // could access from cb_solarsystem, but a shortcut feels better
 
-    public Camera cam;
-    public cbp_floatingentity[] bodyEntities;
+    public e_floatingentity[] bodyEntities;
 
     public float originRadius; // how far from the origin can the player get before they get "corrected"
     public float renderRadius; // how far can objects be before they're squished
 
     public Vector3 worldOffset; // the current offset of the world
 
-    public cbp_floatingentity player;
-    public cbp_floatingentity entityInControl;
+    public e_floatingentity player;
+    public e_floatingentity entityInControl;
 
     public void SetupEntities()
     {
-        bodyEntities = new cbp_floatingentity[cb_solarsystem.Instance.monoBodies.Count];
+        bodyEntities = new e_floatingentity[cb_solarsystem.Instance.monoBodies.Count];
         t_bodyContainer = cb_solarsystem.Instance.monoBodies[0].transform.parent;
 
         for (int i = 0; i < bodyEntities.Length; i++)
         {
-            bodyEntities[i] = new cbp_floatingentity(cb_solarsystem.Instance.monoBodies[i].transform.GetChild(0));
+            bodyEntities[i] = new e_floatingentity(cb_solarsystem.Instance.monoBodies[i].transform.GetChild(0));
             bodyEntities[i].defaultScale = 1;
         }
 
         // 'player' IS actually a gameObject
-        player = new cbp_floatingentity(GameObject.Find("player").transform);
+        player = new e_floatingentity(GameObject.Find("player").transform);
     }
 
     public void UpdateAllBodyPositions()
@@ -104,7 +113,7 @@ public class cb_renderingmanager : MonoBehaviour
         entityInControl = player;
     }
 
-    public bool EntityInsideRenderRadius(cbp_floatingentity _entity) {
+    public bool EntityInsideRenderRadius(e_floatingentity _entity) {
         return true; // TODO: change this
     }
 

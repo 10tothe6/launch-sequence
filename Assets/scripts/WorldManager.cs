@@ -61,6 +61,35 @@ public class WorldManager : MonoBehaviour
         
     }
 
+    public int GetSOIIndex()
+    {
+        Vector3 playerPos = Vector3.zero;
+
+        // I can't use the 'getbodypositions' function or whatever bc i have to use the CURRENT position
+
+        float[] gravForces = new float[cb_solarsystem.Instance.monoBodies.Count];
+        
+        for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
+        {
+            // TODO: all of this
+            float force = 0;
+        }
+
+        int kingIndex = 0;
+
+        // does not at all require two loops, just doing it this way so its a little nicer to read
+        // (splitting the calculation step and sorting step instead of combining them)
+        for (int i = 1; i < gravForces.Length; i++)
+        {
+            if (gravForces[kingIndex] < gravForces[i])
+            {
+                kingIndex = i;
+            }
+        }
+
+        return kingIndex;
+    }
+
     public void StartGame(TMP_InputField input)
     {
         int parsed = -1;

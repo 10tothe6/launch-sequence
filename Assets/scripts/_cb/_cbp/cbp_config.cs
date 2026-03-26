@@ -12,7 +12,6 @@ public class cbp_config
     public int selfIndex; // because I'm not putting mono refs in a data class, this is how things will be referenced
 
     public cbp_orbit orbit;
-    public cbp_poseinfo pose;
 
     // i for initial
     public Vector3 iPosition;
@@ -29,7 +28,6 @@ public class cbp_config
     public cbp_config()
     {
         orbit = new cbp_orbit();
-        pose = new cbp_poseinfo();
     }
 
     // using physics stuff to move the planets is better for short timespans

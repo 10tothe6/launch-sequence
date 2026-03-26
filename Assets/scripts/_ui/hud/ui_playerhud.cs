@@ -40,5 +40,10 @@ public class ui_playerhud : MonoBehaviour
         ui_debugmenu.Instance.AddEntry("[hud]", 
         () => "",
         "game_main");
+
+        // based on the player's position, what planet's SOI are they in?
+        ui_debugmenu.Instance.AddEntry("current SOI", 
+        () => WorldManager.Instance.GetSOIIndex().ToString(),
+        "game_main");
     }
 }

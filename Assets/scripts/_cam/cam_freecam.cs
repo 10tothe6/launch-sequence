@@ -22,7 +22,8 @@ public class cam_freecam : MonoBehaviour
     {
         CameraController.cam_main.cullingMask = cullingMask;
         transform.SetParent(t_player);
-        transform.localPosition = Vector3.zero;
+        
+        CameraController.ZeroOut();
     }
     public void ExitControl()
     {

@@ -96,9 +96,11 @@ public class Program : MonoBehaviour
 
     void Update()
     {
+        // we want to try and have an update function in as few scripts as possible
         if (gameState == GameState.InGame)
         {
             UIManager.Instance.InGameUpdate();
+            WorldManager.Instance.UpdateWorld();
         }
     }
 

@@ -40,10 +40,10 @@ public class cam_freecam : MonoBehaviour
             }
 
             // TODO: run the position changes THROUGH THE RENDERING MANAGER!
-            // t_player.transform.position += 
-            // transform.forward * Input.inputAxisForward +
-            // transform.right * Input.inputAxisHorizontal + 
-            // transform.up * Input.inputAxisVertical;
+            LocalPlayer.Instance.MoveBy(
+            (transform.forward * Input.inputAxisForward +
+            transform.right * Input.inputAxisHorizontal + 
+            transform.up * Input.inputAxisVertical) * 0.05f);
         }
     }
 }

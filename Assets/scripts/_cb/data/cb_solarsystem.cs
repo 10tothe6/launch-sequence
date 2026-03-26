@@ -165,8 +165,8 @@ public class cb_solarsystem : MonoBehaviour
     {
         for (int i = 0; i < monoBodies.Count; i++)
         {
-            if (i == 0 || i == 1) {monoBodies[i].data.pConfig.pose.localPosition = DoubleVector3.zero; continue;}
-            monoBodies[i].data.pConfig.pose.localPosition = monoBodies[i].data.pConfig.GetPositionAtTime(time + temporalOffset, 1000);
+            if (i == 0 || i == 1) {monoBodies[i].pose.data.localPosition = DoubleVector3.zero; continue;}
+            monoBodies[i].pose.data.localPosition = monoBodies[i].data.pConfig.GetPositionAtTime(time + temporalOffset, 1000);
         }
     }
 
@@ -177,7 +177,7 @@ public class cb_solarsystem : MonoBehaviour
         for (int i = 0; i < positions.Length; i++)
         {
             if (i == 0 || i == 1) {positions[i] = Vector3.zero; continue;}
-            positions[i] = monoBodies[monoBodies[i].data.pConfig.parentIndex].data.pConfig.pose.localPosition.ToVector3() +  monoBodies[i].data.pConfig.pose.localPosition.ToVector3();
+            positions[i] = monoBodies[monoBodies[i].data.pConfig.parentIndex].pose.data.localPosition.ToVector3() +  monoBodies[i].pose.data.localPosition.ToVector3();
             positions[i] *= scaleFactor;
         }
 
@@ -191,7 +191,7 @@ public class cb_solarsystem : MonoBehaviour
         for (int i = 0; i < velocities.Length; i++)
         {
             if (i == 0 || i == 1) {velocities[i] = Vector3.zero; continue;}
-            velocities[i] = monoBodies[monoBodies[i].data.pConfig.parentIndex].data.pConfig.pose.velocity.ToVector3() +  monoBodies[i].data.pConfig.pose.velocity.ToVector3();
+            velocities[i] = monoBodies[monoBodies[i].data.pConfig.parentIndex].pose.data.velocity.ToVector3() +  monoBodies[i].pose.data.velocity.ToVector3();
             velocities[i] *= scaleFactor;
         }
 

@@ -58,7 +58,7 @@ public class WorldManager : MonoBehaviour
 
     public void UpdateWorld()
     {
-        
+        cb_renderingmanager.Instance.UpdateAllBodyPositions();
     }
 
     public int GetSOIIndex()
@@ -115,6 +115,11 @@ public class WorldManager : MonoBehaviour
         UIManager.Instance.EnterMapView();
 
         Program.gameState = GameState.InGame;
+
+        cb_renderingmanager.Instance.SetupEntities();
+
+        // VERY MUCH TEMP
+        cb_renderingmanager.Instance.player.data.localPosition = ss.monoBodies[2].pose.data.localPosition.Add(Vector3.right * 25f);
     }
 
     // just putting this here for now

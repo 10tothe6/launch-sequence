@@ -21,21 +21,21 @@ public class e_mimicentitydata {
         defaultScale = _ref.localScale.x;
     }
 
-    public void Refresh() {
-        // for now just set the unity position to game position
-        Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.reference;
-        reference.position = planetTransform.position + cb_renderingmanager.Instance.AdjustVector(defaultPosition, 0) * planetTransform.localScale.x;
-        reference.eulerAngles = planetTransform.eulerAngles + defaultRotation;
-        reference.localScale = Vector3.one * defaultScale * (planetTransform.localScale.x / cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.defaultScale);
-    }
+    // public void Refresh() {
+    //     // for now just set the unity position to game position
+    //     Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.reference;
+    //     reference.position = planetTransform.position + cb_renderingmanager.Instance.AdjustVector(defaultPosition, 0) * planetTransform.localScale.x;
+    //     reference.eulerAngles = planetTransform.eulerAngles + defaultRotation;
+    //     reference.localScale = Vector3.one * defaultScale * (planetTransform.localScale.x / cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.defaultScale);
+    // }
 
-    public Vector3 GetPosition() {
-        Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.reference;
-        return planetTransform.position + defaultPosition * planetTransform.localScale.x;
-    }
+    // public Vector3 GetPosition() {
+    //     Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.reference;
+    //     return planetTransform.position + defaultPosition * planetTransform.localScale.x;
+    // }
 
-    public Vector3 GetRotation() {
-        Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.reference;
-        return reference.eulerAngles = planetTransform.eulerAngles + defaultRotation;
-    }
+    // public Vector3 GetRotation() {
+    //     Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.reference;
+    //     return reference.eulerAngles = planetTransform.eulerAngles + defaultRotation;
+    // }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class cb_trackedbody : MonoBehaviour
 {
     public cb_trackedbodydata data;
+    public e_floatingentity pose;
     public Transform t_model;
     public float epsilon;
 
@@ -27,6 +28,12 @@ public class cb_trackedbody : MonoBehaviour
         FillDataBasedOnBodyType(bodyType);
         // this generates the actual object mesh
         GenerateModel();
+
+        // floating entity parent (only applies to celestial bodies)
+        if (parentIndex != -1)
+        {
+            pose.data.parent = cb_solarsystem.Instance.monoBodies[parentIndex].pose;
+        }
     }
 
     public int GetMoonCount()
@@ -203,8 +210,8 @@ public class cb_trackedbody : MonoBehaviour
             data.pConfig.iPosition = Vector3.zero;
             data.pConfig.iVelocity = Vector3.zero;
 
-            data.pConfig.pose.localPosition = new DoubleVector3(data.pConfig.iPosition);
-            data.pConfig.pose.velocity = new DoubleVector3(data.pConfig.iVelocity);
+            pose.data.localPosition = new DoubleVector3(data.pConfig.iPosition);
+            pose.data.velocity = new DoubleVector3(data.pConfig.iVelocity);
             return;
         }
         float orbitalVelocity = Mathf.Sqrt(cb_solarsystem.gravConstant * cb_solarsystem.Instance.monoBodies[data.pConfig.parentIndex].data.mass / baseRadius);
@@ -242,7 +249,7 @@ public class cb_trackedbody : MonoBehaviour
         data.pConfig.orbit.orbitalEccentricity = data.pConfig.iN / data.pConfig.iM;
         data.pConfig.orbit.orbitalPeriod = (data.pConfig.iM * 2 * Mathf.PI) / (Mathf.Abs(data.pConfig.iTransverseVelocity) * data.pConfig.iRadius * Mathf.Pow(data.pConfig.iM * data.pConfig.iM - data.pConfig.iN * data.pConfig.iN, 1.5f));
 
-        data.pConfig.pose.localPosition = new DoubleVector3(data.pConfig.iPosition);
-        data.pConfig.pose.velocity = new DoubleVector3(data.pConfig.iVelocity);
+        pose.data.localPosition = new DoubleVector3(data.pConfig.iPosition);
+        pose.data.velocity = new DoubleVector3(data.pConfig.iVelocity);
     }
 }

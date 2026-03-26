@@ -154,6 +154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1298731031599254677}
   - component: {fileID: 6596696864992323317}
+  - component: {fileID: 6420620203700900405}
   m_Layer: 0
   m_Name: cb_generic
   m_TagString: Untagged
@@ -206,15 +207,6 @@ MonoBehaviour:
         semiMinorAxis: 0
         orbitalPeriod: 0
         orbitalEccentricity: 0
-      pose:
-        localPosition:
-          x: 0
-          y: 0
-          z: 0
-        velocity:
-          x: 0
-          y: 0
-          z: 0
       iPosition: {x: 0, y: 0, z: 0}
       iVelocity: {x: 0, y: 0, z: 0}
       iRadius: 0
@@ -242,5 +234,36 @@ MonoBehaviour:
       scatterFactor: 0
       scatterStrength: 0
       waveLengths: {x: 0, y: 0, z: 0}
+  pose: {fileID: 6420620203700900405}
   t_model: {fileID: 3056679450261237978}
   epsilon: 0.1
+--- !u!114 &6420620203700900405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daa3dac6b64e9544ba2b470dc1adc6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_floatingentity
+  data:
+    isCelestial: 0
+    reference: {fileID: 0}
+    parent: {fileID: 0}
+    localPosition:
+      x: 0
+      y: 0
+      z: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    velocity:
+      x: 0
+      y: 0
+      z: 0
+    defaultScale: 0
+  setupOnAwake: 1

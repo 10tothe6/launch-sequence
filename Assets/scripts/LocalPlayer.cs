@@ -1,0 +1,38 @@
+using UnityEngine;
+
+// might end up being a temporary class (by the time we add multiplayer), 
+// but we're keeping it for now to help with inputs and stuff
+
+public class LocalPlayer : MonoBehaviour
+{
+    private static LocalPlayer _instance;
+
+    public static LocalPlayer Instance
+    {
+        get => _instance;
+        private set
+        {
+            if (_instance == null)
+            {
+                _instance = value;
+            }
+            else if (_instance != value)
+            {
+                Debug.Log("You messed up buddy.");
+                Destroy(value);
+            }
+        }
+    }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    public e_floatingentity pose;
+
+    public void MoveBy(Vector3 amt)
+    {
+        pose.data.localPosition = pose.data.localPosition.Add(new DoubleVector3(amt));
+    }
+}

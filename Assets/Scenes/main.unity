@@ -4775,6 +4775,9 @@ MonoBehaviour:
   onChangeControlMode:
     m_PersistentCalls:
       m_Calls: []
+  onCameraUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &751265230
 Transform:
   m_ObjectHideFlags: 0
@@ -4807,7 +4810,7 @@ MonoBehaviour:
   cullingMask:
     serializedVersion: 2
     m_Bits: 375
-  moveSpeed: 0.1
+  moveSpeed: 10
 --- !u!1 &756680592
 GameObject:
   m_ObjectHideFlags: 0

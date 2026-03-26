@@ -92,15 +92,6 @@ public class cb_renderingmanager : MonoBehaviour
         // we have merged cbp_poseinfo and e_floatingentity to serve the same function,
         // so the position doesn't need to be updated
 
-        // they do need to be refreshed tho
-        for (int i = 0; i < bodyEntities.Length; i++)
-        {
-            bodyEntities[i].data.Refresh();
-        }
-
-        // player
-        player.data.Refresh();
-
         if (entityInControl != null)
         {
             // this is the code that "corrects" the world when you get too far from the origin
@@ -119,6 +110,15 @@ public class cb_renderingmanager : MonoBehaviour
 
                 player.data.reference.position += shoveFactor;
             }
+        }
+
+        // player
+        player.data.Refresh();
+
+        // they do need to be refreshed tho
+        for (int i = 0; i < bodyEntities.Length; i++)
+        {
+            bodyEntities[i].data.Refresh();
         }
     }
 

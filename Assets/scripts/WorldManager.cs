@@ -62,6 +62,7 @@ public class WorldManager : MonoBehaviour
 
     public void UpdateWorld()
     {
+        CameraController.Instance.UpdateCamera();
         cb_renderingmanager.Instance.UpdateAllBodyPositions();
     }
 

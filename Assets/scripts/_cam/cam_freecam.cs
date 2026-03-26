@@ -10,6 +10,7 @@ public class cam_freecam : MonoBehaviour
     void Start()
     {
         CameraController.Instance.onChangeControlMode.AddListener(ProcessChangeInControlMode);
+        CameraController.Instance.onCameraUpdate.AddListener(CameraUpdate);
     }
 
     public void ProcessChangeInControlMode()
@@ -32,7 +33,7 @@ public class cam_freecam : MonoBehaviour
         
     }
 
-    void Update()
+    void CameraUpdate()
     {
         if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.Freecam)
         {

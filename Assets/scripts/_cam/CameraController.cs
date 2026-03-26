@@ -59,6 +59,12 @@ public class CameraController : MonoBehaviour
 
     // to help with transitions
     public UnityEvent onChangeControlMode;
+    public UnityEvent onCameraUpdate;
+
+    public void UpdateCamera()
+    {
+        onCameraUpdate.Invoke();
+    }
 
     public Vector3 PositionRelativeToControlEntity()
     {

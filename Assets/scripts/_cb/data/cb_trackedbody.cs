@@ -11,9 +11,11 @@ public class cb_trackedbody : MonoBehaviour
 
     public void Initialize(string name, int parentIndex, ushort bodyType,float baseRadius)
     {
-        gameObject.name = name;
-
         data = new cb_trackedbodydata();
+        
+        gameObject.name = name;
+        data.name = name;
+
         // basic data
         if (bodyType == (ushort)cb_bodytype.Stellar || bodyType == (ushort)cb_bodytype.Null)
         {
@@ -22,7 +24,7 @@ public class cb_trackedbody : MonoBehaviour
         data.pConfig.isGrandparent = data.bodyType == (ushort)cb_bodytype.Null;
         data.pConfig.parentIndex = parentIndex;
         data.pConfig.selfIndex = cb_solarsystem.Instance.monoBodies.Count - 1;
-        data.name = name;
+        
 
         GenerateOrbit(baseRadius);
         FillDataBasedOnBodyType(bodyType);

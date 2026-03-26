@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 // the return of WorldManager.cs!
 
@@ -55,6 +56,8 @@ public class WorldManager : MonoBehaviour
     public float currentTimewarpFactor;
 
     // ****************************
+
+    public UnityEvent onNewWorldGenerate;
 
     public void UpdateWorld()
     {
@@ -120,6 +123,8 @@ public class WorldManager : MonoBehaviour
 
         // VERY MUCH TEMP
         cb_renderingmanager.Instance.player.data.localPosition = ss.monoBodies[2].pose.data.localPosition.Add(Vector3.right * 25f);
+
+        onNewWorldGenerate.Invoke();
     }
 
     // just putting this here for now
@@ -148,7 +153,7 @@ public class WorldManager : MonoBehaviour
         {
             // subtracting the position of the center body focuses on it
             // easier than moving the camera ig?
-            t_mapBodyContainer.GetChild(i).GetComponent<cb_mapobject>().Initialize(p[i]);
+            t_mapBodyContainer.GetChild(i).GetComponent<cb_mapobject>().Initialize(p[i] - p[mapFocusIndex]);
         }
         for (int i = 0; i < t_mapBodyContainer.childCount; i++)
         {
@@ -165,7 +170,7 @@ public class WorldManager : MonoBehaviour
             GameObject g_newMapBody = Instantiate(p_mapBody, t_mapBodyContainer);
 
             // handling the screenspace icon thing
-            ui_screenspaceicon comp = g_newMapBody.GetComponent<ui_screenspaceicon>();
+            ui_linkedicon comp = g_newMapBody.GetComponent<ui_linkedicon>();
 
             // just pass it to the ui script atp
             ui_mapview.Instance.SetupBody(ss.monoBodies[i],comp);

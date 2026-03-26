@@ -5,6 +5,8 @@ public class cam_freecam : MonoBehaviour
     public Transform t_player;
     public LayerMask cullingMask;
 
+    public float moveSpeed;
+
     void Start()
     {
         CameraController.Instance.onChangeControlMode.AddListener(ProcessChangeInControlMode);
@@ -43,7 +45,7 @@ public class cam_freecam : MonoBehaviour
             LocalPlayer.Instance.MoveBy(
             (transform.forward * Input.inputAxisForward +
             transform.right * Input.inputAxisHorizontal + 
-            transform.up * Input.inputAxisVertical) * 0.05f);
+            transform.up * Input.inputAxisVertical) * moveSpeed);
         }
     }
 }

@@ -50,8 +50,8 @@ public class cb_mapobject : MonoBehaviour
     {
         if (CameraController.controlMode == (ushort)CameraControlMode.MapView)
         {
-            GetComponent<ui_screenspaceicon>().Show();
-        } else {GetComponent<ui_screenspaceicon>().Hide();}
+            GetComponent<ui_linkedicon>().Show();
+        } else {GetComponent<ui_linkedicon>().Hide();}
     }
 
     // the physical mesh that the body will use

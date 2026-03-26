@@ -1,9 +1,9 @@
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
-// drawing a gameobject to the screen
 
-public class ui_screenspaceicon : MonoBehaviour
+
+public class ui_linkedicon : MonoBehaviour
 {
     public Sprite icon;
     public GameObject p_icon;

@@ -66,7 +66,7 @@ public class ui_mapview : MonoBehaviour
         "map");
     }
 
-    public void SetupBody(cb_trackedbody body, ui_screenspaceicon comp)
+    public void SetupBody(cb_trackedbody body, ui_linkedicon comp)
     {
         comp.icon = WorldManager.Instance.cbIcons[body.data.bodyType];
         comp.t_uiContainer = t_mapIcons;

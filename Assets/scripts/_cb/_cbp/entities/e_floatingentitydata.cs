@@ -109,7 +109,7 @@ public class e_floatingentitydata {
 
                 
                 reference.localScale = Vector3.one * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(localPosition).Mag());
-                reference.position = localPosition.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(cb_renderingmanager.Instance.entityInControl.data.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
+                reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(cb_renderingmanager.Instance.entityInControl.data.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
 
 
                 //}
@@ -117,7 +117,7 @@ public class e_floatingentitydata {
             else
             {
                 reference.localScale = Vector3.one * defaultScale;
-                reference.position = localPosition.Sub(camPosition).Add(cb_renderingmanager.Instance.entityInControl.data.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
+                reference.position = pos.Sub(camPosition).Add(cb_renderingmanager.Instance.entityInControl.data.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
             }
         }
 

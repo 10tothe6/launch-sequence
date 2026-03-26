@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1950562063242888560}
   - component: {fileID: 2429306924842219781}
   - component: {fileID: 7266436794235081132}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: temp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 1298731031599254677}
   - component: {fileID: 5613676204026087662}
   - component: {fileID: 892541809401650966}
-  - component: {fileID: 6831168609199027297}
+  - component: {fileID: 8983940671535341157}
   m_Layer: 7
   m_Name: cb_map_generic
   m_TagString: Untagged
@@ -215,7 +215,7 @@ MonoBehaviour:
   useColor: 0
   lineColor: {r: 0, g: 0, b: 0, a: 0}
   lineWidth: 0.1
---- !u!114 &6831168609199027297
+--- !u!114 &8983940671535341157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,13 +224,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8460234261487516770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b419aacd5a5caa944b1ef3eaf3b22b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b76734985b03434da25d443fda51347, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ui_screenspaceicon
+  m_EditorClassIdentifier: Assembly-CSharp::ui_linkedicon
   icon: {fileID: 0}
   p_icon: {fileID: 325579002622698583, guid: bf803859dee8dc740aedb44f794ece9e, type: 3}
   t_icon: {fileID: 0}
   t_uiContainer: {fileID: 0}
+  isHidden: 0
 --- !u!1 &9022401789089274635
 GameObject:
   m_ObjectHideFlags: 0

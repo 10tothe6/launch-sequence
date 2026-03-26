@@ -262,7 +262,7 @@ public class cb_solarsystem : MonoBehaviour
                 }
 
                 // spawn the planet itself
-                addedPlanets.Add(AddBodyToSystem(i.ToString(), 0, bodyType,currentRadius)); // again, parent to COM
+                addedPlanets.Add(AddBodyToSystem("Planet " + i.ToString(), 0, bodyType,currentRadius)); // again, parent to COM
             }
         }
 
@@ -301,7 +301,7 @@ public class cb_solarsystem : MonoBehaviour
                     (ushort)cb_bodytype.JovianMoon;
 
                     // plus 2 bc of COM and star
-                    AddBodyToSystem("m" + i.ToString() + "   " + j.ToString(), i+2, bodyType,currentRadius);
+                    AddBodyToSystem("Moon " + i.ToString() + "." + j.ToString(), i+2, bodyType,currentRadius);
                 }
             }
         }

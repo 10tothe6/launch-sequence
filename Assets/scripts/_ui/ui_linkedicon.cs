@@ -13,10 +13,13 @@ public class ui_linkedicon : MonoBehaviour
 
     public bool isHidden;
 
+    public Button button;
+
     public void Initialize()
     {
         t_icon = Instantiate(p_icon, t_uiContainer).transform;
         t_icon.GetComponent<Image>().sprite = icon;
+        button = t_icon.GetComponent<Button>();
     }
 
     void OnDestroy()

@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -50,6 +51,11 @@ public class WorldManager : MonoBehaviour
     public float mapScaleFactorPlanetary;
     public int mapFocusIndex; // what cb to focus on
 
+    public float mapLerpSpeed;
+    public int oldMapFocusIndex;
+    private Vector3[] p;
+    private Vector3 mapBasePosition;
+
     // *********
 
     // ************ TIME-RELATED STUFF ************
@@ -59,6 +65,12 @@ public class WorldManager : MonoBehaviour
     // ****************************
 
     public UnityEvent onNewWorldGenerate;
+
+    void Update()
+    {
+        RefreshMap();
+        UpdateMapBasePosition();
+    }
 
     public void UpdateWorld()
     {
@@ -111,7 +123,7 @@ public class WorldManager : MonoBehaviour
 
     public float GetSeaLevelAltitude()
     {
-        Debug.Log(GetCoreAltitude() + "     " + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius);
+        //Debug.Log(GetCoreAltitude() + "     " + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius);
         return GetCoreAltitude() - cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius;
     }
 
@@ -171,23 +183,50 @@ public class WorldManager : MonoBehaviour
 
         ui_mapview.Instance.SetupDebugInfo();
 
-        RefreshMap();
+        RegenerateMap();
     }
 
-    public void RefreshMap()
+    public void RegenerateMap()
     {
-        Vector3[] p = ss.GetBodyPositions(GetMapScaleFromFocusedBody());
+        p = ss.GetBodyPositions(GetMapScaleFromFocusedBody());
 
         for (int i = 0; i < t_mapBodyContainer.childCount; i++)
         {
             // subtracting the position of the center body focuses on it
             // easier than moving the camera ig?
-            t_mapBodyContainer.GetChild(i).GetComponent<cb_mapobject>().Initialize(p[i] - p[mapFocusIndex]);
+            t_mapBodyContainer.GetChild(i).GetComponent<cb_mapobject>().Initialize(p[i] - GetMapBasePosition());
+        }
+
+        RefreshMap();
+    }
+
+    public void RefreshMap()
+    {
+        for (int i = 0; i < t_mapBodyContainer.childCount; i++)
+        {
+            // subtracting the position of the center body focuses on it
+            // easier than moving the camera ig?
+            t_mapBodyContainer.GetChild(i).GetComponent<cb_mapobject>().SetPosition(p[i] - GetMapBasePosition());
         }
         for (int i = 0; i < t_mapBodyContainer.childCount; i++)
         {
-            t_mapBodyContainer.GetChild(i).localPosition = p[i] - p[mapFocusIndex];
+            t_mapBodyContainer.GetChild(i).localPosition = p[i] - GetMapBasePosition();
         }
+    }
+
+    public void UpdateMapBasePosition()
+    {
+        if (p == null) {mapBasePosition = Vector3.zero;}
+
+        else
+        {
+            mapBasePosition =  Vector3.Lerp(mapBasePosition, p[mapFocusIndex], mapLerpSpeed);
+        }
+    }
+
+    public Vector3 GetMapBasePosition()
+    {
+        return mapBasePosition;
     }
 
     public void RegenerateMapBodies()
@@ -209,13 +248,55 @@ public class WorldManager : MonoBehaviour
     // like pressing tab in ksp
     public void CycleMapFocus()
     {
-        mapFocusIndex++;
-        if (mapFocusIndex >= t_mapBodyContainer.childCount)
+        SetMapFocus(GetNextMapIndex(mapFocusIndex));
+
+        RegenerateMap();
+    }
+
+    public void SetMapFocus(int newIndex)
+    {
+        oldMapFocusIndex = mapFocusIndex;
+        mapFocusIndex = newIndex;
+        RegenerateMap();
+    }
+
+    
+    // we switch map bodies like ksp [planet -> moon -> moon -> moon -> planet -> moon]
+    // this takes a bit of work, since the planet indices are organized [planet -> planet -> planet -> moon -> moon]
+
+    // not entirely tested, but I do think it works
+    public int GetNextMapIndex(int currentIndex)
+    {
+        int result = currentIndex + 1;
+
+        for (int i = 2; i < cb_solarsystem.Instance.monoBodies.Count; i++)
         {
-            mapFocusIndex = 1;
+            int currentParent = cb_solarsystem.Instance.monoBodies[i].data.pConfig.parentIndex;
+            if (currentParent > 1)
+            {
+                if (currentParent == currentIndex && cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex < 2)
+                {
+                    result = i;
+                    break;
+                }
+            }
         }
 
-        RefreshMap();
+        if (result > cb_solarsystem.Instance.monoBodies.Count - 1)
+        {
+            result = 1;
+        }
+        else
+        {
+            if (cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex > 1 && 
+            cb_solarsystem.Instance.monoBodies[currentIndex+1].data.pConfig.parentIndex !=
+            cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex)
+            {
+                result = cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex + 1;
+            }
+        }
+
+        return result;
     }
 
     public float GetMapScaleFromFocusedBody()

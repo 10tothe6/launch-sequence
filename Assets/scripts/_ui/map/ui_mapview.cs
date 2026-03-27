@@ -41,7 +41,7 @@ public class ui_mapview : MonoBehaviour
         "map");
 
         ui_debugmenu.Instance.AddEntry("dist from focus", 
-        () => Vector3.Distance(CameraController.t_cam.position, WorldManager.Instance.t_mapBodyContainer.GetChild(WorldManager.Instance.mapFocusIndex).position).ToString(),
+        () => Vector3.Distance(CameraController.t_cam.position, WorldManager.Instance.GetMapBasePosition()).ToString(),
         "map");
 
         ui_debugmenu.Instance.AddEntry("name", 
@@ -72,5 +72,6 @@ public class ui_mapview : MonoBehaviour
         comp.t_uiContainer = t_mapIcons;
 
         comp.Initialize();
+        comp.button.onClick.AddListener(() => WorldManager.Instance.SetMapFocus(body.data.pConfig.selfIndex));
     }
 }

@@ -11,9 +11,14 @@ public class cb_mapobject : MonoBehaviour
     public int parentIndex;
     public Transform t_parent;
 
-    public void Initialize(Vector3 pos)
+    public void SetPosition(Vector3 pos)
     {
         transform.position = pos;
+    }
+
+    public void Initialize(Vector3 pos)
+    {
+        SetPosition(pos);
 
         selfIndex = transform.GetSiblingIndex();
         parentIndex = cb_solarsystem.Instance.monoBodies[selfIndex].data.pConfig.parentIndex;
@@ -44,6 +49,8 @@ public class cb_mapobject : MonoBehaviour
         GenerateModel();
 
         CameraController.Instance.onChangeControlMode.AddListener(ShowHideIcon);
+
+        
     }
 
     public void ShowHideIcon()

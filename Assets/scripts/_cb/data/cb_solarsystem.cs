@@ -76,6 +76,7 @@ public class cb_solarsystem : MonoBehaviour
     // might move them into some other sort of class later if this script balloons too much
     public int minimumPlanetCount;
     public int maximumPlanetCount;
+    private int currentPlanetCount;
 
     // ******************** full solar system scaling ********************
 
@@ -146,6 +147,11 @@ public class cb_solarsystem : MonoBehaviour
 
     [Header("ACTUAL DATA")]
     public cb_solarsystemdata data;
+
+    public int GetPlanetCount()
+    {
+        return currentPlanetCount;
+    }
 
     public void LoadFromData(cb_solarsystemdata data)
     {
@@ -233,6 +239,8 @@ public class cb_solarsystem : MonoBehaviour
         // systems can't have no planets, but they CAN have one
         int planetCap = Random.Range(Instance.minimumPlanetCount,Instance.maximumPlanetCount);
 
+        currentPlanetCount = planetCap;
+
         float currentRadius = minimumSystemRadius * WorldData.universalScaleFactor - minimumPlanetSpacing * WorldData.universalScaleFactor;
 
         // keeping track so we can add moons later
@@ -246,6 +254,7 @@ public class cb_solarsystem : MonoBehaviour
 
             if (currentRadius >= maximumSystemRadius * WorldData.universalScaleFactor)
             {
+                currentPlanetCount = i+1;
                 // system got too big, regardless of whether we hit our planet cap or not
                 break;
             } else

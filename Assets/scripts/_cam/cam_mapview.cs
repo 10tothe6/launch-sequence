@@ -36,9 +36,7 @@ public class cam_mapview : MonoBehaviour
         // this script only does anything if the camera is in map view mode
         if (CameraController.controlMode == (ushort)CameraControlMode.MapView)
         {
-            Vector3 basePosition = WorldManager.Instance.t_mapBodyContainer.GetChild(
-                WorldManager.Instance.mapFocusIndex
-            ).position;
+            Vector3 basePosition = Vector3.zero;
 
             // user input stuff is gonna be done on some cam scripts too
             if (Keyboard.current.tabKey.wasPressedThisFrame)

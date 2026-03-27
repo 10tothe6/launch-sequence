@@ -2690,6 +2690,8 @@ MonoBehaviour:
   mapScaleFactorSolar: 0.0000001
   mapScaleFactorPlanetary: 0.001
   mapFocusIndex: 0
+  mapLerpSpeed: 0.05
+  oldMapFocusIndex: 0
   currentTimewarpFactor: 0
   onNewWorldGenerate:
     m_PersistentCalls:
@@ -10447,7 +10449,7 @@ MonoBehaviour:
   maximumSystemRadius: 3e+12
   minimumMoonSpacing: 30000000
   maximumMoonSpacing: 100000000
-  minimumPlanetarySystemRadius: 5000000
+  minimumPlanetarySystemRadius: 11000000
   maximumPlanetarySystemRadius: 1e+9
   minimumTerranSurfaceRadius: 200000
   maximumTerranSurfaceRadius: 800000

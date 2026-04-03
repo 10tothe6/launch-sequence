@@ -7,6 +7,10 @@ using UnityEngine;
 
 public class cbt_meshchunk : MonoBehaviour
 {
+    public bool isCulledByAngle;
+    public bool isCulledByLOD;
+
+
     public Transform t_model;
 
     [Header("TESTING")]
@@ -121,6 +125,14 @@ public class cbt_meshchunk : MonoBehaviour
         //gameObject.layer = Sys.planetLayerMaskInt;
     }
 
+    public void UpdateRenderStatus()
+    {
+        if (!isCulledByAngle && !isCulledByLOD)
+        {
+            Show();
+        } else {Hide();}
+    }
+
     public void Hide()
     {
         mr.gameObject.SetActive(false);
@@ -128,6 +140,16 @@ public class cbt_meshchunk : MonoBehaviour
     public void Show()
     {
         mr.gameObject.SetActive(true);
+    }
+    
+    public void SetAsActive()
+    {
+        isCulledByLOD = false;
+        for (int i = 0; i < children.Length; i++)
+        {
+            children[i].isCulledByLOD = true;
+            children[i].UpdateRenderStatus();
+        }
     }
 
     public bool IsGrandChild()

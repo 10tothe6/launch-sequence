@@ -98,6 +98,21 @@ public class cbt_meshbody : MonoBehaviour
         // fuck it im keeping it in
         foreach (cbt_meshchunk current in chunks)
         {   
+            // finally, we see if a given chunk needs to be hidden
+            // we can only go backwards if the parent chunk won't immediately advance the next frame (that'll look glitchy)
+            // so we'll use the parent chunk for the distance test
+            if (useDirectObject)
+            {
+                if (current.t_model.gameObject.activeSelf &&
+                current.parent != null)
+                {
+                    if (Vector3.Distance(current.parent.mr.bounds.center, t_decidingObject.position) >= detailLevelThresholds[current.parent.levelOfDetail])
+                    {
+                        current.parent.SetAsActive();
+                    }
+                }
+            }
+
             // first, we check to see if any chunks should be subdivided
             if (current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
             {
@@ -112,19 +127,26 @@ public class cbt_meshbody : MonoBehaviour
             }
 
             // next, we check to see if a given chunk should be culled
-            if (useDirectObject)
+            if (useDirectObject && enableChunkCulling)
             {
                 Vector3 toDecider = t_decidingObject.position - transform.position;
                 Vector3 toChunk = current.mr.bounds.center - transform.position;
 
                 if (Vector3.Angle(toDecider, toChunk) > chunkCullingAngle)
                 {
-                    current.Hide();
-                } else if (current.IsGrandChild()) // no need to show the chunk if it has more detailed children
+                    current.isCulledByAngle = true;
+                } else
                 {
-                    current.Show();
+                    current.isCulledByAngle = false;
                 }
+
+                current.UpdateRenderStatus();
             }
+
+            
+            //  ********************************
+            //  below here is unused, old parts of the code
+            // ********************************
 
             // // active gameobjects means the chunk is actually being rendered, and therefore is relevant
             // if (current.gameObject.activeSelf && current.levelOfDetail > 0)
@@ -163,6 +185,15 @@ public class cbt_meshbody : MonoBehaviour
 
     public void Subdivide(cbt_meshchunk input)
     {
+        if (input.children.Length > 0)
+        {
+            for (int i = 0; i < input.children.Length; i++)
+            {
+                input.children[i].isCulledByLOD = false;
+                input.children[i].UpdateRenderStatus();
+            }
+            return;
+        }
         // make sure the children array is initialized
         input.children = new cbt_meshchunk[4];
 
@@ -200,7 +231,8 @@ public class cbt_meshbody : MonoBehaviour
         }
 
         // make sure we don't render the old one over the new ones
-        input.Hide();
+        input.isCulledByLOD = true;
+        input.UpdateRenderStatus();
     }
 
     // ********************

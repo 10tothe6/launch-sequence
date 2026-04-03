@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class cbt_meshbody : MonoBehaviour
 {
+    public bool enableChunkCulling;
+    public float chunkCullingAngle; // anything at a greater angle will be culled
     public bool updateChunksPeriodically;
 
     [Header("TRACKING CONFIG")]
@@ -106,6 +108,21 @@ public class cbt_meshbody : MonoBehaviour
                         // this will BOTH make the new chunks AND hide the old one
                         Subdivide(current);
                     }
+                }
+            }
+
+            // next, we check to see if a given chunk should be culled
+            if (useDirectObject)
+            {
+                Vector3 toDecider = t_decidingObject.position - transform.position;
+                Vector3 toChunk = current.mr.bounds.center - transform.position;
+
+                if (Vector3.Angle(toDecider, toChunk) > chunkCullingAngle)
+                {
+                    current.Hide();
+                } else if (current.IsGrandChild()) // no need to show the chunk if it has more detailed children
+                {
+                    current.Show();
                 }
             }
 

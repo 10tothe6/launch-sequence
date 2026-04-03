@@ -8,7 +8,7 @@ using UnityEngine;
 public class cbt_meshchunk : MonoBehaviour
 {
     public Transform t_model;
-    
+
     [Header("TESTING")]
     // normally the radius is referenced from cb_solarsystem,
     // but the script checks for a non-zero value here and uses that if need be
@@ -128,5 +128,10 @@ public class cbt_meshchunk : MonoBehaviour
     public void Show()
     {
         mr.gameObject.SetActive(true);
+    }
+
+    public bool IsGrandChild()
+    {
+        return children.Length == 0;
     }
 }

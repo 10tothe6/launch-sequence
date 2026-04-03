@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class cbt_meshchunk : MonoBehaviour
 {
+    public Transform t_model;
+    
     [Header("TESTING")]
     // normally the radius is referenced from cb_solarsystem,
     // but the script checks for a non-zero value here and uses that if need be
@@ -32,7 +34,7 @@ public class cbt_meshchunk : MonoBehaviour
     Vector3 axisA; // not sure
     Vector3 axisB; // not sure
 
-    public int level; // the LOD level of the chunk
+    public int levelOfDetail; // the LOD level of the chunk
 
     public void Initialize(int resolution, Vector3 localUp, Vector3 dims, int bodyIndex) {
         this.dims = dims;
@@ -117,5 +119,14 @@ public class cbt_meshchunk : MonoBehaviour
         mf.mesh = mesh;
 
         //gameObject.layer = Sys.planetLayerMaskInt;
+    }
+
+    public void Hide()
+    {
+        mr.gameObject.SetActive(false);
+    }
+    public void Show()
+    {
+        mr.gameObject.SetActive(true);
     }
 }

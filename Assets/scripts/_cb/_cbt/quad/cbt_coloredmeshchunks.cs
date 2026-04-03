@@ -1,8 +1,15 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
+
+public enum cbt_ChunkColoringMode
+{
+    LOD,
+    PARENT_FACE,
+}
 
 public class cbt_coloredmeshchunks : MonoBehaviour
 {
+    public cbt_ChunkColoringMode coloringMode;
+
     public bool refreshOnUpdate;
     public Color[] debugColors;
     private cbt_meshbody comp;
@@ -23,10 +30,20 @@ public class cbt_coloredmeshchunks : MonoBehaviour
     // go through all the chunks of the mesh body, and give them their corresponding color
     public void RefreshColors()
     {
-        for (int i = 0; i < comp.chunks.Count; i++)
+        if (coloringMode == cbt_ChunkColoringMode.LOD)
         {
-            // TODO: figure out what order we want the indices in
-            comp.chunks[i].SetDebugColor(debugColors[0]);
+            for (int i = 0; i < comp.chunks.Count; i++)
+            {
+                // TODO: figure out what order we want the indices in
+                comp.chunks[i].SetDebugColor(debugColors[comp.detailLevelThresholds.Length - 1 -comp.chunks[i].levelOfDetail]);
+            }
+        } else if (coloringMode == cbt_ChunkColoringMode.PARENT_FACE)
+        {
+            for (int i = 0; i < comp.chunks.Count; i++)
+            {
+                // TODO: figure out what order we want the indices in
+                comp.chunks[i].SetDebugColor(debugColors[comp.chunks[i].startingFace]);
+            }
         }
     }
 }

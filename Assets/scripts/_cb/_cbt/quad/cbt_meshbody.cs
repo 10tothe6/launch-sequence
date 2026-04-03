@@ -5,6 +5,13 @@ using System.Collections.Generic;
 
 public class cbt_meshbody : MonoBehaviour
 {
+    public bool updateChunksPeriodically;
+
+    [Header("TRACKING CONFIG")]
+    public bool useDirectObject;
+    public Transform t_decidingObject;
+    
+    [Space(12)]
     public GameObject p_chunk;
     public Transform t_chunkContainer;
 
@@ -29,12 +36,10 @@ public class cbt_meshbody : MonoBehaviour
     // THEY HAVE TO BE MULTIPLIED BY THE UNIVERSAL SCALE FACTOR
     // DO NOT FORGET THIS
 
-    public Transform t_decidingObject;
-
     // TODO: call this from a more managerial script
     void FixedUpdate()
     {
-        if (chunks != null)
+        if (chunks != null && updateChunksPeriodically)
         {
             UpdateAllChunks();
         }
@@ -61,7 +66,7 @@ public class cbt_meshbody : MonoBehaviour
             parentChunks[i] = g_parentChunk.GetComponent<cbt_meshchunk>();
 
             parentChunks[i].Initialize(startingResolution, directions[i], new Vector3(0, 0, startingResolution), bodyIndex);
-            parentChunks[i].level = 0;
+            parentChunks[i].levelOfDetail = detailLevelThresholds.Length - 1; // higher number, lower detail
             parentChunks[i].parent = null;
 
             parentChunks[i].startingFace = i;
@@ -83,103 +88,108 @@ public class cbt_meshbody : MonoBehaviour
 
     void UpdateAllChunks()
     {
-        // newChunks.Clear();
+        // we reset the newChunks list in anticipation of making new new chunks
+        // ^^ wow that makes so much sense
+        newChunks.Clear();
 
-        // // oh god, remember when I used to use foreach loops?
-        // // fuck it im keeping it in
-        // // - 10^6, 3/30/2026
-        // foreach (cbt_meshchunk current in chunks)
-        // {   
-        //     // active gameobjects means the chunk is actually being rendered, and therefore is relevant
-        //     if (current.gameObject.activeSelf && current.level > 0)
-        //     {
-        //         int count = 0;
-        //         for (int i = 0; i < 4; i++)
-        //         {
-        //             if (Vector3.Distance(current.parent.children[i].GetComponent<MeshRenderer>().bounds.center, t_player.position) > detailLevelThresholds[current.level - 1])
-        //             {
-        //                 count++;
-        //             }
-        //         }
+        // oh god, remember when I used to use foreach loops?
+        // fuck it im keeping it in
+        foreach (cbt_meshchunk current in chunks)
+        {   
+            // first, we check to see if any chunks should be subdivided
+            if (current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
+            {
+                if (useDirectObject)
+                {
+                    if (Vector3.Distance(current.mr.bounds.center, t_decidingObject.position) < detailLevelThresholds[current.levelOfDetail])
+                    {
+                        // this will BOTH make the new chunks AND hide the old one
+                        Subdivide(current);
+                    }
+                }
+            }
 
-        //         if (count == 4)
-        //         {
-        //             current.gameObject.SetActive(false);
-        //             if (current.parent != null)
-        //             {
-        //                 current.parent.gameObject.SetActive(true);
-        //             }
-        //         }
-        //     }
+            // // active gameobjects means the chunk is actually being rendered, and therefore is relevant
+            // if (current.gameObject.activeSelf && current.levelOfDetail > 0)
+            // {
+            //     int count = 0;
+            //     for (int i = 0; i < 4; i++)
+            //     {
+            //         if (Vector3.Distance(current.parent.children[i].GetComponent<MeshRenderer>().bounds.center, t_player.position) > detailLevelThresholds[current.level - 1])
+            //         {
+            //             count++;
+            //         }
+            //     }
 
-        //     if (current.children != null)
-        //     {
-        //         if (current.gameObject.name == "mesh")
-        //         {
-        //             for (int i = 0; i < 4; i++)
-        //             {
-        //                 newChunks.Add(current.children[i]);
-        //             }
+            //     if (count == 4)
+            //     {
+            //         current.gameObject.SetActive(false);
+            //         if (current.parent != null)
+            //         {
+            //             current.parent.gameObject.SetActive(true);
+            //         }
+            //     }
+            // }
 
-        //             current.gameObject.name = "cached mesh";
-        //             current.gameObject.SetActive(false);
-        //         }
-        //     }
-        //     else if (detailLevelThresholds.Length > current.level + 1 && Vector3.Distance(current.GetComponent<MeshRenderer>().bounds.center, t_player.position) < detailLevelThresholds[current.level + 1])
-        //     {
-        //         Subdivide(current);
-        //     }
+            // if (current.hashCode != null && current.reference.activeSelf)
+            // {
+            //     GetNeighborLOD(current.hashCode, current.reference.GetComponent<MeshRenderer>(), current.startingFace);
+            // }
+        }
 
-        //     // if (current.hashCode != null && current.reference.activeSelf)
-        //     // {
-        //     //     GetNeighborLOD(current.hashCode, current.reference.GetComponent<MeshRenderer>(), current.startingFace);
-        //     // }
-        // }
-
-        // // transferring the new chunks over to the master chunks list
-        // foreach(cbt_meshchunk current in newChunks)
-        // {
-        //     chunks.Add(current);
-        // }
+        // transferring the new chunks over to the master chunks list
+        foreach(cbt_meshchunk current in newChunks)
+        {
+            chunks.Add(current);
+        }
     }
 
-    // public void Subdivide(cbt_meshchunk input)
-    // {
-    //     input.children = new cbt_meshchunk[4];
+    public void Subdivide(cbt_meshchunk input)
+    {
+        // make sure the children array is initialized
+        input.children = new cbt_meshchunk[4];
 
-    //     for (int i = 0; i < 4; i++)
-    //     {
-    //         // not using a prefab for some reason? fine
-    //         GameObject meshObj = new GameObject("mesh");
-    //         meshObj.transform.SetParent(t_chunkContainer);
-    //         meshObj.transform.localScale = Vector3.one;
+        for (int i = 0; i < 4; i++)
+        {
+            // not using a prefab for some reason? fine
+            GameObject g_newDaughterChunk = Instantiate(p_chunk, t_chunkContainer);
+            g_newDaughterChunk.transform.localScale = Vector3.one;
 
-    //         meshObj.transform.position = cb_solarsystem.Instance.monoBodies[bodyIndex].transform.position;
+            g_newDaughterChunk.transform.position = transform.position;
 
-    //         MeshFilter newFilter = meshObj.AddComponent<MeshFilter>();
-    //         meshObj.AddComponent<MeshRenderer>().sharedMaterial = new Material(planetMaterial);
-    //         newFilter.sharedMesh = new Mesh();
+            float res = (float)startingResolution;
 
-    //         float res = (float)startingResolution;
+            input.children[i] = g_newDaughterChunk.GetComponent<cbt_meshchunk>();
+            input.children[i].Initialize(startingResolution, input.localUp, new Vector3(input.dims.x + (res * (input.dims.z / res)) / 2f * ((float)i % 2f), input.dims.y + (res * (input.dims.z/ res)) / 2 * Mathf.Floor((float)i / 2f), (res * (input.dims.z/ res)) / 2f), bodyIndex);
+            input.children[i].levelOfDetail = input.levelOfDetail - 1; // lower number, more detail
+            input.children[i].parent = input;
+
+            input.children[i].startingFace = input.startingFace;
+            input.children[i].hashCode = input.hashCode + i.ToString();
             
-    //         input.children[i].Initialize(newFilter.sharedMesh, resolution, input.localUp, new Vector3(input.dims.x + (res * (input.dims.z / res)) / 2f * ((float)i % 2f), input.dims.y + (res * (input.dims.z/ res)) / 2 * Mathf.Floor((float)i / 2f), (res * (input.dims.z/ res)) / 2f), radius);
-    //         input.children[i].level = input.level + 1;
-    //         input.children[i].parent = input;
 
-    //         input.children[i].startingFace = input.startingFace;
-    //         input.children[i].hashCode = input.hashCode + i.ToString();
-    //     }
+            // ******** mesh stuff ********
 
-    //     for (int i = 0; i < 4; i++)
-    //     {
-    //         input.children[i].ConstructMesh(bodyIndex);
+            input.children[i].ConstructMesh(bodyIndex);
 
-    //         if (input.level + 1 > detailLevelThresholds.Length - 5)
-    //         {
-    //             input.children[i].gameObject.AddComponent<MeshCollider>();
-    //         }
-    //     }
-    // }
+            // input is one, meaning the children will be 0 (max detail)
+            if (input.levelOfDetail == 1)
+            {
+                // max detail chunks need colliders
+                input.children[i].t_model.gameObject.AddComponent<MeshCollider>();
+            }
+
+            newChunks.Add(input.children[i]);
+        }
+
+        // make sure we don't render the old one over the new ones
+        input.Hide();
+    }
+
+    // ********************
+    // below here, there be draagons
+    // (old, untested neighbour-finding code)
+    // ********************
 
     // void GetNeighborLOD(string hashCode, MeshRenderer output, int startingFace)
     // {

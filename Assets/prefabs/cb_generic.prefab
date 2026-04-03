@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767217204084819624}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -107,7 +107,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -142,6 +142,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6987787813210316347}
+  - {fileID: 8116052590345554806}
   m_Father: {fileID: 1298731031599254677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8460234261487516770
@@ -155,6 +156,8 @@ GameObject:
   - component: {fileID: 1298731031599254677}
   - component: {fileID: 6596696864992323317}
   - component: {fileID: 6420620203700900405}
+  - component: {fileID: 7775331553818960751}
+  - component: {fileID: 6011434511242130393}
   m_Layer: 0
   m_Name: cb_generic
   m_TagString: Untagged
@@ -267,3 +270,73 @@ MonoBehaviour:
       z: 0
     defaultScale: 0
   setupOnAwake: 1
+--- !u!114 &7775331553818960751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f5ca80843bab8949ac8990db2138a21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cbt_meshbody
+  t_chunkContainer: {fileID: 8116052590345554806}
+  planetMaterial: {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
+  resolution: 10
+  radius: 0
+  detailLevelThresholds:
+  - 0
+  - 0
+--- !u!114 &6011434511242130393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3fa0a1d5a7d5f14195d1d32962e10e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cbt_coloredmeshchunks
+  debugColors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0, g: 0.19627857, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.15898585, a: 1}
+  - {r: 1, g: 0.90484047, b: 0, a: 1}
+  - {r: 1, g: 0.528935, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.06343174, a: 1}
+  - {r: 1, g: 0, b: 0.87524605, a: 1}
+--- !u!1 &8827367443003885876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8116052590345554806}
+  m_Layer: 0
+  m_Name: chunks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8116052590345554806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8827367443003885876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3056679450261237978}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -136,15 +136,17 @@ public class cb_renderingmanager : MonoBehaviour
     }
 
     // ******** helpers *********
-    // public Vector3 AdjustVector(Vector3 _v, int _id) {
-    //     return new Vector3(_v.z * Mathf.Sin((float)bodyEntities[_id].rotation.y * (Mathf.PI / 180)) + _v.x * Mathf.Cos((float)bodyEntities[_id].rotation.y * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos((float)bodyEntities[_id].rotation.y * (Mathf.PI / 180)) + _v.x * -Mathf.Sin((float)bodyEntities[_id].rotation.y * (Mathf.PI / 180)));
-    // }
-    // public Vector3 AdjustVectorReverse(Vector3 _v, int _id) {
-    //     return new Vector3(_v.z * Mathf.Sin((float)-bodyEntities[_id].rotation.y * (Mathf.PI / 180)) + _v.x * Mathf.Cos((float)-bodyEntities[_id].rotation.y * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos((float)-bodyEntities[_id].rotation.y * (Mathf.PI / 180)) + _v.x * -Mathf.Sin((float)-bodyEntities[_id].rotation.y * (Mathf.PI / 180)));
-    // }
-    // public Vector3 AdjustVector(Vector3 _v, float _amount) {
-    //     return new Vector3(_v.z * Mathf.Sin(_amount * (Mathf.PI / 180)) + _v.x * Mathf.Cos(_amount * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos(_amount * (Mathf.PI / 180)) + _v.x * -Mathf.Sin(_amount * (Mathf.PI / 180)));
-    // }
+    public Vector3 AdjustVector(Vector3 _v, int _id) {
+        double rot = 0; // TODO: grab the actual planet data
+        return new Vector3(_v.z * Mathf.Sin((float)rot * (Mathf.PI / 180)) + _v.x * Mathf.Cos((float)rot * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos((float)rot * (Mathf.PI / 180)) + _v.x * -Mathf.Sin((float)rot * (Mathf.PI / 180)));
+    }
+    public Vector3 AdjustVectorReverse(Vector3 _v, int _id) {
+        double rot = 0;
+        return new Vector3(_v.z * Mathf.Sin((float)-rot * (Mathf.PI / 180)) + _v.x * Mathf.Cos((float)-rot * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos((float)-rot * (Mathf.PI / 180)) + _v.x * -Mathf.Sin((float)-rot * (Mathf.PI / 180)));
+    }
+    public Vector3 AdjustVector(Vector3 _v, float _amount) {
+        return new Vector3(_v.z * Mathf.Sin(_amount * (Mathf.PI / 180)) + _v.x * Mathf.Cos(_amount * (Mathf.PI / 180)), _v.y, _v.z * Mathf.Cos(_amount * (Mathf.PI / 180)) + _v.x * -Mathf.Sin(_amount * (Mathf.PI / 180)));
+    }
 
     // // what even is this?
     // public List<float> GetAngles() {

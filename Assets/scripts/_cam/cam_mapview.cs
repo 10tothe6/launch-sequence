@@ -8,9 +8,12 @@ public class cam_mapview : MonoBehaviour
 
     public LayerMask mapCullingMask;
 
+    private Quaternion storedRotation;
+
     void Start()
     {
         CameraController.Instance.onChangeControlMode.AddListener(ProcessChangeInControlMode);
+        storedRotation = Quaternion.identity;
     }
 
     public void ProcessChangeInControlMode()
@@ -23,12 +26,13 @@ public class cam_mapview : MonoBehaviour
 
     public void EnterControl()
     {
+        if (storedRotation != Quaternion.identity) {CameraController.t_cam.parent.rotation = storedRotation;}
         CameraController.cam_main.cullingMask = mapCullingMask;
         transform.SetParent(null);
     }
     public void ExitControl()
     {
-        
+        storedRotation = CameraController.t_cam.parent.rotation;
     }
 
     void Update()

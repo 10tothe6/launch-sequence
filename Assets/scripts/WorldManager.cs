@@ -7,6 +7,9 @@ using UnityEngine.Events;
 
 // controls solar system stuff, craft stuff, etc.
 
+
+// TODO: move the map stuff (mapFocusIndex) to another script
+
 public class WorldManager : MonoBehaviour
 {
     private static WorldManager _instance;
@@ -181,7 +184,7 @@ public class WorldManager : MonoBehaviour
     // just putting this here for now
     public void SetupMap()
     {
-        mapFocusIndex = 1;
+        if (mapFocusIndex == 0) {mapFocusIndex = 1;}
         // for the actual game, there are 2 different lists of objects
         // 'bodies' are the actual planet objects
         // 'map bodies' are specifically for the map view

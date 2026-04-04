@@ -7,10 +7,14 @@ public class cam_freecam : MonoBehaviour
 
     public float moveSpeed;
 
+    private Quaternion storedRotation;
+
     void Start()
     {
         CameraController.Instance.onChangeControlMode.AddListener(ProcessChangeInControlMode);
         CameraController.Instance.onCameraUpdate.AddListener(CameraUpdate);
+
+        storedRotation = Quaternion.identity;
     }
 
     public void ProcessChangeInControlMode()
@@ -27,10 +31,13 @@ public class cam_freecam : MonoBehaviour
         transform.SetParent(t_player);
         
         CameraController.ZeroOut();
+
+        if (storedRotation != Quaternion.identity) {LocalPlayer.Instance.transform.rotation = storedRotation;}
+        CameraController.t_cam.parent.localRotation = Quaternion.Euler(Vector3.zero);
     }
     public void ExitControl()
     {
-        
+        storedRotation = LocalPlayer.Instance.transform.rotation;
     }
 
     void CameraUpdate()

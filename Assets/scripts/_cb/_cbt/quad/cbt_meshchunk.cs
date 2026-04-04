@@ -40,6 +40,11 @@ public class cbt_meshchunk : MonoBehaviour
 
     public int levelOfDetail; // the LOD level of the chunk
 
+    public Vector3 chunkMidpoint;
+    // let's consider the chunk as a square inscribed in a cirlcle
+    // how much of the sphere's surface is covered by that circular region?
+    public float spanningAngle; // deg
+
     public void Initialize(int resolution, Vector3 localUp, Vector3 dims, int bodyIndex) {
         this.dims = dims;
         this.resolution = resolution;
@@ -76,16 +81,25 @@ public class cbt_meshchunk : MonoBehaviour
         int triIndex = 0;
         float scale = dims.z / (float)resolution;
 
+        float xOff = dims.x / (float)resolution - (scale / 2) * (1 / scale - 1);
+        float yOff = dims.y / (float)resolution - (scale / 2) * (1 / scale - 1);
+        xOff /= scale;
+        yOff /= scale;
+
+        chunkMidpoint = (localUp + axisA * (0.5f + xOff - 0.5f) * 2 * scale + axisB * (0.5f + yOff - 0.5f) * 2 * scale).normalized * rad;
+
         for (int i = 0, y = 0; y < resolution; y++)
         {
             for (int x = 0; x < resolution; x++, i++)
             {
+                if (x == 0 && y == 0)
+                {
+                    spanningAngle = 5 * Vector3.Angle(chunkMidpoint, (localUp + axisA * (0.5f + xOff - 0.5f) * 2 * scale + axisB * (0.5f + yOff - 0.5f) * 2 * scale).normalized * rad);
+                }
+
                 Vector2 percent = new Vector2(x, y) / (resolution - 1);
 
-                float xOff = dims.x / (float)resolution - (scale / 2) * (1 / scale - 1);
-                float yOff = dims.y / (float)resolution - (scale / 2) * (1 / scale - 1);
-                xOff /= scale;
-                yOff /= scale;
+                
                 Vector3 pointOnUnitCube = localUp + axisA * (percent.x + xOff - 0.5f) * 2 * scale + axisB * (percent.y + yOff - 0.5f) * 2 * scale;
                 
                 //without normalizing it it would be a cube
@@ -125,6 +139,43 @@ public class cbt_meshchunk : MonoBehaviour
         //gameObject.layer = Sys.planetLayerMaskInt;
     }
 
+    public Vector3 GetLocalPosition()
+    {
+        return chunkMidpoint;
+    }
+
+    // ************************
+    // TODO: find a better way of calculating dist to a chunk
+    // ************************
+
+    // public Vector3 GetClosestPositionToPlayer()
+    // {
+    //     Vector3 centerToChunk = chunkMidpoint;
+    //     Vector3 centerToControl = cb_renderingmanager.GetControlPosition() - cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3();
+
+    //     Vector3 axis = Vector3.Cross(centerToChunk, centerToControl);
+
+    //     Vector3 limit = util_math.RotateVector(centerToChunk, axis, spanningAngle);
+
+    //     return cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3() + limit;
+    // }
+
+    public float GetDistance()
+    {
+        return (cb_renderingmanager.GetControlPosition() - (chunkMidpoint + cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3())).magnitude;
+
+        // float distanceToSurface = WorldManager.Instance.GetSeaLevelAltitude();
+        
+
+        // if (Vector3.Angle(chunkMidpoint, cb_renderingmanager.GetControlPosition() - cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3()) < spanningAngle)
+        // {
+        //     return distanceToSurface;
+        // } else
+        // {
+        //     return (cb_renderingmanager.GetControlPosition() - (chunkMidpoint + cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3()).magnitude;
+        // }
+    }
+
     public void UpdateRenderStatus()
     {
         if (!isCulledByAngle && !isCulledByLOD)
@@ -145,6 +196,7 @@ public class cbt_meshchunk : MonoBehaviour
     public void SetAsActive()
     {
         isCulledByLOD = false;
+        UpdateRenderStatus();
         for (int i = 0; i < children.Length; i++)
         {
             children[i].isCulledByLOD = true;

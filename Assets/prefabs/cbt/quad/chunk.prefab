@@ -134,8 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7640a35244c58e47b969d5800ad8d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_meshchunk
+  isCulledByAngle: 0
+  isCulledByLOD: 0
   t_model: {fileID: 382908491606340920}
-  directRadius: 10
+  directRadius: 0
   mr: {fileID: 1449421786422819062}
   mf: {fileID: 5302401563296917948}
   parent: {fileID: 0}

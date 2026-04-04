@@ -60,7 +60,9 @@ public class cb_trackedbody : MonoBehaviour
     // the physical mesh that the body will use
     public void GenerateModel()
     {
-        t_model.GetChild(0).localScale = Vector3.one * data.tConfig.equitorialRadius;
+        //t_model.GetChild(0).localScale = Vector3.one * data.tConfig.equitorialRadius;
+
+        GetComponent<cbt_meshbody>().Initialize(data.pConfig.selfIndex);
     }
 
     // handles: 

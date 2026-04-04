@@ -68,6 +68,11 @@ public class cb_renderingmanager : MonoBehaviour
 
     // ************************
 
+    public static Vector3 GetControlPosition()
+    {
+        return Instance.player.data.GetPosition().ToVector3();
+    }
+
     public void SetupEntities()
     {
         bodyEntities = new e_floatingentity[cb_solarsystem.Instance.monoBodies.Count];

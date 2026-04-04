@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6987787813210316347
 Transform:
   m_ObjectHideFlags: 0
@@ -282,13 +282,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5ca80843bab8949ac8990db2138a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_meshbody
+  enableChunkCulling: 1
+  chunkCullingAngle: 90
+  updateChunksPeriodically: 0
+  useDirectObject: 0
+  t_decidingObject: {fileID: 0}
+  p_chunk: {fileID: 8312659028223598983, guid: 78a008ad81002254a8304202ea45ac30, type: 3}
   t_chunkContainer: {fileID: 8116052590345554806}
-  planetMaterial: {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
-  resolution: 10
-  radius: 0
+  startingResolution: 10
+  chunks: []
+  newChunks: []
+  parentChunks: []
   detailLevelThresholds:
   - 0
-  - 0
+  - 10000
+  - 100000
+  - 250000
+  - 450000
+  - 500000
 --- !u!114 &6011434511242130393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,14 +312,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fa0a1d5a7d5f14195d1d32962e10e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_coloredmeshchunks
+  coloringMode: 0
+  refreshOnUpdate: 1
   debugColors:
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0, g: 0.19627857, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0.15898585, a: 1}
-  - {r: 1, g: 0.90484047, b: 0, a: 1}
-  - {r: 1, g: 0.528935, b: 0, a: 1}
-  - {r: 1, g: 0, b: 0.06343174, a: 1}
-  - {r: 1, g: 0, b: 0.87524605, a: 1}
+  - {r: 1, g: 0.4509434, b: 0.4509434, a: 1}
+  - {r: 1, g: 0.73946726, b: 0.4509434, a: 1}
+  - {r: 1, g: 0.9622641, b: 0.51886785, a: 1}
+  - {r: 0.64536434, g: 1, b: 0.4584905, a: 1}
+  - {r: 0.5264151, g: 0.56170183, b: 1, a: 1}
+  - {r: 0.9121313, g: 0.5254902, b: 1, a: 1}
 --- !u!1 &8827367443003885876
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class cbp_config
     // a very interesting solution to a verbosity problem
     public e_floatingentitydata Pose()
     {
-        return cb_solarsystem.Instance.monoBodies[parentIndex].pose.data;
+        return cb_solarsystem.Instance.monoBodies[selfIndex].pose.data;
     }
 
     public DoubleVector3 GetPosition()

@@ -321,7 +321,8 @@ public class cb_solarsystem : MonoBehaviour
 
     public float PercentChanceForJovian(float distanceFromCOM)
     {
-        return 0.5f;
+        //return 0.5f;
+        return 0f;
     }
 
     // regardless of type (planet, star, etc.)

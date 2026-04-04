@@ -49,6 +49,12 @@ public class cbt_meshbody : MonoBehaviour
 
     // ********************************************************************
 
+    public void Initialize(int bodyIndex)
+    {
+        this.bodyIndex = bodyIndex;
+        Initialize();
+    }
+
     public void Initialize()
     {
         // **** just setting variables ****
@@ -88,12 +94,8 @@ public class cbt_meshbody : MonoBehaviour
         }
     }
 
-    void UpdateAllChunks()
+    public void UpdateAllChunks()
     {
-        // we reset the newChunks list in anticipation of making new new chunks
-        // ^^ wow that makes so much sense
-        newChunks.Clear();
-
         // oh god, remember when I used to use foreach loops?
         // fuck it im keeping it in
         foreach (cbt_meshchunk current in chunks)
@@ -106,7 +108,18 @@ public class cbt_meshbody : MonoBehaviour
                 if (current.t_model.gameObject.activeSelf &&
                 current.parent != null)
                 {
-                    if (Vector3.Distance(current.parent.mr.bounds.center, t_decidingObject.position) >= detailLevelThresholds[current.parent.levelOfDetail])
+                    if (Vector3.Distance(current.parent.mr.bounds.center, t_decidingObject.position) >= detailLevelThresholds[current.parent.levelOfDetail] * WorldData.universalScaleFactor)
+                    {
+                        current.parent.SetAsActive();
+                    }
+                }
+            }
+            else
+            {
+                if (current.t_model.gameObject.activeSelf &&
+                current.parent != null)
+                {
+                    if (current.parent.GetDistance() >= detailLevelThresholds[current.parent.levelOfDetail] * WorldData.universalScaleFactor)
                     {
                         current.parent.SetAsActive();
                     }
@@ -114,11 +127,30 @@ public class cbt_meshbody : MonoBehaviour
             }
 
             // first, we check to see if any chunks should be subdivided
-            if (current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
+            if (useDirectObject)
             {
-                if (useDirectObject)
+                if (current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
                 {
-                    if (Vector3.Distance(current.mr.bounds.center, t_decidingObject.position) < detailLevelThresholds[current.levelOfDetail])
+                    if (Vector3.Distance(current.mr.bounds.center, t_decidingObject.position) < detailLevelThresholds[current.levelOfDetail] / WorldData.universalScaleFactor)
+                    {
+                        // this will BOTH make the new chunks AND hide the old one
+                        Subdivide(current);
+                    }
+                }
+            } else
+            {
+                if (current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
+                {
+                    float dist = current.GetDistance();
+                    
+                    // if (bodyIndex == 2 && current.startingFace == 2 && current.levelOfDetail == 1)
+                    // {
+                        
+                    //     Debug.Log(current.GetLocalPosition());
+                    // }
+
+                    // the thresholds are all in meters, so we need to multiply by the scale factor to turn them into the units that game-space actually uses
+                    if (dist < detailLevelThresholds[current.levelOfDetail] * WorldData.universalScaleFactor)
                     {
                         // this will BOTH make the new chunks AND hide the old one
                         Subdivide(current);
@@ -127,20 +159,37 @@ public class cbt_meshbody : MonoBehaviour
             }
 
             // next, we check to see if a given chunk should be culled
-            if (useDirectObject && enableChunkCulling)
+            if (enableChunkCulling)
             {
-                Vector3 toDecider = t_decidingObject.position - transform.position;
-                Vector3 toChunk = current.mr.bounds.center - transform.position;
-
-                if (Vector3.Angle(toDecider, toChunk) > chunkCullingAngle)
+                if (useDirectObject)
                 {
-                    current.isCulledByAngle = true;
+                    Vector3 toDecider = t_decidingObject.position - transform.position;
+                    Vector3 toChunk = current.mr.bounds.center - transform.position;
+
+                    if (Vector3.Angle(toDecider, toChunk) > chunkCullingAngle)
+                    {
+                        current.isCulledByAngle = true;
+                    } else
+                    {
+                        current.isCulledByAngle = false;
+                    }
+
+                    current.UpdateRenderStatus();
                 } else
                 {
-                    current.isCulledByAngle = false;
-                }
+                    Vector3 toDecider = cb_renderingmanager.GetControlPosition() - cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3();
+                    Vector3 toChunk = current.chunkMidpoint;
 
-                current.UpdateRenderStatus();
+                    if (Vector3.Angle(toDecider, toChunk) > chunkCullingAngle)
+                    {
+                        current.isCulledByAngle = true;
+                    } else
+                    {
+                        current.isCulledByAngle = false;
+                    }
+
+                    current.UpdateRenderStatus();
+                }
             }
 
             
@@ -181,6 +230,10 @@ public class cbt_meshbody : MonoBehaviour
         {
             chunks.Add(current);
         }
+
+        // we reset the newChunks list in anticipation of making new new chunks
+        // ^^ wow that makes so much sense
+        newChunks.Clear();
     }
 
     public void Subdivide(cbt_meshchunk input)
@@ -192,6 +245,9 @@ public class cbt_meshbody : MonoBehaviour
                 input.children[i].isCulledByLOD = false;
                 input.children[i].UpdateRenderStatus();
             }
+            // make sure we don't render the old one over the new ones
+            input.isCulledByLOD = true;
+            input.UpdateRenderStatus();
             return;
         }
         // make sure the children array is initialized

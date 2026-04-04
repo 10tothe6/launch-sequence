@@ -76,6 +76,16 @@ public class WorldManager : MonoBehaviour
     {
         CameraController.Instance.UpdateCamera();
         cb_renderingmanager.Instance.UpdateAllBodyPositions();
+
+        // doing chunk updates from here, 'update periodically' has been disabled
+        for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
+        {
+            cbt_meshbody comp = cb_solarsystem.Instance.monoBodies[i].GetComponent<cbt_meshbody>();
+            if (comp != null)
+            {
+                comp.UpdateAllChunks();
+            }
+        }
     }
 
     public static float SeaLevelRadius()

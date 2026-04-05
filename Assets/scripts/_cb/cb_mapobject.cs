@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class cb_mapobject : MonoBehaviour
@@ -50,7 +51,8 @@ public class cb_mapobject : MonoBehaviour
 
         CameraController.Instance.onChangeControlMode.AddListener(ShowHideIcon);
 
-        
+        GetComponent<ui_linkedicon>().t_icon.AddComponent<cb_mapicon>();
+        GetComponent<ui_linkedicon>().t_icon.GetComponent<cb_mapicon>().SetBodyIndex(selfIndex);
     }
 
     public void ShowHideIcon()

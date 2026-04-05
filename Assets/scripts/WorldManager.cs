@@ -36,6 +36,11 @@ public class WorldManager : MonoBehaviour
     }
 
     public Sprite[] cbIcons;
+    public Color[] cbIconColors;
+    [Space(20)]
+    // TODO: maybe not split these two up?
+    public Sprite[] otherIcons;
+    
 
     public Transform t_bodyContainer;
     public Transform t_mapBodyContainer;
@@ -57,7 +62,6 @@ public class WorldManager : MonoBehaviour
     public int oldMapFocusIndex;
     private Vector3[] p;
     private Vector3 mapBasePosition;
-    public Perlin perlin = new Perlin();
 
     // *********
 
@@ -68,6 +72,22 @@ public class WorldManager : MonoBehaviour
     // ****************************
 
     public UnityEvent onNewWorldGenerate;
+    public Perlin perlin = new Perlin();
+
+    // very much temp
+    public GameObject p_robotIcon;
+    public Transform t_mapIconContainer;
+    public GameObject p_robot;
+
+    // spawns a new player robot at the given position
+    // this requires a bit of extra logic to make sure the robot also has a map view icon
+    public void SpawnRobot(num_precisevector3 position)
+    {
+        GameObject g_newRobot = Instantiate(p_robot, null);
+        GameObject g_newMapIcon = Instantiate(p_robotIcon, t_mapIconContainer);
+
+        
+    }
 
     void Update()
     {

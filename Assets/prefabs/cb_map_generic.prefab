@@ -214,7 +214,7 @@ MonoBehaviour:
   m_line: {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
   useColor: 0
   lineColor: {r: 0, g: 0, b: 0, a: 0}
-  lineWidth: 0.1
+  lineWidth: 0.05
 --- !u!114 &8983940671535341157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +232,7 @@ MonoBehaviour:
   t_icon: {fileID: 0}
   t_uiContainer: {fileID: 0}
   isHidden: 0
+  button: {fileID: 0}
 --- !u!1 &9022401789089274635
 GameObject:
   m_ObjectHideFlags: 0

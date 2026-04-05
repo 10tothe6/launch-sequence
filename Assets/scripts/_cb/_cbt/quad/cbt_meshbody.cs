@@ -177,7 +177,7 @@ public class cbt_meshbody : MonoBehaviour
                     current.UpdateRenderStatus();
                 } else
                 {
-                    Vector3 toDecider = cb_renderingmanager.GetControlPosition() - cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3();
+                    Vector3 toDecider = cb_renderingmanager.GetControlPosition().Sub(cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition()).ToVector3();
                     Vector3 toChunk = current.chunkMidpoint;
 
                     if (Vector3.Angle(toDecider, toChunk) > chunkCullingAngle)

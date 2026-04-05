@@ -162,7 +162,7 @@ public class cbt_meshchunk : MonoBehaviour
 
     public float GetDistance()
     {
-        return (cb_renderingmanager.GetControlPosition() - (chunkMidpoint + cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3())).magnitude;
+        return (float)cb_renderingmanager.GetControlPosition().Add(new num_precisevector3(chunkMidpoint).Add(cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition())).Mag();
 
         // float distanceToSurface = WorldManager.Instance.GetSeaLevelAltitude();
         

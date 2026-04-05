@@ -68,9 +68,9 @@ public class cb_renderingmanager : MonoBehaviour
 
     // ************************
 
-    public static Vector3 GetControlPosition()
+    public static num_precisevector3 GetControlPosition()
     {
-        return Instance.player.data.GetPosition().ToVector3();
+        return Instance.player.data.GetPosition();
     }
 
     public void SetupEntities()

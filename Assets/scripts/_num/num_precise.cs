@@ -8,8 +8,8 @@ using UnityEngine;
 public class num_precise
 {
     // for this game, by convention, we're using 4
-    int numDecimalDigits;
-    BigInteger raw;
+    public int numDecimalDigits;
+    public BigInteger raw;
 
     // a few, very similar-looking constructors
     public num_precise(BigInteger raw)

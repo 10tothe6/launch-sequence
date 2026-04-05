@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using UnityEngine;
 
 [System.Serializable]
@@ -32,7 +33,7 @@ public class num_precisevector3
         this.y = y;
         this.z = z;
     }
-    public num_precisevector3(Vector3 v)
+    public num_precisevector3(UnityEngine.Vector3 v)
     {
         //Debug.Log(v.x);
         this.x = new num_precise(v.x);
@@ -82,7 +83,7 @@ public class num_precisevector3
     {
         return new num_precisevector3(x.Add(other.x), y.Add(other.y), z.Add(other.z));
     }
-    public num_precisevector3 Add(Vector3 other)
+    public num_precisevector3 Add(UnityEngine.Vector3 other)
     {
         return new num_precisevector3(x.Add(other.x), y.Add(other.y), z.Add(other.z));
     }
@@ -115,12 +116,25 @@ public class num_precisevector3
     }
 
 
-    public Vector3 ToVector3()
+    public UnityEngine.Vector3 ToVector3()
     {
-        return new Vector3(x.AsFloat(), y.AsFloat(), z.AsFloat());
+        return new UnityEngine.Vector3(x.AsFloat(), y.AsFloat(), z.AsFloat());
     }
     public DoubleVector3 ToDoubleVector3()
     {
         return new DoubleVector3(x.AsDouble(), y.AsDouble(), z.AsDouble());
+    }
+
+    public string AsString()
+    {
+        return (x.raw / new BigInteger(Mathf.Pow(10,x.numDecimalDigits))).ToString() + ", " + 
+        (y.raw / new BigInteger(Mathf.Pow(10,y.numDecimalDigits))).ToString() + ", " + 
+        (z.raw / new BigInteger(Mathf.Pow(10,z.numDecimalDigits))).ToString();
+    }
+    public string AsRawString()
+    {
+        return x.raw.ToString() + ", " + 
+        y.raw.ToString() + ", " + 
+        z.raw.ToString();
     }
 }

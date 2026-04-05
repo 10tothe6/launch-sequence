@@ -332,7 +332,7 @@ public class cb_solarsystem : MonoBehaviour
 
         for (int i = 0; i < monoBodies.Count; i++)
         {
-            Vector2 intersectResult = util_math.RaySphere(monoBodies[i].pose.data.GetPosition().ToVector3(), monoBodies[i].data.tConfig.equitorialRadius, cb_renderingmanager.GetControlPosition(), rayDir);
+            Vector2 intersectResult = util_math.RaySphere(monoBodies[i].pose.data.GetPosition().ToVector3(), monoBodies[i].data.tConfig.equitorialRadius, cb_renderingmanager.GetControlPosition().ToVector3(), rayDir);
 
             if (intersectResult.x < dist && intersectResult.x > -1 && !avoidBodies.Contains(i) && i > 1)
             {

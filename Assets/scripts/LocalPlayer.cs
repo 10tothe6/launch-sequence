@@ -29,6 +29,11 @@ public class LocalPlayer : MonoBehaviour
         Instance = this;
     }
 
+    void FixedUpdate()
+    {
+        Debug.Log(cb_renderingmanager.GetControlPosition().AsRawString());
+    }
+
     public e_floatingentity pose;
 
     public void MoveBy(Vector3 amt)

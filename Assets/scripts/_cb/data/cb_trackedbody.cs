@@ -72,7 +72,7 @@ public class cb_trackedbody : MonoBehaviour
             }
         }
 
-        Vector3 ray = pose.data.GetPosition().ToVector3() - cb_renderingmanager.GetControlPosition();
+        Vector3 ray = pose.data.GetPosition().Sub(cb_renderingmanager.GetControlPosition()).ToVector3();
         isHidden = cb_solarsystem.Instance.IntersectBodies(ray.normalized, ray.magnitude, new int[] {data.pConfig.selfIndex});
 
         return isSamePlanetarySystem && !isHidden;

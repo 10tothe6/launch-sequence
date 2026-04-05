@@ -4773,7 +4773,7 @@ MonoBehaviour:
   ins_t_cam: {fileID: 2044790576}
   ins_cam_main: {fileID: 2044790575}
   ins_controlMode: 0
-  positionRelativeToControlEntity: {x: 0, y: 0, z: 0}
+  positionRelativeToControlEntity: {}
   onChangeControlMode:
     m_PersistentCalls:
       m_Calls: []
@@ -4812,7 +4812,7 @@ MonoBehaviour:
   cullingMask:
     serializedVersion: 2
     m_Bits: 375
-  moveSpeed: 10
+  moveSpeed: 0.5
 --- !u!1 &756680592
 GameObject:
   m_ObjectHideFlags: 0
@@ -10496,7 +10496,7 @@ MonoBehaviour:
   inflationRadius: 0
   t_bodyContainer: {fileID: 1663306513}
   bodyEntities: []
-  worldOffset: {x: 0, y: 0, z: 0}
+  worldOffset: {}
   player: {fileID: 0}
   entityInControl: {fileID: 0}
 --- !u!1 &1945993507
@@ -10685,18 +10685,9 @@ MonoBehaviour:
     isCelestial: 0
     reference: {fileID: 0}
     parent: {fileID: 0}
-    localPosition:
-      x: 0
-      y: 0
-      z: 0
-    rotation:
-      x: 0
-      y: 0
-      z: 0
-    velocity:
-      x: 0
-      y: 0
-      z: 0
+    localPosition: {}
+    rotation: {}
+    velocity: {}
     defaultScale: 0
   setupOnAwake: 1
 --- !u!114 &1988850775

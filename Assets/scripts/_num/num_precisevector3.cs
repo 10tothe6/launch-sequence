@@ -4,16 +4,10 @@ using UnityEngine;
 [System.Serializable]
 public class num_precisevector3
 {
-    public static num_precisevector3 zero = new num_precisevector3(0,0,0);
-    public static num_precisevector3 one = new num_precisevector3(1,1,1);
+    // i tried having things like 'zero' and 'one' here
+    // however, that caused issues bc each one was a single COMMUNAL copy
 
-    // using the unity convention
-    public static num_precisevector3 left = new num_precisevector3(-1,0,0);
-    public static num_precisevector3 right = new num_precisevector3(1,0,0);
-    public static num_precisevector3 up = new num_precisevector3(0,1,0);
-    public static num_precisevector3 down = new num_precisevector3(0,-1,0);
-    public static num_precisevector3 forward = new num_precisevector3(0,0,1);
-    public static num_precisevector3 backward = new num_precisevector3(0,0,-1);
+    // ... so they're gone now
 
 
     public num_precise x;

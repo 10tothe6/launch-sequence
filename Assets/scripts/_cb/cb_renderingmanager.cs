@@ -33,7 +33,7 @@ public class cb_renderingmanager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        worldOffset = num_precisevector3.zero;
+        worldOffset = new num_precisevector3(0,0,0);
     }
 
     // ************ NEW VARIABLES ************
@@ -103,7 +103,7 @@ public class cb_renderingmanager : MonoBehaviour
             // ofc this doesn't apply if there's no controlling entity
             if (entityInControl.data.reference.position.magnitude > originSnapBackRadius)
             {
-                num_precisevector3 shoveFactor = new num_precisevector3(entityInControl.data.reference.position).Mul(new num_precise(-1));
+                num_precisevector3 shoveFactor = new num_precisevector3(entityInControl.data.reference.position).Mul(-1);
                 // player is too far from (0, 0, 0) so shove em' back
                 worldOffset = worldOffset.Add(shoveFactor);
 
@@ -113,7 +113,7 @@ public class cb_renderingmanager : MonoBehaviour
                 //     spacecraft[i].reference.position += shoveFactor;
                 // }
 
-                player.data.reference.position += shoveFactor.ToVector3();
+                player.data.reference.position = Vector3.zero;
             }
         }
 

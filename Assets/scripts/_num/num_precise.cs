@@ -12,6 +12,11 @@ public class num_precise
     BigInteger raw;
 
     // a few, very similar-looking constructors
+    public num_precise(BigInteger raw)
+    {
+        numDecimalDigits = 4;
+        this.raw = raw;
+    }
     public num_precise()
     {
         numDecimalDigits = 4;
@@ -20,22 +25,27 @@ public class num_precise
     public num_precise(float num)
     {
         numDecimalDigits = 4;
-        raw = new BigInteger(num);
+        raw = new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
     }
     public num_precise(double num)
     {
         numDecimalDigits = 4;
-        raw = new BigInteger(num);
+        raw = new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
     }
     public num_precise(int num)
     {
         numDecimalDigits = 4;
-        raw = new BigInteger(num);
+        raw = new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
     }
 
     // all manipulation functions return the class (this) for convinience, allowing for repeat operations
 
     // TODO: make these use the constructors, cuz that's good convention
+
+    // okay okay, time to make a note
+    // at the end of the manipulation functions,
+    // DO NOT return this; YOU FUCKING DUMBASS
+    // that is all
 
     // ********************
     // division
@@ -43,90 +53,75 @@ public class num_precise
     public num_precise Div(num_precise num)
     {
         // just dividing the raw numbers should work?
-        raw = raw / num.raw;
-        return this;
+        return Div(num.AsDouble());
     }
     public num_precise Div(double num)
     {
-        raw = raw / new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(raw / new BigInteger(num));
     }
     public num_precise Div(float num)
     {
-        raw = raw / new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(raw / new BigInteger(num));
     }
     // ********************
     // multiplication
     // ********************
     public num_precise Mul(num_precise num)
     {
-        raw = raw * num.raw; // again, just manipulating the raw numbers should be fine
-        return this;
+        return Mul(num.AsDouble()); // again, just manipulating the raw numbers should be fine
     }
     public num_precise Mul(double num)
     {
-        raw = raw * new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(raw * new BigInteger(num));
     }
     public num_precise Mul(float num)
     {
-        raw = raw * new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(raw * new BigInteger(num));
     }
     // ********************
     // subtraction
     // ********************
     public num_precise Sub(double num)
     {
-        raw = raw - new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(raw - new BigInteger(num * Mathf.Pow(10, numDecimalDigits)));
     }
     public num_precise Sub(float num)
     {
-        raw = raw - new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(raw - new BigInteger(num * Mathf.Pow(10, numDecimalDigits)));
     }
     public num_precise Sub(num_precise num)
     {
-        raw = raw - num.raw;
-        return this;
+        return new num_precise(raw - num.raw);
     }
     // ********************
     // addition
     // ********************
     public num_precise Add(double num)
     {
-        raw = raw + new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(raw + new BigInteger(num * Mathf.Pow(10, numDecimalDigits)));
     }
     public num_precise Add(float num)
     {
-        raw = raw + new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(raw + new BigInteger(num * Mathf.Pow(10, numDecimalDigits)));
     }
     public num_precise Add(num_precise num)
     {
-        raw = raw + num.raw;
-        return this;
+        return new num_precise(raw + num.raw);
     }
     // ********************
     // assignment
     // ********************
     public num_precise Set(double num)
     {
-        raw = new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(new BigInteger(num * Mathf.Pow(10, numDecimalDigits)));
     }
     public num_precise Set(float num)
     {
-        raw = new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
-        return this;
+        return new num_precise(new BigInteger(num * Mathf.Pow(10, numDecimalDigits)));
     }
     public num_precise Set(num_precise num)
     {
-        raw = num.raw;
-        return this;
+        return new num_precise(num.raw);
     }
 
 

@@ -33,8 +33,11 @@ public class Sandbox : MonoBehaviour
 
     public cam_firstperson fpCam;
 
+    private bool isActive;
+
     // called when the game boots into sandbox mode
     // TODO: allow the user to enter sandbox mode from the console, not just the unity editor
+    // ^^ THIS SHOULD ALSO ALLOW FOR MULTIPLAYER SANDBOX-ING
     public void StartSandbox()
     {
         g_parent.SetActive(true);
@@ -47,5 +50,20 @@ public class Sandbox : MonoBehaviour
         fpCam.SetControl(g_playerObj);
 
         CameraController.SetControlMode(CameraControlMode.PlayerFirstPerson);
+
+        isActive = true;
+    }
+
+    void Update()
+    {
+        if (isActive)
+        {
+            UpdateSandbox();
+        }
+    }
+
+    public void UpdateSandbox()
+    {
+        CameraController.Instance.UpdateCamera();
     }
 }

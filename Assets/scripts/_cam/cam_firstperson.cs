@@ -32,7 +32,7 @@ public class cam_firstperson : MonoBehaviour
     public void EnterControl()
     {
         CameraController.cam_main.cullingMask = cullingMask;
-        transform.SetParent(t_controlling);
+        transform.SetParent(t_controlling.GetChild(0));
         
         CameraController.ZeroOut();
     }
@@ -50,7 +50,6 @@ public class cam_firstperson : MonoBehaviour
         if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.PlayerFirstPerson)
         {
             player_keypresspacket toSend = LocalPlayer.GetKeypressPacket();
-
             // this ends up doing most of the work
             // really more like all of it
             controller.SetKeypresses(toSend);

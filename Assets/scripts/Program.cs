@@ -78,6 +78,8 @@ public class Program : MonoBehaviour
 
     public void Boot()
     {
+        Application.targetFrameRate = 60;
+        
         if (buildMode == ProgramBuildMode.HybridBuild)
         {
             if (startMode == ProgramStartMode.FullGame)

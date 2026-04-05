@@ -6092,6 +6092,7 @@ GameObject:
   - component: {fileID: 971387525}
   - component: {fileID: 971387527}
   - component: {fileID: 971387526}
+  - component: {fileID: 971387528}
   m_Layer: 0
   m_Name: ground plane
   m_TagString: Untagged
@@ -6169,6 +6170,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971387524}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &971387528
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971387524}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1039208647
 GameObject:
@@ -10883,7 +10906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1989326765}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: objects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11220,6 +11243,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sandbox
   g_parent: {fileID: 54539360}
+  t_objectContainer: {fileID: 1989326765}
+  p_robot: {fileID: 8782933785179873280, guid: d9b535f823432a043ba06a314e3a8496, type: 3}
+  fpCam: {fileID: 751265232}
 --- !u!1 &2044790573
 GameObject:
   m_ObjectHideFlags: 0

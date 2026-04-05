@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
     public UnityEvent onCameraUpdate;
 
     public void UpdateCamera()
-    {
+    { 
         onCameraUpdate.Invoke();
     }
 

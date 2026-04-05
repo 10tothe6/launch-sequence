@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Data.Common;
+using NUnit.Framework;
 using UnityEngine;
 
 public class cb_trackedbody : MonoBehaviour
@@ -45,6 +46,36 @@ public class cb_trackedbody : MonoBehaviour
         {
             pose.data.parent = cb_solarsystem.Instance.monoBodies[parentIndex].pose;
         }
+    }
+
+    public bool ShouldIconBeVisible()
+    {
+        // two conditions have to be met here
+        // the first: that the body is in the same planetary system OR is the star
+        
+        bool isSamePlanetarySystem = false;
+        bool isHidden = false;
+
+        if (data.pConfig.selfIndex == 1)
+        {
+            isSamePlanetarySystem = true;
+        } else
+        {
+            if (data.pConfig.parentIndex == 0)
+            {
+                // planet
+                isSamePlanetarySystem = data.pConfig.selfIndex == WorldManager.Instance.GetSOIIndex();
+            } else
+            {
+                // moon
+                isSamePlanetarySystem = data.pConfig.parentIndex == WorldManager.Instance.GetSOIIndex();
+            }
+        }
+
+        Vector3 ray = pose.data.GetPosition().ToVector3() - cb_renderingmanager.GetControlPosition();
+        isHidden = cb_solarsystem.Instance.IntersectBodies(ray.normalized, ray.magnitude, new int[] {data.pConfig.selfIndex});
+
+        return isSamePlanetarySystem && !isHidden;
     }
 
     // this isn't stored in a variable

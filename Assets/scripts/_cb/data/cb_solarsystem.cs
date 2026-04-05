@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum cb_bodytype
@@ -323,6 +324,25 @@ public class cb_solarsystem : MonoBehaviour
         {
             monoBodies[i].naturalSatellites = monoBodies[i].GetMoons();
         }
+    }
+
+    public bool IntersectBodies(Vector3 rayDir, float dist, int[] avoidBodies)
+    {
+        bool hit = false;
+
+        for (int i = 0; i < monoBodies.Count; i++)
+        {
+            Vector2 intersectResult = util_math.RaySphere(monoBodies[i].pose.data.GetPosition().ToVector3(), monoBodies[i].data.tConfig.equitorialRadius, cb_renderingmanager.GetControlPosition(), rayDir);
+
+            if (intersectResult.x < dist && intersectResult.x > -1 && !avoidBodies.Contains(i) && i > 1)
+            {
+                //Debug.Log(avoidBodies[0] + "     " + i);
+                hit = true;
+                break;
+            }
+        }
+
+        return hit;
     }
 
     public float PercentChanceForJovian(float distanceFromCOM)

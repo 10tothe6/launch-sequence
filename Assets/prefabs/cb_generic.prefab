@@ -240,6 +240,7 @@ MonoBehaviour:
   pose: {fileID: 6420620203700900405}
   t_model: {fileID: 3056679450261237978}
   epsilon: 0.1
+  naturalSatellites: []
 --- !u!114 &6420620203700900405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +296,7 @@ MonoBehaviour:
   parentChunks: []
   detailLevelThresholds:
   - 0
-  - 10000
+  - 30000
   - 100000
   - 250000
   - 450000

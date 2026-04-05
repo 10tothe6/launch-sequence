@@ -23,7 +23,7 @@ public class ui_planethighlights : MonoBehaviour
 
             comp.additionalDrawCriteria = () =>
             {
-                return !UIManager.Instance.isInMapView && Vector3.Distance(cb_solarsystem.Instance.monoBodies[j].pose.data.GetPosition().ToVector3(), cb_renderingmanager.Instance.player.data.GetPosition().ToVector3()) < cb_renderingmanager.Instance.primaryCullingRadius;
+                return !UIManager.Instance.isInMapView && cb_solarsystem.Instance.monoBodies[j].ShouldIconBeVisible();
             };
 
             comp.GetComponent<ui_planetpoint>().Setup(cb_solarsystem.Instance.monoBodies[i].gameObject.name);

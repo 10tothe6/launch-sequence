@@ -23,4 +23,27 @@ public class util_math
 
         return rotated;
     }
+
+    //a function that intersects a ray with a sphere
+    //CREDIT: Sebastian Lague [Coding Adventures: Atmosphere]
+    // returns Vector2(dist to, dist through)
+    public static Vector2 RaySphere(Vector3 sphereCentre, float sphereRadius, Vector3 rayOrigin, Vector3 rayDir) {
+        Vector3 offset = rayOrigin - sphereCentre;
+        float a = 1;
+        float b = 2 * Vector3.Dot(offset, rayDir);
+        float c = Vector3.Dot(offset, offset) - sphereRadius * sphereRadius;
+        float d = b * b - 4 * a * c;
+
+        if (d > 0) {
+            float s = Mathf.Sqrt(d);
+            float dstToSphereNear = Mathf.Max(0, (-b - s) / (2 * a));
+            float dstToSphereFar = (-b + s) / (2 * a);
+
+            if (dstToSphereFar >= 0) {
+                return new Vector2(dstToSphereNear, dstToSphereFar - dstToSphereNear);
+            }
+        }
+
+        return new Vector2(-1, 0);
+    }
 }

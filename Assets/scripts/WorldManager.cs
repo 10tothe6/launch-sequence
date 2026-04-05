@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -277,38 +276,86 @@ public class WorldManager : MonoBehaviour
     // we switch map bodies like ksp [planet -> moon -> moon -> moon -> planet -> moon]
     // this takes a bit of work, since the planet indices are organized [planet -> planet -> planet -> moon -> moon]
 
-    // not entirely tested, but I do think it works
+    // the last implementation of this was a shitshow so i fixed it
     public int GetNextMapIndex(int currentIndex)
     {
-        int result = currentIndex + 1;
+        int result = currentIndex;
 
-        for (int i = 2; i < cb_solarsystem.Instance.monoBodies.Count; i++)
+        int planetIndex;
+        int moonIndex;
+
+        // checking if planet
+        if (cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex == 0)
         {
-            int currentParent = cb_solarsystem.Instance.monoBodies[i].data.pConfig.parentIndex;
-            if (currentParent > 1)
+            planetIndex = currentIndex;
+            moonIndex = -1;
+        } else
+        {
+            moonIndex = currentIndex;
+            planetIndex = cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex;
+        }
+
+        if (moonIndex == -1)
+        {
+            // we're dealing with a planet, and either advance to its next moon or the next planet (if there are no moons)
+            
+            if (cb_solarsystem.Instance.monoBodies[currentIndex].naturalSatellites.Length > 0)
             {
-                if (currentParent == currentIndex && cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex < 2)
+                // advance to the first moon
+                result = cb_solarsystem.Instance.monoBodies[currentIndex].naturalSatellites[0].data.pConfig.selfIndex;
+            } else
+            {
+                // next planet (if there is none it'll get wrapped back to index 1 (the star))
+                result = currentIndex + 1;
+
+                // if the index is too high, wrap the result
+                if (result > cb_solarsystem.Instance.monoBodies.Count - 1)
+                {
+                    result = 1;
+                }
+
+                if (cb_solarsystem.Instance.monoBodies[result].data.pConfig.parentIndex != 0)
+                {
+                    // no next planet either, so wrap
+                    result = 1;
+                }
+            }
+        } else
+        {
+            // dealing with a moon, so either advance to the next moon or the next planet
+
+            // seeing if there is a next moon
+            bool hasFoundNextMoon = false;
+            for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
+            {
+                if (cb_solarsystem.Instance.monoBodies[i].data.pConfig.parentIndex == planetIndex && i > currentIndex)
                 {
                     result = i;
+                    hasFoundNextMoon = true;
                     break;
+                }
+            }
+
+            if (!hasFoundNextMoon)
+            {
+                // no next moon, so next planet
+                result = planetIndex+1;
+
+                // if the index is too high, wrap the result
+                if (result > cb_solarsystem.Instance.monoBodies.Count - 1)
+                {
+                    result = 1;
+                }
+
+                if (cb_solarsystem.Instance.monoBodies[result].data.pConfig.parentIndex != 0)
+                {
+                    // no next planet either, so wrap
+                    result = 1;
                 }
             }
         }
 
-        if (result > cb_solarsystem.Instance.monoBodies.Count - 1)
-        {
-            result = 1;
-        }
-        else
-        {
-            if (cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex > 1 && 
-            cb_solarsystem.Instance.monoBodies[currentIndex+1].data.pConfig.parentIndex !=
-            cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex)
-            {
-                result = cb_solarsystem.Instance.monoBodies[currentIndex].data.pConfig.parentIndex + 1;
-            }
-        }
-
+        // in theory we should never get here
         return result;
     }
 

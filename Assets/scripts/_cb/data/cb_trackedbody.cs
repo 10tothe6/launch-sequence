@@ -9,6 +9,9 @@ public class cb_trackedbody : MonoBehaviour
     public Transform t_model;
     public float epsilon;
 
+    // a way of storing moons so they don't need to be accessed through the function all the time
+    public cb_trackedbody[] naturalSatellites;
+
     public void Initialize(string name, int parentIndex, ushort bodyType,float baseRadius)
     {
         data = new cb_trackedbodydata();
@@ -42,6 +45,22 @@ public class cb_trackedbody : MonoBehaviour
         {
             pose.data.parent = cb_solarsystem.Instance.monoBodies[parentIndex].pose;
         }
+    }
+
+    // this isn't stored in a variable
+    public cb_trackedbody[] GetMoons()
+    {
+        List<cb_trackedbody> result = new List<cb_trackedbody>();
+
+        for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
+        {
+            if (cb_solarsystem.Instance.monoBodies[i].data.pConfig.parentIndex == data.pConfig.selfIndex)
+            {
+                result.Add(cb_solarsystem.Instance.monoBodies[i]);
+            }
+        }
+
+        return result.ToArray();
     }
 
     public int GetMoonCount()

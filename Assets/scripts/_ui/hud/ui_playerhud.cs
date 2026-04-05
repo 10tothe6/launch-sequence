@@ -60,5 +60,9 @@ public class ui_playerhud : MonoBehaviour
         ui_debugmenu.Instance.AddEntry("backend core altitude", 
         () => util_game.FormatDistance(WorldManager.Instance.GetCoreAltitude()),
         "game_main");
+
+        ui_debugmenu.Instance.AddEntry("eq radius", 
+        () => util_game.FormatRawDistance(WorldManager.SeaLevelRadius()),
+        "game_main");
     }
 }

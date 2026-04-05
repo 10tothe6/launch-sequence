@@ -317,6 +317,12 @@ public class cb_solarsystem : MonoBehaviour
 
         temporalOffset = Random.Range(10f, 30f);
         SetTimeOffset(0);
+
+        // making sure every cb knows what its moons are
+        for (int i = 0; i < monoBodies.Count; i++)
+        {
+            monoBodies[i].naturalSatellites = monoBodies[i].GetMoons();
+        }
     }
 
     public float PercentChanceForJovian(float distanceFromCOM)

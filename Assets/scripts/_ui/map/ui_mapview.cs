@@ -64,6 +64,10 @@ public class ui_mapview : MonoBehaviour
         ui_debugmenu.Instance.AddEntry("has atmo", 
         () => cb_solarsystem.Instance.monoBodies[WorldManager.Instance.mapFocusIndex].data.hasAtmosphere ? "Yes" : "No",
         "map");
+
+        ui_debugmenu.Instance.AddEntry("map eq radius", 
+        () => util_game.FormatRawDistance(WorldManager.SeaLevelRadius(WorldManager.Instance.mapFocusIndex)),
+        "map");
     }
 
     public void SetupBody(cb_trackedbody body, ui_linkedicon comp)

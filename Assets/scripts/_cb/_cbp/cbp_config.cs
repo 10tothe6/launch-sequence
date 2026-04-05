@@ -44,7 +44,7 @@ public class cbp_config
         return cb_solarsystem.Instance.monoBodies[selfIndex].pose.data;
     }
 
-    public DoubleVector3 GetPosition()
+    public num_precisevector3 GetPosition()
     {
         if (parentIndex != -1)
         {
@@ -102,14 +102,14 @@ public class cbp_config
         return 2 * Mathf.Atan(Mathf.Tan(eccentricAnomaly / 2f) * Mathf.Sqrt((iM + iN) / (iM - iN))) - iPhaseShift;
     }
 
-    public DoubleVector3 GetPositionAtTime(float time, int precision)
+    public num_precisevector3 GetPositionAtTime(float time, int precision)
     {
         float trueAnomaly = TrueAnomaly(time, precision);
         float radius = DistFromFocus(trueAnomaly);
 
         Vector3 result = new Vector3(radius * Mathf.Cos(trueAnomaly), 0, radius * Mathf.Sin(trueAnomaly));
         //data.pose.position = new DoubleVector3(result).Add(parent.data.pose.position);
-        return new DoubleVector3(result);
+        return new num_precisevector3(result);
     }
 
     public Vector3[] SampleFullOrbit(float scaleFactor, int pointCount)

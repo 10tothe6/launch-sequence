@@ -33,7 +33,7 @@ public class LocalPlayer : MonoBehaviour
 
     public void MoveBy(Vector3 amt)
     {
-        pose.data.localPosition = pose.data.localPosition.Add(new DoubleVector3(amt));
+        pose.data.localPosition = pose.data.localPosition.Add(new num_precisevector3(amt));
     }
 
     public void SystemTeleport(int index)

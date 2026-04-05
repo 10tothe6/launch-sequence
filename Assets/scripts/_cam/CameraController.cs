@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
 
     public static ushort previousControlMode;
 
-    public Vector3 positionRelativeToControlEntity;
+    public num_precisevector3 positionRelativeToControlEntity;
 
     // to help with transitions
     public UnityEvent onChangeControlMode;
@@ -66,7 +66,7 @@ public class CameraController : MonoBehaviour
         onCameraUpdate.Invoke();
     }
 
-    public Vector3 PositionRelativeToControlEntity()
+    public num_precisevector3 PositionRelativeToControlEntity()
     {
         return positionRelativeToControlEntity;
     }

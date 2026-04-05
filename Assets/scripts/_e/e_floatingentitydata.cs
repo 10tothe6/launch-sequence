@@ -11,21 +11,21 @@ public class e_floatingentitydata {
 
     public e_floatingentity parent; // can very much be null
 
-    public DoubleVector3 localPosition; // THIS IS LOCAL
-    public DoubleVector3 rotation;
-    public DoubleVector3 velocity;
+    public num_precisevector3 localPosition; // THIS IS LOCAL
+    public num_precisevector3 rotation;
+    public num_precisevector3 velocity;
     public float defaultScale; // the scale the object should be at
 
     public e_floatingentitydata() {}
     public e_floatingentitydata(Transform _ref) {
         reference = _ref;
-        localPosition = new DoubleVector3(_ref.position);
-        rotation = new DoubleVector3(_ref.eulerAngles);
+        localPosition = new num_precisevector3(_ref.position);
+        rotation = new num_precisevector3(_ref.eulerAngles);
         defaultScale = _ref.localScale.x;
         //Refresh();
     }
 
-    public e_floatingentitydata(Transform _ref, DoubleVector3 _pos, DoubleVector3 _rot) {
+    public e_floatingentitydata(Transform _ref, num_precisevector3 _pos, num_precisevector3 _rot) {
         reference = _ref;
         localPosition = _pos;
         rotation = _rot;
@@ -33,25 +33,25 @@ public class e_floatingentitydata {
         //Refresh();
     }
 
-    public e_floatingentitydata(Transform _ref, DoubleVector3 _pos, float _scl) {
+    public e_floatingentitydata(Transform _ref, num_precisevector3 _pos, float _scl) {
         reference = _ref;
         localPosition = _pos;
-        rotation = new DoubleVector3( _ref.eulerAngles);
+        rotation = new num_precisevector3( _ref.eulerAngles);
         defaultScale = _scl;
         //Refresh();
     }
 
-    public e_floatingentitydata(Transform _ref, DoubleVector3 _pos, float _scl, bool isCelestial) {
+    public e_floatingentitydata(Transform _ref, num_precisevector3 _pos, float _scl, bool isCelestial) {
         reference = _ref;
         localPosition = _pos;
-        rotation = new DoubleVector3( _ref.eulerAngles);
+        rotation = new num_precisevector3( _ref.eulerAngles);
         defaultScale = _scl;
         this.isCelestial = isCelestial;
 
         //Refresh();
     }
 
-    public DoubleVector3 GetPosition()
+    public num_precisevector3 GetPosition()
     {
         if (parent == null)
         {
@@ -86,13 +86,13 @@ public class e_floatingentitydata {
         // }
         
         if (cb_renderingmanager.Instance.entityInControl != null) {
-            DoubleVector3 pos = GetPosition();
+            num_precisevector3 pos = GetPosition();
 
             // set the transform's position basee on the world offset
             reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
 
             // get the position of the camera
-            DoubleVector3 camPosition = cb_renderingmanager.Instance.entityInControl.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
+            num_precisevector3 camPosition = cb_renderingmanager.Instance.entityInControl.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
 
             if (camPosition.Sub(pos).Mag() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
             {
@@ -100,14 +100,14 @@ public class e_floatingentitydata {
                 {
                     // inflate
                     reference.localScale = Vector3.one * defaultScale;
-                    reference.position = localPosition.Sub(camPosition).Add(cb_renderingmanager.Instance.entityInControl.data.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
+                    reference.position = localPosition.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
                 }
                 else
                 { // far from planet
 
                 
                 reference.localScale = Vector3.one * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(localPosition).Mag());
-                reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(cb_renderingmanager.Instance.entityInControl.data.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
+                reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
 
 
                 }
@@ -115,7 +115,7 @@ public class e_floatingentitydata {
             else
             {
                 reference.localScale = Vector3.one * defaultScale;
-                reference.position = pos.Sub(camPosition).Add(cb_renderingmanager.Instance.entityInControl.data.reference.position + CameraController.Instance.PositionRelativeToControlEntity()).ToVector3();
+                reference.position = pos.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
             }
         }
 

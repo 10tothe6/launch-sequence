@@ -33,7 +33,7 @@ public class cb_renderingmanager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        worldOffset = Vector3.zero;
+        worldOffset = num_precisevector3.zero;
     }
 
     // ************ NEW VARIABLES ************
@@ -56,7 +56,7 @@ public class cb_renderingmanager : MonoBehaviour
 
 
     // TODO: make this a DoubleVector3?
-    public Vector3 worldOffset; // the current offset of the world
+    public num_precisevector3 worldOffset; // the current offset of the world
 
 
     // more shortcuts!
@@ -103,9 +103,9 @@ public class cb_renderingmanager : MonoBehaviour
             // ofc this doesn't apply if there's no controlling entity
             if (entityInControl.data.reference.position.magnitude > originSnapBackRadius)
             {
-                Vector3 shoveFactor = -entityInControl.data.reference.position;
+                num_precisevector3 shoveFactor = new num_precisevector3(entityInControl.data.reference.position).Mul(new num_precise(-1));
                 // player is too far from (0, 0, 0) so shove em' back
-                worldOffset += shoveFactor;
+                worldOffset = worldOffset.Add(shoveFactor);
 
                 // same with the spacecrafts, but this is unused rn
                 // for (int i = 0; i < spacecraft.Count; i++)
@@ -113,7 +113,7 @@ public class cb_renderingmanager : MonoBehaviour
                 //     spacecraft[i].reference.position += shoveFactor;
                 // }
 
-                player.data.reference.position += shoveFactor;
+                player.data.reference.position += shoveFactor.ToVector3();
             }
         }
 
@@ -128,7 +128,7 @@ public class cb_renderingmanager : MonoBehaviour
     }
 
     // where is (0,0,0) in the unity engine, in game space?
-    public Vector3 GetOriginInGameSpace() {
+    public num_precisevector3 GetOriginInGameSpace() {
         return worldOffset;
     }
 

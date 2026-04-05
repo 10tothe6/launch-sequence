@@ -172,7 +172,7 @@ public class cb_solarsystem : MonoBehaviour
     {
         for (int i = 0; i < monoBodies.Count; i++)
         {
-            if (i == 0 || i == 1) {monoBodies[i].pose.data.localPosition = DoubleVector3.zero; continue;}
+            if (i == 0 || i == 1) {monoBodies[i].pose.data.localPosition = num_precisevector3.zero; continue;}
             monoBodies[i].pose.data.localPosition = monoBodies[i].data.pConfig.GetPositionAtTime(time + temporalOffset, 1000);
         }
     }

@@ -270,11 +270,16 @@ public class cb_trackedbody : MonoBehaviour
             data.pConfig.iPosition = Vector3.zero;
             data.pConfig.iVelocity = Vector3.zero;
 
-            pose.data.localPosition = new DoubleVector3(data.pConfig.iPosition);
-            pose.data.velocity = new DoubleVector3(data.pConfig.iVelocity);
+            pose.data.localPosition = new num_precisevector3(data.pConfig.iPosition);
+            pose.data.velocity = new num_precisevector3(data.pConfig.iVelocity);
             return;
         }
         float orbitalVelocity = Mathf.Sqrt(cb_solarsystem.gravConstant * cb_solarsystem.Instance.monoBodies[data.pConfig.parentIndex].data.mass / baseRadius);
+
+        if (baseRadius == 0)
+        {
+            orbitalVelocity = 0;
+        }
 
         // (isGrantparent and parentIndex and selfIndex have already been set)
 
@@ -309,7 +314,7 @@ public class cb_trackedbody : MonoBehaviour
         data.pConfig.orbit.orbitalEccentricity = data.pConfig.iN / data.pConfig.iM;
         data.pConfig.orbit.orbitalPeriod = (data.pConfig.iM * 2 * Mathf.PI) / (Mathf.Abs(data.pConfig.iTransverseVelocity) * data.pConfig.iRadius * Mathf.Pow(data.pConfig.iM * data.pConfig.iM - data.pConfig.iN * data.pConfig.iN, 1.5f));
 
-        pose.data.localPosition = new DoubleVector3(data.pConfig.iPosition);
-        pose.data.velocity = new DoubleVector3(data.pConfig.iVelocity);
+        pose.data.localPosition = new num_precisevector3(data.pConfig.iPosition);
+        pose.data.velocity = new num_precisevector3(data.pConfig.iVelocity);
     }
 }

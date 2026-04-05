@@ -57,6 +57,7 @@ public class WorldManager : MonoBehaviour
     public int oldMapFocusIndex;
     private Vector3[] p;
     private Vector3 mapBasePosition;
+    public Perlin perlin = new Perlin();
 
     // *********
 

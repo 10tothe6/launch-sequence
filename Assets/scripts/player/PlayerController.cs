@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * lastPacket.horizontalMouse, Space.World);
         transform.GetChild(0).Rotate(Vector3.right * Time.deltaTime * turnSpeed * -lastPacket.verticalMouse, Space.Self);
 
-        rb.linearVelocity += movementVector * Time.deltaTime;
+        //rb.linearVelocity += movementVector * Time.deltaTime;
     }
 
     public void SetKeypresses(player_keypresspacket keys)

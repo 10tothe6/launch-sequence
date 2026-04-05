@@ -64,7 +64,8 @@ public class cbt_meshchunk : MonoBehaviour
     }
 
     public float GetHeightAt(Vector3 v) {
-        return 1f;
+        v = v.normalized;
+        return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 10f;
     }
 
     public void ConstructMesh(int bodyIndex)
@@ -104,7 +105,7 @@ public class cbt_meshchunk : MonoBehaviour
                 
                 //without normalizing it it would be a cube
                 vertices[i] = pointOnUnitCube.normalized * rad;
-                //vertices[i] += pointOnUnitCube.normalized * GetHeightAt(vertices[i]) * (rad / 1000f);
+                vertices[i] += pointOnUnitCube.normalized * GetHeightAt(vertices[i]) * (rad / 1000f);
                 // vertices[i] = cb_renderingmanager.Instance.AdjustVector(vertices[i].normalized, 0) * vertices[i].magnitude;
 
                 normals[i] = pointOnUnitCube.normalized;

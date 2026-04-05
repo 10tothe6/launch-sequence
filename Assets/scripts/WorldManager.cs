@@ -133,15 +133,16 @@ public class WorldManager : MonoBehaviour
         return kingIndex;
     }
 
-    public float GetSeaLevelAltitude()
+    public double GetSeaLevelAltitude()
     {
         //Debug.Log(GetCoreAltitude() + "     " + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius);
-        return GetCoreAltitude() - cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius;
+        return GetCoreAltitude() - (double)cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius;
     }
 
-    public float GetCoreAltitude()
+    public double GetCoreAltitude()
     {
-        return Vector3.Distance(cb_renderingmanager.Instance.player.data.GetPosition().ToVector3(), cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition().ToVector3());
+        num_precisevector3 diff = cb_renderingmanager.Instance.player.data.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition());
+        return diff.Mag();
     }
 
     public void StartGame(TMP_InputField input)
@@ -159,6 +160,7 @@ public class WorldManager : MonoBehaviour
     // generates a new solar system
     public void StartGame(int worldSeed)
     {
+        ui_playerhud.Instance.SetupDebugInfo();
         UIManager.Instance.HideConsole();
 
         // -1 means random seed

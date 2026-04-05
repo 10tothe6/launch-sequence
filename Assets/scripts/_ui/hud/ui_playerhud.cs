@@ -29,11 +29,6 @@ public class ui_playerhud : MonoBehaviour
         Instance = this;
     }
 
-
-    void Start()
-    {
-        SetupDebugInfo();
-    }
     public void SetupDebugInfo()
     {
         // the title of the tab

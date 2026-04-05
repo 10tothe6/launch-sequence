@@ -9,6 +9,8 @@ public class cam_freecam : MonoBehaviour
 
     private Quaternion storedRotation;
 
+
+
     void Start()
     {
         CameraController.Instance.onChangeControlMode.AddListener(ProcessChangeInControlMode);

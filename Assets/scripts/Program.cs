@@ -19,7 +19,7 @@ public enum ProgramBuildMode
 public enum ProgramStartMode
 {
     FullGame,
-    Sandbox,
+    Sandbox, // sandbox is like the 'dev scene' thing from White Knuckle
     InstantGame,
 }
 
@@ -85,7 +85,7 @@ public class Program : MonoBehaviour
                 UIManager.Instance.SwitchMenu("main menu");
             } else if (startMode == ProgramStartMode.Sandbox)
             {
-                
+                Sandbox.Instance.StartSandbox();
             } else if (startMode == ProgramStartMode.InstantGame)
             {
                 WorldManager.Instance.StartGame(-1);

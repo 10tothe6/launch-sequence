@@ -258,17 +258,26 @@ MonoBehaviour:
     reference: {fileID: 0}
     parent: {fileID: 0}
     localPosition:
-      x: 0
-      y: 0
-      z: 0
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
     rotation:
-      x: 0
-      y: 0
-      z: 0
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
     velocity:
-      x: 0
-      y: 0
-      z: 0
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
     defaultScale: 0
   setupOnAwake: 1
 --- !u!114 &7775331553818960751
@@ -296,7 +305,7 @@ MonoBehaviour:
   parentChunks: []
   detailLevelThresholds:
   - 0
-  - 30000
+  - 50000
   - 100000
   - 250000
   - 450000

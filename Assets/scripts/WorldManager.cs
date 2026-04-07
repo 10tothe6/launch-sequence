@@ -154,16 +154,22 @@ public class WorldManager : MonoBehaviour
         return kingIndex;
     }
 
-    public double GetSeaLevelAltitude()
+    public double GetSeaLevelAltitudeAsDouble()
     {
         //Debug.Log(GetCoreAltitude() + "     " + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius);
-        return GetCoreAltitude() - (double)cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius;
+        return GetCoreAltitudeAsDouble() - (double)cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius;
     }
 
-    public double GetCoreAltitude()
+    public num_precise GetCoreAltitude()
+    {
+        return cb_renderingmanager.Instance.player.data.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition()).Mag();
+    }
+
+    public double GetCoreAltitudeAsDouble()
     {
         num_precisevector3 diff = cb_renderingmanager.Instance.player.data.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition());
-        return diff.Mag();
+        
+        return diff.Mag().AsDouble();
     }
 
     public void StartGame(TMP_InputField input)

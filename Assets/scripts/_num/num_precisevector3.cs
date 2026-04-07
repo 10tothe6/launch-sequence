@@ -103,16 +103,25 @@ public class num_precisevector3
     
     public num_precisevector3 Norm()
     {
-        double l = Mag();
+        num_precise l = Mag();
         return new num_precisevector3(x.Div(l), y.Div(l), z.Div(l));
     }
-    public double Mag()
+    public double MagDouble()
     {
         num_precise _x = x.Mul(x);
         num_precise _y = y.Mul(y);
         num_precise _z = z.Mul(z);
 
         return Math.Sqrt(_x.Add(_y).Add(_z).AsDouble());
+    }
+
+    public num_precise Mag()
+    {
+        num_precise _x = x.Mul(x);
+        num_precise _y = y.Mul(y);
+        num_precise _z = z.Mul(z);
+
+        return new num_precise(util_math.Sqrt(_x.Add(_y).Add(_z).raw * BigInteger.Pow(10, _x.numDecimalDigits)));
     }
 
 

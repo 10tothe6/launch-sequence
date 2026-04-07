@@ -43,17 +43,17 @@ public class ui_playerhud : MonoBehaviour
 
         // ksp's "sea level alt"
         ui_debugmenu.Instance.AddEntry("sea level altitude", 
-        () => util_game.FormatRawDistance(WorldManager.Instance.GetSeaLevelAltitude()),
+        () => util_game.FormatRawDistance(WorldManager.Instance.GetSeaLevelAltitudeAsDouble()),
         "game_main");
         ui_debugmenu.Instance.AddEntry("backend sea level altitude", 
-        () => util_game.FormatDistance(WorldManager.Instance.GetSeaLevelAltitude()),
+        () => util_game.FormatDistance(WorldManager.Instance.GetSeaLevelAltitudeAsDouble()),
         "game_main");
         // similar, but distance to center
         ui_debugmenu.Instance.AddEntry("core altitude", 
         () => util_game.FormatRawDistance(WorldManager.Instance.GetCoreAltitude()),
         "game_main");
         ui_debugmenu.Instance.AddEntry("backend core altitude", 
-        () => util_game.FormatDistance(WorldManager.Instance.GetCoreAltitude()),
+        () => util_game.FormatDistance(WorldManager.Instance.GetCoreAltitudeAsDouble()),
         "game_main");
 
         ui_debugmenu.Instance.AddEntry("eq radius", 

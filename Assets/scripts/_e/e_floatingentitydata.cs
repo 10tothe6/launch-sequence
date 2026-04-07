@@ -94,9 +94,9 @@ public class e_floatingentitydata {
             // get the position of the camera
             num_precisevector3 camPosition = cb_renderingmanager.Instance.entityInControl.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
 
-            if (camPosition.Sub(pos).Mag() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
+            if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
             {
-                if (camPosition.Sub(pos).Mag() < cb_renderingmanager.Instance.inflationRadius)
+                if (camPosition.Sub(pos).Mag().AsDouble() < cb_renderingmanager.Instance.inflationRadius)
                 {
                     // inflate
                     reference.localScale = Vector3.one * defaultScale;
@@ -106,7 +106,7 @@ public class e_floatingentitydata {
                 { // far from planet
 
                 
-                reference.localScale = Vector3.one * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(localPosition).Mag());
+                reference.localScale = Vector3.one * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(localPosition).Mag().AsDouble());
                 reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
 
 

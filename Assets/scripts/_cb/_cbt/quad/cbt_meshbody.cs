@@ -57,6 +57,14 @@ public class cbt_meshbody : MonoBehaviour
 
     public void Initialize()
     {
+        if (!useDirectObject)
+        {
+            if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius > 100000f)
+            {
+                cb_solarsystem.Instance.monoBodies[bodyIndex].pose.data.scaleFactor = 10000f / cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius;
+            }
+        }
+
         // **** just setting variables ****
         
         chunks = new List<cbt_meshchunk>();

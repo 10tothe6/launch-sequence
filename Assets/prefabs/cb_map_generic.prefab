@@ -214,7 +214,7 @@ MonoBehaviour:
   m_line: {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
   useColor: 0
   lineColor: {r: 0, g: 0, b: 0, a: 0}
-  lineWidth: 0.05
+  lineWidth: 0.025
 --- !u!114 &8983940671535341157
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -105,11 +105,14 @@ public class cb_solarsystem : MonoBehaviour
 
     [Header("Basic Body Configs")]
 
+    // stellar
+    public float minimumStellarSurfaceRadius;
+    public float maximumStellarSurfaceRadius;
     // terran
     public float minimumTerranSurfaceRadius;
     public float maximumTerranSurfaceRadius;
 
-    public float chanceForTerrainAtmosphere;
+    public float chanceForTerranAtmosphere;
     public float minimumTerranAtmosphereRadius;
     public float maximumTerranAtmosphereRadius;
 

@@ -74,6 +74,11 @@ public class cbt_meshchunk : MonoBehaviour
 
         float rad = directRadius != 0 ? directRadius : cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius;
 
+        if (rad > 10000f)
+        {
+            rad = 10000f;
+        }
+
         Vector3[] vertices = new Vector3[resolution * resolution];
         Vector3[] normals = new Vector3[resolution * resolution];
         Vector2[] uvs = new Vector2[resolution * resolution];

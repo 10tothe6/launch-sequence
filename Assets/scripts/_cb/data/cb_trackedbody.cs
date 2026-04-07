@@ -23,7 +23,7 @@ public class cb_trackedbody : MonoBehaviour
         // basic data
         if (bodyType == (ushort)cb_bodytype.Stellar || bodyType == (ushort)cb_bodytype.Null)
         {
-            data.mass = 1000000f;
+            data.mass = 10000000f;
         } else if (bodyType == (ushort)cb_bodytype.Jovian || bodyType == (ushort)cb_bodytype.Terran)
         {
             data.mass = 20f;
@@ -46,6 +46,8 @@ public class cb_trackedbody : MonoBehaviour
         {
             pose.data.parent = cb_solarsystem.Instance.monoBodies[parentIndex].pose;
         }
+        
+        gameObject.AddComponent<cbr_litbody>();
     }
 
     public bool ShouldIconBeVisible()
@@ -194,7 +196,18 @@ public class cb_trackedbody : MonoBehaviour
     public void FillDataBasedOnBodyType(ushort type)
     {
         data.bodyType = type;
+
         data.hasSurface = !(type == (ushort)cb_bodytype.Jovian);
+        // the only exception to the above rule is the COM
+        if (type == (ushort)cb_bodytype.Null) {data.hasSurface = false;}
+
+        if (type == (ushort)cb_bodytype.Stellar)
+        {
+            data.tConfig.equitorialRadius = Random.Range(
+                cb_solarsystem.Instance.minimumStellarSurfaceRadius,
+                cb_solarsystem.Instance.maximumStellarSurfaceRadius
+            ) * WorldData.universalScaleFactor;
+        }
 
         // sizes are based on ranges for each planet type
         if (type == (ushort)cb_bodytype.Terran)
@@ -204,7 +217,7 @@ public class cb_trackedbody : MonoBehaviour
                 cb_solarsystem.Instance.maximumTerranSurfaceRadius
             ) * WorldData.universalScaleFactor;
 
-            data.hasAtmosphere = util_math.DiceRoll(cb_solarsystem.Instance.chanceForTerrainAtmosphere);
+            data.hasAtmosphere = util_math.DiceRoll(cb_solarsystem.Instance.chanceForTerranAtmosphere);
 
             if (data.hasAtmosphere)
             {

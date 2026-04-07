@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: b4557658573c1b540a69fff43b14a569, type: 2}
@@ -2772,6 +2772,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   p_robotIcon: {fileID: 2830241902180362358, guid: e2226a3b8f1bf164e92472ade711d150, type: 3}
+  t_mapIconContainer: {fileID: 0}
   p_robot: {fileID: 8782933785179873280, guid: d9b535f823432a043ba06a314e3a8496, type: 3}
 --- !u!4 &314687046
 Transform:
@@ -4896,7 +4897,7 @@ MonoBehaviour:
   cullingMask:
     serializedVersion: 2
     m_Bits: 375
-  moveSpeed: 10
+  moveSpeed: 100
 --- !u!114 &751265232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10665,9 +10666,11 @@ MonoBehaviour:
   maximumMoonSpacing: 100000000
   minimumPlanetarySystemRadius: 11000000
   maximumPlanetarySystemRadius: 1e+9
+  minimumStellarSurfaceRadius: 1e+9
+  maximumStellarSurfaceRadius: 9e+9
   minimumTerranSurfaceRadius: 200000
   maximumTerranSurfaceRadius: 800000
-  chanceForTerrainAtmosphere: 0.5
+  chanceForTerranAtmosphere: 0
   minimumTerranAtmosphereRadius: 0
   maximumTerranAtmosphereRadius: 0
   minimumJovianSurfaceRadius: 3000000
@@ -10927,6 +10930,7 @@ MonoBehaviour:
       z:
         numDecimalDigits: 4
     defaultScale: 0
+    scaleFactor: 0
   setupOnAwake: 1
 --- !u!114 &1988850775
 MonoBehaviour:

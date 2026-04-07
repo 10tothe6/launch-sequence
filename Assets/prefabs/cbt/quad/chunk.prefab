@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
+  - {fileID: 2100000, guid: 9b0c798dfac8a1046bd67d049e095888, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -147,3 +147,5 @@ MonoBehaviour:
   dims: {x: 0, y: 0, z: 0}
   localUp: {x: 0, y: 0, z: 0}
   levelOfDetail: 0
+  chunkMidpoint: {x: 0, y: 0, z: 0}
+  spanningAngle: 0

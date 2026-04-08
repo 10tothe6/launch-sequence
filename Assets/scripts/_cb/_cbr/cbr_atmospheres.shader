@@ -1,9 +1,13 @@
-Shader "Custom/Atmo"
+Shader "cbr/atmospheres"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
-        _CloudTex ("Cloud Map", 2D) = "white" {}
+        // the color buffer coming in from the camera
+        _MainTex ("Texture", 2D) = "white" {} 
+
+        // there WAS a cloud map but I have to figure out how to combine textures, since this shader now supports n planets
+        // maybe just have 8 maps?
+        // _CloudTex ("Cloud Map", 2D) = "white" {} 
     }
     SubShader
     {
@@ -55,6 +59,8 @@ Shader "Custom/Atmo"
             // tldr: you cant initialize arrays with variables, so I'm setting a HARD MAX LIMIT on celestial bodies of 8
             // bodies without atmospheres need not be included, so thats not 8 bodies thats 12 bodies with atmospheres
 
+            // c_ means center
+ 
             float3 planetCentre[8];
             float3 c_planetCentre;
 
@@ -93,12 +99,15 @@ Shader "Custom/Atmo"
             float c_maxCloudRadius;
 
             float theta;
-
+            
+            // move a vector by an angle
+            // (2D rotation matrix around the (0,1,0) vector, I think)
             float3 AdjustVector(float3 _v) {
                 float a = theta;
                 return float3(_v.z * sin(-a * (3.14192 / 180)) + _v.x * cos(-a * (3.14192 / 180)), _v.y, _v.z * cos(-a * (3.14192 / 180)) + _v.x * -sin(-a * (3.14192 / 180)));
             }
 
+            // getting the uv coordinate OF A SPHERE-MAPPED TEXTURE from a point in 3D space
             float2 UVFromPoint(float3 _point) {
                 float u = atan2(_point.x, _point.z) / (2*3.14159) + 0.5;
                 float v = -asin(_point.y) / 3.14159 + 0.5;

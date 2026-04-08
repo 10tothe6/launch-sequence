@@ -1,4 +1,4 @@
-Shader "Custom/Planet Shaders/Fake Terrain" {
+Shader "cbr/terrain" {
 Properties {
     _MainTex ("Biome Map", 2D) = "white" {}
 }

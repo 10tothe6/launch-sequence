@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,6 +9,7 @@ using UnityEngine.Events;
 
 
 // TODO: move the map stuff (mapFocusIndex) to another script
+// TODO: PLEASE DO THIS THIS SCRIPT IS BASICALLY A GARBADGE DUMP NOW
 
 public class WorldManager : MonoBehaviour
 {
@@ -152,6 +154,19 @@ public class WorldManager : MonoBehaviour
         }
 
         return kingIndex;
+    }
+
+    // lovely function name
+    // this is called by the script that draws the atmospheres (as a screenspace effect) 
+    // it gets the indices of the bodies that have atmospheres, and are close enough for those atmos to be rendered
+    // IT ALSO SORTS THE INDICES IN ORDER OF DISTANCE TO SAVE WORK ON THE GPU SIDE
+    public int[] GetVisibleAtmosphericBodyIndices()
+    {
+        List<int> visibleBodies = new List<int>();
+
+        List<int> sortedBodies = new List<int>();
+
+        return sortedBodies.ToArray();
     }
 
     public double GetSeaLevelAltitudeAsDouble()

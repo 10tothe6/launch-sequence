@@ -11306,6 +11306,7 @@ GameObject:
   - component: {fileID: 2044790576}
   - component: {fileID: 2044790575}
   - component: {fileID: 2044790574}
+  - component: {fileID: 2044790577}
   m_Layer: 0
   m_Name: main cam
   m_TagString: MainCamera
@@ -11387,6 +11388,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 751265230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2044790577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044790573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf89153f864ee94299ef80135d862a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cbr_applyatmosphere
+  m: {fileID: 2100000, guid: 3f01b9bfdaa9dd14e895a2301e54d36b, type: 2}
 --- !u!1 &2108618640
 GameObject:
   m_ObjectHideFlags: 0

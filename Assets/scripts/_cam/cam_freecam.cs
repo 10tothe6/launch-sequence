@@ -30,6 +30,8 @@ public class cam_freecam : MonoBehaviour
 
     public void EnterControl()
     {
+        CameraController.cam_main.GetComponent<cbr_applyatmosphere>().enabled = true;
+
         CameraController.cam_main.cullingMask = cullingMask;
         transform.SetParent(t_player);
         
@@ -43,6 +45,7 @@ public class cam_freecam : MonoBehaviour
         storedRotation = LocalPlayer.Instance.transform.rotation;
     }
 
+    // continuing the trend of avoiding Update()
     void CameraUpdate()
     {
         if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.Freecam)

@@ -19,7 +19,15 @@ public enum ProgramBuildMode
 public enum ProgramStartMode
 {
     FullGame,
-    Sandbox, // sandbox is like the 'dev scene' thing from White Knuckle
+
+    // sandbox is like the 'dev scene' thing from White Knuckle
+    // IT WILL BE A PART OF THE GAME
+    Sandbox, 
+
+    // okay, I DO see a reason to put the sandbox in the game, 
+    // but not the planet editor
+    // THIS IS STRICTLY A DEV TOOL
+    BodyEditor, 
     InstantGame,
 }
 
@@ -93,6 +101,9 @@ public class Program : MonoBehaviour
             } else if (startMode == ProgramStartMode.InstantGame)
             {
                 WorldManager.Instance.StartGame(-1);
+            } else if (startMode == ProgramStartMode.BodyEditor)
+            {
+                BodyEditor.Instance.SetupEditor();
             }
         } 
         else if (buildMode == ProgramBuildMode.ServerBuild) {/* not really relevant rn*/}

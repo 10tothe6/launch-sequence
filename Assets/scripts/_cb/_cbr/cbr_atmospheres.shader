@@ -97,13 +97,11 @@ Shader "cbr/atmospheres"
             float c_minCloudRadius;
             float maxCloudRadius[8];
             float c_maxCloudRadius;
-
-            float theta;
             
             // move a vector by an angle
             // (2D rotation matrix around the (0,1,0) vector, I think)
             float3 AdjustVector(float3 _v) {
-                float a = theta;
+                float a = 0;
                 return float3(_v.z * sin(-a * (3.14192 / 180)) + _v.x * cos(-a * (3.14192 / 180)), _v.y, _v.z * cos(-a * (3.14192 / 180)) + _v.x * -sin(-a * (3.14192 / 180)));
             }
 

@@ -49,30 +49,37 @@ public class cb_trackedbody : MonoBehaviour
         
         gameObject.AddComponent<cbr_litbody>();
     }
+    
+    public bool IsSamePlanetarySystem(int otherIndex)
+    {
+        bool isSame = false;
+
+        if (data.pConfig.selfIndex == 1)
+        {
+            isSame = true;
+        } else
+        {
+            if (data.pConfig.parentIndex == 0)
+            {
+                // planet
+                isSame = data.pConfig.selfIndex == otherIndex;
+            } else
+            {
+                // moon
+                isSame = data.pConfig.parentIndex == otherIndex;
+            }
+        }
+
+        return isSame;
+    }
 
     public bool ShouldIconBeVisible()
     {
         // two conditions have to be met here
         // the first: that the body is in the same planetary system OR is the star
         
-        bool isSamePlanetarySystem = false;
+        bool isSamePlanetarySystem = IsSamePlanetarySystem(WorldManager.Instance.GetSOIIndex());
         bool isHidden = false;
-
-        if (data.pConfig.selfIndex == 1)
-        {
-            isSamePlanetarySystem = true;
-        } else
-        {
-            if (data.pConfig.parentIndex == 0)
-            {
-                // planet
-                isSamePlanetarySystem = data.pConfig.selfIndex == WorldManager.Instance.GetSOIIndex();
-            } else
-            {
-                // moon
-                isSamePlanetarySystem = data.pConfig.parentIndex == WorldManager.Instance.GetSOIIndex();
-            }
-        }
 
         Vector3 ray = pose.data.GetPosition().Sub(cb_renderingmanager.GetControlPosition()).ToVector3();
         isHidden = cb_solarsystem.Instance.IntersectBodies(ray.normalized, ray.magnitude, new int[] {data.pConfig.selfIndex});

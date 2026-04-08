@@ -35,6 +35,8 @@ public class CameraController : MonoBehaviour
 
         t_cam = ins_t_cam;
         cam_main = ins_cam_main;
+
+        cam_main.GetComponent<cbr_applyatmosphere>().enabled = false;
     }
 
     // what layers should be rendered for each view

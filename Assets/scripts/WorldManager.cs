@@ -164,7 +164,45 @@ public class WorldManager : MonoBehaviour
     {
         List<int> visibleBodies = new List<int>();
 
+        // no sorting yet, we're just getting an un-organized list first
+        for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
+        {
+            if (cb_solarsystem.Instance.monoBodies[i].data.hasAtmosphere && cb_solarsystem.Instance.monoBodies[i].IsSamePlanetarySystem(WorldManager.Instance.GetSOIIndex()))
+            {
+                visibleBodies.Add(i);
+            }
+        }
+
         List<int> sortedBodies = new List<int>();
+
+        // NOW the sorting comes in
+        // we're using a (pretty disgusting) king-of-the-hill approach,
+        // where we find the shortest distance, add it to the list, and repeat
+
+        while(visibleBodies.Count > 1)
+        {
+            int kingIndex = 0;
+            float kingDist = 0;
+            for (int i = 1; i < visibleBodies.Count; i++)
+            {   
+                // we shouldn't need the higher-precision number systems because the distances should be different enough
+                // HOPEFULLY
+                // TODO: upgrade to a higher precision system?
+                float distToKing = kingDist == 0 ? Vector3.Distance(cb_solarsystem.Instance.monoBodies[kingIndex].pose.data.GetPosition().ToVector3(), cb_renderingmanager.GetControlPosition().ToVector3()) : kingDist;
+                float distToOther = Vector3.Distance(cb_solarsystem.Instance.monoBodies[i].pose.data.GetPosition().ToVector3(), cb_renderingmanager.GetControlPosition().ToVector3());
+
+                if (distToOther < distToKing)
+                {
+                    kingIndex = i;
+                    kingDist = distToOther;
+                }
+            }
+
+            sortedBodies.Add(visibleBodies[kingIndex]);
+            visibleBodies.RemoveAt(kingIndex); // remove from the pool as we go
+        }
+        // add the last item to the list, and boom its sorted
+        sortedBodies.Add(visibleBodies[0]);
 
         return sortedBodies.ToArray();
     }
@@ -212,6 +250,9 @@ public class WorldManager : MonoBehaviour
         ss.Generate(worldSeed);
         
         CameraController.SetControlMode(CameraControlMode.Freecam);
+        CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
+        // the enabling of the component is done on cam_freecam.cs for now
+        
         UIManager.Instance.EnterMapView();
 
         Program.gameState = GameState.InGame;

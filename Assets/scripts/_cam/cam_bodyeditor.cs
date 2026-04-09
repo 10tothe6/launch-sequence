@@ -7,6 +7,7 @@ using UnityEngine;
 public class cam_bodyeditor : MonoBehaviour
 {
     public float cameraRotateSpeed;
+    public float scrollSpeed;
 
     public float viewDist;
 
@@ -48,6 +49,8 @@ public class cam_bodyeditor : MonoBehaviour
 
             // the body is always located at (0,0,0) so we don't need a ref
             transform.position = -transform.forward * viewDist;
+
+            viewDist += Input.scrollWheelAxis * scrollSpeed;
         }
     }
 }

@@ -5018,6 +5018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cam_bodyeditor
   cameraRotateSpeed: 0.5
+  scrollSpeed: 1.5
   viewDist: 0
 --- !u!1 &756680592
 GameObject:
@@ -7719,14 +7720,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445756aa8b8fcfd43b0004fe96aa2753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyEditor
-  waveLengths: {x: 415.393, y: 446.732, z: 426.767}
+  waveLengths: {x: 422.9, y: 462.9, z: 537.2}
   scatterStrength: 0.3
   atmosphereData:
     bodyCenter: {x: 0, y: 0, z: 0}
     atmosphereRadius: 54
     surfaceRadius: 50
     densityFalloff: 1
-    scatterCoefficients: {x: 0.25794345, y: 0.19282927, z: 0.231525}
+    scatterCoefficients: {x: 0.24011013, y: 0.16726786, z: 0.09221831}
     planetScale: 0.8
     densityMultiplier: 0.15
     luminance: 50

@@ -33,6 +33,7 @@ public class BodyEditor : MonoBehaviour
     private cbr_applyatmosphere comp;
     private bool isActive;
 
+    [Header("BODY CONFIG")]
     public Vector3 waveLengths;
     public float scatterStrength;
 

@@ -145,7 +145,7 @@ Shader "cbr/atmospheres"
             float opticalDepth(float3 rayOrigin, float3 rayDir, float rayLength) {
                 float3 samplePoint = rayOrigin;
 
-                int numOpticalDepthPoints = 10;
+                int numOpticalDepthPoints = 4;
                 float stepSize = rayLength / (numOpticalDepthPoints-1);
 
                 float opticalDepth = 0;
@@ -161,7 +161,7 @@ Shader "cbr/atmospheres"
 
             float3 calculateLight(float3 rayOrigin, float3 rayDir, float rayLength, float3 originalColor) { //
                 // no engine units here
-                int numInscatteringPoints = 10;
+                int numInscatteringPoints = 4;
                 float stepSize = rayLength / (numInscatteringPoints-1);
 
                 float3 inScatterPoint = rayOrigin;
@@ -235,26 +235,6 @@ Shader "cbr/atmospheres"
             fixed4 frag (v2f i) : SV_Target
             {
                 const float epsilon = 0.001f;
-
-                // eve-like
-                // densityMultiplier = 0.15;
-                // luminance = 50;
-                // externalBrightness = 1;
-                // cloudBrightness = 7;
-                // scatterFactor = 0.5;
-                //ss of 0.3, wl of (415.393, 446.732, 426.767)
-
-                // earth-like
-                // densityMultiplier = 0.025;
-                // luminance = 1000;
-                // externalBrightness = 0.5;
-                // scatterFactor = 0.8;
-
-                // duna-like
-                // densityMultiplier = 0.02;
-                // luminance = 600;
-                // externalBrightness = 0.3;
-                // scatterFactor = 0.6;
 
                 // *** variables that apply to ALL planets ***
 

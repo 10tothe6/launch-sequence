@@ -2970,13 +2970,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378630548}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &389957923
 GameObject:
   m_ObjectHideFlags: 0
@@ -4756,6 +4756,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688051906}
   m_CullTransparentMesh: 1
+--- !u!1 &704434971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 704434972}
+  - component: {fileID: 704434974}
+  - component: {fileID: 704434973}
+  m_Layer: 0
+  m_Name: test planet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &704434972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704434971}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1289060807}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &704434973
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704434971}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 52fcabe5f5ab986458de8b7ad41c93e1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &704434974
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704434971}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &714867631
 GameObject:
   m_ObjectHideFlags: 0
@@ -4807,6 +4896,7 @@ GameObject:
   - component: {fileID: 751265228}
   - component: {fileID: 751265231}
   - component: {fileID: 751265232}
+  - component: {fileID: 751265233}
   m_Layer: 0
   m_Name: cam controller
   m_TagString: Untagged
@@ -4915,6 +5005,20 @@ MonoBehaviour:
     m_Bits: 375
   t_controlling: {fileID: 0}
   controller: {fileID: 0}
+--- !u!114 &751265233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751265227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc284eff50e19c4459304d92b9fd58c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cam_bodyeditor
+  cameraRotateSpeed: 0.5
+  viewDist: 0
 --- !u!1 &756680592
 GameObject:
   m_ObjectHideFlags: 0
@@ -7579,6 +7683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1289060807}
+  - component: {fileID: 1289060808}
   m_Layer: 0
   m_Name: body editor
   m_TagString: Untagged
@@ -7595,12 +7700,41 @@ Transform:
   m_GameObject: {fileID: 1289060806}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -875.1118, y: 0.00002, z: 23.79272}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 704434972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1289060808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289060806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445756aa8b8fcfd43b0004fe96aa2753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BodyEditor
+  waveLengths: {x: 415.393, y: 446.732, z: 426.767}
+  scatterStrength: 0.3
+  atmosphereData:
+    bodyCenter: {x: 0, y: 0, z: 0}
+    atmosphereRadius: 54
+    surfaceRadius: 50
+    densityFalloff: 1
+    scatterCoefficients: {x: 0.25794345, y: 0.19282927, z: 0.231525}
+    planetScale: 0.8
+    densityMultiplier: 0.15
+    luminance: 50
+    externalBrightness: 1
+    scatterFactor: 0.5
+    cloudBrightness: 1
+    minCloudRadius: 0
+    maxCloudRadius: 0
 --- !u!1 &1314254079
 GameObject:
   m_ObjectHideFlags: 0
@@ -11432,6 +11566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbr_applyatmosphere
   m: {fileID: 2100000, guid: 3f01b9bfdaa9dd14e895a2301e54d36b, type: 2}
+  isInGame: 0
 --- !u!1 &2108618640
 GameObject:
   m_ObjectHideFlags: 0

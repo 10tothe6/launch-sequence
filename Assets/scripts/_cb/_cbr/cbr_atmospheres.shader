@@ -267,63 +267,50 @@ Shader "cbr/atmospheres"
                 float3 rayOrigin = _WorldSpaceCameraPos;
                 float3 rayDir = normalize(i.viewVector);
 
-                // *** SORTING ***
-
-                int planetIndices[8];
-                for (int n = 0; n < 8; n++) {
-                    if (atmosphereRadius[n] == 0) {
-                        planetIndices[n] = -1;
-                    } else {
-                        planetIndices[n] = n;
-                    }
-                }
-
                 for (int i = 0; i < 8; i++) {
-                    if (planetIndices[i] != -1) {
-                        if (atmosphereRadius[planetIndices[i]] != 0) {
-                            c_planetCentre = planetCentre[planetIndices[i]];
+                    if (atmosphereRadius[i] != 0) {
+                        c_planetCentre = planetCentre[i];
 
-                            c_atmosphereRadius = atmosphereRadius[planetIndices[i]];
-                            c_surfaceRadius = surfaceRadius[planetIndices[i]];
+                        c_atmosphereRadius = atmosphereRadius[i];
+                        c_surfaceRadius = surfaceRadius[i];
 
-                            c_densityFalloff = densityFalloff[planetIndices[i]];
-                            c_scatterCoefficients = scatterCoefficients[planetIndices[i]];
+                        c_densityFalloff = densityFalloff[i];
+                        c_scatterCoefficients = scatterCoefficients[i];
 
-                            c_planetScale = planetScale[planetIndices[i]];
-                            float sceneDepth = rawSceneDepth / c_planetScale;
+                        c_planetScale = planetScale[i];
+                        float sceneDepth = rawSceneDepth / c_planetScale;
 
-                            c_densityMultiplier = densityMultiplier[planetIndices[i]];
-                            c_luminance = luminance[planetIndices[i]];
-                            c_externalBrightness = externalBrightness[planetIndices[i]];
-                            c_scatterFactor = scatterFactor[planetIndices[i]];
-                            c_cloudBrightness = cloudBrightness[planetIndices[i]];
+                        c_densityMultiplier = densityMultiplier[i];
+                        c_luminance = luminance[i];
+                        c_externalBrightness = externalBrightness[i];
+                        c_scatterFactor = scatterFactor[i];
+                        c_cloudBrightness = cloudBrightness[i];
 
-                            c_minCloudRadius = minCloudRadius[planetIndices[i]];
-                            c_maxCloudRadius = maxCloudRadius[planetIndices[i]];
+                        c_minCloudRadius = minCloudRadius[i];
+                        c_maxCloudRadius = maxCloudRadius[i];
 
-                            dirToSun = normalize(sunPosition - c_planetCentre);
+                        dirToSun = normalize(sunPosition - c_planetCentre);
 
-                            // all in engine units (not actual dist, physically speaking)
-                            float2 planetHitInfo = raySphere(c_planetCentre, c_atmosphereRadius, rayOrigin, rayDir);
-                            float distanceToAtmosphere = planetHitInfo.x;
-                            float distanceThroughAtmosphere = min(sceneDepth - distanceToAtmosphere, planetHitInfo.y);
+                        // all in engine units (not actual dist, physically speaking)
+                        float2 planetHitInfo = raySphere(c_planetCentre, c_atmosphereRadius, rayOrigin, rayDir);
+                        float distanceToAtmosphere = planetHitInfo.x;
+                        float distanceThroughAtmosphere = min(sceneDepth - distanceToAtmosphere, planetHitInfo.y);
 
-                            float2 minCloudHitInfo = raySphere(c_planetCentre, c_minCloudRadius, rayOrigin, rayDir);
-                            float2 maxCloudHitInfo = raySphere(c_planetCentre, c_maxCloudRadius, rayOrigin, rayDir);
+                        float2 minCloudHitInfo = raySphere(c_planetCentre, c_minCloudRadius, rayOrigin, rayDir);
+                        float2 maxCloudHitInfo = raySphere(c_planetCentre, c_maxCloudRadius, rayOrigin, rayDir);
 
-                            minCloudHitInfo.y = min(sceneDepth - minCloudHitInfo.x, minCloudHitInfo.y);
-                            maxCloudHitInfo.y = min(sceneDepth - maxCloudHitInfo.x, maxCloudHitInfo.y);
-                            
-                            if (distanceThroughAtmosphere > 0) {
-                                // also engine units
-                                float3 pointInAtmosphere = rayOrigin + rayDir * (distanceToAtmosphere + epsilon);
-                                float3 light = calculateLight(pointInAtmosphere, rayDir, distanceThroughAtmosphere - epsilon, originalColor);
-                                originalColor = float4(light, 1);
-                            }
-                            if (maxCloudHitInfo.y > 0) {
-                                originalColor = float4(calculateClouds(rayOrigin, rayDir, minCloudHitInfo, maxCloudHitInfo, originalColor), 1);
-                            }
+                        minCloudHitInfo.y = min(sceneDepth - minCloudHitInfo.x, minCloudHitInfo.y);
+                        maxCloudHitInfo.y = min(sceneDepth - maxCloudHitInfo.x, maxCloudHitInfo.y);
+                        
+                        if (distanceThroughAtmosphere > 0) {
+                            // also engine units
+                            float3 pointInAtmosphere = rayOrigin + rayDir * (distanceToAtmosphere + epsilon);
+                            float3 light = calculateLight(pointInAtmosphere, rayDir, distanceThroughAtmosphere - epsilon, originalColor);
+                            originalColor = float4(light, 1);
                         }
+                        // if (maxCloudHitInfo.y > 0) {
+                        //     originalColor = float4(calculateClouds(rayOrigin, rayDir, minCloudHitInfo, maxCloudHitInfo, originalColor), 1);
+                        // }
                     }
                 }
 

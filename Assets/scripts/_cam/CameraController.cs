@@ -3,9 +3,11 @@ using UnityEngine.Events;
 
 public enum CameraControlMode
 {
+    None,
     MapView,
     Freecam,
     PlayerFirstPerson,
+    BodyEditor,
 }
 
 public class CameraController : MonoBehaviour

@@ -62,9 +62,9 @@ public class cbr_applyatmosphere : MonoBehaviour
 
 
         // now we define some arrays and variables, to be shipped to the shadeer
-        Vector3 sunPosition = Vector3.zero;
-        Vector3[] planetCentres = new Vector3[8];
-        Vector3[] scatterCoefficients = new Vector3[8];
+        Vector3 sunPosition = Vector3.right * 10000;
+        Vector4[] planetCentres = new Vector4[8];
+        Vector4[] scatterCoefficients = new Vector4[8];
         float[] atmosphereRadii = new float[8];
         float[] surfaceRadii = new float[8];
         float[] planetScales = new float[8];
@@ -77,9 +77,41 @@ public class cbr_applyatmosphere : MonoBehaviour
         float[] minCloudRadii = new float[8];
         float[] maxCloudRadii = new float[8];
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < Mathf.Min(8,data.Length); i++)
         {
-            // TODO: re-package the data
+            // re-packaging the data into separate arrays
+            // (better organization for the shader, worse for me)
+            planetCentres[i] = data[i].bodyCenter;
+            scatterCoefficients[i] = data[i].scatterCoefficients;
+            atmosphereRadii[i] = data[i].atmosphereRadius;
+            surfaceRadii[i] = data[i].surfaceRadius;
+            planetScales[i] = data[i].planetScale;
+            densityMultipliers[i] = data[i].densityMultiplier;
+            densityFalloffs[i] = data[i].densityFalloff;
+            luminances[i] = data[i].luminance;
+            externalBrightnesses[i] = data[i].externalBrightness;
+            scatterFactors[i] = data[i].scatterFactor;
+            cloudBrightnesses[i] = data[i].cloudBrightness;
+            minCloudRadii[i] = data[i].minCloudRadius;
+            maxCloudRadii[i] = data[i].maxCloudRadius;
         }
+
+        // passing the packaged arrays off to the shader
+        m.SetVector("sunPosition",sunPosition);
+
+        m.SetVectorArray("planetCentre", planetCentres);
+        m.SetVectorArray("scatterCoefficients", scatterCoefficients);
+        
+        m.SetFloatArray("atmosphereRadius", atmosphereRadii);
+        m.SetFloatArray("surfaceRadius",surfaceRadii);
+        m.SetFloatArray("planetScale",planetScales);
+        m.SetFloatArray("densityMultiplier",densityMultipliers);
+        m.SetFloatArray("densityFalloff", densityFalloffs);
+        m.SetFloatArray("luminance", luminances);
+        m.SetFloatArray("externalBrightness",externalBrightnesses);
+        m.SetFloatArray("scatterFactor",scatterFactors);
+        m.SetFloatArray("cloudBrightness",cloudBrightnesses);
+        m.SetFloatArray("minCloudRadius", minCloudRadii);
+        m.SetFloatArray("maxCloudRadius", maxCloudRadii);
     }
 }

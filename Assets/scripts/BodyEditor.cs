@@ -33,12 +33,16 @@ public class BodyEditor : MonoBehaviour
     private cbr_applyatmosphere comp;
     private bool isActive;
 
+    public Vector3 waveLengths;
+    public float scatterStrength;
+
     // using the inspector to allow the user to edit settings
     // (FOR NOW)
     public cbr_atmosphererenderingdata atmosphereData;
 
     public void SetupEditor()
     {
+        CameraController.SetControlMode(CameraControlMode.BodyEditor);
         isActive = true;
         comp.enabled = true;
     }
@@ -47,9 +51,23 @@ public class BodyEditor : MonoBehaviour
     {
         if (isActive)
         {
+            CameraController.Instance.UpdateCamera();
+
+            UpdateScatterCoefficients();
+
             // basically, we're hijacking the camera's atmosphere rendering shader in order to render a test atmosphere
             comp.ApplyAtmosphereRenderingData(new cbr_atmosphererenderingdata[] {atmosphereData});
             // updating the shader vars will run automatically from Graphics.Blit()
         }
+    }
+
+    void UpdateScatterCoefficients()
+    {
+        Vector3 result = new Vector3(
+            Mathf.Pow(400f / waveLengths.x, 4) * scatterStrength,
+            Mathf.Pow(400f / waveLengths.y, 4) * scatterStrength,
+            Mathf.Pow(400f / waveLengths.z, 4) * scatterStrength);
+
+        atmosphereData.scatterCoefficients = result;
     }
 }

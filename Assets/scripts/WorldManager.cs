@@ -38,7 +38,7 @@ public class WorldManager : MonoBehaviour
     }
 
     public Sprite[] cbIcons;
-    public Color[] cbIconColors;
+    public Color[] cbIconColors; // TEMP TEMP TEMP TEMp
     [Space(20)]
     // TODO: maybe not split these two up?
     public Sprite[] otherIcons;

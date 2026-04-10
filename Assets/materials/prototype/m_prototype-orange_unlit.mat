@@ -7,12 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: water_vertex
-  m_Shader: {fileID: 4800000, guid: 509fc145b63177647b06460ae41a461f, type: 3}
+  m_Name: m_prototype-orange_unlit
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _GLOSSYREFLECTIONS_OFF
+  - _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -43,23 +45,11 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Foam1:
-        m_Texture: {fileID: 2800000, guid: 5f513c288907d0f4da38d732c6913244, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Foam2:
-        m_Texture: {fileID: 2800000, guid: 1468d67332a48f842ab547d65f720397, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b81a34361907c7348a7d62db23565277, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Noise:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -71,14 +61,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SparkleNoise:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecularNormal:
-        m_Texture: {fileID: 2800000, guid: 6fba072b592881247a59320b2e853fc6, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
@@ -86,36 +68,19 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _MaxTessDistance: 10
+    - _Glossiness: 0
+    - _GlossyReflections: 0
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseScale: 0.1
-    - _NoiseWeight: 0.1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PathBlending: 2
-    - _RimPower: 20
     - _SmoothnessTextureChannel: 0
-    - _SnowHeight: 0.3
-    - _SnowPathStrength: 2
-    - _SnowTextureOpacity: 0.3
-    - _SnowTextureScale: 0.3
-    - _SparkCutoff: 0.9
-    - _SparkleScale: 10
-    - _SpecularHighlights: 1
+    - _SpecularHighlights: 0
     - _SrcBlend: 1
-    - _Tess: 5
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.0627451, g: 0.21568628, b: 0.211789, a: 1}
-    - _DarkCol: {r: 0, g: 0.15482797, b: 0.2924528, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LightCol: {r: 0.0048593613, g: 0.3679245, b: 0.31111836, a: 1}
-    - _PathColorIn: {r: 1, g: 1, b: 1, a: 1}
-    - _PathColorOut: {r: 0.5, g: 0.5, b: 1, a: 1}
-    - _RimColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

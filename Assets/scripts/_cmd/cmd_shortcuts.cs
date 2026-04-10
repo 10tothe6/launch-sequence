@@ -11,8 +11,8 @@ public class cmd_shortcuts : MonoBehaviour
     {
         if (Keyboard.current.ctrlKey.isPressed)
         {
-            // ctrl+g is toggle gravity
-            
+            // ctrl+i is toggle map icons
+            WorldManager.Instance.ToggleMapIcons();
         }
     }
 }

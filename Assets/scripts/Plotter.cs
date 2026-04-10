@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 // mostly used to draw orbit lines in the map menu, but really could be used for anything
 
@@ -15,11 +16,25 @@ public class Plotter : MonoBehaviour
     
     public float lineWidth;
 
+    public bool adjustWidth;
+    public Transform focusPoint;
+
+    public bool colorGradient;
+
     void Awake()
     {
         if (lr == null && GetComponent<LineRenderer>() != null)
         {
             lr = GetComponent<LineRenderer>();
+        }
+    }
+
+    void Update()
+    {
+        if (adjustWidth)
+        {
+            lr.startWidth = lineWidth * Vector3.Distance(CameraController.t_cam.position, focusPoint.position);
+            lr.endWidth = lineWidth * Vector3.Distance(CameraController.t_cam.position, focusPoint.position);
         }
     }
 
@@ -36,7 +51,17 @@ public class Plotter : MonoBehaviour
 
         if (useColor)
         {
-            m_line.color = lineColor;
+            if (colorGradient)
+            {
+                Gradient g = new Gradient();
+                g.SetColorKeys(new GradientColorKey[]{new GradientColorKey(lineColor, 0f),new GradientColorKey(Color.black, 1f)});
+                lr.colorGradient = g;
+            } else
+            {
+                Gradient g = new Gradient();
+                g.SetColorKeys(new GradientColorKey[]{new GradientColorKey(lineColor, 0f),new GradientColorKey(Color.black, 1f)});
+                lr.colorGradient = g;
+            }
         }
     }
 }

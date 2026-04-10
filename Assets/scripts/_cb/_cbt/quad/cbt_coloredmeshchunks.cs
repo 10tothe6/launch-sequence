@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum cbt_ChunkColoringMode
 {
+    NONE,
     LOD,
     PARENT_FACE,
 }
@@ -43,6 +44,13 @@ public class cbt_coloredmeshchunks : MonoBehaviour
             {
                 // TODO: figure out what order we want the indices in
                 comp.chunks[i].SetDebugColor(debugColors[comp.chunks[i].startingFace]);
+            }
+        } else if (coloringMode == cbt_ChunkColoringMode.NONE)
+        {
+            for (int i = 0; i < comp.chunks.Count; i++)
+            {
+                // TODO: figure out what order we want the indices in
+                comp.chunks[i].SetDebugColor(debugColors[debugColors.Length - 1]);
             }
         }
     }

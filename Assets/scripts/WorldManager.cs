@@ -80,6 +80,16 @@ public class WorldManager : MonoBehaviour
     public GameObject p_robotIcon;
     public Transform t_mapIconContainer;
     public GameObject p_robot;
+    private bool isShowingMapIcons;
+
+    public void ToggleMapIcons()
+    {
+        
+    }
+    public void SetMapIconsActive(bool active)
+    {
+        
+    }
 
     // spawns a new player robot at the given position
     // this requires a bit of extra logic to make sure the robot also has a map view icon

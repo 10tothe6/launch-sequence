@@ -131,7 +131,7 @@ public class UIManager : MonoBehaviour
             t_canvas.GetChild(i).gameObject.SetActive(false);
             if (menuNames[i] == name)
             {
-                index = i;
+                index = menuSiblingIndices[i];
             }
         }
 

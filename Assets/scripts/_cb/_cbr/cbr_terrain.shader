@@ -1,6 +1,7 @@
 Shader "cbr/terrain" {
 Properties {
     _MainTex ("Biome Map", 2D) = "white" {}
+    _Color ("Color", Color) = (1,1,1,1)
 }
 SubShader {
     Tags { "RenderType" = "Opaque" }
@@ -31,9 +32,10 @@ SubShader {
     };
         
     sampler2D _MainTex;
+    fixed4 _Color;
 
     void surf (Input IN, inout SurfaceOutput o) {
-        o.Albedo = float3(1,1,1);
+        o.Albedo = _Color;
     }
     ENDCG
     }

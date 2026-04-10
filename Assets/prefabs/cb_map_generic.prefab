@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
+  - {fileID: 2100000, guid: 9b0c798dfac8a1046bd67d049e095888, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 5613676204026087662}
   - component: {fileID: 892541809401650966}
   - component: {fileID: 8983940671535341157}
+  - component: {fileID: 4408381248049617167}
   m_Layer: 7
   m_Name: cb_map_generic
   m_TagString: Untagged
@@ -211,10 +212,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Plotter
   lr: {fileID: 6012613243223672048}
   isShowing: 1
-  m_line: {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
-  useColor: 0
-  lineColor: {r: 0, g: 0, b: 0, a: 0}
-  lineWidth: 0.025
+  m_line: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  useColor: 1
+  lineColor: {r: 0.5943396, g: 0.77384686, b: 1, a: 1}
+  lineWidth: 0.005
+  adjustWidth: 1
+  focusPoint: {fileID: 3492338339632457666}
+  colorGradient: 1
 --- !u!114 &8983940671535341157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +237,23 @@ MonoBehaviour:
   t_uiContainer: {fileID: 0}
   isHidden: 0
   button: {fileID: 0}
+--- !u!114 &4408381248049617167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c764bb8abd63f4398a842a9803538d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cbr_litbody
+  children:
+  - {fileID: 2429306924842219781}
+  useSpecificObjects: 1
+  useIndex: 1
+  bodyIndex: 0
 --- !u!1 &9022401789089274635
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,3 +413,6 @@ MonoBehaviour:
   useColor: 0
   lineColor: {r: 0, g: 0, b: 0, a: 0}
   lineWidth: 0
+  adjustWidth: 0
+  focusPoint: {fileID: 0}
+  colorGradient: 0

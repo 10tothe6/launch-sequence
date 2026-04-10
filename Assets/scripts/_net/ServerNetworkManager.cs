@@ -3,6 +3,8 @@ using Riptide;
 using Riptide.Utils;
 using System.Collections.Generic;
 
+// (not bothering with a _net prefix here, cuz its a HL script)
+
 // SERVER!
 
 public enum ServerToClientId : ushort

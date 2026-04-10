@@ -99,7 +99,8 @@ public class Program : MonoBehaviour
             {
                 Sandbox.Instance.StartSandbox();
             } else if (startMode == ProgramStartMode.InstantGame)
-            {
+            {   
+                NetworkHelper.Instance.StartSingleplayerGame();
                 WorldManager.Instance.StartGame(-1);
             } else if (startMode == ProgramStartMode.BodyEditor)
             {

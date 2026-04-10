@@ -201,8 +201,11 @@ public class WorldManager : MonoBehaviour
             sortedBodies.Add(visibleBodies[kingIndex]);
             visibleBodies.RemoveAt(kingIndex); // remove from the pool as we go
         }
-        // add the last item to the list, and boom its sorted
-        sortedBodies.Add(visibleBodies[0]);
+        if (visibleBodies.Count > 0) // the ONLY reason I need this if statement is to make sure there aren't NO visible bodies at all
+        {
+            // add the last item to the list, and boom its sorted
+            sortedBodies.Add(visibleBodies[0]);
+        }
 
         return sortedBodies.ToArray();
     }

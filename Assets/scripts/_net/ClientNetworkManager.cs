@@ -3,6 +3,8 @@ using Riptide;
 using Riptide.Utils;
 using System;
 
+// (not bothering with a _net prefix here, cuz its a HL script)
+
 // CLIENT!
 
 // ids use a classification system:

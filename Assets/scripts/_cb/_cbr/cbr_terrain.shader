@@ -7,16 +7,17 @@ SubShader {
     CGPROGRAM
     #pragma surface surf SimpleLambert
     
-    half3 sunPosition; // always (0,0,0) for now
+    float3 sunPosition; // always (0,0,0) for now
     int isStar;
-    half3 position;
+    float3 position;
 
     // Lighting for the terrain (custom so that the sun direction can change)
     half4 LightingSimpleLambert (SurfaceOutput s, half3 lightDir, half atten) {
         if (isStar == 1) {
             return 1;
         }
-        half NdotL = dot(s.Normal, normalize(sunPosition - position));
+        half NdotL = saturate(dot(s.Normal, normalize(sunPosition - position)));
+        
         half4 c;
         c.rgb = s.Albedo * (NdotL);
         c.a = 1;

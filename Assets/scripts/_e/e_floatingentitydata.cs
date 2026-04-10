@@ -6,6 +6,10 @@ using UnityEngine;
 // the player, planets, ships
 [System.Serializable]
 public class e_floatingentitydata {
+    // very important for keeping track of entities in the multiplayer system
+    public int index;
+
+
     public bool isCelestial; // is it big enough to never un-render?
     public Transform reference;
 

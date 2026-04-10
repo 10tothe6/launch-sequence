@@ -297,6 +297,8 @@ public class cbt_meshbody : MonoBehaviour
         // make sure we don't render the old one over the new ones
         input.isCulledByLOD = true;
         input.UpdateRenderStatus();
+
+        GetComponent<cbr_litbody>().UpdateChildren();
     }
 
     // ********************

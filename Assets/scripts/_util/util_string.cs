@@ -1,9 +1,20 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 
 public class util_string
 {   
+    public static string[] AddToArray(string[] old, string toAdd)
+    {
+        string[] result = new string[old.Length + 1];
+
+        for (int i = 0; i < old.Length; i++)
+        {
+            result[i] = old[i];
+        }
+        result[result.Length - 1] = toAdd;
+
+        return result;
+    }
     public static string RemoveChars(string raw, char[] toRemove)
     {
         string result = "";

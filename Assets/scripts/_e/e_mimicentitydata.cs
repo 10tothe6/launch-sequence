@@ -6,6 +6,10 @@ using UnityEngine;
 // in other words, they do not need to be a part of the floating rendering system
 [System.Serializable]
 public class e_mimicentitydata {
+    // very important for keeping track of entities in the multiplayer system
+    public int index;
+
+
     public Transform reference;
     public int bodyIndex; // What celestial body is this bound to?
     public Vector3 defaultPosition; // local position at planet's full scale

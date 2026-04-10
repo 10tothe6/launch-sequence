@@ -28,4 +28,9 @@ public class cbr_litbody : MonoBehaviour
             }
         }
     }
+
+    public void UpdateChildren()
+    {
+        children = GetComponentsInChildren<MeshRenderer>();
+    }
 }

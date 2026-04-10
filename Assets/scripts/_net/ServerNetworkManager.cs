@@ -11,17 +11,12 @@ public enum ServerToClientId : ushort
 {
     join_permitted = 10000, // tell a client that they can join (also send them the player list)
     join_denied = 10001, // tell a client that they can't join (usually bc their username is taken or their version is wrong)
-    player_connected = 10002, // new player joined
-    player_disconnected = 10003, // new player quit
+    player_connected = 10002, // new player joined (tell to all clients)
+    player_disconnected = 10003, // new player quit OR WAS BANNED (tell to all clients))
 
-    remove_player = 10004, // for whatever reason
+    chat_message_update = 10100, // tell to all clients
 
-    chat_message_update = 10100,
-
-    robot_select = 10300, // someone updated their robot
-    level_select = 10301, // someone selected a level
-
-    player_positions = 10400,
+    player_positions = 10400, // an entity positioning update
     object_positions = 10401,
 }
 

@@ -68,6 +68,7 @@ public class WorldManager : MonoBehaviour
     // *********
 
     // ************ TIME-RELATED STUFF ************
+    public float worldTime;
 
     public float currentTimewarpFactor;
 

@@ -77,9 +77,9 @@ public class ClientNetworkManager : MonoBehaviour
     public void ConnectToLocalServer() { ConnectToServer("127.0.0.1", 7770);}
     public void ConnectToServer(string ip, ushort port)
     {
-        if (username.Length < 1) {Debug.Log("Username has not been set! Cannot join server."); return;}
+        if (username.Length < 1) {cmd.Log("Username has not been set! Cannot join server."); return;}
         
-        Debug.Log("Connecting Drivetrain client to server ...");
+        cmd.Log("Connecting client to server ...");
         client.Connect($"{ip}:{port}");
 
         isClientActive = true;
@@ -87,7 +87,7 @@ public class ClientNetworkManager : MonoBehaviour
     private void DidConnect(object sender, EventArgs e)
     {
         // send basic info to server
-        Debug.Log("Connected to server.");
+        cmd.Log("Connected to server.");
         SendJoinRequestToServer();
     }
     private void FailedToConnect(object sender, EventArgs e)

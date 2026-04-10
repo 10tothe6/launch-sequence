@@ -41,11 +41,14 @@ public class BodyEditor : MonoBehaviour
     // (FOR NOW)
     public cbr_atmosphererenderingdata atmosphereData;
 
+    public GameObject g_testPlanet;
+
     public void SetupEditor()
     {
         CameraController.SetControlMode(CameraControlMode.BodyEditor);
         isActive = true;
         comp.enabled = true;
+        g_testPlanet.SetActive(true);
     }
 
     void Update()
@@ -59,6 +62,9 @@ public class BodyEditor : MonoBehaviour
             // basically, we're hijacking the camera's atmosphere rendering shader in order to render a test atmosphere
             comp.ApplyAtmosphereRenderingData(new cbr_atmosphererenderingdata[] {atmosphereData});
             // updating the shader vars will run automatically from Graphics.Blit()
+        } else
+        {
+            g_testPlanet.SetActive(false);
         }
     }
 

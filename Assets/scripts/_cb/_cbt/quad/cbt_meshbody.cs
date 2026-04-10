@@ -151,11 +151,11 @@ public class cbt_meshbody : MonoBehaviour
                 {
                     float dist = current.GetDistance();
                     
-                    if (bodyIndex == 2 && current.startingFace == 2 && current.levelOfDetail == 5)
-                    {
+                    // if (bodyIndex == 2 && current.startingFace == 2 && current.levelOfDetail == 5)
+                    // {
                         
-                        Debug.Log(current.GetDistance());
-                    }
+                    //     Debug.Log(current.GetDistance());
+                    // }
 
                     // the thresholds are all in meters, so we need to multiply by the scale factor to turn them into the units that game-space actually uses
                     if (dist < detailLevelThresholds[current.levelOfDetail] * WorldData.universalScaleFactor)

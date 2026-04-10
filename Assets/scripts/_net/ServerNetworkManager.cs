@@ -67,20 +67,23 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void StartServer(ushort port, ushort maxClientCount)
     {
-        Debug.Log("Starting Drivetrain server v0.1.0 ...");
+        cmd.Log("Starting server ...");
         server.Start(port, maxClientCount);
         isServerActive = true;
     }
-
+    
+    // hosting and joining a server
     public void StartAndJoinServer(ushort port, ushort maxClientCount)
     {
         StartServer(port, maxClientCount);
         ClientNetworkManager.Instance.ConnectToLocalServer();
     }
 
+    // starting a singleplayer world
     public void StartSingleplayerServer()
     {
         StartServer(7770, 1);
+        ClientNetworkManager.Instance.username = "null";
         ClientNetworkManager.Instance.ConnectToLocalServer();
     }
 

@@ -32,6 +32,6 @@ public class NetworkHelper : MonoBehaviour
     // sets up a single-person server
     public void StartSingleplayerGame()
     {
-        
+        ServerNetworkManager.Instance.StartSingleplayerServer();
     }
 }

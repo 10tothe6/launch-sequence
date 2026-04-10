@@ -38,6 +38,29 @@ public class cmd_consolecommand
 
 public class cmd_console : MonoBehaviour
 {
+    private static cmd_console _instance;
+    public static cmd_console Instance
+    {
+        get => _instance;
+        private set
+        {
+            if (_instance == null)
+            {
+                _instance = value;
+            }
+            else if (_instance != value)
+            {
+                Debug.Log("You messed up buddy.");
+                Destroy(value);
+            }
+        }
+    }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     public ui_console menu;
 
     public static cmd_consolecommand[] possibleCommands = new cmd_consolecommand[]

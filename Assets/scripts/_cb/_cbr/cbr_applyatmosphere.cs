@@ -40,6 +40,8 @@ public class cbr_applyatmosphere : MonoBehaviour
 
     void UpdateDataFromVisibleBodies()
     {
+        if (data == null) {return;}
+
         int[] sortedBodyIndices = WorldManager.Instance.GetVisibleAtmosphericBodyIndices();
         if (sortedBodyIndices.Length > 8)
         {
@@ -58,6 +60,7 @@ public class cbr_applyatmosphere : MonoBehaviour
     // this function takes all the data and re-packages it for the shader
     void UpdateShaderPeriodic()
     {
+        if (data == null) {return;}
         // just using the number 8, which is the limit in the shader
 
 

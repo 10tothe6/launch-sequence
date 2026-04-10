@@ -125,4 +125,10 @@ public class Program : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public string GetPreviousVersion()
+    {
+        // TODO: this function
+        return version;
+    }
 }

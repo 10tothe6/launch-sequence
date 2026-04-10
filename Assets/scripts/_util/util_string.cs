@@ -1,36 +1,51 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class util_string
 {   
-    // uses spaces ' ' as the split character, doesn't include them in the result
-    public static string[] SplitIntoWords(string raw)
+    public static string RemoveChars(string raw, char[] toRemove)
     {
-        List<string> results = new List<string>();
-
-        // could just do this with a string, I realized
-        // dont care enough to change it
-        List<char> currentWord = new List<char>();
+        string result = "";
 
         for (int i = 0; i < raw.Length; i++)
         {
-            if (raw[i] == ' ')
+            if (!toRemove.Contains(raw[i]))
             {
-                results.Add(CharsToString(currentWord.ToArray()));
-                currentWord = new List<char>();
+                result += raw[i];
+            }
+        }
+
+        return result;
+    }
+    public static string[] SplitByChar(string raw, char c)
+    {
+        string current = "";
+        List<string> results = new List<string>();
+
+        for (int i = 0; i < raw.Length; i++)
+        {
+            if (raw[i] == c)
+            {
+                if (current.Length > 0) {results.Add(current);}
+                current = "";
+            } else if (i == raw.Length - 1)
+            {
+                current += raw[i];
+                if (current.Length > 0) {results.Add(current);}
             } else
             {
-                currentWord.Add(raw[i]);
-            }
-
-            if (i == raw.Length - 1)
-            {
-                results.Add(CharsToString(currentWord.ToArray()));
-                currentWord = new List<char>();
+                current += raw[i];
             }
         }
 
         return results.ToArray();
+    }
+    
+    // uses spaces ' ' as the split character, doesn't include them in the result
+    public static string[] SplitIntoWords(string raw)
+    {
+        return SplitByChar(raw, ' ');
     }
 
     public static string CharsToString(char[] chars)

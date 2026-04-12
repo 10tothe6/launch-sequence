@@ -2,6 +2,7 @@ using UnityEngine;
 using Riptide;
 using Riptide.Utils;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 // (not bothering with a _net prefix here, cuz its a HL script)
 
@@ -47,18 +48,27 @@ public class ServerNetworkManager : MonoBehaviour
     }
 
     public Server server {get; private set;}
+    public string serverIP;
+    public ushort serverPort;
 
     public bool isServerActive;
 
     // trying to keep this central and easy-to-access, unlike the old version of drivetrain
     // come to think of it the weird Player class caused a lot of issues
-    public List<net_connectedclient> connectedClients;
+    // NOT ORDERED AT ALL, KEEP IN MIND
+    public List<net_connectedclient> connectedClients; 
 
     public bool useWhitelist;
     // ips of whitelisted users
     // ips of blacklisted users
     public List<string> whitelist;
     public List<string> blacklist;
+
+    // UNITY EVENTS *************
+    public UnityEvent onJoinServer;
+    public UnityEvent onPlayerJoin;
+    public UnityEvent onPlayerLeave;
+    // ************
 
     public static string[] GetConnectedUsernames()
     {
@@ -185,11 +195,11 @@ public class ServerNetworkManager : MonoBehaviour
 
             if (passedListCheck)
             {
-                Instance.SendJoinConfirm(fromClientId);
-                // add the client AFTER we've sent over the player list to avoid having the client think itself is another player
+                cmd.LogRaw($"[Server] Client accepted.");
+
                 Instance.connectedClients.Add(new net_connectedclient(username, fromClientId));
 
-                cmd.LogRaw($"[Server] Client accepted.");
+                Instance.SendJoinConfirm(fromClientId);
             }
         }
     }
@@ -234,14 +244,51 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void SendJoinConfirm(ushort toClientId)
     {
+        cmd.LogRaw($"[Server] Sending player list to new client...");
+
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.join_permitted);
-        message.AddStrings(GetClientUsernames());
+
+        // converting the connected client list to a string, then shipping it over
+        string[] connectedClients = new string[Instance.connectedClients.Count];
+
+        for (int i = 0; i < connectedClients.Length; i++)
+        {
+            connectedClients[i] = Instance.connectedClients[i].ParseToString();
+        }
+
+        message.AddStrings(connectedClients);
+       
         Instance.server.Send(message, toClientId);
 
-        // we also need to tell the other players there's a new kid in town
-        for (int i = 0; i < connectedClients.Count; i++)
+        // so the one client has been confirmed, great
+        // now we tell everyone else that there's a new player
+        Message toOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.player_connected);
+
+        // the username and permission level (net_connectedclient) get sent over
+        toOthers.AddString(GetClient(toClientId).ParseToString());
+        int otherPlayerCount = Instance.connectedClients.Count - 1;
+        cmd.LogRaw($"[Server] Sending player join notification to {otherPlayerCount} other clients...");
+        SendToAllExcept(toClientId, toOthers);
+    }
+
+    public static net_connectedclient GetClient(ushort id)
+    {
+        for (int i = 0; i < Instance.connectedClients.Count; i++)
         {
-            
+            if (Instance.connectedClients[i].client_index == id)
+            {
+                return Instance.connectedClients[i];
+            }
+        }
+        return null;
+    }
+
+    public static void SendToAllExcept(ushort except, Message msg)
+    {
+        for (int i = 0; i < Instance.connectedClients.Count; i++)
+        {
+            if (i == except) {continue;}
+            Instance.server.Send(msg, (ushort)i);
         }
     }
 

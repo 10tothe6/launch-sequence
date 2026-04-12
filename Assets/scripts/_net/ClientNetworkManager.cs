@@ -3,6 +3,8 @@ using Riptide;
 using Riptide.Utils;
 using System;
 using UnityEngine.Events;
+using System.Collections.Generic;
+using System.Linq;
 
 // (not bothering with a _net prefix here, cuz its a HL script)
 
@@ -56,17 +58,8 @@ public class ClientNetworkManager : MonoBehaviour
 
     public string username; // the username associated with the current client
 
-    // pretty sure the client doesn't need to know the actual IDs of the other clients
-    public string[] otherUsernames; // the usernames of the other connected clients
-
     public bool isClientActive;
     public Client client {get; private set;}
-
-    public UnityEvent onPlayerCountUpdate;
-
-
-    public string serverIP;
-    public ushort serverPort;
 
     private void Start()
     {
@@ -85,8 +78,8 @@ public class ClientNetworkManager : MonoBehaviour
         if (username.Length < 1) {cmd.LogRaw("[Client] Username has not been set! Cannot join server."); return;}
         
         cmd.LogRaw("[Client] Connecting to local server ...");
-        serverIP = ip;
-        serverPort = port;
+        ServerNetworkManager.Instance.serverIP = ip;
+        ServerNetworkManager.Instance.serverPort = port;
         client.Connect($"{ip}:{port}");
 
         isClientActive = true;
@@ -94,7 +87,7 @@ public class ClientNetworkManager : MonoBehaviour
     private void DidConnect(object sender, EventArgs e)
     {
         // send basic info to server
-        cmd.LogRaw("[Client] Found server at ip: " + serverIP + ". Sending handshake...");
+        cmd.LogRaw("[Client] Found server at ip: " + ServerNetworkManager.Instance.serverIP + ". Sending handshake...");
         SendJoinRequestToServer();
     }
     private void FailedToConnect(object sender, EventArgs e)
@@ -145,21 +138,33 @@ public class ClientNetworkManager : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.join_denied)]
     private static void HandleJoinDenial(Message message)
     {
-        Debug.Log("Server kicked us out.");
+        string reason = message.GetString();
+
+        cmd.LogRaw($"[Client] Join request denied by server. Reason: {reason}");
         Instance.client.Disconnect();
     }
 
     [MessageHandler((ushort)ServerToClientId.join_permitted)]
     private static void HandleJoinConfirmation(Message message)
     {
-        string[] otherPlayerNames = message.GetStrings();
-        Instance.otherUsernames = otherPlayerNames;
+        string[] rawClientData = message.GetStrings();
+        net_connectedclient[] clientData = net_connectedclient.ParseFromStringArray(rawClientData);
 
-        Instance.onPlayerCountUpdate.Invoke();
+        cmd.LogRaw($"[Client] Join request accepted. Setting player list ({rawClientData.Length})...");
 
-        // once we've confirmed that we're in the server,
-        // open up the sim setup menu
+        ServerNetworkManager.Instance.connectedClients = clientData.ToList();
+        ServerNetworkManager.Instance.onJoinServer.Invoke();
+    }
 
-        // TODO: switch to lobby
+    [MessageHandler((ushort)ServerToClientId.player_connected)]
+    private static void HandleNewPlayer(Message message)
+    {
+        ServerNetworkManager.Instance.onPlayerJoin.Invoke();
+    }
+
+    [MessageHandler((ushort)ServerToClientId.player_disconnected)]
+    private static void HandlePlayerDisconnect(Message message)
+    {
+        ServerNetworkManager.Instance.onPlayerLeave.Invoke();
     }
 }

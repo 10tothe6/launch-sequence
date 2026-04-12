@@ -7,17 +7,21 @@ public enum net_permissionlevel
     User = 0, // nothing
 }
 
+
+
+// ONLY USED SERVER-SIDE
+
 [System.Serializable]
-public class net_connectedclient
+public class net_connectedclient 
 {
     public string username;
+    public ushort permissionLevel; // references net_permissionlevel
     public ushort client_index; // THE RIPTIDE INDEX
     // NOT USING CLIENT IDS/INDEXES, USUALLY
 
     public float ping; // two-way ping
 
-    public ushort permissionLevel; // references net_permissionlevel
-
+    public net_connectedclient() {}    
     public net_connectedclient(string username, ushort client_index)
     {
         this.username = username;
@@ -32,13 +36,40 @@ public class net_connectedclient
         this.permissionLevel = permissionLevel;
     }
 
-    public bool CanUseCommands()
+    public string ParseToString()
     {
-        return permissionLevel > 0;
+        string result = "";
+
+        result += username;
+        result += ",";
+        result += permissionLevel;
+        result += ",";
+        result += client_index;
+
+        return result;
     }
 
-    public bool IsAdmin()
+    public static net_connectedclient ParseFromString(string raw)
     {
-        return permissionLevel > 1;
+        net_connectedclient result = new net_connectedclient();
+        string[] elements = util_string.SplitByChar(raw,',');
+        
+        result.username = elements[0];
+        result.permissionLevel = ushort.Parse(elements[1]);
+        // no need for ping
+        result.client_index = ushort.Parse(elements[2]);
+
+        return result;
+    }
+
+    public static net_connectedclient[] ParseFromStringArray(string[] raw)
+    {
+        net_connectedclient[] result = new net_connectedclient[raw.Length];
+        for (int i = 0; i < raw.Length; i++)
+        {
+            result[i] = net_connectedclient.ParseFromString(raw[i]);
+        }
+
+        return result;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EntityManager : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class EntityManager : MonoBehaviour
     public List<e_mimicentity> mimicEntities;
 
     public GameObject[] p_entities;
+
+    public UnityEvent onSpawnEntity;
+    public UnityEvent onDestroyEntity;
 
 
     // okay so

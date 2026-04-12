@@ -30,8 +30,25 @@ public class ui_mapview : MonoBehaviour
     {
         Instance = this;
     }
+    void Start()
+    {
+        // EntityManager.Instance.onDestroyEntity.AddListener(UpdateVisibleEntities);
+        // EntityManager.Instance.onSpawnEntity.AddListener(UpdateVisibleEntities);
+    }
 
-    public Transform t_mapIcons;
+    public Transform t_bodyIcons;
+    public Transform t_playerIcons;
+    public Transform t_entityIcons;
+
+    public GameObject p_entityIcon;
+
+    public num_precisevector3 ConvertPosition(num_precisevector3 worldPosition)
+    {
+        num_precisevector3 offset = worldPosition.Sub(cb_solarsystem.Instance.monoBodies[WorldManager.Instance.mapFocusIndex].data.pConfig.GetPosition());
+        offset = offset.Div((double)(1 / WorldManager.Instance.GetMapScaleFromFocusedBody()));
+
+        return offset;
+    }
 
     public void SetupDebugInfo()
     {
@@ -73,9 +90,37 @@ public class ui_mapview : MonoBehaviour
     public void SetupBody(cb_trackedbody body, ui_linkedicon comp)
     {
         comp.icon = WorldManager.Instance.cbIcons[body.data.bodyType];
-        comp.t_uiContainer = t_mapIcons;
+        comp.t_uiContainer = t_bodyIcons;
 
         comp.Initialize();
         comp.button.onClick.AddListener(() => WorldManager.Instance.SetMapFocus(body.data.pConfig.selfIndex));
+    }
+
+    public void UpdatePlayers()
+    {
+        string[] usernames = ServerNetworkManager.GetConnectedUsernames();
+
+        for (int i = 0; i < usernames.Length; i++)
+        {
+            if (!ui_canvasutils.HasChildOfName(t_playerIcons.gameObject, usernames[i]))
+            {
+                GameObject g_newIcon = Instantiate(p_entityIcon, t_playerIcons);
+
+                g_newIcon.name = usernames[i];
+
+                e_mapentity comp = g_newIcon.GetComponent<e_mapentity>();
+
+                // temp temp temp
+                comp.reference = GameObject.Find("player").GetComponent<e_generic>();
+                comp.showName = true;
+
+                comp.Initialize();
+            }
+        }
+    }
+
+    public void UpdateVisibleEntities()
+    {
+        
     }
 }

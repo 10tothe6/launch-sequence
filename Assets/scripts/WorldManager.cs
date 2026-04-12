@@ -106,6 +106,7 @@ public class WorldManager : MonoBehaviour
     {
         RefreshMap();
         UpdateMapBasePosition();
+        ui_mapview.Instance.UpdatePlayers();
     }
 
     public void UpdateWorld()

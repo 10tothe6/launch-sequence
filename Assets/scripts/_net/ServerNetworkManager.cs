@@ -54,10 +54,16 @@ public class ServerNetworkManager : MonoBehaviour
     // come to think of it the weird Player class caused a lot of issues
     public List<net_connectedclient> connectedClients;
 
+    public bool useWhitelist;
     // ips of whitelisted users
     // ips of blacklisted users
     public List<string> whitelist;
     public List<string> blacklist;
+
+    public static string[] GetConnectedUsernames()
+    {
+        return new string[] {"localplayer"};
+    }
 
     public void WhitelistPlayer(string username)
     {
@@ -87,7 +93,7 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void StartServer(ushort port, ushort maxClientCount)
     {
-        cmd.Log("Starting server ...");
+        cmd.LogRaw("[Server] Starting server ...");
         server.Start(port, maxClientCount);
         isServerActive = true;
     }
@@ -102,6 +108,7 @@ public class ServerNetworkManager : MonoBehaviour
     // starting a singleplayer world
     public void StartSingleplayerServer()
     {
+        cmd.LogRaw("[Server] Setting up singleplayer server on port " + 7770 + "...");
         StartServer(7770, 1);
         ClientNetworkManager.Instance.username = "localplayer";
         ClientNetworkManager.Instance.ConnectToLocalServer();
@@ -132,17 +139,58 @@ public class ServerNetworkManager : MonoBehaviour
         string username = message.GetString();
         string version = message.GetString();
 
-        if (Instance.IsUsernameTaken(username) || Program.Instance.version != version)
-        {
-            Instance.SendJoinDenial(fromClientId);
-            Debug.Log($"Client {fromClientId} with username {username} was denied entry.");
-        } else
-        {
-            Instance.SendJoinConfirm(fromClientId);
-            // add the client AFTER we've sent over the player list to avoid having the client think itself is another player
-            Instance.connectedClients.Add(new net_connectedclient(username, fromClientId));
+        cmd.LogRaw($"[Server] Received join request from '{username}'. Validating...");        
 
-            Debug.Log($"Client {fromClientId} with username {username} was permitted to join.");
+        if (Instance.IsUsernameTaken(username))
+        {
+            Instance.SendJoinDenial(fromClientId, "duplicate username");
+            cmd.LogRaw($"[Server] Client denied. Reason: duplicate username.");
+        } 
+        else if (Program.Instance.version != version)
+        {
+            Instance.SendJoinDenial(fromClientId, "wrong version");
+            cmd.LogRaw($"[Server] Client denied. Reason: wrong game version.");
+        }
+
+        
+        else
+        {
+            bool passedListCheck = false;
+
+            if (Instance.useWhitelist)
+            {
+                // whitelist check
+                if (Instance.whitelist.Contains(util_network.RemovePortFromIp(Instance.server.Clients[fromClientId-1].ToString())))
+                {
+                    // on the whitelist, so we good
+                    passedListCheck = true;
+                } else
+                {
+                    Instance.SendJoinDenial(fromClientId, "not whitelisted");
+                    cmd.LogRaw($"[Server] Client denied. Reason: not on whitelist.");
+                }
+            } else
+            {
+                // blacklist check
+                if (!Instance.blacklist.Contains(util_network.RemovePortFromIp(Instance.server.Clients[fromClientId-1].ToString())))
+                {
+                    // not on blacklist, so we good
+                    passedListCheck = true;
+                } else
+                {
+                    Instance.SendJoinDenial(fromClientId, "blacklisted");
+                    cmd.LogRaw($"[Server] Client with denied. Reason: on blacklist.");
+                }
+            }
+
+            if (passedListCheck)
+            {
+                Instance.SendJoinConfirm(fromClientId);
+                // add the client AFTER we've sent over the player list to avoid having the client think itself is another player
+                Instance.connectedClients.Add(new net_connectedclient(username, fromClientId));
+
+                cmd.LogRaw($"[Server] Client accepted.");
+            }
         }
     }
 
@@ -175,12 +223,10 @@ public class ServerNetworkManager : MonoBehaviour
         Instance.server.Send(message, toClientId);
     }
 
-    public void SendJoinDenial(ushort toClientId)
+    public void SendJoinDenial(ushort toClientId, string reason)
     {
-        string reasoning = "Join request denied.";
-
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.join_denied);
-        message.AddString(reasoning);
+        message.AddString(reason);
         Instance.server.Send(message, toClientId);
 
         // nobody else really needs to see that someone tried to join

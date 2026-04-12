@@ -23,11 +23,9 @@ using UnityEngine.Events;
 public enum ClientToServerId : ushort
 {
     join_request = 00000, // can i join this server?
-    remove_player_request = 00001, // banning someone
+    kick_player_request = 00001, // kicking someone
 
     chat_message_send = 00100, // probably the only message in category 01
-
-    movement_keypresses = 00400, // trying to move, basically
 }
 
 public class ClientNetworkManager : MonoBehaviour
@@ -66,6 +64,10 @@ public class ClientNetworkManager : MonoBehaviour
 
     public UnityEvent onPlayerCountUpdate;
 
+
+    public string serverIP;
+    public ushort serverPort;
+
     private void Start()
     {
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
@@ -80,9 +82,11 @@ public class ClientNetworkManager : MonoBehaviour
     public void ConnectToLocalServer() { ConnectToServer("127.0.0.1", 7770);}
     public void ConnectToServer(string ip, ushort port)
     {
-        if (username.Length < 1) {cmd.Log("Username has not been set! Cannot join server."); return;}
+        if (username.Length < 1) {cmd.LogRaw("[Client] Username has not been set! Cannot join server."); return;}
         
-        cmd.Log("Connecting client to server ...");
+        cmd.LogRaw("[Client] Connecting to local server ...");
+        serverIP = ip;
+        serverPort = port;
         client.Connect($"{ip}:{port}");
 
         isClientActive = true;
@@ -90,7 +94,7 @@ public class ClientNetworkManager : MonoBehaviour
     private void DidConnect(object sender, EventArgs e)
     {
         // send basic info to server
-        cmd.Log("Connected to server.");
+        cmd.LogRaw("[Client] Found server at ip: " + serverIP + ". Sending handshake...");
         SendJoinRequestToServer();
     }
     private void FailedToConnect(object sender, EventArgs e)
@@ -132,7 +136,7 @@ public class ClientNetworkManager : MonoBehaviour
 
     public void RequestKickPlayer(string username)
     {
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.remove_player_request);
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.kick_player_request);
         
         message.AddString(username);
         // @

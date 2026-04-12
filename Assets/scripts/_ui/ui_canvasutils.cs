@@ -6,6 +6,18 @@ using UnityEngine.UI;
 // This class can be referenced by any other script in the project
 public class ui_canvasutils : MonoBehaviour
 {
+    public static bool HasChildOfName(GameObject parent, string name)
+    {
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            if (parent.transform.GetChild(i).name == name)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     public static List<GameObject> GetImageObjectsInChildren(GameObject parent, bool inclueParent) {
         List<GameObject> toReturn = new List<GameObject>();
         if (inclueParent) {toReturn.Add(parent);}

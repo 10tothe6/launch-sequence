@@ -25,6 +25,11 @@ public class e_mimicentitydata {
         defaultScale = _ref.localScale.x;
     }
 
+    public num_precisevector3 GetPosition()
+    {
+        return new num_precisevector3(0,0,0);
+    }
+
     // public void Refresh() {
     //     // for now just set the unity position to game position
     //     Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.reference;

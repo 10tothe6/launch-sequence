@@ -6,6 +6,10 @@ public class cmd
 {
     public static void Log(string msg)
     {
+        cmd_console.Instance.DebugLog("[DEBUG] " + msg);
+    }
+    public static void LogRaw(string msg)
+    {
         cmd_console.Instance.DebugLog(msg);
     }
 }

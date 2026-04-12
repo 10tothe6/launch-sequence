@@ -79,6 +79,7 @@ public class cmd_console : MonoBehaviour
         new cmd_consolecommand(new string[]{"spawn"}), // spawn entity
 
         new cmd_consolecommand(new string[]{"title"}), // big text for all players
+        new cmd_consolecommand(new string[]{"chat","c"}), // big text for all players
 
         new cmd_consolecommand(new string[]{"p"}), // change permission
 
@@ -185,7 +186,7 @@ public class cmd_console : MonoBehaviour
     public void DebugLog(string msg)
     {
         // our console
-        PostToConsole("[DEBUG] " + msg);
+        PostToConsole(msg);
 
         // unity console
         Debug.Log(msg);

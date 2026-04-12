@@ -36,6 +36,11 @@ public class Settings : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        ReadSettingsFile();
+    }
+
     public static string emptyString = "err";
     public static double emptyDouble = -999d;
     public static float emptyFloat = -999f;
@@ -152,5 +157,29 @@ public class Settings : MonoBehaviour
         }
 
         // we're not going to bother with writing anything to disk, that's another function's job
+    }
+    void OnApplicationQuit()
+    {
+        Settings.Instance.WriteToSettingsFile();
+    }
+
+    public void WriteToSettingsFile()
+    {
+        if (!Directory.Exists(util_file.GetWorkingDirectory())) {Directory.CreateDirectory(util_file.GetWorkingDirectory());}
+        string filePath = util_file.GetWorkingDirectory() + "user.settings";
+
+        if (!File.Exists(filePath))
+        {
+            File.Create(filePath);
+        }
+
+        List<string> lines = new List<string>();
+
+        for (int i = 0; i < settings.Count; i++)
+        {
+            lines.Add(settings[i].key + ":" + settings[i].value);
+        }
+
+        File.WriteAllLines(filePath, lines.ToArray());
     }
 }

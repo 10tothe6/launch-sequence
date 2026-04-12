@@ -5,6 +5,7 @@ public enum prefs_entrytype
     Double,
     Float,
     String,
+    Bool,
 }
 
 // like everything else, the way this game handles settings is much more complicated than what I usually do
@@ -56,7 +57,10 @@ public class prefs_genericentry
 
             return true;
 
-        } else if (type == prefs_entrytype.Float)
+        }  else if (type == prefs_entrytype.Bool)
+        {
+            return val == "true" || val == "false";
+        }else if (type == prefs_entrytype.Float)
         {
             // TODO: same thing as double
         } else if (type == prefs_entrytype.String)

@@ -5184,7 +5184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cam_mapview
   viewDistance: 1
-  viewDistanceSensitivity: 1
+  viewDistanceSensitivity: 0.1
   mapCullingMask:
     serializedVersion: 2
     m_Bits: 128
@@ -7810,6 +7810,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251284072}
   m_CullTransparentMesh: 1
+--- !u!1 &1272016256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272016257}
+  - component: {fileID: 1272016258}
+  m_Layer: 0
+  m_Name: settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1272016257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272016256}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2144568379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1272016258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272016256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1d08904a9701e4fa5b340e493126d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Settings
+  ins_settings:
+  - type: 0
+    isFilled: 0
+    key: fov
+    value: 
+    lowerLimit: 30
+    upperLimit: 100
+    defaultValue: 90
 --- !u!1 &1285539533
 GameObject:
   m_ObjectHideFlags: 0
@@ -12592,6 +12644,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 201656890}
+  - {fileID: 1272016257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2144568380
@@ -12606,7 +12659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da38d6fc5ad2cde43b43e8e2cb1d9a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Program
-  version: 
+  version: mptest-1.0
   ins_buildMode: 0
   ins_startMode: 3
   ins_gameState: 0

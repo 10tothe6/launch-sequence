@@ -54,6 +54,31 @@ public class ServerNetworkManager : MonoBehaviour
     // come to think of it the weird Player class caused a lot of issues
     public List<net_connectedclient> connectedClients;
 
+    // ips of whitelisted users
+    // ips of blacklisted users
+    public List<string> whitelist;
+    public List<string> blacklist;
+
+    public void WhitelistPlayer(string username)
+    {
+        
+    }
+    public void BlacklistPlayer(string username)
+    {
+        
+    }
+
+    public void KickPlayer(string username)
+    {
+        
+    }
+
+    public void BanPlayer(string username)
+    {
+        BlacklistPlayer(username);
+        KickPlayer(username);
+    }
+
     private void Start()
     {
         connectedClients = new List<net_connectedclient>();

@@ -47,6 +47,11 @@ public class LocalPlayer : MonoBehaviour
         cb_renderingmanager.Instance.player.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
     }
 
+    public void Teleport(num_precisevector3 pos)
+    {
+        
+    }
+
     // grabs which keys the player is pressing and turns them into this nice, clean, standard format
     public static player_keypresspacket GetKeypressPacket()
     {

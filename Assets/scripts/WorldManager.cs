@@ -133,6 +133,19 @@ public class WorldManager : MonoBehaviour
         return cb_solarsystem.Instance.monoBodies[index].data.tConfig.equitorialRadius;
     }
 
+
+    // i hate it here
+    public int GetMapSOIIndex()
+    {
+        if (cb_solarsystem.Instance.monoBodies[mapFocusIndex].data.pConfig.parentIndex == 0)
+        {
+            return mapFocusIndex;
+        } else
+        {
+            return cb_solarsystem.Instance.monoBodies[mapFocusIndex].data.pConfig.parentIndex;
+        }
+    }
+
     public int GetSOIIndex()
     {
         Vector3 playerPos = Vector3.zero;

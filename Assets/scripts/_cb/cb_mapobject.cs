@@ -55,7 +55,7 @@ public class cb_mapobject : MonoBehaviour
         GetComponent<ui_linkedicon>().t_icon.GetComponent<cb_mapicon>().SetBodyIndex(selfIndex);
         GetComponent<cbr_litbody>().bodyIndex = selfIndex;
 
-        if (WorldManager.Instance.mapFocusIndex == selfIndex)
+        if (WorldManager.Instance.GetMapSOIIndex() == selfIndex)
         {
             orbitLine.lr.enabled = false;
         } else

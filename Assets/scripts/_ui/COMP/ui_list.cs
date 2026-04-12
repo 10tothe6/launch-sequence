@@ -18,6 +18,7 @@ public class ui_list : MonoBehaviour
             g_newElement.name = "element " + i;
 
             g_newElement.GetComponent<ui_instantiatable>().SetData(data[i]);
+            g_newElement.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -28,5 +29,16 @@ public class ui_list : MonoBehaviour
         {
             Destroy(t_listContainer.GetChild(i).gameObject);
         }
+    }
+
+    public float GetEffectiveHeight()
+    {
+        float sum = 0;
+        for (int i = 0; i < t_listContainer.childCount; i++)
+        {
+            sum += t_listContainer.GetChild(i).GetComponent<ui_instantiatable>().effectiveHeight;
+        }
+
+        return sum;
     }
 }

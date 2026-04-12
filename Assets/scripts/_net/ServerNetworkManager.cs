@@ -103,7 +103,7 @@ public class ServerNetworkManager : MonoBehaviour
     public void StartSingleplayerServer()
     {
         StartServer(7770, 1);
-        ClientNetworkManager.Instance.username = "null";
+        ClientNetworkManager.Instance.username = "localplayer";
         ClientNetworkManager.Instance.ConnectToLocalServer();
     }
 

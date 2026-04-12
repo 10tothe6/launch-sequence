@@ -43,10 +43,17 @@ public class UIManager : MonoBehaviour
     // for convinience
     public bool isInMapView;
 
+    public ui_connectedclients connectedclients;
+
 
     // not just 'update', because i only want to run this sometimes
     public void InGameUpdate()
     {
+        if (Keyboard.current.f1Key.wasPressedThisFrame)
+        {
+            connectedclients.Toggle();
+        }
+        
         if (Keyboard.current.backquoteKey.wasPressedThisFrame)
         {
             ToggleConsole();

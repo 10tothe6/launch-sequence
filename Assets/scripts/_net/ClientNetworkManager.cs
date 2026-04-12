@@ -2,6 +2,7 @@ using UnityEngine;
 using Riptide;
 using Riptide.Utils;
 using System;
+using UnityEngine.Events;
 
 // (not bothering with a _net prefix here, cuz its a HL script)
 
@@ -62,6 +63,8 @@ public class ClientNetworkManager : MonoBehaviour
 
     public bool isClientActive;
     public Client client {get; private set;}
+
+    public UnityEvent onPlayerCountUpdate;
 
     private void Start()
     {
@@ -147,6 +150,8 @@ public class ClientNetworkManager : MonoBehaviour
     {
         string[] otherPlayerNames = message.GetStrings();
         Instance.otherUsernames = otherPlayerNames;
+
+        Instance.onPlayerCountUpdate.Invoke();
 
         // once we've confirmed that we're in the server,
         // open up the sim setup menu

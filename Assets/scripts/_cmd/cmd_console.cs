@@ -80,6 +80,8 @@ public class cmd_console : MonoBehaviour
 
         new cmd_consolecommand(new string[]{"title"}), // big text for all players
 
+        new cmd_consolecommand(new string[]{"p"}), // change permission
+
         // FUTURE:
         new cmd_consolecommand(new string[]{"timeset","t"}), // set time 
     };

@@ -37,6 +37,17 @@ public class LocalPlayer : MonoBehaviour
 
     public e_floatingentity pose;
 
+    public static num_precisevector3 GetPosition()
+    {
+        if (Instance.pose != null)
+        {
+            return Instance.pose.data.GetPosition();
+        } else
+        {
+            return new num_precisevector3(0,0,0);
+        }
+    }
+
     public void MoveBy(Vector3 amt)
     {
         pose.data.localPosition = pose.data.localPosition.Add(new num_precisevector3(amt));
@@ -44,7 +55,8 @@ public class LocalPlayer : MonoBehaviour
 
     public void SystemTeleport(int index)
     {
-        cb_renderingmanager.Instance.player.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
+        if (pose == null) {return;}
+        pose.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
     }
 
     public void Teleport(num_precisevector3 pos)

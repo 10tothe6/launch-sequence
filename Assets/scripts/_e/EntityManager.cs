@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Riptide;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -32,6 +33,11 @@ public class EntityManager : MonoBehaviour
         mimicEntities = new List<e_mimicentity>();
     }
 
+    void Start()
+    {
+        ServerNetworkManager.Instance.onJoinServer.AddListener(InitializeLocalPlayer);
+    }
+
     // the master lists for all entities
     // THIS IS A CLIENT OR SERVER BASED THING, THEY SHARE
     // why? because I don't want two entity manager classes
@@ -43,6 +49,16 @@ public class EntityManager : MonoBehaviour
 
     public UnityEvent onSpawnEntity;
     public UnityEvent onDestroyEntity;
+
+    public Transform t_sandboxPlayerContainer;
+    public Transform t_playerContainer;
+
+
+    // spawns both the sandbox AND world copies
+    public void InitializeLocalPlayer()
+    {
+        Debug.Log("spawning local player");
+    }
 
 
     // okay so

@@ -98,6 +98,9 @@ public class ui_mapview : MonoBehaviour
 
     public void UpdatePlayers()
     {
+        if (!ClientNetworkManager.Instance.isClientActive) {return;}
+
+
         string[] usernames = ServerNetworkManager.GetConnectedUsernames();
 
         for (int i = 0; i < usernames.Length; i++)
@@ -111,7 +114,7 @@ public class ui_mapview : MonoBehaviour
                 e_mapentity comp = g_newIcon.GetComponent<e_mapentity>();
 
                 // temp temp temp
-                comp.reference = GameObject.Find("player").GetComponent<e_generic>();
+                comp.reference = null;
                 comp.showName = true;
 
                 comp.Initialize();

@@ -8,7 +8,22 @@ public class ui_list : MonoBehaviour
 
     public Transform t_listContainer;
 
-    public void DisplayList(string[] data)
+    public void SetItems(string[] data)
+    {
+        ClearAllListElements();
+        AddItems(data);
+    }
+
+    public void AddItem(string data)
+    {
+        GameObject g_newElement = Instantiate(p_listElement, t_listContainer);
+        g_newElement.name = "element " + ( t_listContainer.childCount - 1);
+
+        g_newElement.GetComponent<ui_instantiatable>().SetData(data);
+        g_newElement.transform.localPosition = Vector3.zero;
+    }
+
+    public void AddItems(string[] data)
     {
         ClearAllListElements(); // god im lazy
 

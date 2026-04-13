@@ -1,16 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class ui_stringdisplay : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public TextMeshProUGUI tx;
 
-    // Update is called once per frame
-    void Update()
+    public void Display(string str)
     {
-        
+        tx.text = str;
     }
 }

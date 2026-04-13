@@ -14,6 +14,8 @@ public enum net_permissionlevel
 [System.Serializable]
 public class net_connectedclient 
 {
+    public e_generic clientEntity;
+
     public string username;
     public ushort permissionLevel; // references net_permissionlevel
     public ushort client_index; // THE RIPTIDE INDEX

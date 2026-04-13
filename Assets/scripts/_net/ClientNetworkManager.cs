@@ -159,12 +159,14 @@ public class ClientNetworkManager : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.player_connected)]
     private static void HandleNewPlayer(Message message)
     {
-        ServerNetworkManager.Instance.onPlayerJoin.Invoke();
+        net_connectedclient newPlayer = net_connectedclient.ParseFromString(message.GetString());
+        ServerNetworkManager.Instance.onPlayerJoin.Invoke(newPlayer.username);
     }
 
     [MessageHandler((ushort)ServerToClientId.player_disconnected)]
     private static void HandlePlayerDisconnect(Message message)
     {
-        ServerNetworkManager.Instance.onPlayerLeave.Invoke();
+        net_connectedclient playerGone = net_connectedclient.ParseFromString(message.GetString());
+        ServerNetworkManager.Instance.onPlayerLeave.Invoke(playerGone.username);
     }
 }

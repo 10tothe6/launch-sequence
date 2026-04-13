@@ -58,19 +58,19 @@ public class cb_renderingmanager : MonoBehaviour
     // TODO: make this a DoubleVector3?
     public num_precisevector3 worldOffset; // the current offset of the world
 
-
-    // more shortcuts!
-    public e_floatingentity player;
-    // this system USED to work like ksp, where the player would be despawned upon entering a spacecraft
-    // hence why the 'in control' entity is a separate variable (wouldn't always be the player)
-    // I'm keeping this distinction just in case
     public e_floatingentity entityInControl;
 
     // ************************
 
     public static num_precisevector3 GetControlPosition()
     {
-        return Instance.player.data.GetPosition();
+        if (Instance.entityInControl != null)
+        {
+            return Instance.entityInControl.data.GetPosition();
+        } else
+        {
+            return new num_precisevector3(0,0,0);
+        }
     }
 
     public void SetupEntities()
@@ -83,12 +83,8 @@ public class cb_renderingmanager : MonoBehaviour
             bodyEntities[i] = t_bodyContainer.GetChild(i).GetComponent<e_floatingentity>();
         }
 
-        // 'player' IS actually a gameObject
-        // NO OTHER GAMEOBJECT IS ALLOWED TO BE NAMED THIS
-        player = GameObject.Find("player").transform.GetComponent<e_floatingentity>();
-
-        // TEMP TEMP TEMP TEMP
-        entityInControl = player;
+        // the entity in control will be set elsewhere
+        // as such, EVERYTHING NEEDS NULL CHECKS
     }
 
     // the periodic function, called by WorldManager.cs
@@ -113,12 +109,12 @@ public class cb_renderingmanager : MonoBehaviour
                 //     spacecraft[i].reference.position += shoveFactor;
                 // }
 
-                player.data.reference.position = Vector3.zero;
+                entityInControl.data.reference.position = Vector3.zero;
             }
-        }
 
-        // player
-        player.data.Refresh();
+            // player
+            entityInControl.data.Refresh();
+        }
 
         // they do need to be refreshed tho
         for (int i = 0; i < bodyEntities.Length; i++)
@@ -130,10 +126,6 @@ public class cb_renderingmanager : MonoBehaviour
     // where is (0,0,0) in the unity engine, in game space?
     public num_precisevector3 GetOriginInGameSpace() {
         return worldOffset;
-    }
-
-    public void SwitchToPlayer() {
-        entityInControl = player;
     }
 
     public bool EntityInsideRenderRadius(e_floatingentity _entity) {

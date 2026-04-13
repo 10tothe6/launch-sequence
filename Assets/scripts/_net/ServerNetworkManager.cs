@@ -66,8 +66,8 @@ public class ServerNetworkManager : MonoBehaviour
 
     // UNITY EVENTS *************
     public UnityEvent onJoinServer;
-    public UnityEvent onPlayerJoin;
-    public UnityEvent onPlayerLeave;
+    public UnityEvent<string> onPlayerJoin;
+    public UnityEvent<string> onPlayerLeave;
     // ************
 
     public static string[] GetConnectedUsernames()

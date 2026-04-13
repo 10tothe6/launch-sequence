@@ -106,7 +106,7 @@ public class WorldManager : MonoBehaviour
     {
         RefreshMap();
         UpdateMapBasePosition();
-        ui_mapview.Instance.UpdatePlayers();
+        if (ui_mapview.Instance != null) {ui_mapview.Instance.UpdatePlayers();}
     }
 
     public void UpdateWorld()
@@ -243,12 +243,12 @@ public class WorldManager : MonoBehaviour
 
     public num_precise GetCoreAltitude()
     {
-        return cb_renderingmanager.Instance.player.data.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition()).Mag();
+        return LocalPlayer.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition()).Mag();
     }
 
     public double GetCoreAltitudeAsDouble()
     {
-        num_precisevector3 diff = cb_renderingmanager.Instance.player.data.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition());
+        num_precisevector3 diff = LocalPlayer.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition());
         
         return diff.Mag().AsDouble();
     }
@@ -275,20 +275,20 @@ public class WorldManager : MonoBehaviour
         if (worldSeed == -1) {worldSeed = util_math.GetRandomInt();}
 
         this.worldSeed = worldSeed;
-        ss.Generate(worldSeed);
+        // ss.Generate(worldSeed);
         
-        CameraController.SetControlMode(CameraControlMode.Freecam);
-        CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
-        // the enabling of the component is done on cam_freecam.cs for now
+        // CameraController.SetControlMode(CameraControlMode.Freecam);
+        // CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
+        // // the enabling of the component is done on cam_freecam.cs for now
         
-        UIManager.Instance.EnterMapView();
+        // UIManager.Instance.EnterMapView();
 
-        Program.gameState = GameState.InGame;
+        // Program.gameState = GameState.InGame;
 
-        cb_renderingmanager.Instance.SetupEntities();
+        // cb_renderingmanager.Instance.SetupEntities();
 
-        // VERY MUCH TEMP
-        LocalPlayer.Instance.SystemTeleport(0);
+        // // VERY MUCH TEMP
+        // LocalPlayer.Instance.SystemTeleport(0);
 
         onNewWorldGenerate.Invoke();
     }

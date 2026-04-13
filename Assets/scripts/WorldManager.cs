@@ -127,10 +127,14 @@ public class WorldManager : MonoBehaviour
 
     public static float SeaLevelRadius()
     {
+        if (Instance.GetSOIIndex() == -1) {return 0;}
+
         return cb_solarsystem.Instance.monoBodies[Instance.GetSOIIndex()].data.tConfig.equitorialRadius;
     }
     public static float SeaLevelRadius(int index)
     {
+        if (Instance.GetSOIIndex() == -1) {return 0;}
+
         return cb_solarsystem.Instance.monoBodies[index].data.tConfig.equitorialRadius;
     }
 
@@ -149,6 +153,9 @@ public class WorldManager : MonoBehaviour
 
     public int GetSOIIndex()
     {
+        if (cb_solarsystem.Instance.monoBodies.Count == 0) {return -1;}
+        if (cb_renderingmanager.Instance.entityInControl == null) {return 0;}
+
         Vector3 playerPos = Vector3.zero;
 
         // I can't use the 'getbodypositions' function or whatever bc i have to use the CURRENT position
@@ -237,17 +244,25 @@ public class WorldManager : MonoBehaviour
 
     public double GetSeaLevelAltitudeAsDouble()
     {
+        if (GetSOIIndex() == -1) {return 0f;}
+
         //Debug.Log(GetCoreAltitude() + "     " + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius);
         return GetCoreAltitudeAsDouble() - (double)cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius;
     }
 
     public num_precise GetCoreAltitude()
     {
+        if (GetSOIIndex() == -1) {return new num_precise(0);}
+        if (cb_renderingmanager.Instance.bodyEntities.Length == 0) {return new num_precise(0);}
+
         return LocalPlayer.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition()).Mag();
     }
 
     public double GetCoreAltitudeAsDouble()
     {
+        if (GetSOIIndex() == -1) {return 0;}
+        if (cb_renderingmanager.Instance.bodyEntities.Length == 0) {return 0;}
+
         num_precisevector3 diff = LocalPlayer.GetPosition().Sub(cb_renderingmanager.Instance.bodyEntities[GetSOIIndex()].data.GetPosition());
         
         return diff.Mag().AsDouble();
@@ -275,15 +290,15 @@ public class WorldManager : MonoBehaviour
         if (worldSeed == -1) {worldSeed = util_math.GetRandomInt();}
 
         this.worldSeed = worldSeed;
-        // ss.Generate(worldSeed);
+        ss.Generate(worldSeed);
         
-        // CameraController.SetControlMode(CameraControlMode.Freecam);
-        // CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
-        // // the enabling of the component is done on cam_freecam.cs for now
+        CameraController.SetControlMode(CameraControlMode.Freecam);
+        CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
+        // the enabling of the component is done on cam_freecam.cs for now
         
-        // UIManager.Instance.EnterMapView();
+        UIManager.Instance.EnterMapView();
 
-        // Program.gameState = GameState.InGame;
+        Program.gameState = GameState.InGame;
 
         // cb_renderingmanager.Instance.SetupEntities();
 

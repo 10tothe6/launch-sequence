@@ -62,11 +62,13 @@ public class cb_trackedbody : MonoBehaviour
             if (data.pConfig.parentIndex == 0)
             {
                 // planet
-                isSame = data.pConfig.selfIndex == otherIndex;
+                // either the SOI is a moon (self == other.parent) or we're in the planet (self == other) 
+                isSame = data.pConfig.selfIndex == cb_solarsystem.Instance.monoBodies[otherIndex].data.pConfig.parentIndex || data.pConfig.selfIndex == otherIndex;
             } else
             {
                 // moon
-                isSame = data.pConfig.parentIndex == otherIndex || data.pConfig.selfIndex == otherIndex;
+                // either (parent == other.parent) or (self == other)
+                isSame = data.pConfig.parentIndex == cb_solarsystem.Instance.monoBodies[otherIndex].data.pConfig.parentIndex || data.pConfig.selfIndex == otherIndex;
             }
         }
 

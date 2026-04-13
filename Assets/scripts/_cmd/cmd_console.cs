@@ -87,6 +87,19 @@ public class cmd_console : MonoBehaviour
         new cmd_consolecommand(new string[]{"timeset","t"}), // set time 
     };
     
+    public static cmd_consolecommand GetCommandData(string name)
+    {
+        for (int i = 0; i < possibleCommands.Length; i++)
+        {
+            if (possibleCommands[i].names.Contains(name))
+            {
+                return possibleCommands[i];
+            }
+        }
+
+        return null;
+    }
+    
     public void ProcessMessage(TMP_InputField input)
     {
         ProcessMessage(input.text);

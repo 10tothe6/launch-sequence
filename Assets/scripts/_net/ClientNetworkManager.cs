@@ -28,7 +28,8 @@ public enum ClientToServerId : ushort
     join_request = 00000, // can i join this server?
     kick_player_request = 00001, // kicking someone
 
-    chat_message_send = 00100, // probably the only message in category 01
+    chat_message_send = 00100,
+    command_request = 00101, // same message for any command, for simplicity
 }
 
 public class ClientNetworkManager : MonoBehaviour
@@ -135,6 +136,22 @@ public class ClientNetworkManager : MonoBehaviour
         message.AddString(username);
         // @
     }
+
+    public void SendCommandRequest(cmd_consolecommand command, string[] args)
+    {
+        cmd.LogRaw($"[Client] requesting {command.names[0]} command from server...");
+
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.command_request);
+
+        message.AddString(command.names[0]);
+        message.AddStrings(args);
+
+        client.Send(message);
+    }
+    
+
+    // YOU ARE ENTERING THE HANDLER ZONE vvvv
+    // ********************************************************
 
     [MessageHandler((ushort)ServerToClientId.join_denied)]
     private static void HandleJoinDenial(Message message)

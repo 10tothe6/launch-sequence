@@ -75,4 +75,13 @@ public class net_connectedclient
 
         return result;
     }
+
+    public bool IsAdmin()
+    {
+        return permissionLevel > 1;
+    }
+    public bool CanUseCommands()
+    {
+        return permissionLevel > 0;
+    }
 }

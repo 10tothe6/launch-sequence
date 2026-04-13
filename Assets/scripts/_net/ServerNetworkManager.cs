@@ -81,11 +81,39 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void WhitelistPlayer(string username)
     {
-        
+        if (Instance.isServerActive)
+        {
+            // easy if we're the local client
+
+            // TODO: use the GetIP() function
+            whitelist.Add(util_network.RemovePortFromIp(Instance.server.Clients[GetClientFromUsername(username).client_index-1].ToString()));
+        } else
+        {
+            // this is harder because we have to deal with permissions
+            if (LocalPlayer.localClient.CanUseCommands())
+            {
+                // sending a 'command request' over to the server
+                ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("wlist"), new string[] {username});
+            }
+        }
     }
     public void BlacklistPlayer(string username)
     {
-        
+        if (Instance.isServerActive)
+        {
+            // easy if we're the local client
+
+            // TODO: use the GetIP() function
+            blacklist.Add(util_network.RemovePortFromIp(Instance.server.Clients[GetClientFromUsername(username).client_index-1].ToString()));
+        } else
+        {
+            // this is harder because we have to deal with permissions
+            if (LocalPlayer.localClient.CanUseCommands())
+            {
+                // sending a 'command request' over to the server
+                ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("blist"), new string[] {username});
+            }
+        }
     }
 
     public void KickPlayer(string username)
@@ -174,6 +202,8 @@ public class ServerNetworkManager : MonoBehaviour
             if (Instance.useWhitelist)
             {
                 // whitelist check
+
+                // TODO: use the GetIP() function
                 if (Instance.whitelist.Contains(util_network.RemovePortFromIp(Instance.server.Clients[fromClientId-1].ToString())))
                 {
                     // on the whitelist, so we good
@@ -186,6 +216,8 @@ public class ServerNetworkManager : MonoBehaviour
             } else
             {
                 // blacklist check
+
+                // TODO: use the GetIP() function
                 if (!Instance.blacklist.Contains(util_network.RemovePortFromIp(Instance.server.Clients[fromClientId-1].ToString())))
                 {
                     // not on blacklist, so we good
@@ -216,6 +248,30 @@ public class ServerNetworkManager : MonoBehaviour
     {
         string msg = message.GetString();
         Instance.ProcessChatMessage(fromClientId, msg);
+    }
+
+    [MessageHandler((ushort)ClientToServerId.command_request)]
+    private static void HandleCommandRequest(ushort fromClientId, Message message)
+    {
+        string cmdName = message.GetString();
+        string[] args = message.GetStrings();
+
+        cmd.LogRaw($"[Server] got command ({cmdName}) request from client {fromClientId}.");
+
+        string constructedMessage = "";
+        constructedMessage += cmdName;
+
+        for (int i = 0; i < args.Length; i++)
+        {
+            constructedMessage += " ";
+            constructedMessage += args[i];
+        }
+
+        // this is a SLIGHT security risk, but who cares its a video game
+        // we assume that if we're getting this message then the client has perms (i.e. the check is done client-side)
+
+        // anyways, look at this look at how convinient this is
+        cmd_console.Instance.ProcessMessage(constructedMessage);
     }
 
     public void ProcessChatMessage(ushort fromClientId, string msg)
@@ -312,7 +368,9 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void SendEntityPositionUpdates(int[] entityIds)
     {
-        cmd.LogRaw($"[Server] sending entity position update for {entityIds.Length} entities...");
+        // commenting this out cuz it fucking fills the entire console
+        //cmd.LogRaw($"[Server] sending entity position update for {entityIds.Length} entities...");
+
         // we obviously don't need to update the server's client
         Message toOthers = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_position_updates);
 
@@ -354,6 +412,18 @@ public class ServerNetworkManager : MonoBehaviour
         for (int i = 0; i < Instance.connectedClients.Count; i++)
         {
             if (Instance.connectedClients[i].client_index == id)
+            {
+                return Instance.connectedClients[i];
+            }
+        }
+        return null;
+    }
+
+    public static net_connectedclient GetClientFromUsername(string username)
+    {
+        for (int i = 0; i < Instance.connectedClients.Count; i++)
+        {
+            if (Instance.connectedClients[i].username == username)
             {
                 return Instance.connectedClients[i];
             }

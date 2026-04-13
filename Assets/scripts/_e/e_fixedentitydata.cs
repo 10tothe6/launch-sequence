@@ -5,29 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class e_fixedentitydata
 {
-    // very important for keeping track of entities in the multiplayer system
-    public int index;
-
-    public Transform reference;
-
-    public num_precisevector3 localPosition; // THIS IS LOCAL
-
-    public num_precisevector3 rotation;
-    public num_precisevector3 velocity;
-
-    public num_precisevector3 GetPosition()
-    {
-        return localPosition;
-    }
-
-    public net_packagedentitydata Package()
-    {
-        return new net_packagedentitydata();
-    }
-
-    public int GetPrefabIndex()
-    {
-        return 0;
-        // TODO: this
-    }
+    public e_genericentitydata genericData;
+    // eventually we will have some data here that isn't generic, but for now the generic part handles it
 }

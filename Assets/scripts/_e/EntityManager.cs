@@ -56,7 +56,7 @@ public class EntityManager : MonoBehaviour
     public List<e_floatingentity> floatingEntities;
     public List<e_fixedentity> fixedEntities;
     public List<e_mimicentity> mimicEntities;
-    public Dictionary<int,e_generic> entities; // TODO: this
+    public List<e_genericentity> allEntities;
     // sandbox and main-world entities are shared between these lists
     // sandbox entities just have a negative index
     // world entities have positive indices
@@ -73,11 +73,11 @@ public class EntityManager : MonoBehaviour
     {
         // first, we have to spawn a new freecam entity
 
-        GameObject g_newFreecam = SpawnNewEntity("freecam", num_precisevector3.Zero());
+        GameObject g_newFreecam = SpawnNewEntity("freecam", "freecam_" + ServerNetworkManager.GetClient(clientId).username, num_precisevector3.Zero());
         // ^^ THIS WILL AUTOMATICALLY NOTIFY ALL CLIETNS OF THE NEW ENTITY
 
         // then, we have to set the client to control that freecam
-        ServerNetworkManager.Instance.SetControllingEntity(clientId, g_newFreecam.GetComponent<e_generic>());
+        ServerNetworkManager.Instance.SetControllingEntity(clientId, g_newFreecam.GetComponent<e_genericentity>());
     }
 
 
@@ -85,17 +85,9 @@ public class EntityManager : MonoBehaviour
     {
         List<net_packagedentitydata> result = new List<net_packagedentitydata>();
 
-        for (int i = 0; i < floatingEntities.Count; i++)
+        for (int i = 0; i < allEntities.Count; i++)
         {
-            result.Add(floatingEntities[i].data.Package());
-        }
-        for (int i = 0; i < fixedEntities.Count; i++)
-        {
-            result.Add(fixedEntities[i].data.Package());
-        }
-        for (int i = 0; i < mimicEntities.Count; i++)
-        {
-            result.Add(mimicEntities[i].data.Package());
+            result.Add(allEntities[i].data.GetPackagedData());
         }
 
         return result.ToArray();
@@ -108,7 +100,7 @@ public class EntityManager : MonoBehaviour
 
         GameObject g_newEntity = SpawnNewEntity(p_entity, num_precisevector3.Zero());
 
-        g_newEntity.GetComponent<e_generic>().SetData(data);
+        g_newEntity.GetComponent<e_genericentity>().data.SetPackagedData(data);
 
         return g_newEntity;
     }
@@ -130,22 +122,33 @@ public class EntityManager : MonoBehaviour
         return SpawnNewEntity(p_entity, spawnPosition);
     }
 
+    public GameObject SpawnNewEntity(string entityName, string nameToApply, num_precisevector3 spawnPosition)
+    {
+        GameObject p_entity = GetEntityPrefabFromName(entityName);
+
+        GameObject g_newEntity = SpawnNewEntity(p_entity, spawnPosition);
+        g_newEntity.name = "e_" + nameToApply;
+        g_newEntity.GetComponent<e_genericentity>().data.entityName = nameToApply;
+
+        return g_newEntity;
+    }
+
     public GameObject SpawnNewEntity(GameObject p_entity, num_precisevector3 spawnPosition)
     {
         GameObject g_newEntity = Instantiate(p_entity, null);
+
+        e_genericentity genericComp = g_newEntity.GetComponent<e_genericentity>();
+        genericComp.data.localPosition = spawnPosition;
+        allEntities.Add(genericComp);
 
         // depending on what type of entity we're dealing with
         if (g_newEntity.GetComponent<e_floatingentity>() != null)
         {
             e_floatingentity comp = g_newEntity.GetComponent<e_floatingentity>();
-            
-            comp.data.localPosition = spawnPosition;
             floatingEntities.Add(comp);
         } else if (g_newEntity.GetComponent<e_fixedentity>() != null)
         {
             e_fixedentity comp = g_newEntity.GetComponent<e_fixedentity>();
-
-            comp.data.localPosition = spawnPosition;
             fixedEntities.Add(comp);
         } else if (g_newEntity.GetComponent<e_mimicentity>() != null)
         {

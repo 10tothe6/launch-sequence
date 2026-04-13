@@ -6,40 +6,8 @@ using UnityEngine;
 // in other words, they do not need to be a part of the floating rendering system
 [System.Serializable]
 public class e_mimicentitydata {
-    // very important for keeping track of entities in the multiplayer system
-    public int index;
-
-
-    public Transform reference;
-    public int bodyIndex; // What celestial body is this bound to?
-    public Vector3 defaultPosition; // local position at planet's full scale
-    public Vector3 defaultRotation; // local rotation at planet's full scale (although scale doesn't matter for this one)
+    public e_genericentitydata genericData;
     public float defaultScale;
-
-    public e_mimicentitydata(Transform _ref, int _body) {
-        reference = _ref;
-        bodyIndex = _body;
-        Transform planetTransform = cb_renderingmanager.Instance.bodyEntities[bodyIndex].data.reference;
-        defaultPosition = (_ref.position - planetTransform.position) / planetTransform.localScale.x; // difference in position relative to planet
-        defaultRotation = _ref.eulerAngles - planetTransform.eulerAngles; // difference in rotation relative to planet
-        defaultScale = _ref.localScale.x;
-    }
-
-    public int GetPrefabIndex()
-    {
-        return 0;
-        // TODO: this
-    }
-
-    public net_packagedentitydata Package()
-    {
-        return new net_packagedentitydata();
-    }
-
-    public num_precisevector3 GetPosition()
-    {
-        return new num_precisevector3(0,0,0);
-    }
 
     // public void Refresh() {
     //     // for now just set the unity position to game position

@@ -6,7 +6,7 @@ using UnityEngine;
 public class cb_trackedbody : MonoBehaviour
 {
     public cb_trackedbodydata data;
-    public e_floatingentity pose;
+    public e_genericentity pose;
     public Transform t_model;
     public float epsilon;
 

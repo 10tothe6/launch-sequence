@@ -235,9 +235,9 @@ public class ServerNetworkManager : MonoBehaviour
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.spawn_entity);
 
         // the prefab index is stored in the int, anything else we need is in the string
-        e_generic comp = g_new.GetComponent<e_generic>();
-        message.AddString(comp.GetData());
-        message.AddInt(comp.GetPrefabIndex());
+        e_genericentity comp = g_new.GetComponent<e_genericentity>();
+        message.AddString(comp.data.GetRawPackagedData());
+        message.AddInt(comp.data.entityPrefabIndex);
 
         cmd.LogRaw($"[Server] spawning new {g_new.name} entity...");
 
@@ -301,7 +301,7 @@ public class ServerNetworkManager : MonoBehaviour
         EntityManager.Instance.PutClientInFreecam(toClientId);
     }
 
-    public void SetControllingEntity(ushort clientId, e_generic entity)
+    public void SetControllingEntity(ushort clientId, e_genericentity entity)
     {
         net_connectedclient client = ServerNetworkManager.GetClient(clientId);
 
@@ -314,7 +314,7 @@ public class ServerNetworkManager : MonoBehaviour
         Message toOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.entity_control);
 
         toOthers.AddInt(clientId);
-        toOthers.AddInt(entity.GetEntityIndex());
+        toOthers.AddInt(entity.data.entityPrefabIndex);
 
         SendToAllExceptLocal(toOthers);
     }

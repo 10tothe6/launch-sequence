@@ -15,7 +15,7 @@ public enum net_permissionlevel
 public class net_connectedclient 
 {
     public bool isLocal;
-    public e_generic controllingEntity;
+    public e_genericentity controllingEntity;
 
     public string username;
     public ushort permissionLevel; // references net_permissionlevel

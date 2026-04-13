@@ -52,13 +52,13 @@ public class cb_renderingmanager : MonoBehaviour
 
     // another shortcut
     // this is so that I don't have to use GetComponent<>()
-    public e_floatingentity[] bodyEntities; 
+    public e_genericentity[] bodyEntities; 
 
 
     // TODO: make this a DoubleVector3?
     public num_precisevector3 worldOffset; // the current offset of the world
 
-    public e_floatingentity entityInControl;
+    public e_genericentity entityInControl;
 
     // ************************
 
@@ -75,12 +75,12 @@ public class cb_renderingmanager : MonoBehaviour
 
     public void SetupEntities()
     {
-        bodyEntities = new e_floatingentity[cb_solarsystem.Instance.monoBodies.Count];
+        bodyEntities = new e_genericentity[cb_solarsystem.Instance.monoBodies.Count];
         t_bodyContainer = cb_solarsystem.Instance.monoBodies[0].transform.parent;
 
         for (int i = 0; i < bodyEntities.Length; i++)
         {
-            bodyEntities[i] = t_bodyContainer.GetChild(i).GetComponent<e_floatingentity>();
+            bodyEntities[i] = t_bodyContainer.GetChild(i).GetComponent<e_genericentity>();
         }
 
         // the entity in control will be set elsewhere
@@ -113,13 +113,13 @@ public class cb_renderingmanager : MonoBehaviour
             }
 
             // player
-            entityInControl.data.Refresh();
+            //entityInControl.data.Refresh();
         }
 
         // they do need to be refreshed tho
         for (int i = 0; i < bodyEntities.Length; i++)
         {
-            bodyEntities[i].data.Refresh();
+            bodyEntities[i].data.floatingData.Refresh();
         }
     }
 

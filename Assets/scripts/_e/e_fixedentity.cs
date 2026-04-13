@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class e_fixedentity : MonoBehaviour
 {
-    public e_fixedentitydata data;
+    // data is accessed through e_genericentitydata
 }

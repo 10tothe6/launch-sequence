@@ -40,9 +40,9 @@ public class LocalPlayer : MonoBehaviour
     public static num_precisevector3 GetPosition()
     {
         // TODO: make the controlling entity a fixed entity?
-        if (localClient.controllingEntity.floating_ref != null)
+        if (localClient.controllingEntity != null)
         {
-            return localClient.controllingEntity.floating_ref.data.GetPosition();
+            return localClient.controllingEntity.data.GetPosition();
         } else
         {
             return new num_precisevector3(0,0,0);
@@ -51,13 +51,13 @@ public class LocalPlayer : MonoBehaviour
 
     public void MoveBy(Vector3 amt)
     {
-        localClient.controllingEntity.floating_ref.data.localPosition = localClient.controllingEntity.floating_ref.data.localPosition.Add(new num_precisevector3(amt));
+        localClient.controllingEntity.data.localPosition = localClient.controllingEntity.data.localPosition.Add(new num_precisevector3(amt));
     }
 
     public void SystemTeleport(int index)
     {
-        if (localClient.controllingEntity.floating_ref == null) {return;}
-        localClient.controllingEntity.floating_ref.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
+        if (localClient.controllingEntity == null) {return;}
+        localClient.controllingEntity.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
     }
 
     public void Teleport(num_precisevector3 pos)

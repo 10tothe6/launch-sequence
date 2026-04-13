@@ -39,7 +39,7 @@ public class cbp_config
     }
 
     // a very interesting solution to a verbosity problem
-    public e_floatingentitydata Pose()
+    public e_genericentitydata Pose()
     {
         return cb_solarsystem.Instance.monoBodies[selfIndex].pose.data;
     }

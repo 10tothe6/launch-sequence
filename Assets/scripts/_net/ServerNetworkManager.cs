@@ -1,8 +1,8 @@
 using UnityEngine;
 using Riptide;
-using Riptide.Utils;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.SocialPlatforms;
 
 // (not bothering with a _net prefix here, cuz its a HL script)
 
@@ -17,8 +17,9 @@ public enum ServerToClientId : ushort
 
     chat_message_update = 10100, // tell to all clients
 
-    player_positions = 10400, // an entity positioning update
-    object_positions = 10401,
+    spawn_entity = 10200,
+    kill_entity = 10201,
+    entity_control = 10202, // does this really need to be its own message?
 }
 
 public class ServerNetworkManager : MonoBehaviour
@@ -68,6 +69,8 @@ public class ServerNetworkManager : MonoBehaviour
     public UnityEvent onJoinServer;
     public UnityEvent<string> onPlayerJoin;
     public UnityEvent<string> onPlayerLeave;
+
+    public UnityEvent<net_connectedclient> onClientConnect; // all the client data, instead of the username
     // ************
 
     public static string[] GetConnectedUsernames()
@@ -197,7 +200,10 @@ public class ServerNetworkManager : MonoBehaviour
             {
                 cmd.LogRaw($"[Server] Client accepted.");
 
-                Instance.connectedClients.Add(new net_connectedclient(username, fromClientId));
+                net_connectedclient newClient = new net_connectedclient(username, fromClientId);
+
+                Instance.connectedClients.Add(newClient);
+                LocalPlayer.localClient = newClient;
 
                 Instance.SendJoinConfirm(fromClientId);
             }
@@ -222,6 +228,20 @@ public class ServerNetworkManager : MonoBehaviour
                 SendChatMessage(connectedClients[i].client_index, GetUsernameFromIndex(fromClientId), msg);
             }
         }
+    }
+
+    public void SendNewEntity(GameObject g_new)
+    {
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.spawn_entity);
+
+        // the prefab index is stored in the int, anything else we need is in the string
+        e_generic comp = g_new.GetComponent<e_generic>();
+        message.AddString(comp.GetData());
+        message.AddInt(comp.GetPrefabIndex());
+
+        cmd.LogRaw($"[Server] spawning new {g_new.name} entity...");
+
+        SendToAllExcept(LocalPlayer.localClient.client_index, message);
     }
 
     // can't pass the index to the client bc they don't know what that is
@@ -276,6 +296,27 @@ public class ServerNetworkManager : MonoBehaviour
         int otherPlayerCount = Instance.connectedClients.Count - 1;
         cmd.LogRaw($"[Server] Sending player join notification to {otherPlayerCount} other clients...");
         SendToAllExcept(toClientId, toOthers);
+
+        // temp temp temp temp temp
+        EntityManager.Instance.PutClientInFreecam(toClientId);
+    }
+
+    public void SetControllingEntity(ushort clientId, e_generic entity)
+    {
+        net_connectedclient client = ServerNetworkManager.GetClient(clientId);
+
+        client.controllingEntity = entity;
+
+        cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...");
+
+        // great, now its done on the server side
+        // we still need to update everyone (except the local client, obviously)
+        Message toOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.entity_control);
+
+        toOthers.AddInt(clientId);
+        toOthers.AddInt(entity.GetEntityIndex());
+
+        SendToAllExceptLocal(toOthers);
     }
 
     public static net_connectedclient GetClient(ushort id)
@@ -294,7 +335,22 @@ public class ServerNetworkManager : MonoBehaviour
     {
         for (int i = 0; i < Instance.connectedClients.Count; i++)
         {
-            if (i == except) {continue;}
+            if (Instance.connectedClients[i].client_index == except) {continue;}
+            Instance.server.Send(msg, (ushort)i);
+        }
+    }
+
+    public static void SendToAllExceptLocal(Message msg)
+    {
+        int localIndex = -1; // this effectively counts as nothing (no clients have index of -1)
+        if (LocalPlayer.localClient != null)
+        {
+            localIndex = LocalPlayer.localClient.client_index;
+        }
+
+        for (int i = 0; i < Instance.connectedClients.Count; i++)
+        {
+            if (Instance.connectedClients[i].client_index == localIndex) {continue;}
             Instance.server.Send(msg, (ushort)i);
         }
     }

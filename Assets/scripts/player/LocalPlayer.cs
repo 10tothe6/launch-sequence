@@ -30,14 +30,19 @@ public class LocalPlayer : MonoBehaviour
         Instance = this;
     }
 
-    public e_generic localPlayerEntity;
+    public static net_connectedclient localClient;
+
+    public void Setup(net_connectedclient client)
+    {
+        localClient = client;
+    }
 
     public static num_precisevector3 GetPosition()
     {
         // TODO: make the controlling entity a fixed entity?
-        if (Instance.localPlayerEntity.floating_ref != null)
+        if (localClient.controllingEntity.floating_ref != null)
         {
-            return Instance.localPlayerEntity.floating_ref.data.GetPosition();
+            return localClient.controllingEntity.floating_ref.data.GetPosition();
         } else
         {
             return new num_precisevector3(0,0,0);
@@ -46,13 +51,13 @@ public class LocalPlayer : MonoBehaviour
 
     public void MoveBy(Vector3 amt)
     {
-        localPlayerEntity.floating_ref.data.localPosition = localPlayerEntity.floating_ref.data.localPosition.Add(new num_precisevector3(amt));
+        localClient.controllingEntity.floating_ref.data.localPosition = localClient.controllingEntity.floating_ref.data.localPosition.Add(new num_precisevector3(amt));
     }
 
     public void SystemTeleport(int index)
     {
-        if (localPlayerEntity.floating_ref == null) {return;}
-        localPlayerEntity.floating_ref.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
+        if (localClient.controllingEntity.floating_ref == null) {return;}
+        localClient.controllingEntity.floating_ref.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
     }
 
     public void Teleport(num_precisevector3 pos)

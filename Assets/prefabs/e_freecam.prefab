@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3aaa985ed445f43861b5c96dd856ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_generic
-  entityName: localplayer
-  type: 1
+  entityName: freecam
+  type: 0
   floating_ref: {fileID: 0}
-  fixed_ref: {fileID: 0}
+  fixed_ref: {fileID: 2729367974183567087}
   mimic_ref: {fileID: 0}
 --- !u!114 &2729367974183567087
 MonoBehaviour:

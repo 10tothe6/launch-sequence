@@ -150,8 +150,14 @@ public class ClientNetworkManager : MonoBehaviour
         string[] rawClientData = message.GetStrings();
         net_connectedclient[] clientData = net_connectedclient.ParseFromStringArray(rawClientData);
 
-        cmd.LogRaw($"[Client] Join request accepted. Setting client list ({rawClientData.Length})...");
-        ServerNetworkManager.Instance.connectedClients = clientData.ToList();
+        if (!ServerNetworkManager.Instance.isServerActive)
+        {
+            cmd.LogRaw($"[Client] Join request accepted. Setting client list ({rawClientData.Length})...");
+            ServerNetworkManager.Instance.connectedClients = clientData.ToList();
+        } else
+        {
+            cmd.LogRaw($"[Client] Join request accepted. Client list skipped cuz we're a server");
+        }
 
         string[] rawEntityData1 = message.GetStrings();
         int[] rawEntityData2 = message.GetInts();
@@ -162,6 +168,8 @@ public class ClientNetworkManager : MonoBehaviour
             // first, make the new prefab
             EntityManager.Instance.SpawnNewEntity(rawEntityData2[i], rawEntityData1[i]); 
         }
+
+        LocalPlayer.localClient = ServerNetworkManager.GetClient(Instance.client.Id);
 
         ServerNetworkManager.Instance.onJoinServer.Invoke();
     }
@@ -178,5 +186,13 @@ public class ClientNetworkManager : MonoBehaviour
     {
         net_connectedclient playerGone = net_connectedclient.ParseFromString(message.GetString());
         ServerNetworkManager.Instance.onPlayerLeave.Invoke(playerGone.username);
+    }
+
+    [MessageHandler((ushort)ServerToClientId.entity_control)]
+    private static void HandleEntityControlChange(Message message)
+    {
+        int clientIndex = message.GetInt();
+        int entityIndex = message.GetInt();
+        // TODO: actually set the control
     }
 }

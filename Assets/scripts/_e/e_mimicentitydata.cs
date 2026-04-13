@@ -25,6 +25,12 @@ public class e_mimicentitydata {
         defaultScale = _ref.localScale.x;
     }
 
+    public int GetPrefabIndex()
+    {
+        return 0;
+        // TODO: this
+    }
+
     public net_packagedentitydata Package()
     {
         return new net_packagedentitydata();

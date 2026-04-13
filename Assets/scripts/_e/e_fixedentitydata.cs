@@ -25,4 +25,9 @@ public class e_fixedentitydata
         return new net_packagedentitydata();
     }
 
+    public int GetPrefabIndex()
+    {
+        return 0;
+        // TODO: this
+    }
 }

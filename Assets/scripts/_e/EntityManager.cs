@@ -69,6 +69,17 @@ public class EntityManager : MonoBehaviour
     public Transform t_sandboxPlayerContainer;
     public Transform t_playerContainer;
 
+    public void PutClientInFreecam(ushort clientId)
+    {
+        // first, we have to spawn a new freecam entity
+
+        GameObject g_newFreecam = SpawnNewEntity("freecam", num_precisevector3.Zero());
+        // ^^ THIS WILL AUTOMATICALLY NOTIFY ALL CLIETNS OF THE NEW ENTITY
+
+        // then, we have to set the client to control that freecam
+        ServerNetworkManager.Instance.SetControllingEntity(clientId, g_newFreecam.GetComponent<e_generic>());
+    }
+
 
     public net_packagedentitydata[] PackageAllEntityData()
     {
@@ -91,30 +102,32 @@ public class EntityManager : MonoBehaviour
     }
 
     // used mainly when spawning entities delivered by the server
-    public void SpawnNewEntity(int entityIndex, string data)
+    public GameObject SpawnNewEntity(int entityIndex, string data)
     {
         GameObject p_entity = p_entities[entityIndex];
 
         GameObject g_newEntity = SpawnNewEntity(p_entity, num_precisevector3.Zero());
 
         g_newEntity.GetComponent<e_generic>().SetData(data);
+
+        return g_newEntity;
     }
 
-    public void SpawnNewEntity(int entityIndex, num_precisevector3 spawnPosition)
+    public GameObject SpawnNewEntity(int entityIndex, num_precisevector3 spawnPosition)
     {
         GameObject p_entity = p_entities[entityIndex];
-        SpawnNewEntity(p_entity, spawnPosition);
+        return SpawnNewEntity(p_entity, spawnPosition);
     }
 
     // okay so
     // * the client tells the server it's spawning a new entity
     // * if the server agrees, it runs this function on its end
     // * all clients then run this on their end, except for the host which did it already
-    public void SpawnNewEntity(string entityName, num_precisevector3 spawnPosition)
+    public GameObject SpawnNewEntity(string entityName, num_precisevector3 spawnPosition)
     {
         GameObject p_entity = GetEntityPrefabFromName(entityName);
 
-        SpawnNewEntity(p_entity, spawnPosition);
+        return SpawnNewEntity(p_entity, spawnPosition);
     }
 
     public GameObject SpawnNewEntity(GameObject p_entity, num_precisevector3 spawnPosition)
@@ -140,6 +153,12 @@ public class EntityManager : MonoBehaviour
         } else
         {
             cmd.Log("There was an issue with the entity prefab '" + p_entity.name + "'. It has no entity component!");
+        }
+        // better just to have the logic automatically here instead of making a whole separate function
+        if (ServerNetworkManager.Instance.isServerActive)
+        {
+            // since we're on a server, we need to tell everyone BUT the local clients
+            ServerNetworkManager.Instance.SendNewEntity(g_newEntity);
         }
 
         return g_newEntity;

@@ -300,10 +300,9 @@ public class WorldManager : MonoBehaviour
 
         Program.gameState = GameState.InGame;
 
-        // cb_renderingmanager.Instance.SetupEntities();
+        cb_renderingmanager.Instance.SetupEntities();
 
-        // // VERY MUCH TEMP
-        // LocalPlayer.Instance.SystemTeleport(0);
+        // there WAS a system teleport here, but that doesn't work here anymore cuz multiplayer
 
         onNewWorldGenerate.Invoke();
     }

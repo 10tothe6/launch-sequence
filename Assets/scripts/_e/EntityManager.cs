@@ -66,8 +66,8 @@ public class EntityManager : MonoBehaviour
     public UnityEvent onSpawnEntity;
     public UnityEvent onDestroyEntity;
 
-    public Transform t_sandboxPlayerContainer;
-    public Transform t_playerContainer;
+    public Transform t_sandboxEntityContainer;
+    public Transform t_entityContainer;
 
     public void PutClientInFreecam(ushort clientId)
     {
@@ -135,7 +135,7 @@ public class EntityManager : MonoBehaviour
 
     public GameObject SpawnNewEntity(GameObject p_entity, num_precisevector3 spawnPosition)
     {
-        GameObject g_newEntity = Instantiate(p_entity, null);
+        GameObject g_newEntity = Instantiate(p_entity, t_entityContainer);
 
         e_genericentity genericComp = g_newEntity.GetComponent<e_genericentity>();
         genericComp.data.localPosition = spawnPosition;

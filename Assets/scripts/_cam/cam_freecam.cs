@@ -10,7 +10,10 @@ public class cam_freecam : MonoBehaviour
 
     private Quaternion storedRotation;
 
-
+    void Awake()
+    {
+        
+    }
 
     void Start()
     {
@@ -30,6 +33,14 @@ public class cam_freecam : MonoBehaviour
 
     public void EnterControl()
     {
+        if (LocalPlayer.localClient != null)
+        {
+            t_player = LocalPlayer.localClient.controllingEntity.transform;
+        } else
+        {
+            cmd.Log("there was a problem entering freecam mode");
+        }
+
         CameraController.cam_main.GetComponent<cbr_applyatmosphere>().enabled = true;
 
         CameraController.cam_main.cullingMask = cullingMask;
@@ -48,7 +59,7 @@ public class cam_freecam : MonoBehaviour
     // continuing the trend of avoiding Update()
     void CameraUpdate()
     {
-        if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.Freecam)
+        if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.Freecam && t_player != null)
         {
             if (Input.mouseButtonRight)
             {

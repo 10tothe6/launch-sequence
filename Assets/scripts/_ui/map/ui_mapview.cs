@@ -100,21 +100,18 @@ public class ui_mapview : MonoBehaviour
     {
         if (!ClientNetworkManager.Instance.isClientActive) {return;}
 
-
-        string[] usernames = ServerNetworkManager.GetConnectedUsernames();
-
-        for (int i = 0; i < usernames.Length; i++)
+        for (int i = 0; i < ServerNetworkManager.Instance.connectedClients.Count; i++)
         {
-            if (!ui_canvasutils.HasChildOfName(t_playerIcons.gameObject, usernames[i]))
+            if (!ui_canvasutils.HasChildOfName(t_playerIcons.gameObject, ServerNetworkManager.Instance.connectedClients[i].username))
             {
                 GameObject g_newIcon = Instantiate(p_entityIcon, t_playerIcons);
 
-                g_newIcon.name = usernames[i];
+                g_newIcon.name = ServerNetworkManager.Instance.connectedClients[i].username;
 
                 e_mapentity comp = g_newIcon.GetComponent<e_mapentity>();
 
                 // temp temp temp
-                comp.reference = null;
+                comp.reference = ServerNetworkManager.Instance.connectedClients[i].controllingEntity;
                 comp.showName = true;
 
                 comp.Initialize();

@@ -6,7 +6,7 @@ using UnityEngine;
 // in other words, they do not need to be a part of the floating rendering system
 [System.Serializable]
 public class e_mimicentitydata {
-    public e_genericentitydata genericData;
+    public e_genericentity generic;
     public float defaultScale;
 
     // public void Refresh() {

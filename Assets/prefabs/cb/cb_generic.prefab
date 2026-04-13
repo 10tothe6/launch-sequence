@@ -155,9 +155,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1298731031599254677}
   - component: {fileID: 6596696864992323317}
-  - component: {fileID: 6420620203700900405}
   - component: {fileID: 7775331553818960751}
   - component: {fileID: 6011434511242130393}
+  - component: {fileID: -7358400810771844880}
+  - component: {fileID: -5798558475547542834}
   m_Layer: 0
   m_Name: cb_generic
   m_TagString: Untagged
@@ -237,49 +238,10 @@ MonoBehaviour:
       scatterFactor: 0
       scatterStrength: 0
       waveLengths: {x: 0, y: 0, z: 0}
-  pose: {fileID: 6420620203700900405}
+  pose: {fileID: -7358400810771844880}
   t_model: {fileID: 3056679450261237978}
   epsilon: 0.1
   naturalSatellites: []
---- !u!114 &6420620203700900405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8460234261487516770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daa3dac6b64e9544ba2b470dc1adc6f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::e_floatingentity
-  data:
-    isCelestial: 0
-    reference: {fileID: 0}
-    parent: {fileID: 0}
-    localPosition:
-      x:
-        numDecimalDigits: 4
-      y:
-        numDecimalDigits: 4
-      z:
-        numDecimalDigits: 4
-    rotation:
-      x:
-        numDecimalDigits: 4
-      y:
-        numDecimalDigits: 4
-      z:
-        numDecimalDigits: 4
-    velocity:
-      x:
-        numDecimalDigits: 4
-      y:
-        numDecimalDigits: 4
-      z:
-        numDecimalDigits: 4
-    defaultScale: 0
-  setupOnAwake: 1
 --- !u!114 &7775331553818960751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +297,62 @@ MonoBehaviour:
   - {r: 0.9121313, g: 0.5254902, b: 1, a: 1}
   - {r: 1, g: 0.7905661, b: 0.8770714, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &-7358400810771844880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3aaa985ed445f43861b5c96dd856ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
+  data:
+    reference: {fileID: 0}
+    entityType: 0
+    entityPrefabIndex: 0
+    index: 0
+    entityName: 
+    localPosition:
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
+    parent: {fileID: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    velocity:
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
+    fixedData:
+      generic: {fileID: 0}
+    floatingData:
+      generic: {fileID: 0}
+      isCelestial: 0
+      defaultScale: 0
+      scaleFactor: 1
+    mimicData:
+      generic: {fileID: 0}
+      defaultScale: 0
+--- !u!114 &-5798558475547542834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daa3dac6b64e9544ba2b470dc1adc6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_floatingentity
 --- !u!1 &8827367443003885876
 GameObject:
   m_ObjectHideFlags: 0

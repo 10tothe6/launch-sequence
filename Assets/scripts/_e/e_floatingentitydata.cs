@@ -6,7 +6,7 @@ using UnityEngine;
 // the player, planets, ships
 [System.Serializable]
 public class e_floatingentitydata {
-    public e_genericentitydata genericData;
+    public e_genericentity generic;
 
     public bool isCelestial; // is it big enough to never un-render?
     public float defaultScale; // the scale the object should be at
@@ -38,10 +38,10 @@ public class e_floatingentitydata {
         // }
         
         if (cb_renderingmanager.Instance.entityInControl != null) {
-            num_precisevector3 pos = genericData.GetPosition();
+            num_precisevector3 pos = generic.data.GetPosition();
 
             // set the transform's position basee on the world offset
-            genericData.reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
+            generic.data.reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
 
             // get the position of the camera
             num_precisevector3 camPosition = cb_renderingmanager.Instance.entityInControl.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
@@ -51,23 +51,23 @@ public class e_floatingentitydata {
                 if (camPosition.Sub(pos).Mag().AsDouble() < cb_renderingmanager.Instance.inflationRadius)
                 {
                     // inflate
-                    genericData.reference.localScale = Vector3.one / scaleFactor * defaultScale;
-                    genericData.reference.position = genericData.localPosition.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
+                    generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale;
+                    generic.data.reference.position = generic.data.localPosition.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
                 }
                 else
                 { // far from planet
 
                 
-                genericData.reference.localScale = Vector3.one / scaleFactor * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(genericData.localPosition).Mag().AsDouble());
-                genericData.reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
+                generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(generic.data.localPosition).Mag().AsDouble());
+                generic.data.reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
 
 
                 }
             }
             else
             {
-                genericData.reference.localScale = Vector3.one / scaleFactor * defaultScale;
-                genericData.reference.position = pos.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
+                generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale;
+                generic.data.reference.position = pos.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
             }
         }
 

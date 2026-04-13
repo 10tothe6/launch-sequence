@@ -3,6 +3,8 @@ using UnityEngine;
 // sort of a mish-mash of server and client stuff
 // its one level "higher" than ServerNetworkManager.cs and ClientNetworkManager.cs
 
+// THE HOPE IS TO MOVE MORE AND MORE FUNCTIONS OVER HERE SOON, AFTER AN UPDATE TO THE NETWORKING ORGANIZATION SYSTEM
+
 public class NetworkHelper : MonoBehaviour
 {
     private static NetworkHelper _instance;

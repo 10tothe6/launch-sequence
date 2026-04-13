@@ -22,12 +22,21 @@ public class cmd_consolecommand
     // can also have shorthands ('tp')
     public string[] names;
 
+    // the difference between operator and admin commands
+    public bool needsAdmin;
+
     public cmd_commandarg[] args;
 
     public cmd_consolecommand() {}
     public cmd_consolecommand(string[] names)
     {
         this.names = names;
+        needsAdmin = false;
+    }
+    public cmd_consolecommand(string[] names, bool needsAdmin)
+    {
+        this.names = names;
+        this.needsAdmin = needsAdmin;
     }
 
     public bool IsValid(string name)
@@ -66,25 +75,25 @@ public class cmd_console : MonoBehaviour
     public static cmd_consolecommand[] possibleCommands = new cmd_consolecommand[]
     {
         // CURRENT:
-        new cmd_consolecommand(new string[]{"tp"}), // teleport
-        new cmd_consolecommand(new string[]{"systp"}), // (planetary) system teleport
+        new cmd_consolecommand(new string[]{"tp"},false), // teleport
+        new cmd_consolecommand(new string[]{"systp"},false), // (planetary) system teleport
 
-        new cmd_consolecommand(new string[]{"fspeed"}), // freecam speed
+        new cmd_consolecommand(new string[]{"fspeed"},false), // freecam speed
 
-        new cmd_consolecommand(new string[]{"whitelist","wlist"}), // allow a player on a server
-        new cmd_consolecommand(new string[]{"blacklist","blist"}), // block a player from a server
-        new cmd_consolecommand(new string[]{"kick","k"}), // remove a player from a server
-        new cmd_consolecommand(new string[]{"ban","b"}), // kick + blacklist
+        new cmd_consolecommand(new string[]{"whitelist","wlist"},true), // allow a player on a server
+        new cmd_consolecommand(new string[]{"blacklist","blist"},true), // block a player from a server
+        new cmd_consolecommand(new string[]{"kick","k"},true), // remove a player from a server
+        new cmd_consolecommand(new string[]{"ban","b"},true), // kick + blacklist
 
-        new cmd_consolecommand(new string[]{"spawn"}), // spawn entity
+        new cmd_consolecommand(new string[]{"spawn"},false), // spawn entity
 
-        new cmd_consolecommand(new string[]{"title"}), // big text for all players
-        new cmd_consolecommand(new string[]{"chat","c"}), // big text for all players
+        new cmd_consolecommand(new string[]{"title"},false), // big text for all players
+        new cmd_consolecommand(new string[]{"chat","c"},false), // big text for all players
 
-        new cmd_consolecommand(new string[]{"p"}), // change permission
+        new cmd_consolecommand(new string[]{"p","perm"},true), // change permission
 
         // FUTURE:
-        new cmd_consolecommand(new string[]{"timeset","t"}), // set time 
+        new cmd_consolecommand(new string[]{"timeset","t"},false), // set time 
     };
     
     public static cmd_consolecommand GetCommandData(string name)
@@ -112,7 +121,7 @@ public class cmd_console : MonoBehaviour
         string[] items = util_string.SplitIntoWords(text);
 
         // the command type is the first word, hence items[0]
-        if (possibleCommands[0].IsValid(items[0])) // tp
+        if (GetCommandData("tp").IsValid(items[0])) // tp
         {
             // this will post the error message too if it fails
             if (ArgCheck(items, possibleCommands[0]))
@@ -126,43 +135,50 @@ public class cmd_console : MonoBehaviour
                 LocalPlayer.Instance.Teleport(new num_precisevector3(x,y,z));
             }
         } 
-        else if (possibleCommands[1].IsValid(items[0])) // systp
+        else if (GetCommandData("systp").IsValid(items[0])) // systp
         {
             ServerNetworkManager.Instance.SystemTeleport(LocalPlayer.localClient.controllingEntity, int.Parse(items[1]));
             PostToConsole("[CONSOLE] Teleported to system " + items[1]);
         } 
-        else if (possibleCommands[2].IsValid(items[0])) // fspeed
+        else if (GetCommandData("fspeed").IsValid(items[0])) // fspeed
         {
             CameraController.Instance.GetComponent<cam_freecam>().moveSpeed = float.Parse(items[1]);
             PostToConsole("[CONSOLE] Set freecam speed to " + items[1]);
         } 
         
-        else if (possibleCommands[2].IsValid(items[0])) // whitelist
+        else if (GetCommandData("whitelist").IsValid(items[0])) // whitelist
         {
             ServerNetworkManager.Instance.WhitelistPlayer(items[1]);
         }
-        else if (possibleCommands[2].IsValid(items[0])) // blacklist
+        else if (GetCommandData("blacklist").IsValid(items[0])) // blacklist
         {
             ServerNetworkManager.Instance.BlacklistPlayer(items[1]);
-        } else if (possibleCommands[2].IsValid(items[0])) // kick
+        } else if (GetCommandData("kick").IsValid(items[0])) // kick
         {
             ServerNetworkManager.Instance.KickPlayer(items[1]);
         }
-        else if (possibleCommands[2].IsValid(items[0])) // ban
+        else if (GetCommandData("ban").IsValid(items[0])) // ban
         {
             ServerNetworkManager.Instance.BanPlayer(items[1]);
         }
 
-        else if (possibleCommands[2].IsValid(items[0])) // title
+        else if (GetCommandData("title").IsValid(items[0])) // title
         {
-            CameraController.Instance.GetComponent<cam_freecam>().moveSpeed = float.Parse(items[1]);
-            PostToConsole("[CONSOLE] Set freecam speed to " + items[1]);
+            
         }
 
-        else if (possibleCommands[2].IsValid(items[0])) // spawn
+        else if (GetCommandData("spawn").IsValid(items[0])) // spawn
         {
-            CameraController.Instance.GetComponent<cam_freecam>().moveSpeed = float.Parse(items[1]);
-            PostToConsole("[CONSOLE] Set freecam speed to " + items[1]);
+            
+        }
+
+        else if (GetCommandData("p").IsValid(items[0])) // permission change
+        {
+            ushort newPermissionLevel;
+            if (ushort.TryParse(items[2], out newPermissionLevel))
+            {
+                ServerNetworkManager.Instance.ChangeClientPermissions(items[1], newPermissionLevel);
+            }
         }
         
         

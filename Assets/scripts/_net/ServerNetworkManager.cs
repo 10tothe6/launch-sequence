@@ -79,6 +79,17 @@ public class ServerNetworkManager : MonoBehaviour
         return new string[] {"localplayer"};
     }
 
+    public void ChangeClientPermissions(string username, ushort newPermissionLevel)
+    {
+        if (Instance.isServerActive)
+        {
+            GetClientFromUsername(username).permissionLevel = newPermissionLevel;
+        } else
+        {
+            ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("p"), new string[] {username, newPermissionLevel.ToString()});
+        }
+    }
+
     public void WhitelistPlayer(string username)
     {
         if (Instance.isServerActive)
@@ -89,12 +100,8 @@ public class ServerNetworkManager : MonoBehaviour
             whitelist.Add(util_network.RemovePortFromIp(Instance.server.Clients[GetClientFromUsername(username).client_index-1].ToString()));
         } else
         {
-            // this is harder because we have to deal with permissions
-            if (LocalPlayer.localClient.CanUseCommands())
-            {
-                // sending a 'command request' over to the server
-                ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("wlist"), new string[] {username});
-            }
+            // sending a 'command request' over to the server
+            ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("wlist"), new string[] {username});
         }
     }
     public void BlacklistPlayer(string username)
@@ -236,7 +243,19 @@ public class ServerNetworkManager : MonoBehaviour
                 net_connectedclient newClient = new net_connectedclient(username, fromClientId);
 
                 Instance.connectedClients.Add(newClient);
-                LocalPlayer.localClient = newClient;
+
+
+                // okay yeah this assumes the first client is the local one, but when ISN'T that the case?
+                if (LocalPlayer.localClient == null) 
+                {
+                    LocalPlayer.localClient = newClient;
+
+                    // default permissions
+                    LocalPlayer.localClient.permissionLevel = 2;
+                } else
+                {
+                    LocalPlayer.localClient.permissionLevel = 0;
+                }
 
                 Instance.SendJoinConfirm(fromClientId);
             }
@@ -256,22 +275,38 @@ public class ServerNetworkManager : MonoBehaviour
         string cmdName = message.GetString();
         string[] args = message.GetStrings();
 
-        cmd.LogRaw($"[Server] got command ({cmdName}) request from client {fromClientId}.");
+        bool arePermissionsValid = false;
 
-        string constructedMessage = "";
-        constructedMessage += cmdName;
-
-        for (int i = 0; i < args.Length; i++)
+        if (cmd_console.GetCommandData(cmdName).needsAdmin)
         {
-            constructedMessage += " ";
-            constructedMessage += args[i];
+            arePermissionsValid = GetClient(fromClientId).IsAdmin();
+        } else
+        {
+            arePermissionsValid = GetClient(fromClientId).CanUseCommands();
         }
 
-        // this is a SLIGHT security risk, but who cares its a video game
-        // we assume that if we're getting this message then the client has perms (i.e. the check is done client-side)
+        if (arePermissionsValid)
+        {
+            cmd.LogRaw($"[Server] putting through command ({cmdName}) request from client {fromClientId}.");
 
-        // anyways, look at this look at how convinient this is
-        cmd_console.Instance.ProcessMessage(constructedMessage);
+            string constructedMessage = "";
+            constructedMessage += cmdName;
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                constructedMessage += " ";
+                constructedMessage += args[i];
+            }
+
+            // this is a SLIGHT security risk, but who cares its a video game
+            // we assume that if we're getting this message then the client has perms (i.e. the check is done client-side)
+
+            // anyways, look at this look at how convinient this is
+            cmd_console.Instance.ProcessMessage(constructedMessage);
+        } else
+        {
+            cmd.LogRaw($"[Server] blocked command ({cmdName}) request from client {fromClientId} cuz perms");
+        }
     }
 
     public void ProcessChatMessage(ushort fromClientId, string msg)

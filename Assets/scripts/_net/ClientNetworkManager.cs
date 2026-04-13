@@ -131,10 +131,13 @@ public class ClientNetworkManager : MonoBehaviour
 
     public void RequestKickPlayer(string username)
     {
+        cmd.LogRaw($"[Client] requesting player {username} to be kicked...");
+
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.kick_player_request);
         
-        message.AddString(username);
-        // @
+        message.AddString(username); // this is all we need for this one
+        
+        client.Send(message);
     }
 
     public void SendCommandRequest(cmd_consolecommand command, string[] args)
@@ -188,6 +191,15 @@ public class ClientNetworkManager : MonoBehaviour
         }
 
         LocalPlayer.localClient = ServerNetworkManager.GetClient(Instance.client.Id);
+
+        // default permissions
+        if (ServerNetworkManager.Instance.isServerActive)
+        {
+            LocalPlayer.localClient.permissionLevel = 2;
+        } else
+        {
+            LocalPlayer.localClient.permissionLevel = 0;
+        }
 
         ServerNetworkManager.Instance.onJoinServer.Invoke();
     }

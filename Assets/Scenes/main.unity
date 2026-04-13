@@ -2028,6 +2028,7 @@ GameObject:
   - component: {fileID: 201656893}
   - component: {fileID: 201656892}
   - component: {fileID: 201656891}
+  - component: {fileID: 201656894}
   m_Layer: 0
   m_Name: network
   m_TagString: Untagged
@@ -2107,6 +2108,22 @@ MonoBehaviour:
   onClientConnect:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &201656894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201656889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9623a25afdff8d643bbd6067456552f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkResources
+  permissionLevelIcons:
+  - {fileID: 21300000, guid: c00e68cc9760c2a428fd194972557cb7, type: 3}
+  - {fileID: 21300000, guid: 95588d32461d9da44a2aed9ff461ec03, type: 3}
+  - {fileID: 21300000, guid: 0e5621388cb88f347b600f639df646db, type: 3}
 --- !u!1 &206394645
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,18 +58,23 @@ public class cb_renderingmanager : MonoBehaviour
     // TODO: make this a DoubleVector3?
     public num_precisevector3 worldOffset; // the current offset of the world
 
-    public e_genericentity entityInControl;
-
     // ************************
 
     public static num_precisevector3 GetControlPosition()
     {
-        if (Instance.entityInControl != null)
-        {
-            return Instance.entityInControl.data.GetPosition();
-        } else
+        if (LocalPlayer.localClient == null)
         {
             return new num_precisevector3(0,0,0);
+        }
+        else
+        {
+            if (LocalPlayer.localClient.controllingEntity != null)
+            {
+                return LocalPlayer.localClient.controllingEntity.data.GetPosition();
+            } else
+            {
+                return new num_precisevector3(0,0,0);
+            }
         }
     }
 
@@ -90,16 +95,17 @@ public class cb_renderingmanager : MonoBehaviour
     // the periodic function, called by WorldManager.cs
     public void UpdateAllBodyPositions()
     {
+        if (LocalPlayer.localClient == null) {return;}
         // we have merged cbp_poseinfo and e_floatingentity to serve the same function,
         // so the position doesn't need to be updated
 
-        if (entityInControl != null)
+        if (LocalPlayer.localClient.controllingEntity != null)
         {
             // this is the code that "corrects" the world when you get too far from the origin
             // ofc this doesn't apply if there's no controlling entity
-            if (entityInControl.data.reference.position.magnitude > originSnapBackRadius)
+            if (LocalPlayer.localClient.controllingEntity.data.reference.position.magnitude > originSnapBackRadius)
             {
-                num_precisevector3 shoveFactor = new num_precisevector3(entityInControl.data.reference.position).Mul(-1);
+                num_precisevector3 shoveFactor = new num_precisevector3(LocalPlayer.localClient.controllingEntity.data.reference.position).Mul(-1);
                 // player is too far from (0, 0, 0) so shove em' back
                 worldOffset = worldOffset.Add(shoveFactor);
 
@@ -109,11 +115,11 @@ public class cb_renderingmanager : MonoBehaviour
                 //     spacecraft[i].reference.position += shoveFactor;
                 // }
 
-                entityInControl.data.reference.position = Vector3.zero;
+                LocalPlayer.localClient.controllingEntity.data.reference.position = Vector3.zero;
             }
 
             // player
-            //entityInControl.data.Refresh();
+            //LocalPlayer.localClient.entityInControl.data.Refresh();
         }
 
         // they do need to be refreshed tho

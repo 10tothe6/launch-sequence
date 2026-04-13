@@ -5333,7 +5333,7 @@ MonoBehaviour:
   cullingMask:
     serializedVersion: 2
     m_Bits: 375
-  moveSpeed: 100
+  moveSpeed: 1000
 --- !u!114 &751265232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5708,6 +5708,7 @@ MonoBehaviour:
   floatingEntities: []
   fixedEntities: []
   mimicEntities: []
+  allEntities: []
   p_entities:
   - {fileID: 7055245852948794534, guid: 083e66ef02e75bd40ade347ca27702f9, type: 3}
   onSpawnEntity:
@@ -5716,8 +5717,8 @@ MonoBehaviour:
   onDestroyEntity:
     m_PersistentCalls:
       m_Calls: []
-  t_sandboxPlayerContainer: {fileID: 257749167}
-  t_playerContainer: {fileID: 626867863}
+  t_sandboxEntityContainer: {fileID: 257749167}
+  t_entityContainer: {fileID: 626867863}
 --- !u!1 &797234736
 GameObject:
   m_ObjectHideFlags: 0
@@ -11599,7 +11600,6 @@ MonoBehaviour:
       numDecimalDigits: 4
     z:
       numDecimalDigits: 4
-  entityInControl: {fileID: 0}
 --- !u!1 &1945993507
 GameObject:
   m_ObjectHideFlags: 0

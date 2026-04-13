@@ -115,7 +115,7 @@ public class cmd_console : MonoBehaviour
         } 
         else if (possibleCommands[1].IsValid(items[0])) // systp
         {
-            LocalPlayer.Instance.SystemTeleport(int.Parse(items[1]));
+            ServerNetworkManager.Instance.SystemTeleport(LocalPlayer.localClient.controllingEntity, int.Parse(items[1]));
             PostToConsole("[CONSOLE] Teleported to system " + items[1]);
         } 
         else if (possibleCommands[2].IsValid(items[0])) // fspeed

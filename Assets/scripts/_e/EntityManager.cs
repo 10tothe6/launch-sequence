@@ -43,6 +43,8 @@ public class EntityManager : MonoBehaviour
         floatingEntities = new List<e_floatingentity>();
         fixedEntities = new List<e_fixedentity>();
         mimicEntities = new List<e_mimicentity>();
+
+        allEntities = new List<e_genericentity>();
     }
 
     void Start()
@@ -138,8 +140,9 @@ public class EntityManager : MonoBehaviour
         GameObject g_newEntity = Instantiate(p_entity, t_entityContainer);
 
         e_genericentity genericComp = g_newEntity.GetComponent<e_genericentity>();
-        genericComp.data.localPosition = spawnPosition;
+        genericComp.data.index = allEntities.Count;
         allEntities.Add(genericComp);
+        genericComp.data.SetPosition(spawnPosition);
 
         // depending on what type of entity we're dealing with
         if (g_newEntity.GetComponent<e_floatingentity>() != null)
@@ -165,6 +168,34 @@ public class EntityManager : MonoBehaviour
         }
 
         return g_newEntity;
+    }
+
+    public e_genericentity GetEntityFromName(string name)
+    {
+        for (int i = 0; i < allEntities.Count; i++)
+        {
+            if  (allEntities[i].data.entityName == name)
+            {
+                return allEntities[i];
+            }
+        }
+
+        // maybe I could return some sort of 'error' entity, like an untextured block from Minecraft?
+        return null;
+    }
+
+    public e_genericentity GetEntityFromIndex(int index)
+    {
+        for (int i = 0; i < allEntities.Count; i++)
+        {
+            if  (allEntities[i].data.index == index)
+            {
+                return allEntities[i];
+            }
+        }
+
+        // maybe I could return some sort of 'error' entity, like an untextured block from Minecraft?
+        return null;
     }
 
     public GameObject GetEntityPrefabFromName(string name)

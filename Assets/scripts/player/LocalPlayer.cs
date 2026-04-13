@@ -40,24 +40,20 @@ public class LocalPlayer : MonoBehaviour
     public static num_precisevector3 GetPosition()
     {
         // TODO: make the controlling entity a fixed entity?
-        if (localClient.controllingEntity != null)
+        if (localClient != null)
+        {
+            if (localClient.controllingEntity != null)
         {
             return localClient.controllingEntity.data.GetPosition();
-        } else
-        {
-            return new num_precisevector3(0,0,0);
         }
+        }
+
+        return new num_precisevector3(0,0,0);
     }
 
     public void MoveBy(Vector3 amt)
     {
-        localClient.controllingEntity.data.localPosition = localClient.controllingEntity.data.localPosition.Add(new num_precisevector3(amt));
-    }
-
-    public void SystemTeleport(int index)
-    {
-        if (localClient.controllingEntity == null) {return;}
-        localClient.controllingEntity.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
+        localClient.controllingEntity.data.SetPosition(localClient.controllingEntity.data.localPosition.Add(new num_precisevector3(amt)));
     }
 
     public void Teleport(num_precisevector3 pos)

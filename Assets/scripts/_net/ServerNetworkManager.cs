@@ -20,6 +20,7 @@ public enum ServerToClientId : ushort
     spawn_entity = 10200,
     kill_entity = 10201,
     entity_control = 10202, // does this really need to be its own message?
+    entity_position_updates = 10203, // updates, plural (uses arrays)
 }
 
 public class ServerNetworkManager : MonoBehaviour
@@ -299,6 +300,35 @@ public class ServerNetworkManager : MonoBehaviour
 
         // temp temp temp temp temp
         EntityManager.Instance.PutClientInFreecam(toClientId);
+        // putting the player in the first planetary system (also temp)
+        Instance.SystemTeleport(ServerNetworkManager.GetClient(toClientId).controllingEntity, 0);
+    }
+
+    public void SystemTeleport(e_genericentity entity, int index)
+    {
+        if (entity == null) {cmd.Log("you can't system teleport nothing, dipshit"); return;}
+        entity.data.SetPosition(cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2));
+    }
+
+    public void SendEntityPositionUpdates(int[] entityIds)
+    {
+        cmd.LogRaw($"[Server] sending entity position update for {entityIds.Length} entities...");
+        // we obviously don't need to update the server's client
+        Message toOthers = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_position_updates);
+
+        toOthers.AddInts(entityIds);
+
+        string[] positionData = new string[entityIds.Length];
+
+        for (int i = 0; i < positionData.Length; i++)
+        {
+            if (EntityManager.Instance.GetEntityFromIndex(entityIds[i]) == null) {continue;}
+            positionData[i] = EntityManager.Instance.GetEntityFromIndex(entityIds[i]).data.localPosition.AsRawString();
+        }
+
+        toOthers.AddStrings(positionData);
+
+        SendToAllExceptLocal(toOthers);
     }
 
     public void SetControllingEntity(ushort clientId, e_genericentity entity)

@@ -11,6 +11,11 @@ public class num_precise
     public int numDecimalDigits;
     public BigInteger raw;
 
+    public num_precise(string data)
+    {
+        raw = BigInteger.Parse(data);
+    }
+
     // a few, very similar-looking constructors
     public num_precise(BigInteger raw)
     {

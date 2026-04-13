@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fa0a1d5a7d5f14195d1d32962e10e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_coloredmeshchunks
-  coloringMode: 0
+  coloringMode: 1
   refreshOnUpdate: 1
   debugColors:
   - {r: 1, g: 0.4509434, b: 0.4509434, a: 1}
@@ -315,13 +315,6 @@ MonoBehaviour:
     entityPrefabIndex: 0
     index: 0
     entityName: 
-    localPosition:
-      x:
-        numDecimalDigits: 4
-      y:
-        numDecimalDigits: 4
-      z:
-        numDecimalDigits: 4
     parent: {fileID: 0}
     rotation: {x: 0, y: 0, z: 0, w: 0}
     velocity:
@@ -335,8 +328,8 @@ MonoBehaviour:
       generic: {fileID: 0}
     floatingData:
       generic: {fileID: 0}
-      isCelestial: 0
-      defaultScale: 0
+      isCelestial: 1
+      defaultScale: 1
       scaleFactor: 1
     mimicData:
       generic: {fileID: 0}

@@ -37,29 +37,35 @@ public class e_floatingentitydata {
 
         // }
         
-        if (cb_renderingmanager.Instance.entityInControl != null) {
+        if (LocalPlayer.localClient.controllingEntity != null) {
             num_precisevector3 pos = generic.data.GetPosition();
 
             // set the transform's position basee on the world offset
             generic.data.reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
 
             // get the position of the camera
-            num_precisevector3 camPosition = cb_renderingmanager.Instance.entityInControl.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
+            num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
 
+            // if (generic.gameObject.name == "Moon 0.0")
+            // {
+            //     Debug.Log("a" + generic.data.GetPosition().AsString());
+            //     Debug.Log("b" + generic.data.localPosition.AsString());
+            //     Debug.Log("c" + camPosition.Sub(pos).Mag().AsDouble());
+            // }
             if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
             {
                 if (camPosition.Sub(pos).Mag().AsDouble() < cb_renderingmanager.Instance.inflationRadius)
                 {
                     // inflate
                     generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale;
-                    generic.data.reference.position = generic.data.localPosition.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
+                    generic.data.reference.position = generic.data.localPosition.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
                 }
                 else
                 { // far from planet
 
                 
-                generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(generic.data.localPosition).Mag().AsDouble());
-                generic.data.reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
+                generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(generic.data.GetPosition()).Mag().AsDouble());
+                generic.data.reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
 
 
                 }
@@ -67,7 +73,7 @@ public class e_floatingentitydata {
             else
             {
                 generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale;
-                generic.data.reference.position = pos.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(cb_renderingmanager.Instance.entityInControl.data.reference.position)).ToVector3();
+                generic.data.reference.position = pos.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
             }
         }
 

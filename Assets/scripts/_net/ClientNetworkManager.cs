@@ -5,6 +5,7 @@ using System;
 using UnityEngine.Events;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 
 // (not bothering with a _net prefix here, cuz its a HL script)
 
@@ -161,7 +162,7 @@ public class ClientNetworkManager : MonoBehaviour
 
         string[] rawEntityData1 = message.GetStrings();
         int[] rawEntityData2 = message.GetInts();
-        cmd.LogRaw($"Setting entity list ({rawEntityData1.Length})...");
+        cmd.LogRaw($"[Client] Setting entity list ({rawEntityData1.Length})...");
 
         for (int i = 0; i < rawEntityData1.Length; i++)
         {
@@ -194,5 +195,19 @@ public class ClientNetworkManager : MonoBehaviour
         int clientIndex = message.GetInt();
         int entityIndex = message.GetInt();
         // TODO: actually set the control
+    }
+
+    [MessageHandler((ushort)ServerToClientId.entity_position_updates)]
+    private static void HandleEntityPositionUpdates(Message message)
+    {
+        int[] entityIndices = message.GetInts();
+        string[] entityPositions = message.GetStrings();
+
+        cmd.LogRaw($"[Client] got entity position update for {entityIndices} entities.");
+
+        for (int i = 0; i < entityIndices.Length; i++)
+        {
+            EntityManager.Instance.GetEntityFromIndex(entityIndices[i]).data.SetPosition(num_precisevector3.FromString(entityPositions[i]));
+        }
     }
 }

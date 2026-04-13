@@ -33,7 +33,7 @@ public class cbp_config
     // using physics stuff to move the planets is better for short timespans
     public void StepNewtonian(float delta)
     {
-        Pose().localPosition = Pose().localPosition.Add(Pose().velocity.Mul(delta));
+        Pose().SetPosition(Pose().localPosition.Add(Pose().velocity.Mul(delta)));
 
         Pose().velocity = Pose().velocity.Add(Pose().localPosition.Mul(-1).Norm().Mul(delta).Mul(cb_solarsystem.gravConstant).Mul(cb_solarsystem.Instance.monoBodies[parentIndex].data.mass).Div(Pose().localPosition.Mag()).Div(Pose().localPosition.Mag()));
     }

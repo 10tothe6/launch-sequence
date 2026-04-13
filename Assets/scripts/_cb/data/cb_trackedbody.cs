@@ -66,7 +66,7 @@ public class cb_trackedbody : MonoBehaviour
             } else
             {
                 // moon
-                isSame = data.pConfig.parentIndex == otherIndex;
+                isSame = data.pConfig.parentIndex == otherIndex || data.pConfig.selfIndex == otherIndex;
             }
         }
 
@@ -290,7 +290,7 @@ public class cb_trackedbody : MonoBehaviour
             data.pConfig.iPosition = Vector3.zero;
             data.pConfig.iVelocity = Vector3.zero;
 
-            pose.data.localPosition = new num_precisevector3(data.pConfig.iPosition);
+            pose.data.SetPosition(new num_precisevector3(data.pConfig.iPosition));
             pose.data.velocity = new num_precisevector3(data.pConfig.iVelocity);
             return;
         }
@@ -334,7 +334,7 @@ public class cb_trackedbody : MonoBehaviour
         data.pConfig.orbit.orbitalEccentricity = data.pConfig.iN / data.pConfig.iM;
         data.pConfig.orbit.orbitalPeriod = (data.pConfig.iM * 2 * Mathf.PI) / (Mathf.Abs(data.pConfig.iTransverseVelocity) * data.pConfig.iRadius * Mathf.Pow(data.pConfig.iM * data.pConfig.iM - data.pConfig.iN * data.pConfig.iN, 1.5f));
 
-        pose.data.localPosition = new num_precisevector3(data.pConfig.iPosition);
+        pose.data.SetPosition(new num_precisevector3(data.pConfig.iPosition));
         pose.data.velocity = new num_precisevector3(data.pConfig.iVelocity);
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [System.Serializable]
 public class e_genericentitydata
@@ -15,7 +16,7 @@ public class e_genericentitydata
     // (gameobject name will always be "e_" plus the entity name)
     public string entityName;
 
-    public num_precisevector3 localPosition;
+    public num_precisevector3 localPosition {get; private set;}
     public e_genericentity parent;
     // precision is only needed here for position
     // it's faster for calculations to keep rotation not precise
@@ -31,6 +32,29 @@ public class e_genericentitydata
     public e_floatingentitydata floatingData;
     public e_mimicentitydata mimicData;
     // ****************************
+
+    public void SetPosition(num_precisevector3 pos)
+    {
+        localPosition = pos;
+        // make sure that the change is communicated to all clients
+        if (ServerNetworkManager.Instance.isServerActive)
+        {
+            // I don't care about planets
+            bool doICare = true;
+            if (floatingData != null)
+            {
+                if (floatingData.isCelestial)
+                {
+                    doICare = false;
+                }
+            }
+
+            if (doICare)
+            {
+                ServerNetworkManager.Instance.SendEntityPositionUpdates(new int[] {index});
+            }
+        }
+    }
 
     public string GetRawPackagedData()
     {

@@ -47,6 +47,13 @@ public class num_precisevector3
         this.z = new num_precise(v.z);
     }
 
+    public num_precisevector3(string xData, string yData, string zData)
+    {
+        this.x = new num_precise(xData);
+        this.y = new num_precise(yData);
+        this.z = new num_precise(zData);
+    }
+
     // THESE HAVE TO BE FUNCTIONS BECAUSE THEY NEED TO RETURN NEW COPIES OF THE VARIABLE
     // OTHERWISE SHIT BREAKS
     // (i have seen this myself)
@@ -192,6 +199,13 @@ public class num_precisevector3
         return x.raw.ToString() + ", " + 
         y.raw.ToString() + ", " + 
         z.raw.ToString();
+    }
+
+    public static num_precisevector3 FromString(string raw)
+    {
+        string[] elements = util_string.SplitByChar(raw,',');
+
+        return new num_precisevector3(elements[0],elements[1],elements[2]);
     }
     // ****************************************
 }

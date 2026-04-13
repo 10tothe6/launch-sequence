@@ -154,7 +154,8 @@ public class WorldManager : MonoBehaviour
     public int GetSOIIndex()
     {
         if (cb_solarsystem.Instance.monoBodies.Count == 0) {return -1;}
-        if (cb_renderingmanager.Instance.entityInControl == null) {return 0;}
+        if (LocalPlayer.localClient == null) {return 0;}
+        if (LocalPlayer.localClient.controllingEntity == null) {return 0;}
 
         Vector3 playerPos = Vector3.zero;
 
@@ -166,7 +167,7 @@ public class WorldManager : MonoBehaviour
         {
             float dist = Vector3.Distance(
                 cb_solarsystem.Instance.monoBodies[i].pose.data.GetPosition().ToVector3(), 
-            cb_renderingmanager.Instance.entityInControl.data.GetPosition().ToVector3());
+            LocalPlayer.localClient.controllingEntity.data.GetPosition().ToVector3());
             // big G times big M divided by distance^2
             float force = cb_solarsystem.gravConstant * cb_solarsystem.Instance.monoBodies[i].data.mass / (dist * dist);
 

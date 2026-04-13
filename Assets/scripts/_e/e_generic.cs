@@ -35,4 +35,10 @@ public class e_generic : MonoBehaviour
         // we should never get here
         return new num_precisevector3(0,0,0);
     }
+
+    public void SetData(string data)
+    {
+        string[] dataElements = util_string.SplitByChar(data,',');
+        
+    }
 }

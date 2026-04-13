@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5437459157737577846}
   - component: {fileID: 2469041835595599397}
-  - component: {fileID: 3184155723115397919}
+  - component: {fileID: 2729367974183567087}
   m_Layer: 0
-  m_Name: player
+  m_Name: e_freecam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   floating_ref: {fileID: 0}
   fixed_ref: {fileID: 0}
   mimic_ref: {fileID: 0}
---- !u!114 &3184155723115397919
+--- !u!114 &2729367974183567087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,14 +59,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7055245852948794534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daa3dac6b64e9544ba2b470dc1adc6f9, type: 3}
+  m_Script: {fileID: 11500000, guid: dce172d9a17053741a54da9857497c14, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::e_floatingentity
+  m_EditorClassIdentifier: Assembly-CSharp::e_fixedentity
   data:
     index: 0
-    isCelestial: 0
     reference: {fileID: 0}
-    parent: {fileID: 0}
     localPosition:
       x:
         numDecimalDigits: 4
@@ -88,6 +86,3 @@ MonoBehaviour:
         numDecimalDigits: 4
       z:
         numDecimalDigits: 4
-    defaultScale: 0
-    scaleFactor: 0
-  setupOnAwake: 1

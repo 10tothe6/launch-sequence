@@ -150,9 +150,19 @@ public class ClientNetworkManager : MonoBehaviour
         string[] rawClientData = message.GetStrings();
         net_connectedclient[] clientData = net_connectedclient.ParseFromStringArray(rawClientData);
 
-        cmd.LogRaw($"[Client] Join request accepted. Setting player list ({rawClientData.Length})...");
-
+        cmd.LogRaw($"[Client] Join request accepted. Setting client list ({rawClientData.Length})...");
         ServerNetworkManager.Instance.connectedClients = clientData.ToList();
+
+        string[] rawEntityData1 = message.GetStrings();
+        int[] rawEntityData2 = message.GetInts();
+        cmd.LogRaw($"Setting entity list ({rawEntityData1.Length})...");
+
+        for (int i = 0; i < rawEntityData1.Length; i++)
+        {
+            // first, make the new prefab
+            EntityManager.Instance.SpawnNewEntity(rawEntityData2[i], rawEntityData1[i]); 
+        }
+
         ServerNetworkManager.Instance.onJoinServer.Invoke();
     }
 

@@ -1,1 +1,2 @@
 * upgrade the old ui_linked icon system cuz its confusing (ui_worldspaceelement is better)
+* split the entity packaging into multiple packets

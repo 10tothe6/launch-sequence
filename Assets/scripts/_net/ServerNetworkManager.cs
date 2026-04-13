@@ -250,13 +250,20 @@ public class ServerNetworkManager : MonoBehaviour
 
         // converting the connected client list to a string, then shipping it over
         string[] connectedClients = new string[Instance.connectedClients.Count];
-
         for (int i = 0; i < connectedClients.Length; i++)
         {
             connectedClients[i] = Instance.connectedClients[i].ParseToString();
         }
-
         message.AddStrings(connectedClients);
+
+        
+        net_packagedentitydata[] entityData = EntityManager.Instance.PackageAllEntityData();
+
+        string[] data1 = net_packagedentitydata.MakeDataArray(entityData);
+        int[] data2 = net_packagedentitydata.MakeIndexArray(entityData);
+
+        message.AddStrings(data1);
+        message.AddInts(data2);
        
         Instance.server.Send(message, toClientId);
 

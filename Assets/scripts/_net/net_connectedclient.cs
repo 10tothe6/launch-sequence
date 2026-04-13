@@ -14,7 +14,8 @@ public enum net_permissionlevel
 [System.Serializable]
 public class net_connectedclient 
 {
-    public e_generic clientEntity;
+    public bool isLocal;
+    public e_generic controllingEntity;
 
     public string username;
     public ushort permissionLevel; // references net_permissionlevel

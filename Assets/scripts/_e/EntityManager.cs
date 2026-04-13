@@ -3,6 +3,18 @@ using Riptide;
 using UnityEngine;
 using UnityEngine.Events;
 
+// here's a quick note on player entity handling specifically,
+// derived from a thinking session during a night-walk that I did
+
+// there are 2 schools of thought when it comes to player entities:
+// 1. the 'transient' system
+// the idea here is that clients don't have their own entities
+
+//  ^^ THIS IS THE ONE I'M ACTUALLY GOING WITH FOR THIS PROJECT, MIND YOU
+
+// 2. the 'soul' system
+// each client has its own entity (nicknamed the 'soul') that is just slaved to whatever robot that its controlling
+
 public class EntityManager : MonoBehaviour
 {
     private static EntityManager _instance;
@@ -35,7 +47,7 @@ public class EntityManager : MonoBehaviour
 
     void Start()
     {
-        ServerNetworkManager.Instance.onJoinServer.AddListener(InitializeLocalPlayer);
+        
     }
 
     // the master lists for all entities
@@ -44,6 +56,10 @@ public class EntityManager : MonoBehaviour
     public List<e_floatingentity> floatingEntities;
     public List<e_fixedentity> fixedEntities;
     public List<e_mimicentity> mimicEntities;
+    public Dictionary<int,e_generic> entities; // TODO: this
+    // sandbox and main-world entities are shared between these lists
+    // sandbox entities just have a negative index
+    // world entities have positive indices
 
     public GameObject[] p_entities;
 
@@ -54,12 +70,41 @@ public class EntityManager : MonoBehaviour
     public Transform t_playerContainer;
 
 
-    // spawns both the sandbox AND world copies
-    public void InitializeLocalPlayer()
+    public net_packagedentitydata[] PackageAllEntityData()
     {
-        Debug.Log("spawning local player");
+        List<net_packagedentitydata> result = new List<net_packagedentitydata>();
+
+        for (int i = 0; i < floatingEntities.Count; i++)
+        {
+            result.Add(floatingEntities[i].data.Package());
+        }
+        for (int i = 0; i < fixedEntities.Count; i++)
+        {
+            result.Add(fixedEntities[i].data.Package());
+        }
+        for (int i = 0; i < mimicEntities.Count; i++)
+        {
+            result.Add(mimicEntities[i].data.Package());
+        }
+
+        return result.ToArray();
     }
 
+    // used mainly when spawning entities delivered by the server
+    public void SpawnNewEntity(int entityIndex, string data)
+    {
+        GameObject p_entity = p_entities[entityIndex];
+
+        GameObject g_newEntity = SpawnNewEntity(p_entity, num_precisevector3.Zero());
+
+        g_newEntity.GetComponent<e_generic>().SetData(data);
+    }
+
+    public void SpawnNewEntity(int entityIndex, num_precisevector3 spawnPosition)
+    {
+        GameObject p_entity = p_entities[entityIndex];
+        SpawnNewEntity(p_entity, spawnPosition);
+    }
 
     // okay so
     // * the client tells the server it's spawning a new entity
@@ -69,6 +114,11 @@ public class EntityManager : MonoBehaviour
     {
         GameObject p_entity = GetEntityPrefabFromName(entityName);
 
+        SpawnNewEntity(p_entity, spawnPosition);
+    }
+
+    public GameObject SpawnNewEntity(GameObject p_entity, num_precisevector3 spawnPosition)
+    {
         GameObject g_newEntity = Instantiate(p_entity, null);
 
         // depending on what type of entity we're dealing with
@@ -89,15 +139,17 @@ public class EntityManager : MonoBehaviour
             // TODO: mimics
         } else
         {
-            cmd.Log("There was an issue with the entity prefab '" + entityName + "'. It has no entity component!");
+            cmd.Log("There was an issue with the entity prefab '" + p_entity.name + "'. It has no entity component!");
         }
+
+        return g_newEntity;
     }
 
     public GameObject GetEntityPrefabFromName(string name)
     {
         for (int i = 0; i < p_entities.Length; i++)
         {
-            if  (p_entities[i].name == name)
+            if  (p_entities[i].name == "e_" + name)
             {
                 return p_entities[i];
             }

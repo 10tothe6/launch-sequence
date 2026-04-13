@@ -9,6 +9,7 @@ public class e_floatingentitydata {
     // very important for keeping track of entities in the multiplayer system
     public int index;
 
+    public string entityName;
 
     public bool isCelestial; // is it big enough to never un-render?
     public Transform reference;
@@ -59,6 +60,34 @@ public class e_floatingentitydata {
         scaleFactor = 1;
 
         //Refresh();
+    }
+
+    public net_packagedentitydata Package()
+    {
+        // for now just adding the position and the index
+        string data = "";
+
+        data += localPosition.AsRawString();
+
+        data += ",";
+        data += index;
+
+        net_packagedentitydata result = new net_packagedentitydata(data, GetPrefabIndex());
+
+        return result;
+    }
+
+    public int GetPrefabIndex()
+    {
+        for (int i = 0; i < EntityManager.Instance.p_entities.Length; i++)
+        {
+            if (EntityManager.Instance.p_entities[i].name == "e_" + entityName)
+            {
+                return i;
+            }
+        }
+
+        return -1; // should really never get here?
     }
 
     public num_precisevector3 GetPosition()

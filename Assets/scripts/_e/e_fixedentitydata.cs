@@ -20,4 +20,9 @@ public class e_fixedentitydata
         return localPosition;
     }
 
+    public net_packagedentitydata Package()
+    {
+        return new net_packagedentitydata();
+    }
+
 }

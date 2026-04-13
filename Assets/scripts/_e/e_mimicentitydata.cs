@@ -25,6 +25,11 @@ public class e_mimicentitydata {
         defaultScale = _ref.localScale.x;
     }
 
+    public net_packagedentitydata Package()
+    {
+        return new net_packagedentitydata();
+    }
+
     public num_precisevector3 GetPosition()
     {
         return new num_precisevector3(0,0,0);

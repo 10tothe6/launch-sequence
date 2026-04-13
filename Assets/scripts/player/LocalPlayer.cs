@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// might end up being a temporary class (by the time we add multiplayer), 
-// but we're keeping it for now to help with inputs and stuff
+// TURNS OUT THIS IS NOT A TEMP CLASS
+// it just functions as a sort of shortcut
 
 public class LocalPlayer : MonoBehaviour
 {
@@ -30,18 +30,14 @@ public class LocalPlayer : MonoBehaviour
         Instance = this;
     }
 
-    // void FixedUpdate()
-    // {
-    //     Debug.Log(cb_renderingmanager.GetControlPosition().AsRawString());
-    // }
-
-    public e_floatingentity pose;
+    public e_generic localPlayerEntity;
 
     public static num_precisevector3 GetPosition()
     {
-        if (Instance.pose != null)
+        // TODO: make the controlling entity a fixed entity?
+        if (Instance.localPlayerEntity.floating_ref != null)
         {
-            return Instance.pose.data.GetPosition();
+            return Instance.localPlayerEntity.floating_ref.data.GetPosition();
         } else
         {
             return new num_precisevector3(0,0,0);
@@ -50,13 +46,13 @@ public class LocalPlayer : MonoBehaviour
 
     public void MoveBy(Vector3 amt)
     {
-        pose.data.localPosition = pose.data.localPosition.Add(new num_precisevector3(amt));
+        localPlayerEntity.floating_ref.data.localPosition = localPlayerEntity.floating_ref.data.localPosition.Add(new num_precisevector3(amt));
     }
 
     public void SystemTeleport(int index)
     {
-        if (pose == null) {return;}
-        pose.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
+        if (localPlayerEntity.floating_ref == null) {return;}
+        localPlayerEntity.floating_ref.data.localPosition = cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2);
     }
 
     public void Teleport(num_precisevector3 pos)

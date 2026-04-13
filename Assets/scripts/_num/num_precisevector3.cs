@@ -47,9 +47,54 @@ public class num_precisevector3
         this.z = new num_precise(v.z);
     }
 
+    // THESE HAVE TO BE FUNCTIONS BECAUSE THEY NEED TO RETURN NEW COPIES OF THE VARIABLE
+    // OTHERWISE SHIT BREAKS
+    // (i have seen this myself)
+    // ****************************************
+    public static num_precisevector3 Zero()
+    {
+        return new num_precisevector3(0,0,0);
+    }
+    public static num_precisevector3 One()
+    {
+        return new num_precisevector3(1,1,1);
+    }
+
+
+    // below are unity conventions
+    public static num_precisevector3 Left()
+    {
+        return new num_precisevector3(-1,0,0);
+    }
+    public static num_precisevector3 Right()
+    {
+        return new num_precisevector3(1,0,0);
+    }
+
+    public static num_precisevector3 Up()
+    {
+        return new num_precisevector3(0,1,0);
+    }
+    public static num_precisevector3 Down()
+    {
+        return new num_precisevector3(0,-1,0);
+    }
+
+    public static num_precisevector3 Forward()
+    {
+        return new num_precisevector3(0,0,1);
+    }
+    public static num_precisevector3 Backward()
+    {
+        return new num_precisevector3(0,0,-1);
+    }
+    // ****************************************
+
+
 
     
-
+    // MATH FUNCTIONS
+    // ****************************************
     public num_precisevector3 Mul(num_precise other)
     {
         return new num_precisevector3(x.Mul(other), y.Mul(other), z.Mul(other));
@@ -123,8 +168,10 @@ public class num_precisevector3
 
         return new num_precise(util_math.Sqrt(_x.Add(_y).Add(_z).raw * BigInteger.Pow(10, _x.numDecimalDigits)));
     }
+    // ****************************************
 
-
+    // CONVERSIONS
+    // ****************************************
     public UnityEngine.Vector3 ToVector3()
     {
         return new UnityEngine.Vector3(x.AsFloat(), y.AsFloat(), z.AsFloat());
@@ -146,4 +193,5 @@ public class num_precisevector3
         y.raw.ToString() + ", " + 
         z.raw.ToString();
     }
+    // ****************************************
 }

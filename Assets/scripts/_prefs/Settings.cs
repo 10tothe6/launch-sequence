@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+// TODO: figure out how to group settings by category
+
 public class Settings : MonoBehaviour
 {
     private static Settings _instance;

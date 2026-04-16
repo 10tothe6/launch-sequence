@@ -3899,6 +3899,71 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &480190097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 480190100}
+  - component: {fileID: 480190099}
+  - component: {fileID: 480190098}
+  m_Layer: 0
+  m_Name: main menu scene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &480190098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480190097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830c139126505a34f95b5fcc4c4b6ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cb_mainmenucontroller
+  p_celestialBody: {fileID: 0}
+--- !u!114 &480190099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480190097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b2138b24285e2c48a7bbffc5604fa0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::comment
+  text: 'this is a separate scene, because generating an entire solar system just
+    for one planet to show in the main menu is too much work
+
+
+    that said, I am
+    using the exact same planet prefab and just disabling the LOD (no static mesh
+    because I want to be able to generate random bodies)'
+--- !u!4 &480190100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480190097}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -786.5469, y: 204.5586, z: 185.53857}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &495324069
 GameObject:
   m_ObjectHideFlags: 0
@@ -5350,7 +5415,7 @@ MonoBehaviour:
   cullingMask:
     serializedVersion: 2
     m_Bits: 375
-  moveSpeed: 1000
+  moveSpeed: 100
 --- !u!114 &751265232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12869,3 +12934,4 @@ SceneRoots:
   - {fileID: 314687046}
   - {fileID: 1683129431}
   - {fileID: 1289060807}
+  - {fileID: 480190100}

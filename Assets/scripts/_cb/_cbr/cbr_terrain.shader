@@ -12,15 +12,29 @@ SubShader {
     int isStar;
     float3 position;
 
+    struct SurfaceOutputCustom {
+        fixed3 Albedo;
+        fixed3 Normal;
+        fixed3 Emission;
+        half Specular;
+        fixed Gloss;
+        fixed Alpha;
+
+        float3 worldPos; // thank you chatgpt
+    };
+
+
     // Lighting for the terrain (custom so that the sun direction can change)
-    half4 LightingSimpleLambert (SurfaceOutput s, half3 lightDir, half atten) {
+    half4 LightingSimpleLambert (SurfaceOutputCustom s, half3 lightDir, half atten) {
         if (isStar == 1) {
             return 1;
         }
-        half NdotL = saturate(dot(s.Normal, normalize(sunPosition - position)));
+        
+        half dotSphere = saturate(dot(normalize(s.worldPos - position), normalize(sunPosition - position)));
+        half dotTerrain = saturate(dot(s.Normal, normalize(sunPosition - position)));
         
         half4 c;
-        c.rgb = s.Albedo * (NdotL);
+        c.rgb = s.Albedo * dotSphere * dotTerrain;
         c.a = 1;
         return c;
     }
@@ -34,8 +48,9 @@ SubShader {
     sampler2D _MainTex;
     fixed4 _Color;
 
-    void surf (Input IN, inout SurfaceOutput o) {
+    void surf (Input IN, inout SurfaceOutputCustom  o) {
         o.Albedo = _Color;
+        o.worldPos = IN.worldPos;
     }
     ENDCG
     }

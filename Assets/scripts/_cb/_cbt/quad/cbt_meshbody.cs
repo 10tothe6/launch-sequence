@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class cbt_meshbody : MonoBehaviour
 {
+    public bool useDirectRadius;
+    public float directRadius;
+
     public bool enableChunkCulling;
     public float chunkCullingAngle; // anything at a greater angle will be culled
     public bool updateChunksPeriodically;
@@ -81,6 +84,10 @@ public class cbt_meshbody : MonoBehaviour
             GameObject g_parentChunk = Instantiate(p_chunk, t_chunkContainer);
             parentChunks[i] = g_parentChunk.GetComponent<cbt_meshchunk>();
 
+            if (useDirectRadius)
+            {
+                parentChunks[i].directRadius = directRadius;
+            }
             parentChunks[i].Initialize(startingResolution, directions[i], new Vector3(0, 0, startingResolution), bodyIndex);
             parentChunks[i].levelOfDetail = detailLevelThresholds.Length - 1; // higher number, lower detail
             parentChunks[i].parent = null;
@@ -116,7 +123,7 @@ public class cbt_meshbody : MonoBehaviour
                 if (current.t_model.gameObject.activeSelf &&
                 current.parent != null)
                 {
-                    if (Vector3.Distance(current.parent.mr.bounds.center, t_decidingObject.position) >= detailLevelThresholds[current.parent.levelOfDetail] * WorldData.universalScaleFactor)
+                    if (Vector3.Distance(current.parent.mr.bounds.center, t_decidingObject.position) >= detailLevelThresholds[current.parent.levelOfDetail])
                     {
                         current.parent.SetAsActive();
                     }
@@ -139,7 +146,7 @@ public class cbt_meshbody : MonoBehaviour
             {
                 if (current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
                 {
-                    if (Vector3.Distance(current.mr.bounds.center, t_decidingObject.position) < detailLevelThresholds[current.levelOfDetail] / WorldData.universalScaleFactor)
+                    if (Vector3.Distance(current.mr.bounds.center, t_decidingObject.position) < detailLevelThresholds[current.levelOfDetail])
                     {
                         // this will BOTH make the new chunks AND hide the old one
                         Subdivide(current);
@@ -272,6 +279,10 @@ public class cbt_meshbody : MonoBehaviour
             float res = (float)startingResolution;
 
             input.children[i] = g_newDaughterChunk.GetComponent<cbt_meshchunk>();
+            if (useDirectRadius)
+            {
+                input.children[i].directRadius = directRadius;
+            }
             input.children[i].Initialize(startingResolution, input.localUp, new Vector3(input.dims.x + (res * (input.dims.z / res)) / 2f * ((float)i % 2f), input.dims.y + (res * (input.dims.z/ res)) / 2 * Mathf.Floor((float)i / 2f), (res * (input.dims.z/ res)) / 2f), bodyIndex);
             input.children[i].levelOfDetail = input.levelOfDetail - 1; // lower number, more detail
             input.children[i].parent = input;
@@ -298,7 +309,10 @@ public class cbt_meshbody : MonoBehaviour
         input.isCulledByLOD = true;
         input.UpdateRenderStatus();
 
-        GetComponent<cbr_litbody>().UpdateChildren();
+        if (GetComponent<cbr_litbody>() != null)
+        {
+            GetComponent<cbr_litbody>().UpdateChildren();
+        }
     }
 
     // ********************

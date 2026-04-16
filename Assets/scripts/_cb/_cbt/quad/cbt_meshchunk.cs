@@ -65,7 +65,13 @@ public class cbt_meshchunk : MonoBehaviour
 
     public float GetHeightAt(Vector3 v) {
         v = v.normalized;
-        return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 10f;
+        if (WorldManager.Instance != null)
+        {
+            return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 10f;
+        } else
+        {
+            return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 20f, v.y * 20f, v.z * 20f) * 100f;
+        }
     }
 
     public void ConstructMesh(int bodyIndex)
@@ -110,12 +116,28 @@ public class cbt_meshchunk : MonoBehaviour
                 
                 //without normalizing it it would be a cube
                 vertices[i] = pointOnUnitCube.normalized * rad;
-                vertices[i] += pointOnUnitCube.normalized * GetHeightAt(vertices[i]) * (rad / 1000f);
-                // vertices[i] = cb_renderingmanager.Instance.AdjustVector(vertices[i].normalized, 0) * vertices[i].magnitude;
 
-                normals[i] = pointOnUnitCube.normalized;
-                // normals[i] = cb_renderingmanager.Instance.AdjustVector(pointOnUnitCube.normalized, 0);
+                Vector3 altVertA1 = (vertices[i] - axisA * 0.05f).normalized * rad;
+                Vector3 altVertA2 = (vertices[i] + axisA * 0.05f).normalized * rad;
+
+                Vector3 altVertB1 = (vertices[i] - axisB * 0.05f).normalized * rad;
+                Vector3 altVertB2 = (vertices[i] + axisB * 0.05f).normalized * rad;
                 
+                vertices[i] += pointOnUnitCube.normalized * GetHeightAt(vertices[i].normalized) * (rad / 1000f);
+
+                altVertA1 += altVertA1.normalized * GetHeightAt(altVertA1.normalized) * (rad / 1000f);
+                altVertA2 += altVertA2.normalized * GetHeightAt(altVertA2.normalized) * (rad / 1000f);
+                altVertB1 += altVertB1.normalized * GetHeightAt(altVertB1.normalized) * (rad / 1000f);
+                altVertB2 += altVertB2.normalized * GetHeightAt(altVertB2.normalized) * (rad / 1000f);
+                
+                normals[i] = Vector3.Cross((altVertA2 - altVertA1).normalized, (altVertB2 - altVertB1).normalized);
+                //normals[i] = normals[i].normalized;
+                //Debug.Log((altVert1 - vertices[i]) + "     " + (altVertB - vertices[i])+ "     " + vertices[i] + "    " + altVert1);
+                if (Vector3.Angle(normals[i], vertices[i]) > 90)
+                {
+                    normals[i] *= -1;
+                }
+
                 // the 23 and 24 is based off of resolution
                 uvs[i] = new Vector2((float)x / 23 * scale + dims.x / 24, (float)y / 23 * scale + dims.y / 24);
 

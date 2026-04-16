@@ -220,9 +220,21 @@ public class cmd_console : MonoBehaviour
         // unity console
         Debug.Log(msg);
     }
+    public void DebugLog(string msg, Color col)
+    {
+        // our console
+        PostToConsole(msg, col);
+
+        // unity console
+        Debug.Log(msg);
+    }
 
     public void PostToConsole(string msg)
     {
         menu.PostMessage(msg);
+    }
+    public void PostToConsole(string msg, Color col)
+    {
+        menu.PostMessage(msg, col);
     }
 }

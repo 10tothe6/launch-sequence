@@ -16,4 +16,9 @@ public class ui_consolemsg : MonoBehaviour
     {
         tx.text = data;
     }
+
+    public void SetColor(Color col)
+    {
+        tx.color = col;
+    }
 }

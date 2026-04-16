@@ -40,6 +40,10 @@ public class ui_console : MonoBehaviour
 
     public void PostMessage(string msg)
     {
+        PostMessage(msg, Color.white);
+    }
+    public void PostMessage(string msg, Color col)
+    {
         // first, move all existing messages up
         for (int i = 0; i < t_messageContainer.childCount; i++)
         {
@@ -48,6 +52,7 @@ public class ui_console : MonoBehaviour
 
         ui_consolemsg newMsg = Instantiate(p_msg, t_messageContainer).GetComponent<ui_consolemsg>();
         newMsg.transform.localPosition = Vector3.zero;
+        newMsg.SetColor(col);
 
         newMsg.SetData(msg);
     }

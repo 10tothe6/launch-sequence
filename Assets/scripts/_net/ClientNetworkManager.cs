@@ -77,9 +77,9 @@ public class ClientNetworkManager : MonoBehaviour
     public void ConnectToLocalServer() { ConnectToServer("127.0.0.1", 7770);}
     public void ConnectToServer(string ip, ushort port)
     {
-        if (username.Length < 1) {cmd.LogRaw("[Client] Username has not been set! Cannot join server."); return;}
+        if (username.Length < 1) {cmd.LogRaw("[Client] Username has not been set! Cannot join server.", Color.yellow); return;}
         
-        cmd.LogRaw("[Client] Connecting to local server ...");
+        cmd.LogRaw("[Client] Connecting to local server ...", Color.yellow);
         ServerNetworkManager.Instance.serverIP = ip;
         ServerNetworkManager.Instance.serverPort = port;
         client.Connect($"{ip}:{port}");
@@ -89,7 +89,7 @@ public class ClientNetworkManager : MonoBehaviour
     private void DidConnect(object sender, EventArgs e)
     {
         // send basic info to server
-        cmd.LogRaw("[Client] Found server at ip: " + ServerNetworkManager.Instance.serverIP + ". Sending handshake...");
+        cmd.LogRaw("[Client] Found server at ip: " + ServerNetworkManager.Instance.serverIP + ". Sending handshake...", Color.yellow);
         SendJoinRequestToServer();
     }
     private void FailedToConnect(object sender, EventArgs e)
@@ -131,7 +131,7 @@ public class ClientNetworkManager : MonoBehaviour
 
     public void RequestKickPlayer(string username)
     {
-        cmd.LogRaw($"[Client] requesting player {username} to be kicked...");
+        cmd.LogRaw($"[Client] requesting player {username} to be kicked...", Color.yellow);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.kick_player_request);
         
@@ -142,7 +142,7 @@ public class ClientNetworkManager : MonoBehaviour
 
     public void SendCommandRequest(cmd_consolecommand command, string[] args)
     {
-        cmd.LogRaw($"[Client] requesting {command.names[0]} command from server...");
+        cmd.LogRaw($"[Client] requesting {command.names[0]} command from server...", Color.yellow);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.command_request);
 
@@ -161,7 +161,7 @@ public class ClientNetworkManager : MonoBehaviour
     {
         string reason = message.GetString();
 
-        cmd.LogRaw($"[Client] Join request denied by server. Reason: {reason}");
+        cmd.LogRaw($"[Client] Join request denied by server. Reason: {reason}", Color.yellow);
         Instance.client.Disconnect();
     }
 
@@ -173,11 +173,11 @@ public class ClientNetworkManager : MonoBehaviour
 
         if (!ServerNetworkManager.Instance.isServerActive)
         {
-            cmd.LogRaw($"[Client] Join request accepted. Setting client list ({rawClientData.Length})...");
+            cmd.LogRaw($"[Client] Join request accepted. Setting client list ({rawClientData.Length})...", Color.yellow);
             ServerNetworkManager.Instance.connectedClients = clientData.ToList();
         } else
         {
-            cmd.LogRaw($"[Client] Join request accepted. Client list skipped cuz we're a server");
+            cmd.LogRaw($"[Client] Join request accepted. Client list skipped cuz we're a server", Color.yellow);
         }
 
         string[] rawEntityData1 = message.GetStrings();
@@ -232,7 +232,7 @@ public class ClientNetworkManager : MonoBehaviour
         int[] entityIndices = message.GetInts();
         string[] entityPositions = message.GetStrings();
 
-        cmd.LogRaw($"[Client] got entity position update for {entityIndices} entities.");
+        cmd.LogRaw($"[Client] got entity position update for {entityIndices} entities.", Color.yellow);
 
         for (int i = 0; i < entityIndices.Length; i++)
         {

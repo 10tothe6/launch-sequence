@@ -33,6 +33,7 @@ public class cb_mainmenucontroller : MonoBehaviour
     public void Setup()
     {
         CameraController.SetControlMode(CameraControlMode.MainMenu);
+        transform.GetChild(0).GetComponent<test_drawmeshbody>().Draw();
     }
 
     void Update()

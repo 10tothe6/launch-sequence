@@ -142,7 +142,7 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void StartServer(ushort port, ushort maxClientCount)
     {
-        cmd.LogRaw("[Server] Starting server ...");
+        cmd.LogRaw("[Server] Starting server ...", Color.cyan);
         server.Start(port, maxClientCount);
         isServerActive = true;
     }
@@ -157,7 +157,7 @@ public class ServerNetworkManager : MonoBehaviour
     // starting a singleplayer world
     public void StartSingleplayerServer()
     {
-        cmd.LogRaw("[Server] Setting up singleplayer server on port " + 7770 + "...");
+        cmd.LogRaw("[Server] Setting up singleplayer server on port " + 7770 + "...", Color.cyan);
         StartServer(7770, 1);
         ClientNetworkManager.Instance.username = "localplayer";
         ClientNetworkManager.Instance.ConnectToLocalServer();
@@ -188,17 +188,17 @@ public class ServerNetworkManager : MonoBehaviour
         string username = message.GetString();
         string version = message.GetString();
 
-        cmd.LogRaw($"[Server] Received join request from '{username}'. Validating...");        
+        cmd.LogRaw($"[Server] Received join request from '{username}'. Validating...", Color.cyan);        
 
         if (Instance.IsUsernameTaken(username))
         {
             Instance.SendJoinDenial(fromClientId, "duplicate username");
-            cmd.LogRaw($"[Server] Client denied. Reason: duplicate username.");
+            cmd.LogRaw($"[Server] Client denied. Reason: duplicate username.", Color.cyan);
         } 
         else if (Program.Instance.version != version)
         {
             Instance.SendJoinDenial(fromClientId, "wrong version");
-            cmd.LogRaw($"[Server] Client denied. Reason: wrong game version.");
+            cmd.LogRaw($"[Server] Client denied. Reason: wrong game version.", Color.cyan);
         }
 
         
@@ -218,7 +218,7 @@ public class ServerNetworkManager : MonoBehaviour
                 } else
                 {
                     Instance.SendJoinDenial(fromClientId, "not whitelisted");
-                    cmd.LogRaw($"[Server] Client denied. Reason: not on whitelist.");
+                    cmd.LogRaw($"[Server] Client denied. Reason: not on whitelist.", Color.cyan);
                 }
             } else
             {
@@ -232,13 +232,13 @@ public class ServerNetworkManager : MonoBehaviour
                 } else
                 {
                     Instance.SendJoinDenial(fromClientId, "blacklisted");
-                    cmd.LogRaw($"[Server] Client with denied. Reason: on blacklist.");
+                    cmd.LogRaw($"[Server] Client with denied. Reason: on blacklist.", Color.cyan);
                 }
             }
 
             if (passedListCheck)
             {
-                cmd.LogRaw($"[Server] Client accepted.");
+                cmd.LogRaw($"[Server] Client accepted.", Color.cyan);
 
                 net_connectedclient newClient = new net_connectedclient(username, fromClientId);
 
@@ -287,7 +287,7 @@ public class ServerNetworkManager : MonoBehaviour
 
         if (arePermissionsValid)
         {
-            cmd.LogRaw($"[Server] putting through command ({cmdName}) request from client {fromClientId}.");
+            cmd.LogRaw($"[Server] putting through command ({cmdName}) request from client {fromClientId}.", Color.cyan);
 
             string constructedMessage = "";
             constructedMessage += cmdName;
@@ -305,7 +305,7 @@ public class ServerNetworkManager : MonoBehaviour
             cmd_console.Instance.ProcessMessage(constructedMessage);
         } else
         {
-            cmd.LogRaw($"[Server] blocked command ({cmdName}) request from client {fromClientId} cuz perms");
+            cmd.LogRaw($"[Server] blocked command ({cmdName}) request from client {fromClientId} cuz perms", Color.cyan);
         }
     }
 
@@ -331,7 +331,7 @@ public class ServerNetworkManager : MonoBehaviour
         message.AddString(comp.data.GetRawPackagedData());
         message.AddInt(comp.data.entityPrefabIndex);
 
-        cmd.LogRaw($"[Server] spawning new {g_new.name} entity...");
+        cmd.LogRaw($"[Server] spawning new {g_new.name} entity...", Color.cyan);
 
         SendToAllExcept(LocalPlayer.localClient.client_index, message);
     }
@@ -356,7 +356,7 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void SendJoinConfirm(ushort toClientId)
     {
-        cmd.LogRaw($"[Server] Sending player list to new client...");
+        cmd.LogRaw($"[Server] Sending player list to new client...", Color.cyan);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.join_permitted);
 
@@ -386,7 +386,7 @@ public class ServerNetworkManager : MonoBehaviour
         // the username and permission level (net_connectedclient) get sent over
         toOthers.AddString(GetClient(toClientId).ParseToString());
         int otherPlayerCount = Instance.connectedClients.Count - 1;
-        cmd.LogRaw($"[Server] Sending player join notification to {otherPlayerCount} other clients...");
+        cmd.LogRaw($"[Server] Sending player join notification to {otherPlayerCount} other clients...", Color.cyan);
         SendToAllExcept(toClientId, toOthers);
 
         // temp temp temp temp temp
@@ -430,7 +430,7 @@ public class ServerNetworkManager : MonoBehaviour
 
         client.controllingEntity = entity;
 
-        cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...");
+        cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...", Color.cyan);
 
         // great, now its done on the server side
         // we still need to update everyone (except the local client, obviously)

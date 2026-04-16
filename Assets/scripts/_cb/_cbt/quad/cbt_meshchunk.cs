@@ -66,8 +66,21 @@ public class cbt_meshchunk : MonoBehaviour
     public float GetHeightAt(Vector3 v) {
         v = v.normalized;
 
+        if (directRadius == 0)
+        {
+            if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.bodyType == (ushort)cb_bodytype.Stellar)
+            {
+                return 0.5f;
+            }
+        }
+
         // bad getcomp call
-        if (transform.parent.parent.GetComponent<cbt_meshbody>().useTemporaryPerlin)
+        bool usingTempPerlin = false;
+        if (transform.parent.parent.GetComponent<cbt_meshbody>() != null)
+        {
+            usingTempPerlin = transform.parent.parent.GetComponent<cbt_meshbody>().useTemporaryPerlin;
+        }
+        if (usingTempPerlin)
         {
             return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 10f;
         } else

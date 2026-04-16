@@ -33,6 +33,9 @@ public class cam_mainmenu : MonoBehaviour
 
     void CameraUpdate()
     {
-        CameraController.Instance.transform.Rotate(Vector3.forward * Time.deltaTime * cb_mainmenucontroller.Instance.camRotSpeed, Space.Self);
+        if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.MainMenu)
+        {
+            CameraController.Instance.transform.Rotate(Vector3.forward * Time.deltaTime * cb_mainmenucontroller.Instance.camRotSpeed, Space.Self);
+        }
     }
 }

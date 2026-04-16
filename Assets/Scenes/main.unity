@@ -439,6 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf713f9864ae1548bf6811e1ba3d7cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::test_drawmeshbody
+  runOnStart: 0
 --- !u!1 &39304272
 GameObject:
   m_ObjectHideFlags: 0
@@ -12811,6 +12812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b76b518a7db044b8cba83e8440de4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_connectionmenu
+  in_port: {fileID: 0}
+  in_ip: {fileID: 0}
 --- !u!1 &2134612722
 GameObject:
   m_ObjectHideFlags: 0
@@ -13076,7 +13079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Program
   version: mptest-1.0-rc1
   ins_buildMode: 0
-  ins_startMode: 0
+  ins_startMode: 1
   ins_gameState: 0
 --- !u!114 &2144568381
 MonoBehaviour:

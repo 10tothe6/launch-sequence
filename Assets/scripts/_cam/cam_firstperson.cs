@@ -27,6 +27,8 @@ public class cam_firstperson : MonoBehaviour
     {
         t_controlling = g_toControl.transform;
         controller = g_toControl.GetComponent<PlayerController>();
+
+        g_toControl.GetComponent<PlayerController>().EnterControl();
     }
 
     public void EnterControl()
@@ -35,6 +37,7 @@ public class cam_firstperson : MonoBehaviour
         transform.SetParent(t_controlling.GetChild(0));
         
         CameraController.ZeroOut();
+        
     }
     public void ExitControl()
     {

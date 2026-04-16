@@ -1,3 +1,5 @@
-* upgrade the old ui_linked icon system cuz its confusing (ui_worldspaceelement is better)
-* split the entity packaging into multiple packets
-* make the entity position updates a batch-based system
+PHASE I - player controller + sandbox
+PHASE II - UI 
+PHASE III - final commands (maybe title?)
+PHASE IV - terrain
+PHASE V - polish

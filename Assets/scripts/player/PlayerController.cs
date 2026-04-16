@@ -1,4 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+
+public enum player_movementmode
+{
+    Walking,
+    Crouching,
+    Flying,
+    NoClip,
+}
 
 // one of the first projects in a long while not to use my classic FirstPersonController3D.cs class
 
@@ -17,10 +26,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public Vector3 gravityDirection; // the most important addition to this controller
+    public float gravitationalAcceleration;
+
     #region references
+    private e_genericentity entityData;
     private Rigidbody rb;
     private RaycastHit hit;
     public CapsuleCollider col;
+    private Transform t_camera;
     // keep in mind that eventually I will have to create ghost copies of player entities (for moving vehicle physics)
     // this means I'll need a controlling object of sorts, or similar system
     #endregion
@@ -51,6 +65,7 @@ public class PlayerController : MonoBehaviour
     #region parameters
     // used for raycast checks with the ground
     public Transform t_foot;
+    public float raycastDistanceFromFoot;
 
 
     // for now this applies to both the visual model and the collider, 
@@ -59,8 +74,12 @@ public class PlayerController : MonoBehaviour
     private float colDefaultHeight;
 
     public float moveSpeed; // moving forwards/backwards
+    public float sprintBoost;
     public float strafeSpeed; // moving sideways
     public float turnSpeed; // looking around
+    public float flySpeed;
+
+    public float jumpStrength;
 
     // the player's camera oscillates when walking, which for now is just done by changing the camera offset
     // I likely won't change this, even after adding the player model - 
@@ -81,12 +100,18 @@ public class PlayerController : MonoBehaviour
     #endregion
     
     #region tracking variables
-     /* tracking variables */
-    private bool isFlying;
     private bool isCrouching;
+    /* tracking variables */
+    public player_movementmode mode;
 
     private bool activeJump;
     private float sprintTimer;
+
+
+    private float lastWalkingTime;
+    private float walkingTime;
+
+    private bool isFlying; // either flying OR noclip
     /**/
     #endregion
 
@@ -94,23 +119,213 @@ public class PlayerController : MonoBehaviour
     {
         // setting references
         rb = GetComponent<Rigidbody>();
+        hit = new RaycastHit();
+
+        entityData = GetComponent<e_genericentity>();
+        t_camera = transform.GetChild(0);
+
+
+        entityData.onEnterControl.AddListener(EnterControl);
+        entityData.onExitControl.AddListener(ExitControl);
+
+        colDefaultHeight = col.height;
+        sprintValue = maxSprint;
+    }
+
+    // called when the player assumes control
+    public void EnterControl()
+    {
+        defaultCameraHeight = CameraController.Instance.transform.localPosition.y;
+        currentCameraHeight = defaultCameraHeight;
+
+        mode = player_movementmode.Walking;
+    }
+    public void ExitControl()
+    {
+        
     }
 
     // just doing this through Update() and using Time.deltaTime instead of FixedUpdate()
     void Update()
     {
+        if (t_camera != null) t_camera.localPosition = new Vector3(0, currentCameraHeight, 0);
+        float cameraTiltTarget = 0;
+
+        if (isCrouching)
+        {
+            col.height = colDefaultHeight * crouchPercentHeight;
+            t_foot.transform.localPosition = new Vector3(0,-col.height/2f*col.transform.localScale.y, 0);
+        } else {col.height = colDefaultHeight;t_foot.transform.localPosition = new Vector3(0,-col.height/2f*col.transform.localScale.y, 0);}
+
+        if (!lockMovement && ImprovedRaycast() && !isFlying)
+        {
+            if (lastPacket.forward)
+            {
+                if (isSprinting)
+                {
+                    walkingTime += Time.deltaTime * sprintBoost;
+                } else
+                {
+                    walkingTime += Time.deltaTime;
+                }
+                if (walkingTime * cameraBounceFrequency > Mathf.PI * 3f/2f && lastWalkingTime * cameraBounceFrequency < Mathf.PI * 3f/2f)
+                {
+                    //footstepController.Step();
+                }
+                if (walkingTime * cameraBounceFrequency > Mathf.PI*2f)
+                {
+                    walkingTime -= Mathf.PI*2f/cameraBounceFrequency;
+                }
+                currentCameraHeight = defaultCameraHeight + Mathf.Sin(walkingTime * cameraBounceFrequency) * cameraBounceAmplitude;
+                if (lastPacket.sprint && sprintValue > 0 && allowSprint)
+                {
+                    isSprinting = true;
+                    rb.linearVelocity += transform.forward * moveSpeed * sprintBoost * Time.deltaTime;
+
+                    if (Time.time > sprintTimer + 0.05f)
+                    {
+                        sprintValue--;
+                        sprintTimer = Time.time;
+                    }
+                }
+                else
+                {
+                    isSprinting = false;
+                    rb.linearVelocity += transform.forward * moveSpeed * Time.deltaTime;
+                }
+            }
+            else {
+                isSprinting = false;
+            }
+
+            if (lastPacket.back)
+            {
+                rb.linearVelocity -= transform.forward * moveSpeed;
+            }
+            if (lastPacket.right)
+            {
+                rb.linearVelocity += transform.right * moveSpeed * Time.deltaTime;
+                cameraTiltTarget = -1;
+
+            }
+
+            if (lastPacket.left)
+            {
+                rb.linearVelocity -= transform.right * moveSpeed * Time.deltaTime;
+                cameraTiltTarget = 1;
+            }
+
+            if (!lastPacket.right && !lastPacket.left)
+            {
+                cameraTiltTarget = 0;
+            }
+        }
+        else if (isFlying) {
+            transform.position += (transform.right * Input.inputAxisHorizontal + transform.forward * Input.inputAxisForward + transform.up * Input.inputAxisVertical) * (lastPacket.sprint ? 2.5f : 1) * flySpeed;
+            rb.linearVelocity = Vector3.zero;
+        } else {
+            cameraTiltTarget = 0;
+        }
+
+        if (t_camera.parent != null) t_camera.localRotation = Quaternion.Lerp(Quaternion.Euler(t_camera.localEulerAngles), Quaternion.Euler(new Vector3(t_camera.localEulerAngles.x, t_camera.localEulerAngles.y, cameraTiltTarget)), 0.4f);
+
+        if (!isFlying) {
+            if (ImprovedRaycast())
+            {
+                if (activeJump && rb.linearVelocity.y <= 0)
+                {
+                    // originally I had the Vector3.up here as hit.normal, 
+                    // but that seemed to cause really weird drifting bugs when walking/jumping on angled terrain
+
+                    // so, we doin' Vector3.up now
+
+                    Vector3 lateralVelocity = rb.linearVelocity - Vector3.Project(rb.linearVelocity, Vector3.up);
+                    rb.linearVelocity -= lateralVelocity;
+
+                    activeJump = false;
+                    // if (timeJumpStarted < Time.time - 0.75f) { readyForImpactSound = true; }
+                    // if (readyForImpactSound) { GetComponent<FootstepController>().Step(true); readyForImpactSound = false; }
+                    // GetComponent<GenericCreature>().ApplyFallDamage();
+                }
+
+                // friction
+                rb.linearVelocity -= new Vector3(rb.linearVelocity.x * 0.1f, 0, rb.linearVelocity.z * 0.1f);
+            }
+            else
+            {
+                // drag
+                //rb.linearVelocity -= new Vector3(rb.linearVelocity.x * 0.0001f, 0, rb.linearVelocity.z * 0.0001f);
+                if (!activeJump)
+                {
+                    activeJump = true;
+                }
+            }
+        }
+
+        if (!lastPacket.sprint && sprintValue < maxSprint)
+        {
+            sprintValue += 0.5f;
+        }
+        isCrouching = lastPacket.crouch;
+
+        lastWalkingTime = walkingTime;
+
         Cursor.lockState = CursorLockMode.Locked; // temp temp temp
 
-        // here is where the familiar player-controller stuff starts to kick in
-        Vector3 movementVector = Vector3.zero;
+        // mouse x leads to a rotation AROUND the players's up vector
+        // (not the camera's)
+        if (!lockCameraHorizontal)
+        {
+            //transform.rotation *= Quaternion.Euler(new Vector3(0, 1, 0) * Input.GetAxis("Mouse X") * cameraTurnSpeed);
+            transform.Rotate(Vector3.up * lastPacket.horizontalMouse * turnSpeed * Time.deltaTime, Space.World);
+        }
 
-        movementVector += transform.right * lastPacket.GetHorizontal() * strafeSpeed;
-        movementVector += transform.forward * lastPacket.GetVertical() * moveSpeed;
+        // mouse y leads to a rotation around the CAMERA's right vector
+        // it obeys limits to avoid rotational glitches when looking straight up
+        if (!lockCameraVertical)
+        {
+            float maxAngle = 0.3f;
+            if (Input.mouseMovement.y < 0)
+            {
+                // looking further down
+                if (t_camera.forward.y > -maxAngle)
+                {
+                    t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+                }
+                else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * turnSpeed * Time.deltaTime * Mathf.PI / 180)) > maxAngle)
+                {
+                    t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);  
+                }
+            }
+            else
+            {
+                // looking further down
+                if (t_camera.forward.y < maxAngle)
+                {
+                    t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+                }
+                else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * Time.deltaTime * turnSpeed * Mathf.PI / 180)) > maxAngle)
+                {
+                    t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+                }
+            }
+        }
 
-        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * lastPacket.horizontalMouse, Space.World);
-        transform.GetChild(0).Rotate(Vector3.right * Time.deltaTime * turnSpeed * -lastPacket.verticalMouse, Space.Self);
+        /* jumping */
+        if (lastPacket.jump && allowJump && !activeJump)
+        {
+            rb.linearVelocity += new Vector3(0, jumpStrength, 0);
+            activeJump = true;
 
-        //rb.linearVelocity += movementVector * Time.deltaTime;
+            // TODO: investigate a bug with fall damage
+            //GetComponent<GenericCreature>().PrimeFallDamage();
+        }
+        /**/
+
+
+
+        // GRAVITY
+        rb.linearVelocity += gravityDirection * gravitationalAcceleration * Time.deltaTime;
     }
 
     // keypresses will not change unless updated, 
@@ -120,12 +335,31 @@ public class PlayerController : MonoBehaviour
         lastPacket = keys;
     }
 
-    #region toggling
-
-    public void ToggleFlight()
+    // kept getting stuck on everything because the raycast was missing (like standing on a ledge)
+    // so we're shooting more rays now
+    bool ImprovedRaycast()
     {
-        isFlying = !isFlying;
+        if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        {
+            return true;
+        } else if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f + transform.right * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        {
+            return true;
+        } else if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f + transform.right * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        {
+            return true;
+        } else if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f + transform.forward * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        {
+            return true;
+        } else if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f + transform.forward * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        {
+            return true;
+        }
+        
+        return false;
     }
+
+    #region toggling
 
     public void DisableCollider()
     {

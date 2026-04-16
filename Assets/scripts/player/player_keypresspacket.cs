@@ -8,6 +8,9 @@ public class player_keypresspacket
 
     public bool jump; // space
 
+    public bool crouch; // ctrl, usually
+    public bool sprint; // shift
+
     public float horizontalMouse;
     public float verticalMouse;
 

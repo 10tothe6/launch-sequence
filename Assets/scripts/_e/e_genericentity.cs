@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 // hopefully this doesn't exist already
 public enum e_entitytype
@@ -13,6 +14,9 @@ public class e_genericentity : MonoBehaviour
 {
     // basic data for the entity
     public e_genericentitydata data;
+
+    public UnityEvent onEnterControl;
+    public UnityEvent onExitControl;
 
     void Awake()
     {

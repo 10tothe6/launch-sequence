@@ -73,6 +73,9 @@ public class LocalPlayer : MonoBehaviour
 
         result.jump = Keyboard.current.spaceKey.isPressed;
 
+        result.sprint = Keyboard.current.shiftKey.isPressed;
+        result.crouch = Keyboard.current.leftCtrlKey.isPressed;
+
         result.horizontalMouse = Input.mouseMovement.x;
         result.verticalMouse = Input.mouseMovement.y;
 

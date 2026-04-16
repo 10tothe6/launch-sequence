@@ -144,6 +144,37 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4651226128655083764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3478920282292739920}
+  m_Layer: 0
+  m_Name: foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3478920282292739920
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4651226128655083764}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7571074227628741643}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8782933785179873280
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +186,7 @@ GameObject:
   - component: {fileID: 7571074227628741643}
   - component: {fileID: 8184121651257132309}
   - component: {fileID: 3092532290964612513}
+  - component: {fileID: 1461875249874814483}
   m_Layer: 0
   m_Name: e_robot
   m_TagString: Untagged
@@ -177,6 +209,7 @@ Transform:
   m_Children:
   - {fileID: 4364858803652921769}
   - {fileID: 1349527374419322852}
+  - {fileID: 3478920282292739920}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8184121651257132309
@@ -191,17 +224,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c83feaaf93b77d41b111a1920995685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  gravityDirection: {x: 0, y: -1, z: 0}
+  gravitationalAcceleration: 9.81
+  col: {fileID: 7685948419648131301}
   lastPacket:
     forward: 0
     left: 0
     back: 0
     right: 0
     jump: 0
+    crouch: 0
+    sprint: 0
     horizontalMouse: 0
     verticalMouse: 0
-  moveSpeed: 30
+  allowJump: 1
+  allowSprint: 1
+  allowFlight: 0
+  allowCrouch: 0
+  lockCameraHorizontal: 0
+  lockCameraVertical: 0
+  lockMovement: 0
+  lockCursor: 1
+  t_foot: {fileID: 3478920282292739920}
+  raycastDistanceFromFoot: 0.1
+  crouchPercentHeight: 0.5
+  moveSpeed: 50
+  sprintBoost: 2
   strafeSpeed: 20
-  turnSpeed: 10
+  turnSpeed: 15
+  flySpeed: 0
+  jumpStrength: 10
+  cameraBounceAmplitude: 0.075
+  cameraBounceFrequency: 15
+  maxSprint: 0
+  sprintValue: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 256
+  whatIsVehicle:
+    serializedVersion: 2
+    m_Bits: 0
+  mode: 0
 --- !u!54 &3092532290964612513
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -229,3 +292,46 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1461875249874814483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782933785179873280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3aaa985ed445f43861b5c96dd856ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
+  data:
+    reference: {fileID: 0}
+    entityType: 0
+    entityPrefabIndex: 0
+    index: 0
+    entityName: 
+    parent: {fileID: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    velocity:
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
+    fixedData:
+      generic: {fileID: 0}
+    floatingData:
+      generic: {fileID: 0}
+      isCelestial: 0
+      defaultScale: 0
+      scaleFactor: 1
+    mimicData:
+      generic: {fileID: 0}
+      defaultScale: 0
+  onEnterControl:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitControl:
+    m_PersistentCalls:
+      m_Calls: []

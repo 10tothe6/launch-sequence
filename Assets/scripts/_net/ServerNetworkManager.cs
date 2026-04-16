@@ -14,6 +14,7 @@ public enum ServerToClientId : ushort
     join_denied = 10001, // tell a client that they can't join (usually bc their username is taken or their version is wrong)
     player_connected = 10002, // new player joined (tell to all clients)
     player_disconnected = 10003, // new player quit OR WAS BANNED (tell to all clients))
+    kick_player = 10004, // force a client to leave
 
     chat_message_update = 10100, // tell to all clients
 
@@ -125,7 +126,14 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void KickPlayer(string username)
     {
-        
+        if (isServerActive)
+        {
+            // like all other commands, we assume the local player is an admin because they are literally always an admin
+            SendPlayerKickRequest(username);
+        } else
+        {
+            ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("kick"), new string[] {username});
+        }
     }
 
     public void BanPlayer(string username)
@@ -311,15 +319,35 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void ProcessChatMessage(ushort fromClientId, string msg)
     {
-        for (int i = 0; i < connectedClients.Count; i++)
-        {
-            // this is my way of sending a message to everyone except for one person
-            // TODO: make this its own func
-            if (connectedClients[i].client_index != fromClientId) // no need to send back to the sender
-            {
-                SendChatMessage(connectedClients[i].client_index, GetUsernameFromIndex(fromClientId), msg);
-            }
-        }
+        // TODO: display the chat message in a chat UI
+
+        SendChatMessage(fromClientId, msg);
+    }
+
+    public void SendPlayerKickRequest(string username)
+    {
+        Message kickRequest = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.kick_player);
+
+        string reason = "a reason was not given";
+        kickRequest.AddString(reason);
+
+        // the nice part about the 'transient' entity system (see EntityManager.cs) is that I don't need to delete any entities
+        // the robot itself just isn't controlled anymore
+        // sure, I COULD delete the freecams but I don't have to
+
+        ushort kickedPlayerIndex = GetClientFromUsername(username).client_index;
+        server.Send(kickRequest, kickedPlayerIndex);
+
+        Message noticeOfRemovedPlayer = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.player_disconnected);
+
+        // order is [username, reason]
+
+        // the username of the kicked player is all that we need, other info should already be on the client's side
+        noticeOfRemovedPlayer.AddString(username); 
+
+        noticeOfRemovedPlayer.AddString("kicked by the server");
+        
+        SendToAllExcept(kickedPlayerIndex, noticeOfRemovedPlayer);
     }
 
     public void SendNewEntity(GameObject g_new)
@@ -337,12 +365,13 @@ public class ServerNetworkManager : MonoBehaviour
     }
 
     // can't pass the index to the client bc they don't know what that is
-    public void SendChatMessage(ushort toClientId, string fromUser, string msg)
+    public void SendChatMessage(ushort originalSenderId, string msg)
     {
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.chat_message_update);
-        message.AddString(fromUser);
+        message.AddUShort(originalSenderId);
         message.AddString(msg);
-        Instance.server.Send(message, toClientId);
+
+        SendToAllExcept(originalSenderId, message);
     }
 
     public void SendJoinDenial(ushort toClientId, string reason)

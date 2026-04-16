@@ -2,10 +2,7 @@ using UnityEngine;
 using Riptide;
 using Riptide.Utils;
 using System;
-using UnityEngine.Events;
-using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 
 // (not bothering with a _net prefix here, cuz its a HL script)
 
@@ -26,10 +23,10 @@ using UnityEditor;
 public enum ClientToServerId : ushort
 {
     join_request = 00000, // can i join this server?
-    kick_player_request = 00001, // kicking someone
 
     chat_message_send = 00100,
     command_request = 00101, // same message for any command, for simplicity
+    // ^ this includes kicking, banning, and so on
 }
 
 public class ClientNetworkManager : MonoBehaviour
@@ -124,19 +121,11 @@ public class ClientNetworkManager : MonoBehaviour
     public void SendChatMessageToServer(string msg)
     {
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.chat_message_send);
-        // TODO: add client index
+        
+        // no need for any id/credentials because we can see the fromClientId on the other end
         message.AddString(msg);
         // TODO: timestamp?
-    }
 
-    public void RequestKickPlayer(string username)
-    {
-        cmd.LogRaw($"[Client] requesting player {username} to be kicked...", Color.yellow);
-
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.kick_player_request);
-        
-        message.AddString(username); // this is all we need for this one
-        
         client.Send(message);
     }
 
@@ -155,6 +144,18 @@ public class ClientNetworkManager : MonoBehaviour
 
     // YOU ARE ENTERING THE HANDLER ZONE vvvv
     // ********************************************************
+
+    [MessageHandler((ushort)ServerToClientId.kick_player)]
+    private static void HandleKick(Message message)
+    {
+        string reason = message.GetString();
+
+        cmd.LogRaw($"[Client] We were kicked from the server!. Reason: {reason}", Color.yellow);
+        // TODO: fullscreen info alert
+
+
+        Instance.client.Disconnect();
+    }
 
     [MessageHandler((ushort)ServerToClientId.join_denied)]
     private static void HandleJoinDenial(Message message)

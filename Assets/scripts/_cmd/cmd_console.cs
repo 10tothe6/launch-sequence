@@ -87,13 +87,13 @@ public class cmd_console : MonoBehaviour
 
         new cmd_consolecommand(new string[]{"spawn"},false), // spawn entity
 
-        new cmd_consolecommand(new string[]{"title"},false), // big text for all players
         new cmd_consolecommand(new string[]{"chat","c"},false), // big text for all players
 
         new cmd_consolecommand(new string[]{"p","perm"},true), // change permission
 
         // FUTURE:
         new cmd_consolecommand(new string[]{"timeset","t"},false), // set time 
+        new cmd_consolecommand(new string[]{"title"},false), // big text for all players
     };
     
     public static cmd_consolecommand GetCommandData(string name)
@@ -164,12 +164,37 @@ public class cmd_console : MonoBehaviour
 
         else if (GetCommandData("title").IsValid(items[0])) // title
         {
-            
+            // TODO:
+        } else if (GetCommandData("chat").IsValid(items[0])) // chatting
+        {
+            // normally chat messages would be delivered through an in-game ui, not the console
+            // the reason I'm making it a console command is for testing (dont wanna make a ui)
+            // but this command will be permanent, for debug purposes
+
+            string chatMessage = "";
+
+            if (items.Length > 1) // there has to be more data, otherwise its just 'chat' which is meaningless
+            {
+                for (int i = 1; i < items.Length; i++)
+                {
+                    chatMessage += items[i];
+                    if (i < items.Length - 1)
+                    {
+                        chatMessage += "";
+                    }
+                }
+
+                ClientNetworkManager.Instance.SendChatMessageToServer(chatMessage);
+            } else
+            {
+                cmd.Log("you need to provide a chat message when using the 'chat' command.");
+            }
         }
 
         else if (GetCommandData("spawn").IsValid(items[0])) // spawn
         {
-            
+            string entityName = items[1];
+            EntityManager.Instance.SpawnNewEntity(entityName, LocalPlayer.localClient.controllingEntity.data.GetPosition());
         }
 
         else if (GetCommandData("p").IsValid(items[0])) // permission change

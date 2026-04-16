@@ -14,6 +14,7 @@ using UnityEngine;
 
 // TODO: have a peek at the old player controller and steal some of its tricks (like camera tilting)
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     #region references
@@ -118,4 +119,25 @@ public class PlayerController : MonoBehaviour
     {
         lastPacket = keys;
     }
+
+    #region toggling
+
+    public void ToggleFlight()
+    {
+        isFlying = !isFlying;
+    }
+
+    public void DisableCollider()
+    {
+        col.enabled = false;
+        rb.useGravity = false;
+    }
+
+    public void EnableCollider()
+    {
+        col.enabled = true;
+        rb.useGravity = true;
+    }
+
+    # endregion
 }

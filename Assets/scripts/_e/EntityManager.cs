@@ -71,6 +71,14 @@ public class EntityManager : MonoBehaviour
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
 
+    public void UpdateAllEntityPositions()
+    {
+        for (int i = 0; i < allEntities.Count; i++)
+        {
+            allEntities[i].Refresh();
+        }
+    }
+
     public void PutClientInFreecam(ushort clientId)
     {
         // first, we have to spawn a new freecam entity

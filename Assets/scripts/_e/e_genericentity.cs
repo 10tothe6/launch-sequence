@@ -22,4 +22,16 @@ public class e_genericentity : MonoBehaviour
 
         data.reference = transform;
     }
+
+    public void Refresh()
+    {
+        // don't do this if the entity is being controlled
+        if (LocalPlayer.localClient.controllingEntity == this) {return;}
+
+        
+        if (data.entityType == (ushort)e_entitytype.Fixed)
+        {
+            data.fixedData.Refresh();
+        }
+    }
 }

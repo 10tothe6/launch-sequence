@@ -28,7 +28,8 @@ public enum ProgramStartMode
     // but not the planet editor
     // THIS IS STRICTLY A DEV TOOL
     BodyEditor, 
-    InstantGame,
+    InstantGameSingleplayer,
+    InstantGameMultiplayer,
 }
 
 // used so that very high-level scripts like the WorldManagr can only run certain logic when in-game
@@ -98,10 +99,13 @@ public class Program : MonoBehaviour
             } else if (startMode == ProgramStartMode.Sandbox)
             {
                 Sandbox.Instance.StartSandbox();
-            } else if (startMode == ProgramStartMode.InstantGame)
+            } else if (startMode == ProgramStartMode.InstantGameSingleplayer)
             {   
                 NetworkHelper.Instance.StartSingleplayerGame();
                 WorldManager.Instance.StartGame(-1);
+            } else if (startMode == ProgramStartMode.InstantGameMultiplayer)
+            {   
+                
             } else if (startMode == ProgramStartMode.BodyEditor)
             {
                 BodyEditor.Instance.SetupEditor();

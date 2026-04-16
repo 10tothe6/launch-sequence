@@ -112,6 +112,7 @@ public class WorldManager : MonoBehaviour
     public void UpdateWorld()
     {
         cb_renderingmanager.Instance.UpdateAllBodyPositions();
+        EntityManager.Instance.UpdateAllEntityPositions();
 
         // doing chunk updates from here, 'update periodically' has been disabled
         for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)

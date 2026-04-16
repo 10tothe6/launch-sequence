@@ -8,6 +8,7 @@ public enum CameraControlMode
     Freecam,
     PlayerFirstPerson,
     BodyEditor,
+    MainMenu,
 }
 
 public class CameraController : MonoBehaviour

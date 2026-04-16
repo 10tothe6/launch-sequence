@@ -254,6 +254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5ca80843bab8949ac8990db2138a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_meshbody
+  useDirectRadius: 0
+  directRadius: 0
   enableChunkCulling: 1
   chunkCullingAngle: 90
   updateChunksPeriodically: 0
@@ -261,7 +263,7 @@ MonoBehaviour:
   t_decidingObject: {fileID: 0}
   p_chunk: {fileID: 8312659028223598983, guid: 78a008ad81002254a8304202ea45ac30, type: 3}
   t_chunkContainer: {fileID: 8116052590345554806}
-  startingResolution: 10
+  startingResolution: 20
   chunks: []
   newChunks: []
   parentChunks: []
@@ -286,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fa0a1d5a7d5f14195d1d32962e10e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_coloredmeshchunks
-  coloringMode: 1
+  coloringMode: 0
   refreshOnUpdate: 1
   debugColors:
   - {r: 1, g: 0.4509434, b: 0.4509434, a: 1}

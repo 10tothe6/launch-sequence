@@ -45,10 +45,25 @@ public class UIManager : MonoBehaviour
 
     public ui_connectedclients connectedclients;
 
+    public void EnterMainMenu()
+    {
+        SwitchMenu("main menu");
+        g_console.SetActive(false);
+
+        cb_mainmenucontroller.Instance.Setup();
+    }
+
+    public void InMenuUpdate()
+    {
+        CameraController.Instance.UpdateCamera();
+    }
+
 
     // not just 'update', because i only want to run this sometimes
     public void InGameUpdate()
     {
+        CameraController.Instance.UpdateCamera();
+
         if (Keyboard.current.f1Key.wasPressedThisFrame)
         {
             connectedclients.Toggle();

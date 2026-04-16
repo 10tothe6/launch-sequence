@@ -94,7 +94,7 @@ public class Program : MonoBehaviour
         {
             if (startMode == ProgramStartMode.FullGame)
             {
-                UIManager.Instance.SwitchMenu("main menu");
+                UIManager.Instance.EnterMainMenu();
             } else if (startMode == ProgramStartMode.Sandbox)
             {
                 Sandbox.Instance.StartSandbox();
@@ -117,6 +117,9 @@ public class Program : MonoBehaviour
         {
             UIManager.Instance.InGameUpdate();
             WorldManager.Instance.UpdateWorld();
+        } else if (gameState == GameState.InMenu)
+        {
+            UIManager.Instance.InMenuUpdate();
         }
     }
 

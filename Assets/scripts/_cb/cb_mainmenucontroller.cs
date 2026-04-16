@@ -26,5 +26,17 @@ public class cb_mainmenucontroller : MonoBehaviour
         Instance = this;
     }
 
-    public GameObject p_celestialBody;
+    public Transform t_body;
+    public float rotSpeed;
+    public float camRotSpeed;
+
+    public void Setup()
+    {
+        CameraController.SetControlMode(CameraControlMode.MainMenu);
+    }
+
+    void Update()
+    {
+        t_body.Rotate(Vector3.up * Time.deltaTime * rotSpeed, Space.World);
+    }
 }

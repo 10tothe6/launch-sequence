@@ -65,7 +65,9 @@ public class cbt_meshchunk : MonoBehaviour
 
     public float GetHeightAt(Vector3 v) {
         v = v.normalized;
-        if (WorldManager.Instance != null)
+
+        // bad getcomp call
+        if (transform.parent.parent.GetComponent<cbt_meshbody>().useTemporaryPerlin)
         {
             return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 10f;
         } else

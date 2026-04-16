@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class cbt_meshbody : MonoBehaviour
 {
+    public bool useTemporaryPerlin;
     public bool useDirectRadius;
     public float directRadius;
 

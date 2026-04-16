@@ -111,7 +111,6 @@ public class WorldManager : MonoBehaviour
 
     public void UpdateWorld()
     {
-        CameraController.Instance.UpdateCamera();
         cb_renderingmanager.Instance.UpdateAllBodyPositions();
 
         // doing chunk updates from here, 'update periodically' has been disabled

@@ -120,6 +120,11 @@ public class ClientNetworkManager : MonoBehaviour
 
     public void SendChatMessageToServer(string msg)
     {
+        cmd.LogRaw($"[Client] sending chat message to server...", Color.yellow);
+        
+        // showing the chat message locally
+        ui_chat.Instance.AddChatMessage($"<{LocalPlayer.localClient.username}> " + msg);
+
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.chat_message_send);
         
         // no need for any id/credentials because we can see the fromClientId on the other end
@@ -210,6 +215,17 @@ public class ClientNetworkManager : MonoBehaviour
     {
         net_connectedclient newPlayer = net_connectedclient.ParseFromString(message.GetString());
         ServerNetworkManager.Instance.onPlayerJoin.Invoke(newPlayer.username);
+    }
+
+    [MessageHandler((ushort)ServerToClientId.chat_message_update)]
+    private static void HandleIncomingChatMessage(Message message)
+    {
+        cmd.LogRaw($"[Client] got chat message!", Color.yellow);
+
+        ushort senderId = message.GetUShort();
+        string data = message.GetString();
+
+        ui_chat.Instance.AddChatMessage($"<{ServerNetworkManager.GetClient(senderId).username}> " + data);
     }
 
     [MessageHandler((ushort)ServerToClientId.player_disconnected)]

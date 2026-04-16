@@ -180,7 +180,7 @@ public class cmd_console : MonoBehaviour
                     chatMessage += items[i];
                     if (i < items.Length - 1)
                     {
-                        chatMessage += "";
+                        chatMessage += " ";
                     }
                 }
 

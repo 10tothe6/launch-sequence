@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class ui_list : MonoBehaviour
 {
+    public float spaceBetweenItems;
+    public bool listUpwards;
     public GameObject p_listElement;
 
     public Transform t_listContainer;
+
+    public Vector2 GetListDirection()
+    {
+        return listUpwards ? Vector2.up : Vector2.down;
+    }
 
     public void SetItems(string[] data)
     {
@@ -25,15 +32,17 @@ public class ui_list : MonoBehaviour
 
     public void AddItems(string[] data)
     {
-        ClearAllListElements(); // god im lazy
-
+        
+        float verticalSizeTotal = 0;
+        
         for (int i = 0; i < data.Length; i++)
         {
             GameObject g_newElement = Instantiate(p_listElement, t_listContainer);
             g_newElement.name = "element " + i;
 
             g_newElement.GetComponent<ui_instantiatable>().SetData(data[i]);
-            g_newElement.transform.localPosition = Vector3.zero;
+            g_newElement.transform.localPosition = Vector2.zero + GetListDirection() * verticalSizeTotal;
+            verticalSizeTotal += g_newElement.GetComponent<ui_instantiatable>().effectiveHeight + spaceBetweenItems;
         }
     }
 

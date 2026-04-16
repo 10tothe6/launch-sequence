@@ -48,6 +48,8 @@ public class cb_trackedbody : MonoBehaviour
         }
         
         gameObject.AddComponent<cbr_litbody>();
+        gameObject.GetComponent<cbr_litbody>().useIndex = true;
+        gameObject.GetComponent<cbr_litbody>().bodyIndex = data.pConfig.selfIndex;
     }
     
     public bool IsSamePlanetarySystem(int otherIndex)

@@ -367,6 +367,8 @@ public class ServerNetworkManager : MonoBehaviour
     // can't pass the index to the client bc they don't know what that is
     public void SendChatMessage(ushort originalSenderId, string msg)
     {
+        cmd.LogRaw($"[Server] updating clients with new chat message...", Color.cyan);
+
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.chat_message_update);
         message.AddUShort(originalSenderId);
         message.AddString(msg);

@@ -11,6 +11,7 @@ SubShader {
     float3 sunPosition; // always (0,0,0) for now
     int isStar;
     float3 position;
+    float3 worldPosition;
 
     struct SurfaceOutputCustom {
         fixed3 Albedo;
@@ -30,7 +31,7 @@ SubShader {
             return 1;
         }
         
-        half dotSphere = saturate(dot(normalize(s.worldPos - position), normalize(sunPosition - position)));
+        half dotSphere = saturate(dot(normalize(s.worldPos - worldPosition), normalize(sunPosition - position)));
         half dotTerrain = saturate(dot(s.Normal, normalize(sunPosition - position)));
         
         half4 c;

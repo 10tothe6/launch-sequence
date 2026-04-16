@@ -43,6 +43,7 @@ public class cbr_litbody : MonoBehaviour
             for (int i = 0; i < children.Length; i++) {
                 for (int j = 0; j < children[i].sharedMaterials.Length; j++) {
                     children[i].materials[j].SetVector("position", cb_solarsystem.Instance.monoBodies[bodyIndex].pose.data.GetPosition().ToVector3());
+                    children[i].materials[j].SetVector("worldPosition", transform.position);
                 }
             }
         } else
@@ -50,6 +51,7 @@ public class cbr_litbody : MonoBehaviour
             for (int i = 0; i < children.Length; i++) {
                 for (int j = 0; j < children[i].sharedMaterials.Length; j++) {
                     children[i].materials[j].SetVector("position", GetComponent<cb_trackedbody>().pose.data.GetPosition().ToVector3());
+                    children[i].materials[j].SetVector("worldPosition", Vector3.zero);
                 }
             }
         }

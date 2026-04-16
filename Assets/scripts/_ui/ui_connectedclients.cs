@@ -18,7 +18,7 @@ public class ui_connectedclients : MonoBehaviour
 
     void ConstructMenu()
     {
-        clientList.SetItems(util_string.AddToArray(ServerNetworkManager.Instance.GetClientUsernames(), ClientNetworkManager.Instance.username));
+        clientList.SetItems(ServerNetworkManager.Instance.GetClientUsernames());
 
         // updating the height of the menu
         rt_menuParent.sizeDelta = new Vector2(rt_menuParent.sizeDelta.x, clientList.GetEffectiveHeight());

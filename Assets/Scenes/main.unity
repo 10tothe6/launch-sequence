@@ -12718,8 +12718,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cb_renderingmanager
   originSnapBackRadius: 50
-  primaryCullingRadius: 100000
-  secondaryCullingRadius: 900
+  primaryCullingRadius: 1000000
+  secondaryCullingRadius: 50000
   inflationRadius: 0
   t_bodyContainer: {fileID: 1663306513}
   bodyEntities: []
@@ -13845,7 +13845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2131834344
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14152,7 +14152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Program
   version: mptest-1.0-rc1
   ins_buildMode: 0
-  ins_startMode: 0
+  ins_startMode: 3
   ins_gameState: 0
 --- !u!114 &2144568381
 MonoBehaviour:

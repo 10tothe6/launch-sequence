@@ -52,6 +52,9 @@ public class e_floatingentitydata {
             //     Debug.Log("b" + generic.data.localPosition.AsString());
             //     Debug.Log("c" + camPosition.Sub(pos).Mag().AsDouble());
             // }
+
+            // TODO: fix the below hot pile of garbage
+            // ******************************************************************************
             if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
             {
                 if (camPosition.Sub(pos).Mag().AsDouble() < cb_renderingmanager.Instance.inflationRadius)
@@ -75,6 +78,7 @@ public class e_floatingentitydata {
                 generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale;
                 generic.data.reference.position = pos.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
             }
+            // ******************************************************************************
         }
 
         // if (this != RenderingManager.Instance.entityInControl)

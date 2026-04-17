@@ -5940,7 +5940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776853a94d23f504fa74d1e7065c06d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_infoalerts
-  g_fullscreenAlerts: {fileID: 0}
+  alertList: {fileID: 1043288127}
 --- !u!1 &797234736
 GameObject:
   m_ObjectHideFlags: 0
@@ -7201,8 +7201,8 @@ MonoBehaviour:
   overlapListElements: 1
   spaceBetweenItems: 0
   listUpwards: 0
-  p_listElement: {fileID: 0}
-  t_listContainer: {fileID: 0}
+  p_listElement: {fileID: 2307121928878331344, guid: c8cb58d265b5fa64c96a97fbb9afc38f, type: 3}
+  t_listContainer: {fileID: 1043288126}
 --- !u!1 &1045652798
 GameObject:
   m_ObjectHideFlags: 0

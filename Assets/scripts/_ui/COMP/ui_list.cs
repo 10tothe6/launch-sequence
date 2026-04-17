@@ -28,7 +28,14 @@ public class ui_list : MonoBehaviour
         g_newElement.name = "element " + ( t_listContainer.childCount - 1);
 
         g_newElement.GetComponent<ui_instantiatable>().SetData(data);
-        g_newElement.transform.localPosition = Vector3.zero; // TODO: proper positioning
+        
+        if (overlapListElements)
+        {
+            g_newElement.transform.localPosition = Vector3.zero;
+        } else
+        {
+            g_newElement.transform.localPosition = (listUpwards ? Vector2.up : Vector2.down) * (GetSumHeight() + spaceBetweenItems);
+        }
     }
 
     public void AddItems(string[] data)
@@ -53,6 +60,18 @@ public class ui_list : MonoBehaviour
         }
     }
 
+    public float GetSumHeight()
+    {
+        float verticalSizeTotal = 0;
+
+        for (int i = 0; i < t_listContainer.childCount; i++)
+        {
+            verticalSizeTotal += t_listContainer.GetChild(i).GetComponent<ui_instantiatable>().effectiveHeight + spaceBetweenItems;
+        }
+
+        return verticalSizeTotal; // TODO: make this a public variable that gets updated
+    }
+
     // removes all objects currently a part of the list
     public void ClearAllListElements()
     {
@@ -71,5 +90,15 @@ public class ui_list : MonoBehaviour
         }
 
         return sum;
+    }
+
+    public void RemoveMostRecentItem()
+    {
+        Destroy(t_listContainer.GetChild(t_listContainer.childCount - 1).gameObject);
+    } 
+
+    public void RemoveItemAtIndex(int index)
+    {
+        Destroy(t_listContainer.GetChild(index).gameObject);
     }
 }

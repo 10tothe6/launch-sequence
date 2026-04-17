@@ -65,11 +65,11 @@ public class ui_infoalerts : MonoBehaviour
         // (I don't use LogError much but it will be important, especially going into indev-1)
         if (type == LogType.Exception)
         {
-            ShowFullscreenAlert("unity error: " + logString);
+            ShowFullscreenAlert("unity error: " + logString,Color.red);
             cmd.LogRaw("[ERROR] " + logString,Color.red);
         } else if (type == LogType.Error)
         {
-            ShowFullscreenAlert("logged error: " + logString);
+            ShowFullscreenAlert("logged error: " + logString,Color.red);
             cmd.LogRaw("[ERROR] " + logString,Color.red);
         }
     }
@@ -77,6 +77,16 @@ public class ui_infoalerts : MonoBehaviour
     // for now just a raw message, but I may implement some form of syntax later
     public void ShowFullscreenAlert(string message)
     {
-        
+        ShowFullscreenAlert(message, Color.white);
+    }
+    public void ShowFullscreenAlert(string message, Color col)
+    {
+        alertList.AddItem(message);
+        alertList.t_listContainer.GetChild(alertList.t_listContainer.childCount-1).GetComponent<ui_stringdisplay>().SetColor(col);
+    }
+
+    public void RemoveMostRecentFullscreenAlert()
+    {
+        alertList.RemoveMostRecentItem();
     }
 }

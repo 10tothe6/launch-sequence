@@ -9,4 +9,9 @@ public class ui_stringdisplay : MonoBehaviour
     {
         tx.text = str;
     }
+
+    public void SetColor(Color col)
+    {
+        tx.color = col;
+    }
 }

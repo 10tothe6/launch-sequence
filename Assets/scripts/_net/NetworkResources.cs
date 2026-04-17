@@ -24,7 +24,10 @@ public class NetworkResources : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        lanMulticastAddress = ins_lanMulticastAddress;
     }
 
     public Sprite[] permissionLevelIcons;
+    public string ins_lanMulticastAddress;
+    public static string lanMulticastAddress;
 }

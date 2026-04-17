@@ -12719,8 +12719,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::cb_renderingmanager
   originSnapBackRadius: 50
   primaryCullingRadius: 1000000
-  secondaryCullingRadius: 50000
-  inflationRadius: 0
+  secondaryCullingRadius: 900
+  inflationRadius: 50000
   t_bodyContainer: {fileID: 1663306513}
   bodyEntities: []
   worldOffset:

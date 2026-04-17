@@ -85,7 +85,7 @@ public class cbt_meshchunk : MonoBehaviour
             return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 10f;
         } else
         {
-            return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 20f, v.y * 20f, v.z * 20f) * 100f;
+            return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 20f, v.y * 20f, v.z * 20f) * 10f;
         }
     }
 
@@ -146,9 +146,7 @@ public class cbt_meshchunk : MonoBehaviour
                 altVertB2 += altVertB2.normalized * GetHeightAt(altVertB2.normalized) * (rad / 1000f);
                 
                 normals[i] = Vector3.Cross((altVertA2 - altVertA1).normalized, (altVertB2 - altVertB1).normalized);
-                //normals[i] = normals[i].normalized;
-                //Debug.Log((altVert1 - vertices[i]) + "     " + (altVertB - vertices[i])+ "     " + vertices[i] + "    " + altVert1);
-                if (Vector3.Angle(normals[i], vertices[i]) > 90)
+                if (Vector3.Angle(normals[i], vertices[i]) > 100)
                 {
                     normals[i] *= -1;
                 }

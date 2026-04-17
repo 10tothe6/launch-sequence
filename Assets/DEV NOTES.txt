@@ -3,3 +3,6 @@ PHASE II - UI
 PHASE III - final commands (maybe title?)
 PHASE IV - terrain
 PHASE V - polish
+
+notes:
+* terrain jitter was fixed by increasing the inflation radius, maybe in the future I can find a better way to do that

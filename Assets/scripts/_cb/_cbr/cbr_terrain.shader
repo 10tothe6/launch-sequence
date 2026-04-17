@@ -1,6 +1,7 @@
 Shader "cbr/terrain" {
 Properties {
-    _MainTex ("Biome Map", 2D) = "white" {}
+    _MainTex ("Planet Map", 2D) = "white" {}
+    _NormalTex ("Normal Map", 2D) = "white" {}
     _Color ("Color", Color) = (1,1,1,1)
 }
 SubShader {
@@ -47,10 +48,12 @@ SubShader {
     };
         
     sampler2D _MainTex;
+    sampler2D _NormalTex;
+    
     fixed4 _Color;
 
     void surf (Input IN, inout SurfaceOutputCustom  o) {
-        o.Albedo = _Color;
+        o.Albedo = tex2D(_MainTex, IN.uv_MainTex.xy * 10) * _Color;
         o.worldPos = IN.worldPos;
     }
     ENDCG

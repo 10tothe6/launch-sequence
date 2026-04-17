@@ -2304,7 +2304,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c00e68cc9760c2a428fd194972557cb7, type: 3}
   - {fileID: 21300000, guid: 95588d32461d9da44a2aed9ff461ec03, type: 3}
   - {fileID: 21300000, guid: 0e5621388cb88f347b600f639df646db, type: 3}
-  ins_lanMulticastAddress: 230.0.0.0
+  ins_lanMulticastAddress: 224.100.100.0
 --- !u!114 &201656895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2321,6 +2321,7 @@ MonoBehaviour:
   onReceiveMessage:
     m_PersistentCalls:
       m_Calls: []
+  periodicMessages: []
 --- !u!1 &206394645
 GameObject:
   m_ObjectHideFlags: 0
@@ -13358,6 +13359,7 @@ MonoBehaviour:
   in_ip: {fileID: 1195660665}
   foundServerData: []
   lastHeardFromServers: []
+  serverFadeTime: 10
 --- !u!1 &2134612722
 GameObject:
   m_ObjectHideFlags: 0

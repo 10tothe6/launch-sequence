@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -38,6 +39,14 @@ public class MulticastClient : MonoBehaviour
     void Awake()
     {
         Instance = this;
+
+        monitoredAddresses = new List<string>();
+        periodicMessages = new List<net_periodicmessage>();
+    }
+
+    void Start()
+    {
+        Initialize(54236);
     }
 
     public bool updatePeriodically; // false if you have another script controlling the updates
@@ -50,16 +59,38 @@ public class MulticastClient : MonoBehaviour
 
     public UnityEvent<string,string> onReceiveMessage;
 
+    public List<net_periodicmessage> periodicMessages;
+
+    void OnApplicationQuit()
+    {
+        client.Close();
+    }
+
+    public void PeriodicBroadcast(string ip, string msg, float timing)
+    {
+        net_periodicmessage newBroadcast = new net_periodicmessage(ip,msg, timing);
+
+        periodicMessages.Add(newBroadcast);
+    }
+
+    public void ClearPeriodicBroadcasts()
+    {
+        periodicMessages.Clear();
+    }
+
     public void Initialize(ushort port)
     {
         multicastPort = port;
-        client = new UdpClient(multicastPort);
+        client = new UdpClient(AddressFamily.InterNetwork);
+        client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+        client.Client.Bind(new IPEndPoint(IPAddress.Any, port));
     }
 
     public void AddMonitoredAddress(string address)
     {
+        if (client == null) {return;}
         monitoredAddresses.Add(address);
-        client.JoinMulticastGroup(IPAddress.Parse(address), multicastPort);
+        client.JoinMulticastGroup(IPAddress.Parse(address), 3);
     }
 
     public void RemoveMonitoredAddress(string address)
@@ -80,7 +111,22 @@ public class MulticastClient : MonoBehaviour
     {
         if (updatePeriodically)
         {
-            UpdateClient();
+            // TODO: run less periodically
+            Task.Run(() => UpdateClient());
+
+            for (int i = 0; i < periodicMessages.Count; i++)
+            {
+                if (Time.time > periodicMessages[i].lastBroadcastTime + periodicMessages[i].broadcastFrequency)
+                {
+                    cmd.LogRaw("[Server] broadcasting server info...",Color.green);
+
+                    // do the broadcast, and update the last broadcast time
+                    SetSendAddress(periodicMessages[i].ip);
+                    SendMulticastMessage(periodicMessages[i].message);
+
+                    periodicMessages[i].lastBroadcastTime = Time.time;
+                }
+            }
         }
     }
 
@@ -101,8 +147,6 @@ public class MulticastClient : MonoBehaviour
     
     public void SendMulticastMessage(string msg)
     {
-        client.Ttl = 5;
-
         byte[] data = Encoding.UTF8.GetBytes(msg);
 
         IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(multicastAddress), multicastPort);

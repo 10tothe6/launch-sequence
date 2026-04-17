@@ -3,6 +3,7 @@ using Riptide;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.SocialPlatforms;
+using System.Net;
 
 // (not bothering with a _net prefix here, cuz its a HL script)
 
@@ -74,6 +75,16 @@ public class ServerNetworkManager : MonoBehaviour
 
     public UnityEvent<net_connectedclient> onClientConnect; // all the client data, instead of the username
     // ************
+
+    public void BeginMulticastBroadcast(ushort port)
+    {
+        // net_serverdata data = new net_serverdata();
+        // data.name = "super cool server";
+        // data.ip = util_network.GetLocalIPAddress();
+        // data.port = port;   
+        // // broadcast every 2 seconds
+        // MulticastClient.Instance.PeriodicBroadcast(NetworkResources.lanMulticastAddress, data.Package(), 2);
+    }
 
     public static string[] GetConnectedUsernames()
     {
@@ -152,6 +163,7 @@ public class ServerNetworkManager : MonoBehaviour
     {
         cmd.LogRaw("[Server] Starting server ...", Color.cyan);
         server.Start(port, maxClientCount);
+        BeginMulticastBroadcast(port);
         isServerActive = true;
     }
     

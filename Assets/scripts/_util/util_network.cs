@@ -1,7 +1,23 @@
+using System;
+using System.Net;
+using System.Net.Sockets;
 using UnityEngine;
 
 public class util_network
 {
+    public static string GetLocalIPAddress()
+{
+    var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                return ip.ToString();
+            }
+        }
+        throw new Exception("No network adapters with an IPv4 address in the system!");
+    }
+
     public static bool IsValidIP(string ip)
     {
         string[] elements = util_string.SplitByChar(ip,'.');

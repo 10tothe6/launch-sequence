@@ -74,7 +74,10 @@ public class ClientNetworkManager : MonoBehaviour
     public void ConnectToLocalServer() { ConnectToServer("127.0.0.1", 7770);}
     public void ConnectToServer(string ip, ushort port)
     {
-        if (username.Length < 1) {cmd.LogRaw("[Client] Username has not been set! Cannot join server.", Color.yellow); return;}
+        if (username.Length < 1) {
+            cmd.LogRaw("[Client] Username has not been set! Cannot join server.", Color.yellow); 
+            return;
+        }
         
         cmd.LogRaw("[Client] Connecting to local server ...", Color.yellow);
         ServerNetworkManager.Instance.serverIP = ip;
@@ -92,6 +95,9 @@ public class ClientNetworkManager : MonoBehaviour
     private void FailedToConnect(object sender, EventArgs e)
     {
         // back to the menu
+        UIManager.Instance.SwitchMenu("join server menu");
+        ui_infoalerts.Instance.ShowFullscreenAlert("connection failed!",Color.orange);
+
         isClientActive = false;
     }
     private void DidDisconnect(object sender, EventArgs e)

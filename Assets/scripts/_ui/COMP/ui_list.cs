@@ -22,7 +22,7 @@ public class ui_list : MonoBehaviour
         AddItems(data);
     }
 
-    public void AddItem(string data)
+    public GameObject AddItem(string data)
     {
         GameObject g_newElement = Instantiate(p_listElement, t_listContainer);
         g_newElement.name = "element " + ( t_listContainer.childCount - 1);
@@ -36,6 +36,8 @@ public class ui_list : MonoBehaviour
         {
             g_newElement.transform.localPosition = (listUpwards ? Vector2.up : Vector2.down) * (GetSumHeight() + spaceBetweenItems);
         }
+
+        return g_newElement; // in case further logic needs to be done
     }
 
     public void RefreshElementPositions()
@@ -49,6 +51,7 @@ public class ui_list : MonoBehaviour
         }
     }
 
+    // could return a GameObject[] here I guess (for further logic) but its not needed right now
     public void AddItems(string[] data)
     {
         

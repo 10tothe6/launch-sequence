@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ui_connectionmenu : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class ui_connectionmenu : MonoBehaviour
 
     public TMP_InputField in_port;
     public TMP_InputField in_ip;
+    public TMP_InputField in_username;
 
     public List<net_serverdata> foundServerData;
     // any servers not heard from for more than 10s will be removed
@@ -90,6 +92,11 @@ public class ui_connectionmenu : MonoBehaviour
 
             foundServerData.Add(newServer);
             lastHeardFromServers.Add(Time.time);
+
+            GameObject g_newElement = lanGames.AddItem(name);
+
+            // here is where we tell the button component what to do when clicked
+            g_newElement.GetComponent<ui_buttondisplay>().AddToOnClick(() => AttemptServerConnection(ip,port));
         }
     }
 
@@ -113,6 +120,22 @@ public class ui_connectionmenu : MonoBehaviour
         return LANGameIndex(ip) != -1;
     }
 
+    public void AttemptServerConnection(string ip, ushort port)
+    {
+        if (in_username.text.Length == 0)
+        {
+            ui_infoalerts.Instance.ShowFullscreenAlert("please set the username!",Color.purple);
+            return;
+        } else
+        {
+            ClientNetworkManager.Instance.username = in_username.text;
+        }
+        ClientNetworkManager.Instance.ConnectToServer(ip, port);
+
+        // enter into a loading screen where we wait for the connection to go through
+        UIManager.Instance.SwitchMenu("connection loading");
+    }
+
     public void AttemptDirectServerConnection()
     {
         string rawPort = in_port.text;
@@ -120,15 +143,21 @@ public class ui_connectionmenu : MonoBehaviour
 
         ushort port;
 
+        bool isDataValid = false;
         if (ushort.TryParse(rawPort, out port))
         {
             if (util_network.IsValidIP(rawIP))
             {
-                ClientNetworkManager.Instance.ConnectToServer(rawIP, port);
+                isDataValid = true;
             }
         }
 
-        // enter into a loading screen where we wait for the connection to go through
-        UIManager.Instance.SwitchMenu("connection loading");
+        if (isDataValid)
+        {
+            AttemptServerConnection(rawIP,port);
+        } else
+        {
+            ui_infoalerts.Instance.ShowFullscreenAlert("please enter valid server data!",Color.purple);
+        }
     }
 }

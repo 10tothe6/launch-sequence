@@ -91,6 +91,11 @@ public class cmd_console : MonoBehaviour
 
         new cmd_consolecommand(new string[]{"p","perm"},true), // change permission
 
+        // for debugging purposes
+        new cmd_consolecommand(new string[]{"error","err"},false),
+        new cmd_consolecommand(new string[]{"exception","exc"},false),
+
+
         // FUTURE:
         new cmd_consolecommand(new string[]{"timeset","t"},false), // set time 
         new cmd_consolecommand(new string[]{"title"},false), // big text for all players
@@ -191,6 +196,15 @@ public class cmd_console : MonoBehaviour
             }
         }
 
+        else if (GetCommandData("error").IsValid(items[0]))
+        {
+            MakeError();
+        } else if (GetCommandData("exception").IsValid(items[0]))
+        {
+            // this command literally just tries to throw an error
+            MakeException();
+        }
+
         else if (GetCommandData("spawn").IsValid(items[0])) // spawn
         {
             string entityName = items[1];
@@ -213,7 +227,17 @@ public class cmd_console : MonoBehaviour
         }
     }
 
+    public static void MakeError()
+    {
+        Debug.LogError("TEST ERROR");
+    }
 
+    public static void MakeException()
+    {
+        string[] items = new string[1];
+
+        items[15] = "test"; // this throws an error
+    }
 
     bool ArgCheck(string[] items, cmd_consolecommand command)
     {

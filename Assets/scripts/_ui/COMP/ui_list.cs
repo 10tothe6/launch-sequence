@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ui_list : MonoBehaviour
 {
+    public bool overlapListElements;
     public float spaceBetweenItems;
     public bool listUpwards;
     public GameObject p_listElement;
@@ -27,7 +28,7 @@ public class ui_list : MonoBehaviour
         g_newElement.name = "element " + ( t_listContainer.childCount - 1);
 
         g_newElement.GetComponent<ui_instantiatable>().SetData(data);
-        g_newElement.transform.localPosition = Vector3.zero;
+        g_newElement.transform.localPosition = Vector3.zero; // TODO: proper positioning
     }
 
     public void AddItems(string[] data)
@@ -41,8 +42,14 @@ public class ui_list : MonoBehaviour
             g_newElement.name = "element " + i;
 
             g_newElement.GetComponent<ui_instantiatable>().SetData(data[i]);
-            g_newElement.transform.localPosition = Vector2.zero + GetListDirection() * verticalSizeTotal;
-            verticalSizeTotal += g_newElement.GetComponent<ui_instantiatable>().effectiveHeight + spaceBetweenItems;
+            if (!overlapListElements)
+            {
+                g_newElement.transform.localPosition = Vector2.zero + GetListDirection() * verticalSizeTotal;
+                verticalSizeTotal += g_newElement.GetComponent<ui_instantiatable>().effectiveHeight + spaceBetweenItems;
+            } else
+            {
+                g_newElement.transform.localPosition = Vector2.zero;
+            }
         }
     }
 

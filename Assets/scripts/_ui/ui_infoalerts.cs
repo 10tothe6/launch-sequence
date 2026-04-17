@@ -54,7 +54,7 @@ public class ui_infoalerts : MonoBehaviour
         Application.logMessageReceived += HandleUnityConsoleMessage;
     }
 
-    public GameObject g_fullscreenAlerts;
+    public ui_list alertList;
 
     // we can all thank ChatGPT for forking over this syntax
     // TODO: not have it log EVERY SINGLE error, since errors often repeat every frame
@@ -66,16 +66,16 @@ public class ui_infoalerts : MonoBehaviour
         if (type == LogType.Exception)
         {
             ShowFullscreenAlert("unity error: " + logString);
-            cmd.LogRaw("[ERROR] " + logString);
+            cmd.LogRaw("[ERROR] " + logString,Color.red);
         } else if (type == LogType.Error)
         {
             ShowFullscreenAlert("logged error: " + logString);
-            cmd.LogRaw("[ERROR] " + logString);
+            cmd.LogRaw("[ERROR] " + logString,Color.red);
         }
     }
 
     // for now just a raw message, but I may implement some form of syntax later
-   public void ShowFullscreenAlert(string message)
+    public void ShowFullscreenAlert(string message)
     {
         
     }

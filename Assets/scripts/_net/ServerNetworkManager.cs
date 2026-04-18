@@ -165,6 +165,9 @@ public class ServerNetworkManager : MonoBehaviour
         server.Start(port, maxClientCount);
         BeginMulticastBroadcast(port);
         isServerActive = true;
+
+        // we now have to generate the world
+        GameManager.InitializeNewGame(-1); // random world seed
     }
 
     public void StartMultiplayerServer(ushort clientCount)
@@ -420,6 +423,7 @@ public class ServerNetworkManager : MonoBehaviour
 
         message.AddStrings(data1);
         message.AddInts(data2);
+        message.AddInt(WorldManager.Instance.worldSeed);
        
         Instance.server.Send(message, toClientId);
 

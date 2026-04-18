@@ -96,7 +96,7 @@ public class Program : MonoBehaviour
             } 
             
 
-            else if (startMode == ProgramStartMode.SandboxSingleplayer)
+            else if (startMode == ProgramStartMode.SandboxMultiplayer)
             {
                 GameManager.StartMultiplayerSandbox();
             } 

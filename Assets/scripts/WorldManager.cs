@@ -274,35 +274,23 @@ public class WorldManager : MonoBehaviour
         int parsed = -1;
         if (int.TryParse(input.text, out parsed))
         {
-            StartGame(parsed);
+            GenerateNewWorld(parsed);
         } else
         {
-            StartGame(-1); // will generate a random seed
+            GenerateNewWorld(-1); // will generate a random seed
         }
     }
 
     // generates a new solar system
-    public void StartGame(int worldSeed)
+    public void GenerateNewWorld(int worldSeed)
     {
-        ui_playerhud.Instance.SetupDebugInfo();
-        UIManager.Instance.HideConsole();
-
         // -1 means random seed
         if (worldSeed == -1) {worldSeed = util_math.GetRandomInt();}
 
         this.worldSeed = worldSeed;
         ss.Generate(worldSeed);
-        
-        CameraController.SetControlMode(CameraControlMode.Freecam);
-        CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
-        // the enabling of the component is done on cam_freecam.cs for now
-        
-        UIManager.Instance.EnterMapView();
 
         cb_renderingmanager.Instance.SetupEntities();
-
-        // there WAS a system teleport here, but that doesn't work here anymore cuz multiplayer
-
         onNewWorldGenerate.Invoke();
     }
 

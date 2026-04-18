@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     // into the main menu - this is what player's get
     public static void StartFullGame()
     {
-        EnterMainMenu(); // this will change the gameState to InMenu
+        SwitchToMainMenu(); // this will change the gameState to InMenu
     }
 
     // straight into the sandbox of a singleplayer server
@@ -74,36 +74,53 @@ public class GameManager : MonoBehaviour
     }
 
     // straight into the main game of a singleplayer server
-    public static void StartSingleplayerGame()
+    public static void StartSingleplayerGame()  // done
     {
         gameState = GameState.InGame;
 
-        
+        NetworkHelper.Instance.StartSingleplayerGame(); // starts up the server
 
-
-        NetworkHelper.Instance.StartSingleplayerGame();
-        WorldManager.Instance.StartGame(-1);
+        // there is no more 'WorldManager.StartGame(-1)' here, that'll get called upon joining the server
     }
 
     // straight into the main game of a multiplayer server
-    public static void StartMultiplayerGame()
+    public static void StartMultiplayerGame()  // done
     {
         gameState = GameState.InGame;
 
 
-        
+        NetworkHelper.Instance.StartMultiplayerGame();
     }
 
-    public static void EnterMainMenu()
+    // ====================================
+    // generating a new world
+    // ====================================
+    public static void InitializeNewGame(int worldSeed)
+    {
+        ui_playerhud.Instance.SetupDebugInfo();
+        UIManager.Instance.HideConsole();
+        
+        WorldManager.Instance.GenerateNewWorld(worldSeed);
+
+        CameraController.SetControlMode(CameraControlMode.Freecam);
+        CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
+        // the enabling of the component is done on cam_freecam.cs for now
+        
+        UIManager.Instance.EnterMapView();
+    }
+
+
+    // ====================================
+    // switching, while already in a world
+    // ====================================
+    public static void SwitchToMainMenu() // done
     {
         gameState = GameState.InMenu;
-
-
 
         UIManager.Instance.EnterMainMenu();
     }
 
-    public static void EnterSandbox() {
+    public static void SwitchToSandbox() {
         
     }
 

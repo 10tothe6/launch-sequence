@@ -71,7 +71,7 @@ public class ClientNetworkManager : MonoBehaviour
         client.Disconnected += DidDisconnect;
     }
 
-    public void ConnectToLocalServer() { ConnectToServer("127.0.0.1", 7770);}
+    public void ConnectToLocalServer() { ConnectToServer("127.0.0.1", NetworkResources.defaultServerPort);}
     public void ConnectToServer(string ip, ushort port)
     {
         if (username.Length < 1) {
@@ -195,12 +195,8 @@ public class ClientNetworkManager : MonoBehaviour
         string[] rawEntityData1 = message.GetStrings();
         int[] rawEntityData2 = message.GetInts();
         cmd.LogRaw($"[Client] Setting entity list ({rawEntityData1.Length})...");
-
-        for (int i = 0; i < rawEntityData1.Length; i++)
-        {
-            // first, make the new prefab
-            EntityManager.Instance.SpawnNewEntity(rawEntityData2[i], rawEntityData1[i]); 
-        }
+        int worldSeed = message.GetInt();
+        
 
         LocalPlayer.localClient = ServerNetworkManager.GetClient(Instance.client.Id);
 
@@ -208,9 +204,18 @@ public class ClientNetworkManager : MonoBehaviour
         if (ServerNetworkManager.Instance.isServerActive)
         {
             LocalPlayer.localClient.permissionLevel = 2;
+            // if we are the server, the world will have already been generated
+            // entities will already have been spawned as well
         } else
         {
             LocalPlayer.localClient.permissionLevel = 0;
+            WorldManager.Instance.GenerateNewWorld(worldSeed);
+            
+            for (int i = 0; i < rawEntityData1.Length; i++)
+            {
+                // first, make the new prefab
+                EntityManager.Instance.SpawnNewEntity(rawEntityData2[i], rawEntityData1[i]); 
+            }
         }
 
         ServerNetworkManager.Instance.onJoinServer.Invoke();

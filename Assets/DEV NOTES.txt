@@ -6,3 +6,4 @@ PHASE V - polish
 
 notes:
 * terrain jitter was fixed by increasing the inflation radius, maybe in the future I can find a better way to do that
+* no idea why the weird terrain ridge exists

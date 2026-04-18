@@ -229,11 +229,15 @@ public class cbt_meshchunk : MonoBehaviour
                 altVertA2 += altVertA2.normalized * GetHeightAt(altVertA2.normalized) * (rad / 1000f);
                 altVertB1 += altVertB1.normalized * GetHeightAt(altVertB1.normalized) * (rad / 1000f);
                 altVertB2 += altVertB2.normalized * GetHeightAt(altVertB2.normalized) * (rad / 1000f);
+
+                Vector3 altA = (altVertA2 - altVertA1).normalized;
+                Vector3 altB = (altVertB2 - altVertB1).normalized;
                 
-                normals[i] = Vector3.Cross((altVertA2 - altVertA1).normalized, (altVertB2 - altVertB1).normalized);
-                if (Vector3.Angle(normals[i], vertices[i]) > 100)
+                normals[i] = Vector3.Cross(altA, altB).normalized;
+                // avoiding downwards facing terrain and weird ridges
+                if (Vector3.Angle(normals[i], vertices[i]) >= 80)
                 {
-                    normals[i] *= -1;
+                    normals[i] = vertices[i].normalized;
                 }
 
                 // the 23 and 24 is based off of resolution

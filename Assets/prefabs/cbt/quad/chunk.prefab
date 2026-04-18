@@ -136,6 +136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::cbt_meshchunk
   isCulledByAngle: 0
   isCulledByLOD: 0
+  distanceAngles:
+  - 10
+  - 360
   t_model: {fileID: 382908491606340920}
   directRadius: 0
   mr: {fileID: 1449421786422819062}

@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 6011434511242130393}
   - component: {fileID: -7358400810771844880}
   - component: {fileID: -5798558475547542834}
+  - component: {fileID: 5558296614578897552}
   m_Layer: 0
   m_Name: cb_generic
   m_TagString: Untagged
@@ -254,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5ca80843bab8949ac8990db2138a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_meshbody
+  useTemporaryPerlin: 0
   useDirectRadius: 0
   directRadius: 0
   enableChunkCulling: 1
@@ -269,13 +271,13 @@ MonoBehaviour:
   parentChunks: []
   detailLevelThresholds:
   - 0
-  - 15000
+  - 2000
+  - 10000
   - 25000
   - 50000
   - 100000
-  - 250000
+  - 300000
   - 450000
-  - 500000
 --- !u!114 &6011434511242130393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +338,12 @@ MonoBehaviour:
     mimicData:
       generic: {fileID: 0}
       defaultScale: 0
+  onEnterControl:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitControl:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-5798558475547542834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +356,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa3dac6b64e9544ba2b470dc1adc6f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_floatingentity
+--- !u!114 &5558296614578897552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c764bb8abd63f4398a842a9803538d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cbr_litbody
+  children: []
+  useSpecificObjects: 0
+  useIndex: 0
+  bodyIndex: 0
+  fullbright: 0
 --- !u!1 &8827367443003885876
 GameObject:
   m_ObjectHideFlags: 0

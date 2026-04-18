@@ -2,9 +2,9 @@ using UnityEngine;
 
 public enum cbt_ChunkColoringMode
 {
-    NONE,
-    LOD,
-    PARENT_FACE,
+    NONE, // just white
+    LOD, // whatever the chunk LOD is
+    PARENT_FACE, // whatever the parent face is
 }
 
 public class cbt_coloredmeshchunks : MonoBehaviour
@@ -50,7 +50,7 @@ public class cbt_coloredmeshchunks : MonoBehaviour
             for (int i = 0; i < comp.chunks.Count; i++)
             {
                 // TODO: figure out what order we want the indices in
-                comp.chunks[i].SetDebugColor(debugColors[debugColors.Length - 1]);
+                comp.chunks[i].SetDebugColor(Color.white);
             }
         }
     }

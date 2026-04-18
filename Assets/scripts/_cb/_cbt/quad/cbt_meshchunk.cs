@@ -1,3 +1,5 @@
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // replaces 'TerrainFace.cs'
@@ -7,6 +9,7 @@ using UnityEngine;
 
 public class cbt_meshchunk : MonoBehaviour
 {
+    public cbt_meshbody body;
     public bool isCulledByAngle;
     public bool isCulledByLOD;
 
@@ -41,9 +44,21 @@ public class cbt_meshchunk : MonoBehaviour
     public int levelOfDetail; // the LOD level of the chunk
 
     public Vector3 chunkMidpoint;
-    // let's consider the chunk as a square inscribed in a cirlcle
-    // how much of the sphere's surface is covered by that circular region?
-    public float spanningAngle; // deg
+
+    // the corner vertices of the chunk, stored for easy access during distance calculations
+    // ************************************
+    private Vector3 a;
+    private Vector3 b;
+    private Vector3 c;
+    private Vector3 d;
+
+    private Vector3 ab;
+    private float abMag;
+    private Vector3 ac;
+    private float acMag;
+    
+    private Vector3 n; // plane normal
+    // ************************************
 
     public void Initialize(int resolution, Vector3 localUp, Vector3 dims, int bodyIndex) {
         this.dims = dims;
@@ -56,6 +71,18 @@ public class cbt_meshchunk : MonoBehaviour
         this.bodyIndex = bodyIndex;
 
         ConstructMesh(bodyIndex);
+
+        a = mf.sharedMesh.vertices[0];
+        b = mf.sharedMesh.vertices[resolution - 1];
+        c = mf.sharedMesh.vertices[resolution * resolution - resolution];
+        d = mf.sharedMesh.vertices[resolution * resolution - 1];
+        
+        ab = (b-a).normalized;
+        abMag = (b-a).magnitude;
+        ac = (c-a).normalized;
+        acMag = (c-a).magnitude;
+
+        n = Vector3.Cross(ab,ac).normalized;
     }
 
     public void SetDebugColor(Color col)
@@ -63,14 +90,77 @@ public class cbt_meshchunk : MonoBehaviour
         mr.material.color = col;
     }
 
+    // POSITION IS NOT RELATIVE HERE
+    public float GetDistanceToChunk(num_precisevector3 position)
+    {
+        if (directRadius != 0) {return 0;} // this means no cb_solarsystem is in use rn
+
+        num_precisevector3 playerRelativePosition = position.Sub(cb_solarsystem.Instance.monoBodies[bodyIndex].pose.data.GetPosition());
+        Vector3 clampedPosition = GetClampedPosition(playerRelativePosition.ToVector3());
+
+        return num_precisevector3.Distance(playerRelativePosition, new num_precisevector3(clampedPosition)).AsFloat();
+    }
+
+    // position MUST BE RELATIVE TO THE MESHBODY OBJECT
+    public float GetDistanceToChunk(Vector3 position)
+    {
+        Vector3 clampedPosition = GetClampedPosition(position);
+        return Vector3.Distance(clampedPosition, position);
+    }
+
+    public Vector3 GetClampedPosition(Vector3 position)
+    {
+        Vector3 diff = position - a;
+        //if (bodyIndex == 2) {Debug.Log(position);}
+        // remove any component of the vector in/out of the plane
+        diff -= Vector3.Project(diff, n);
+
+
+        // adjusting the vector in the ab direction
+        Vector3 abComponent = Vector3.Project(diff, ab);
+        diff -= abComponent;
+        if (Vector3.Dot(abComponent, ab) < 0)
+        {
+            abComponent = Vector3.zero;
+        } else if (abComponent.magnitude > abMag)
+        {
+            abComponent *= abMag / abComponent.magnitude;
+        }
+
+        diff += abComponent;
+
+        Vector3 acComponent = Vector3.Project(diff, ac);
+        diff -= acComponent;
+        if (Vector3.Dot(acComponent, ac) < 0)
+        {
+            acComponent = Vector3.zero;
+        } else if (acComponent.magnitude > acMag)
+        {
+            acComponent *= acMag / acComponent.magnitude;
+        }
+        diff += acComponent;
+
+        Vector3 clampedPosition = a + diff;
+        
+        if (directRadius != 0)
+        {
+            return clampedPosition.normalized * directRadius;
+        } else
+        {
+            return clampedPosition.normalized * cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius;
+        }
+    }
+
+    // what is the height of the terrain (from [0..1]) at a given point on the planet
     public float GetHeightAt(Vector3 v) {
         v = v.normalized;
 
         if (directRadius == 0)
         {
+            // stars have flat terrain, there is no variation in height
             if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.bodyType == (ushort)cb_bodytype.Stellar)
             {
-                return 0.5f;
+                return 0;
             }
         }
 
@@ -82,10 +172,10 @@ public class cbt_meshchunk : MonoBehaviour
         }
         if (usingTempPerlin)
         {
-            return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 10f;
+            return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 40f;
         } else
         {
-            return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 20f, v.y * 20f, v.z * 20f) * 10f;
+            return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 20f, v.y * 20f, v.z * 20f) * 25f;
         }
     }
 
@@ -119,11 +209,6 @@ public class cbt_meshchunk : MonoBehaviour
         {
             for (int x = 0; x < resolution; x++, i++)
             {
-                if (x == 0 && y == 0)
-                {
-                    spanningAngle = 5 * Vector3.Angle(chunkMidpoint, (localUp + axisA * (0.5f + xOff - 0.5f) * 2 * scale + axisB * (0.5f + yOff - 0.5f) * 2 * scale).normalized * rad);
-                }
-
                 Vector2 percent = new Vector2(x, y) / (resolution - 1);
 
                 
@@ -178,44 +263,6 @@ public class cbt_meshchunk : MonoBehaviour
         mf.mesh = mesh;
 
         //gameObject.layer = Sys.planetLayerMaskInt;
-    }
-
-    public Vector3 GetLocalPosition()
-    {
-        return chunkMidpoint;
-    }
-
-    // ************************
-    // TODO: find a better way of calculating dist to a chunk
-    // ************************
-
-    // public Vector3 GetClosestPositionToPlayer()
-    // {
-    //     Vector3 centerToChunk = chunkMidpoint;
-    //     Vector3 centerToControl = cb_renderingmanager.GetControlPosition() - cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3();
-
-    //     Vector3 axis = Vector3.Cross(centerToChunk, centerToControl);
-
-    //     Vector3 limit = util_math.RotateVector(centerToChunk, axis, spanningAngle);
-
-    //     return cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3() + limit;
-    // }
-
-    public float GetDistance()
-    {
-        if (cb_renderingmanager.GetControlPosition().ToVector3() == Vector3.zero) {return Mathf.Infinity;}
-        return (float)cb_renderingmanager.GetControlPosition().Sub(new num_precisevector3(chunkMidpoint).Add(cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition())).Mag().AsDouble();
-
-        // float distanceToSurface = WorldManager.Instance.GetSeaLevelAltitude();
-        
-
-        // if (Vector3.Angle(chunkMidpoint, cb_renderingmanager.GetControlPosition() - cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3()) < spanningAngle)
-        // {
-        //     return distanceToSurface;
-        // } else
-        // {
-        //     return (cb_renderingmanager.GetControlPosition() - (chunkMidpoint + cb_solarsystem.Instance.monoBodies[bodyIndex].data.pConfig.GetPosition().ToVector3()).magnitude;
-        // }
     }
 
     public void UpdateRenderStatus()

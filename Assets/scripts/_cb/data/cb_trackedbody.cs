@@ -47,7 +47,6 @@ public class cb_trackedbody : MonoBehaviour
             pose.data.parent = cb_solarsystem.Instance.monoBodies[parentIndex].pose;
         }
         
-        gameObject.AddComponent<cbr_litbody>();
         gameObject.GetComponent<cbr_litbody>().useIndex = true;
         gameObject.GetComponent<cbr_litbody>().bodyIndex = data.pConfig.selfIndex;
     }

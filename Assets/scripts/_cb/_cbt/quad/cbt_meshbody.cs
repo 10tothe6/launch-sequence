@@ -83,6 +83,8 @@ public class cbt_meshbody : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             GameObject g_parentChunk = Instantiate(p_chunk, t_chunkContainer);
+            g_parentChunk.GetComponent<cbt_meshchunk>().body = this;
+
             parentChunks[i] = g_parentChunk.GetComponent<cbt_meshchunk>();
 
             if (useDirectRadius)
@@ -124,7 +126,7 @@ public class cbt_meshbody : MonoBehaviour
                 if (current.t_model.gameObject.activeSelf &&
                 current.parent != null)
                 {
-                    if (Vector3.Distance(current.parent.mr.bounds.center, t_decidingObject.position) >= detailLevelThresholds[current.parent.levelOfDetail])
+                    if (current.parent.GetDistanceToChunk(t_decidingObject.position - transform.position) >= detailLevelThresholds[current.parent.levelOfDetail])
                     {
                         current.parent.SetAsActive();
                     }
@@ -132,10 +134,10 @@ public class cbt_meshbody : MonoBehaviour
             }
             else
             {
-                if (current.t_model.gameObject.activeSelf &&
+                if (LocalPlayer.IsControllingEntity() && current.t_model.gameObject.activeSelf &&
                 current.parent != null)
                 {
-                    if (current.parent.GetDistance() >= detailLevelThresholds[current.parent.levelOfDetail] * WorldData.universalScaleFactor)
+                    if (current.parent.GetDistanceToChunk(LocalPlayer.localClient.controllingEntity.data.GetPosition()) >= detailLevelThresholds[current.parent.levelOfDetail] * WorldData.universalScaleFactor)
                     {
                         current.parent.SetAsActive();
                     }
@@ -147,7 +149,7 @@ public class cbt_meshbody : MonoBehaviour
             {
                 if (current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
                 {
-                    if (Vector3.Distance(current.mr.bounds.center, t_decidingObject.position) < detailLevelThresholds[current.levelOfDetail])
+                    if (current.GetDistanceToChunk(t_decidingObject.position - transform.position) < detailLevelThresholds[current.levelOfDetail])
                     {
                         // this will BOTH make the new chunks AND hide the old one
                         Subdivide(current);
@@ -155,15 +157,9 @@ public class cbt_meshbody : MonoBehaviour
                 }
             } else
             {
-                if (current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
+                if (LocalPlayer.IsControllingEntity() && current.levelOfDetail > 0 && current.t_model.gameObject.activeSelf)
                 {
-                    float dist = current.GetDistance();
-                    
-                    // if (bodyIndex == 2 && current.startingFace == 2 && current.levelOfDetail == 5)
-                    // {
-                        
-                    //     Debug.Log(current.GetDistance());
-                    // }
+                    float dist = current.GetDistanceToChunk(LocalPlayer.localClient.controllingEntity.data.GetPosition());
 
                     // the thresholds are all in meters, so we need to multiply by the scale factor to turn them into the units that game-space actually uses
                     if (dist < detailLevelThresholds[current.levelOfDetail] * WorldData.universalScaleFactor)
@@ -207,38 +203,6 @@ public class cbt_meshbody : MonoBehaviour
                     current.UpdateRenderStatus();
                 }
             }
-
-            
-            //  ********************************
-            //  below here is unused, old parts of the code
-            // ********************************
-
-            // // active gameobjects means the chunk is actually being rendered, and therefore is relevant
-            // if (current.gameObject.activeSelf && current.levelOfDetail > 0)
-            // {
-            //     int count = 0;
-            //     for (int i = 0; i < 4; i++)
-            //     {
-            //         if (Vector3.Distance(current.parent.children[i].GetComponent<MeshRenderer>().bounds.center, t_player.position) > detailLevelThresholds[current.level - 1])
-            //         {
-            //             count++;
-            //         }
-            //     }
-
-            //     if (count == 4)
-            //     {
-            //         current.gameObject.SetActive(false);
-            //         if (current.parent != null)
-            //         {
-            //             current.parent.gameObject.SetActive(true);
-            //         }
-            //     }
-            // }
-
-            // if (current.hashCode != null && current.reference.activeSelf)
-            // {
-            //     GetNeighborLOD(current.hashCode, current.reference.GetComponent<MeshRenderer>(), current.startingFace);
-            // }
         }
 
         // transferring the new chunks over to the master chunks list
@@ -273,6 +237,8 @@ public class cbt_meshbody : MonoBehaviour
         {
             // not using a prefab for some reason? fine
             GameObject g_newDaughterChunk = Instantiate(p_chunk, t_chunkContainer);
+            g_newDaughterChunk.GetComponent<cbt_meshchunk>().body = this;
+
             g_newDaughterChunk.transform.localScale = Vector3.one;
 
             g_newDaughterChunk.transform.position = transform.position;
@@ -313,6 +279,7 @@ public class cbt_meshbody : MonoBehaviour
         if (GetComponent<cbr_litbody>() != null)
         {
             GetComponent<cbr_litbody>().UpdateChildren();
+            GetComponent<cbr_litbody>().Initialize();
         }
     }
 

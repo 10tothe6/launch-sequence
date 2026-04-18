@@ -37,6 +37,19 @@ public class LocalPlayer : MonoBehaviour
         localClient = client;
     }
 
+    public static bool IsControllingEntity()
+    {
+        if (localClient == null)
+        {
+            return false;
+        }
+        if (localClient.controllingEntity == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public static num_precisevector3 GetPosition()
     {
         // TODO: make the controlling entity a fixed entity?

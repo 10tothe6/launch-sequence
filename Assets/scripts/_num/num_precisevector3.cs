@@ -175,6 +175,11 @@ public class num_precisevector3
 
         return new num_precise(util_math.Sqrt(_x.Add(_y).Add(_z).raw * BigInteger.Pow(10, _x.numDecimalDigits)));
     }
+
+    public static num_precise Distance(num_precisevector3 a, num_precisevector3 b)
+    {
+        return a.Sub(b).Mag();
+    }
     // ****************************************
 
     // CONVERSIONS

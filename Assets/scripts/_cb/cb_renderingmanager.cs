@@ -95,7 +95,7 @@ public class cb_renderingmanager : MonoBehaviour
     // the periodic function, called by WorldManager.cs
     public void UpdateAllBodyPositions()
     {
-        inflationRadius = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].data.tConfig.equitorialRadius + 100;
+        inflationRadius = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].data.tConfig.equitorialRadius + 300;
 
         if (LocalPlayer.localClient == null) {return;}
         // we have merged cbp_poseinfo and e_floatingentity to serve the same function,

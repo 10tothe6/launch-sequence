@@ -7,17 +7,23 @@ public class cbr_litbody : MonoBehaviour
     public bool useSpecificObjects;
     public bool useIndex;
     public int bodyIndex;
+    public bool fullbright;
+    private bool oldFullbright;
     void Start()
     {
         UpdateChildren();
 
+        Initialize();
+    }
+    public void Initialize()
+    {
         // we dont really need to update the position every frame,
         // but I want to for now to make my life easier
 
         // as for the isStar field, we for sure do not need to do it every frame so we do it once, here
         if (useIndex)
         {
-            if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.bodyType == (ushort)cb_bodytype.Stellar)
+            if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.bodyType == (ushort)cb_bodytype.Stellar || fullbright)
             {
                 for (int i = 0; i < children.Length; i++) {
                     for (int j = 0; j < children[i].sharedMaterials.Length; j++) {
@@ -27,7 +33,7 @@ public class cbr_litbody : MonoBehaviour
             }
         } else
         {
-            if (GetComponent<cb_trackedbody>().data.bodyType == (ushort)cb_bodytype.Stellar)
+            if (GetComponent<cb_trackedbody>().data.bodyType == (ushort)cb_bodytype.Stellar || fullbright)
             {
                 for (int i = 0; i < children.Length; i++) {
                     for (int j = 0; j < children[i].sharedMaterials.Length; j++) {
@@ -38,6 +44,12 @@ public class cbr_litbody : MonoBehaviour
         }
     }
     void Update() {
+        if (fullbright != oldFullbright)
+        {
+            oldFullbright = fullbright;
+            UpdateChildren();
+            Initialize();
+        }
         if (useIndex)
         {
             for (int i = 0; i < children.Length; i++) {

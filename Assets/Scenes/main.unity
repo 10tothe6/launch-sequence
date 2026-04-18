@@ -364,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e77658152d5fb45a2f24050de7ed2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbr_forcesunposition
+  fullbright: 0
   children: []
   sun: {fileID: 2036707457}
 --- !u!114 &38425335

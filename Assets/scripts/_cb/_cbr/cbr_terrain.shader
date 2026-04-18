@@ -28,14 +28,17 @@ SubShader {
 
     // Lighting for the terrain (custom so that the sun direction can change)
     half4 LightingSimpleLambert (SurfaceOutputCustom s, half3 lightDir, half atten) {
+        half4 c;
+
         if (isStar == 1) {
-            return 1;
+            c.rgb = s.Albedo;
+            c.a = 1;
+            return c;
         }
         
         half dotSphere = saturate(dot(normalize(s.worldPos - worldPosition), normalize(sunPosition - position)));
         half dotTerrain = saturate(dot(s.Normal, normalize(sunPosition - position)));
         
-        half4 c;
         c.rgb = s.Albedo * dotSphere * dotTerrain;
         c.a = 1;
         return c;
@@ -53,8 +56,13 @@ SubShader {
     fixed4 _Color;
 
     void surf (Input IN, inout SurfaceOutputCustom  o) {
-        o.Albedo = tex2D(_MainTex, IN.uv_MainTex.xy * 10) * _Color;
+        fixed2 uv = IN.uv_MainTex.xy * 100;
+
+        o.Albedo = tex2D(_MainTex, uv) * _Color;
         o.worldPos = IN.worldPos;
+
+        fixed3 normal = UnpackNormal(tex2D(_NormalTex, uv));
+        o.Normal = normal;
     }
     ENDCG
     }

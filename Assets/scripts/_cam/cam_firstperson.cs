@@ -23,7 +23,7 @@ public class cam_firstperson : MonoBehaviour
         } else {ExitControl();}
     }
 
-    public void SetControl(GameObject g_toControl)
+    public void SetControllingObject(GameObject g_toControl)
     {
         t_controlling = g_toControl.transform;
         controller = g_toControl.GetComponent<PlayerController>();
@@ -33,6 +33,8 @@ public class cam_firstperson : MonoBehaviour
 
     public void EnterControl()
     {
+        SetControllingObject(LocalPlayer.localClient.controllingEntity.gameObject);
+        
         CameraController.cam_main.cullingMask = cullingMask;
         transform.SetParent(t_controlling.GetChild(0));
         

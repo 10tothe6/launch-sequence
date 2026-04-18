@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 8184121651257132309}
   - component: {fileID: 3092532290964612513}
   - component: {fileID: 1461875249874814483}
+  - component: {fileID: -6093451512030076741}
   m_Layer: 0
   m_Name: e_robot
   m_TagString: Untagged
@@ -224,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c83feaaf93b77d41b111a1920995685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  isActive: 0
   gravityDirection: {x: 0, y: -1, z: 0}
   gravitationalAcceleration: 9.81
   col: {fileID: 7685948419648131301}
@@ -335,3 +337,15 @@ MonoBehaviour:
   onExitControl:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-6093451512030076741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782933785179873280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce172d9a17053741a54da9857497c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_fixedentity

@@ -91,6 +91,8 @@ public class cmd_console : MonoBehaviour
 
         new cmd_consolecommand(new string[]{"p","perm"},true), // change permission
 
+        new cmd_consolecommand(new string[]{"sandbox","sbox"},true), // go in/out of sandbox
+
         // for debugging purposes
         new cmd_consolecommand(new string[]{"error","err"},false),
         new cmd_consolecommand(new string[]{"exception","exc"},false),
@@ -209,6 +211,16 @@ public class cmd_console : MonoBehaviour
         {
             string entityName = items[1];
             EntityManager.Instance.SpawnNewEntity(entityName, LocalPlayer.localClient.controllingEntity.data.GetPosition());
+        }
+
+        else if (GetCommandData("sbox").IsValid(items[0])) // in/out of sandbox
+        {
+            net_connectedclient clientInQuestion = ServerNetworkManager.GetClientFromUsername(items[1]);
+
+            if (clientInQuestion != null)
+            {
+                clientInQuestion.ToggleSandbox();
+            }
         }
 
         else if (GetCommandData("p").IsValid(items[0])) // permission change

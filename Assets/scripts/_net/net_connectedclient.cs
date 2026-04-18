@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public enum net_permissionlevel
@@ -86,4 +87,48 @@ public class net_connectedclient
     {
         return permissionLevel > 0;
     }
+
+    // ALL THREE OF THESE FUNCTIONS CANNOT RUN ON THE CLIENT SIDE, MUST BE SERVER SIDE
+    // ******************************************************
+
+    public void ToggleSandbox()
+    {
+        if (isInSandbox)
+        {
+            ExitSandbox();
+        } else
+        {
+            EnterSandbox();
+        }
+    }
+    public void EnterSandbox()
+    {
+        // first, we spawn a new robot entity in the sandbox to take control of
+        e_genericentity newEntity = EntityManager.Instance.SpawnNewEntityInSandbox("robot", num_precisevector3.Zero()).GetComponent<e_genericentity>();
+
+        // then, we take control of it
+        ServerNetworkManager.Instance.SetControllingEntity(client_index, newEntity);
+
+        GameManager.SwitchToSandbox();
+
+        // we let everyone know we're in the sandbox
+        isInSandbox = true;
+    }
+
+    public void ExitSandbox()
+    {
+        // every client has a freecam entity in the main game, these are not destroyed
+        // we just have to find it, and take control
+        e_genericentity freecam = EntityManager.Instance.GetEntityFromName("freecam_" + username);
+
+        // controlling it
+        ServerNetworkManager.Instance.SetControllingEntity(client_index, freecam);
+
+        GameManager.SwitchToGame();
+
+        // let everyone know we're not in the sandbox
+        isInSandbox = false;
+    }
+
+    // ******************************************************
 }

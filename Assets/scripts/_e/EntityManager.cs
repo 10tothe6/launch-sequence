@@ -143,13 +143,56 @@ public class EntityManager : MonoBehaviour
         return g_newEntity;
     }
 
+    public GameObject SpawnNewEntityInSandbox(string entityName, num_precisevector3 spawnPosition)
+    {
+        GameObject p_entity = GetEntityPrefabFromName(entityName);
+
+        return SpawnNewEntityInSandbox(p_entity, spawnPosition);
+    }
+
+    // hate how this is just copy-pasted
+    public GameObject SpawnNewEntityInSandbox(GameObject p_entity, num_precisevector3 spawnPosition)
+    {
+        GameObject g_newEntity = Instantiate(p_entity, t_sandboxEntityContainer);
+
+        e_genericentity genericComp = g_newEntity.GetComponent<e_genericentity>();
+        allEntities.Add(genericComp);
+        genericComp.data.index = allEntities.Count * -1; // negative index because sandbox
+        genericComp.data.SetPosition(spawnPosition);
+
+        // depending on what type of entity we're dealing with
+        if (g_newEntity.GetComponent<e_floatingentity>() != null)
+        {
+            e_floatingentity comp = g_newEntity.GetComponent<e_floatingentity>();
+            floatingEntities.Add(comp);
+        } else if (g_newEntity.GetComponent<e_fixedentity>() != null)
+        {
+            e_fixedentity comp = g_newEntity.GetComponent<e_fixedentity>();
+            fixedEntities.Add(comp);
+        } else if (g_newEntity.GetComponent<e_mimicentity>() != null)
+        {
+            // TODO: mimics
+        } else
+        {
+            cmd.Log("There was an issue with the entity prefab '" + p_entity.name + "'. It has no entity component!");
+        }
+        // better just to have the logic automatically here instead of making a whole separate function
+        if (ServerNetworkManager.Instance.isServerActive)
+        {
+            // since we're on a server, we need to tell everyone BUT the local clients
+            ServerNetworkManager.Instance.SendNewEntity(g_newEntity);
+        }
+
+        return g_newEntity;
+    }
+
     public GameObject SpawnNewEntity(GameObject p_entity, num_precisevector3 spawnPosition)
     {
         GameObject g_newEntity = Instantiate(p_entity, t_entityContainer);
 
         e_genericentity genericComp = g_newEntity.GetComponent<e_genericentity>();
-        genericComp.data.index = allEntities.Count;
         allEntities.Add(genericComp);
+        genericComp.data.index = allEntities.Count;
         genericComp.data.SetPosition(spawnPosition);
 
         // depending on what type of entity we're dealing with

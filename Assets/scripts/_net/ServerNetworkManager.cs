@@ -78,12 +78,12 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void BeginMulticastBroadcast(ushort port)
     {
-        // net_serverdata data = new net_serverdata();
-        // data.name = "super cool server";
-        // data.ip = util_network.GetLocalIPAddress();
-        // data.port = port;   
-        // // broadcast every 2 seconds
-        // MulticastClient.Instance.PeriodicBroadcast(NetworkResources.lanMulticastAddress, data.Package(), 2);
+        net_serverdata data = new net_serverdata();
+        data.name = "super cool server";
+        data.ip = util_network.GetLocalIPAddress();
+        data.port = port;   
+        // broadcast every 2 seconds
+        MulticastClient.Instance.PeriodicBroadcast(NetworkResources.lanMulticastAddress, data.Package(), 2);
     }
 
     public static string[] GetConnectedUsernames()
@@ -475,19 +475,27 @@ public class ServerNetworkManager : MonoBehaviour
     public void SetControllingEntity(ushort clientId, e_genericentity entity)
     {
         net_connectedclient client = ServerNetworkManager.GetClient(clientId);
+        if (client.controllingEntity != null) {client.controllingEntity.onExitControl.Invoke();}
 
         client.controllingEntity = entity;
+        entity.onEnterControl.Invoke();
 
-        cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...", Color.cyan);
+        if (isServerActive)
+        {
+            cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...", Color.cyan);
 
-        // great, now its done on the server side
-        // we still need to update everyone (except the local client, obviously)
-        Message toOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.entity_control);
+            // great, now its done on the server side
+            // we still need to update everyone (except the local client, obviously)
+            Message toOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.entity_control);
 
-        toOthers.AddInt(clientId);
-        toOthers.AddInt(entity.data.entityPrefabIndex);
+            toOthers.AddInt(clientId);
+            toOthers.AddInt(entity.data.entityPrefabIndex);
 
-        SendToAllExceptLocal(toOthers);
+            SendToAllExceptLocal(toOthers);
+        } else
+        {
+            cmd.LogRaw($"[Client] setting client {clientId} control to {entity.gameObject.name}...", Color.yellow);
+        }
     }
 
     public static net_connectedclient GetClient(ushort id)

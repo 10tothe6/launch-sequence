@@ -251,7 +251,8 @@ public class ClientNetworkManager : MonoBehaviour
     {
         int clientIndex = message.GetInt();
         int entityIndex = message.GetInt();
-        // TODO: actually set the control
+        
+        ServerNetworkManager.Instance.SetControllingEntity((ushort)clientIndex, EntityManager.Instance.GetEntityFromIndex(entityIndex));
     }
 
     [MessageHandler((ushort)ServerToClientId.entity_position_updates)]

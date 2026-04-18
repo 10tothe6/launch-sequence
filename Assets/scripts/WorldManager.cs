@@ -109,10 +109,20 @@ public class WorldManager : MonoBehaviour
         if (ui_mapview.Instance != null) {ui_mapview.Instance.UpdatePlayers();}
     }
 
+
+    // for entering/exiting sandbox mode
+    public void SetAllBodiesActive(bool active)
+    {
+        // doing chunk updates from here, 'update periodically' has been disabled
+        for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
+        {
+            cb_solarsystem.Instance.monoBodies[i].gameObject.SetActive(active);
+        }
+    }
+
     public void UpdateWorld()
     {
         cb_renderingmanager.Instance.UpdateAllBodyPositions();
-        EntityManager.Instance.UpdateAllEntityPositions();
 
         // doing chunk updates from here, 'update periodically' has been disabled
         for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)

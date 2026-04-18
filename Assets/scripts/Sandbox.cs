@@ -28,38 +28,22 @@ public class Sandbox : MonoBehaviour
     }
 
     public GameObject g_parent;
-    public Transform t_objectContainer;
-    public GameObject p_robot;
-
-    public cam_firstperson fpCam;
 
     private bool isActive;
 
     // called when the game boots into sandbox mode
     // TODO: allow the user to enter sandbox mode from the console, not just the unity editor
     // ^^ THIS SHOULD ALSO ALLOW FOR MULTIPLAYER SANDBOX-ING
-    public void StartSandbox()
+    public void EnterSandbox()
     {
         g_parent.SetActive(true);
-
-
-        // here we're creating a player object and giving the user control
-        // since this game involves switching characters, we have to actually create a new player character and then assign control to it
-        GameObject g_playerObj = Instantiate(p_robot, t_objectContainer);
-
-        fpCam.SetControl(g_playerObj);
-
-        CameraController.SetControlMode(CameraControlMode.PlayerFirstPerson);
-
         isActive = true;
     }
 
-    void Update()
+    public void ExitSandbox()
     {
-        if (isActive)
-        {
-            UpdateSandbox();
-        }
+        g_parent.SetActive(false);
+        isActive = false;
     }
 
     public void UpdateSandbox()

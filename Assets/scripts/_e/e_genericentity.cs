@@ -29,9 +29,18 @@ public class e_genericentity : MonoBehaviour
 
     public void Refresh()
     {
+        if (!LocalPlayer.IsControllingEntity()) {return;}
         // don't do this if the entity is being controlled
         if (LocalPlayer.localClient.controllingEntity == this) {return;}
 
+        // hide/show based on whether the client is in the sandbox or the main game
+        if (LocalPlayer.localClient.isInSandbox)
+        {
+            gameObject.SetActive(data.index < 0);
+        } else
+        {
+            gameObject.SetActive(data.index > 0);
+        }
         
         if (data.entityType == (ushort)e_entitytype.Fixed)
         {

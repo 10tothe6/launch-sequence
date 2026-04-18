@@ -13884,9 +13884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sandbox
   g_parent: {fileID: 54539360}
-  t_objectContainer: {fileID: 1989326765}
-  p_robot: {fileID: 8782933785179873280, guid: d9b535f823432a043ba06a314e3a8496, type: 3}
-  fpCam: {fileID: 751265232}
 --- !u!1 &2044790573
 GameObject:
   m_ObjectHideFlags: 0
@@ -14633,7 +14630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Program
   version: mptest-1.0-rc1
   ins_buildMode: 0
-  ins_startMode: 4
+  ins_startMode: 1
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0

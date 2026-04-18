@@ -26,6 +26,7 @@ public enum player_movementmode
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public bool isActive; // very, very important
     public Vector3 gravityDirection; // the most important addition to this controller
     public float gravitationalAcceleration;
 
@@ -132,22 +133,30 @@ public class PlayerController : MonoBehaviour
         sprintValue = maxSprint;
     }
 
-    // called when the player assumes control
+    // called when the someone assumes control
     public void EnterControl()
     {
+        // making sure its actually the local player taking control
+        if (!LocalPlayer.localClient.controllingEntity == this)
+        {
+            return;
+        }
+
         defaultCameraHeight = CameraController.Instance.transform.localPosition.y;
         currentCameraHeight = defaultCameraHeight;
 
         mode = player_movementmode.Walking;
+        isActive = true;
     }
     public void ExitControl()
     {
-        
+        isActive = false;
     }
 
     // just doing this through Update() and using Time.deltaTime instead of FixedUpdate()
     void Update()
     {
+        if (!isActive) {return;}
         if (t_camera != null) t_camera.localPosition = new Vector3(0, currentCameraHeight, 0);
         float cameraTiltTarget = 0;
 
@@ -200,7 +209,7 @@ public class PlayerController : MonoBehaviour
 
             if (lastPacket.back)
             {
-                rb.linearVelocity -= transform.forward * moveSpeed;
+                rb.linearVelocity -= transform.forward * moveSpeed * Time.deltaTime;
             }
             if (lastPacket.right)
             {

@@ -56,8 +56,10 @@ public class GameManager : MonoBehaviour
     {
         gameState = GameState.InGame;
 
+        NetworkHelper.Instance.StartSingleplayerGame(); // starts up the server
 
-        
+        // need to do this so we wait until the server is set up
+        ServerNetworkManager.Instance.onJoinServer.AddListener(TrySwitchToSandbox);
 
         // TODO: moving into the sandbox upon server/game start
     }
@@ -68,7 +70,11 @@ public class GameManager : MonoBehaviour
         gameState = GameState.InGame;
 
 
-        
+        NetworkHelper.Instance.StartMultiplayerGame(); // starts up the server
+
+        // need to do this so we wait until the server is set up
+        ServerNetworkManager.Instance.onJoinServer.AddListener(TrySwitchToSandbox);
+
 
         // TODO: moving into the sandbox  upon server/game start
     }
@@ -102,11 +108,8 @@ public class GameManager : MonoBehaviour
         
         WorldManager.Instance.GenerateNewWorld(worldSeed);
 
-        CameraController.SetControlMode(CameraControlMode.Freecam);
-        CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
+        SwitchToGame();
         // the enabling of the component is done on cam_freecam.cs for now
-        
-        UIManager.Instance.EnterMapView();
     }
 
 
@@ -120,14 +123,38 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.EnterMainMenu();
     }
 
-    public static void SwitchToSandbox() {
-        
+
+    // easy shortcut
+    public static void TrySwitchToSandbox() {
+        ServerNetworkManager.Instance.onJoinServer.RemoveListener(TrySwitchToSandbox);
+
+        ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("sbox"), new string[] {LocalPlayer.localClient.username});
+    }
+
+    // once we've actually done the beforehand work
+    // and are now actually entering the sandbox
+    public static void SwitchToSandbox()
+    {
+        WorldManager.Instance.SetAllBodiesActive(false);
+        Sandbox.Instance.EnterSandbox();
+        CameraController.SetControlMode(CameraControlMode.PlayerFirstPerson);
+    }
+
+    // entering back into the game
+    public static void SwitchToGame()
+    {
+        WorldManager.Instance.SetAllBodiesActive(true);
+        Sandbox.Instance.ExitSandbox();
+        CameraController.SetControlMode(CameraControlMode.Freecam); // automatically parent to the entity
+        CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
     }
 
 
     // called from the Program.cs Update() method
     public void UpdateGame()
     {
+        EntityManager.Instance.UpdateAllEntityPositions();
+
         // ====================================
         // updating the world, entities, etc.
         // ====================================
@@ -137,10 +164,11 @@ public class GameManager : MonoBehaviour
             if (LocalPlayer.localClient.isInSandbox)
             {
                 // we're in the sandbox
+                Sandbox.Instance.UpdateSandbox();
             } else
             {
                 // we're in the main game, and so need to render celestial bodies
-                
+                WorldManager.Instance.UpdateWorld();
             }
         } else
         {

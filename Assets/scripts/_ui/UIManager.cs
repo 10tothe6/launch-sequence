@@ -82,9 +82,9 @@ public class UIManager : MonoBehaviour
                 ExitMapView();
             }
         }
-        else
+        else if (LocalPlayer.IsControllingEntity())
         {
-            if (Keyboard.current.mKey.wasPressedThisFrame)
+            if (Keyboard.current.mKey.wasPressedThisFrame && !LocalPlayer.localClient.isInSandbox)
             {
                 EnterMapView();
             }

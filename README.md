@@ -1,2 +1,2 @@
-![alt text](title_new_black.png)
+![alt text](program_map.png)
 

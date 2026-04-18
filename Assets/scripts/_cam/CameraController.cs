@@ -99,6 +99,8 @@ public class CameraController : MonoBehaviour
     }
     public static void SetControlMode(ushort newMode)
     {
+        if (newMode == 0) {Instance.transform.SetParent(null);}
+        
         previousControlMode = controlMode;
         controlMode = newMode;
         Instance.ins_controlMode = controlMode;

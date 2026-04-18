@@ -542,7 +542,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 704178326}
         m_TargetAssemblyTypeName: cmd_console, Assembly-CSharp
         m_MethodName: ProcessMessage
         m_Mode: 2
@@ -14630,7 +14630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Program
   version: mptest-1.0-rc1
   ins_buildMode: 0
-  ins_startMode: 1
+  ins_startMode: 3
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0

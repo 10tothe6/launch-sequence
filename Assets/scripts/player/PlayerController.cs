@@ -125,10 +125,6 @@ public class PlayerController : MonoBehaviour
         entityData = GetComponent<e_genericentity>();
         t_camera = transform.GetChild(0);
 
-
-        entityData.onEnterControl.AddListener(EnterControl);
-        entityData.onExitControl.AddListener(ExitControl);
-
         colDefaultHeight = col.height;
         sprintValue = maxSprint;
     }
@@ -141,6 +137,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+
+        CameraController.SetControlMode(CameraControlMode.PlayerFirstPerson); // auto-sets the parent
 
         defaultCameraHeight = CameraController.Instance.transform.localPosition.y;
         currentCameraHeight = defaultCameraHeight;

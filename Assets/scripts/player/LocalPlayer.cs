@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms;
 
 // TURNS OUT THIS IS NOT A TEMP CLASS
 // it just functions as a sort of shortcut
@@ -35,6 +36,17 @@ public class LocalPlayer : MonoBehaviour
     public void Setup(net_connectedclient client)
     {
         localClient = client;
+    }
+
+    public static bool IsInSandbox()
+    {
+        if (localClient == null)
+        {
+            return false;
+        } else
+        {
+            return localClient.isInSandbox;
+        }
     }
 
     public static bool IsControllingEntity()

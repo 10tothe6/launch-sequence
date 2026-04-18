@@ -116,7 +116,7 @@ public class WorldManager : MonoBehaviour
         // doing chunk updates from here, 'update periodically' has been disabled
         for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
         {
-            cb_solarsystem.Instance.monoBodies[i].gameObject.SetActive(active);
+            cb_solarsystem.Instance.monoBodies[i].SetActive(active);
         }
     }
 

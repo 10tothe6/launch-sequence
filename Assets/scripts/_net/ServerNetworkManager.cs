@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.SocialPlatforms;
 using System.Net;
+using UnityEditor;
 
 // (not bothering with a _net prefix here, cuz its a HL script)
 
@@ -474,6 +475,10 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void SetControllingEntity(ushort clientId, e_genericentity entity)
     {
+        CameraController.SetControlMode(CameraControlMode.None); // unparenting and stopping the camera so that it doesn't end up deleted/disabled
+
+        entity.gameObject.SetActive(true);
+
         net_connectedclient client = ServerNetworkManager.GetClient(clientId);
         if (client.controllingEntity != null) {client.controllingEntity.onExitControl.Invoke();}
 

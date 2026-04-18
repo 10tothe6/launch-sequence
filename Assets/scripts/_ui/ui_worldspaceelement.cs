@@ -25,7 +25,7 @@ public class ui_worldspaceelement : MonoBehaviour
 
     void Update()
     {
-        if (positionSource != null)
+        if (positionSource != null && t_element != null)
         {
             Vector3 wPos = positionSource.Invoke();
 

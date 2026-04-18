@@ -137,7 +137,6 @@ public class GameManager : MonoBehaviour
     {
         WorldManager.Instance.SetAllBodiesActive(false);
         Sandbox.Instance.EnterSandbox();
-        CameraController.SetControlMode(CameraControlMode.PlayerFirstPerson);
     }
 
     // entering back into the game
@@ -145,7 +144,6 @@ public class GameManager : MonoBehaviour
     {
         WorldManager.Instance.SetAllBodiesActive(true);
         Sandbox.Instance.ExitSandbox();
-        CameraController.SetControlMode(CameraControlMode.Freecam); // automatically parent to the entity
         CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
     }
 

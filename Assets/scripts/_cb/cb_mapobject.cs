@@ -5,6 +5,7 @@ using UnityEngine;
 public class cb_mapobject : MonoBehaviour
 {
     public Transform t_model;
+    // TODO: a direct ref for the icon
 
     public Plotter orbitLine;
 

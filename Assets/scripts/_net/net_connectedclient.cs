@@ -14,7 +14,9 @@ public enum net_permissionlevel
 [System.Serializable]
 public class net_connectedclient 
 {
-    public bool isLocal;
+    public bool isInSandbox; // this is just a shortcut
+    
+    public bool isLocal; // TODO:
     public e_genericentity controllingEntity;
 
     public string username;

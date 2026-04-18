@@ -21,23 +21,19 @@ public enum ProgramStartMode
     FullGame,
 
     // sandbox is like the 'dev scene' thing from White Knuckle
-    // IT WILL BE A PART OF THE GAME
-    Sandbox, 
+    // IT IS A PART OF THE GAME
+    SandboxSingleplayer, 
+
+    SandboxMultiplayer, 
+
+    InstantGameSingleplayer,
+    InstantGameMultiplayer,
+
 
     // okay, I DO see a reason to put the sandbox in the game, 
     // but not the planet editor
     // THIS IS STRICTLY A DEV TOOL
     BodyEditor, 
-    InstantGameSingleplayer,
-    InstantGameMultiplayer,
-}
-
-// used so that very high-level scripts like the WorldManagr can only run certain logic when in-game
-// essentially the updated version of the inGame variable all the way back from Tempest
-public enum GameState
-{
-    InMenu,
-    InGame,
 }
 
 public class Program : MonoBehaviour
@@ -75,11 +71,6 @@ public class Program : MonoBehaviour
     public static ProgramBuildMode buildMode;
     public ProgramStartMode ins_startMode;
     public static ProgramStartMode startMode;
-    // unlike the other two, the static one is the one that scripts look for
-    // the ins_ variable is just so that I can see
-    [Header("READ ONLY")]
-    public GameState ins_gameState;
-    public static GameState gameState;
 
     // should almost be the ONLY use of the start function
     void Start()
@@ -95,19 +86,37 @@ public class Program : MonoBehaviour
         {
             if (startMode == ProgramStartMode.FullGame)
             {
-                UIManager.Instance.EnterMainMenu();
-            } else if (startMode == ProgramStartMode.Sandbox)
+                GameManager.StartFullGame(); 
+            } 
+            
+            
+            else if (startMode == ProgramStartMode.SandboxSingleplayer)
             {
-                Sandbox.Instance.StartSandbox();
-            } else if (startMode == ProgramStartMode.InstantGameSingleplayer)
-            {   
-                NetworkHelper.Instance.StartSingleplayerGame();
-                WorldManager.Instance.StartGame(-1);
-            } else if (startMode == ProgramStartMode.InstantGameMultiplayer)
-            {   
-                
-            } else if (startMode == ProgramStartMode.BodyEditor)
+                GameManager.StartSingleplayerSandbox();
+            } 
+            
+
+            else if (startMode == ProgramStartMode.SandboxSingleplayer)
             {
+                GameManager.StartMultiplayerSandbox();
+            } 
+            
+            
+            else if (startMode == ProgramStartMode.InstantGameSingleplayer)
+            {   
+                GameManager.StartSingleplayerGame();
+            } 
+            
+            
+            else if (startMode == ProgramStartMode.InstantGameMultiplayer)
+            {   
+                GameManager.StartMultiplayerGame();
+            } 
+            
+            
+            else if (startMode == ProgramStartMode.BodyEditor)
+            {
+                // not talking to the game manager for this one, because it's outside the game
                 BodyEditor.Instance.SetupEditor();
             }
         } 
@@ -116,21 +125,14 @@ public class Program : MonoBehaviour
 
     void Update()
     {
-        // we want to try and have an update function in as few scripts as possible
-        if (gameState == GameState.InGame)
-        {
-            UIManager.Instance.InGameUpdate();
-            WorldManager.Instance.UpdateWorld();
-        } else if (gameState == GameState.InMenu)
-        {
-            UIManager.Instance.InMenuUpdate();
-        }
+        // the game manager handles the specifics
+        GameManager.Instance.UpdateGame();
     }
 
     // forget exiting to main, just quit the damn program
     public void HardQuit()
     {
-        Application.Quit();
+        Application.Quit(); // NO OTHER SCRIPT IS ALLOWED TO CALL THIS
     }
 
     public string GetPreviousVersion()

@@ -299,8 +299,6 @@ public class WorldManager : MonoBehaviour
         
         UIManager.Instance.EnterMapView();
 
-        Program.gameState = GameState.InGame;
-
         cb_renderingmanager.Instance.SetupEntities();
 
         // there WAS a system teleport here, but that doesn't work here anymore cuz multiplayer

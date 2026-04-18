@@ -542,7 +542,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568383}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: cmd_console, Assembly-CSharp
         m_MethodName: ProcessMessage
         m_Mode: 2
@@ -1641,6 +1641,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105330815}
   m_CullTransparentMesh: 1
+--- !u!1 &158860746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 158860747}
+  - component: {fileID: 158860748}
+  m_Layer: 0
+  m_Name: inputs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &158860747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158860746}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2144568379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &158860748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158860746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a114f53c6b9b643b6f774f203dcb2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Input
+  axisSpringAmount: 100
 --- !u!1 &168563328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,7 +2451,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -2539,7 +2584,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -2672,7 +2717,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -5120,6 +5165,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645047619}
   m_CullTransparentMesh: 1
+--- !u!1 &657973540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 657973541}
+  - component: {fileID: 657973542}
+  m_Layer: 0
+  m_Name: ui
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &657973541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657973540}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2144568379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &657973542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657973540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe966b43f840aa944839a80cc7ddb1a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  t_canvas: {fileID: 1146640996}
+  g_console: {fileID: 1721601046}
+  menuNames: []
+  menuSiblingIndices: 
+  isInMapView: 0
+  connectedclients: {fileID: 383437683}
 --- !u!1 &671438107
 GameObject:
   m_ObjectHideFlags: 0
@@ -5279,6 +5374,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688051906}
   m_CullTransparentMesh: 1
+--- !u!1 &704178324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 704178325}
+  - component: {fileID: 704178326}
+  m_Layer: 0
+  m_Name: cmd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &704178325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704178324}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2144568379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &704178326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704178324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633b2939715e1e54fabeeb92710fe35e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cmd_console
+  menu: {fileID: 1721601048}
 --- !u!1 &704434971
 GameObject:
   m_ObjectHideFlags: 0
@@ -6044,7 +6184,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -7694,7 +7834,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -8949,7 +9089,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -9780,7 +9920,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -9913,7 +10053,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -10910,7 +11050,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -12248,7 +12388,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -13018,7 +13158,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -13737,7 +13877,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2144568381}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchMenu
         m_Mode: 5
@@ -14111,8 +14251,6 @@ GameObject:
   - component: {fileID: 2144568379}
   - component: {fileID: 2144568380}
   - component: {fileID: 2144568381}
-  - component: {fileID: 2144568382}
-  - component: {fileID: 2144568383}
   m_Layer: 0
   m_Name: sys
   m_TagString: Untagged
@@ -14133,10 +14271,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 657973541}
   - {fileID: 201656890}
   - {fileID: 1272016257}
   - {fileID: 778456376}
   - {fileID: 952552696}
+  - {fileID: 704178325}
+  - {fileID: 158860747}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2144568380
@@ -14154,7 +14295,6 @@ MonoBehaviour:
   version: mptest-1.0-rc1
   ins_buildMode: 0
   ins_startMode: 3
-  ins_gameState: 0
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14164,47 +14304,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2144568378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe966b43f840aa944839a80cc7ddb1a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4dcc1dc16b2dbbd40861289e98c964d7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  t_canvas: {fileID: 1146640996}
-  g_console: {fileID: 1721601046}
-  menuNames: []
-  menuSiblingIndices: 
-  isInMapView: 0
-  connectedclients: {fileID: 383437683}
---- !u!114 &2144568382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144568378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26a114f53c6b9b643b6f774f203dcb2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Input
-  axisSpringAmount: 100
---- !u!114 &2144568383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144568378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 633b2939715e1e54fabeeb92710fe35e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::cmd_console
-  menu: {fileID: 1721601048}
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  ins_gameState: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 751265230}
   - {fileID: 2144568379}
+  - {fileID: 751265230}
   - {fileID: 1146640996}
   - {fileID: 2038754787}
   - {fileID: 314687046}

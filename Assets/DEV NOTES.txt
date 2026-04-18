@@ -1,3 +1,8 @@
+
+**
+15k lines! that means this project is in 2nd place rn
+**
+
 PHASE I - player controller + sandbox
 PHASE II - UI 
 PHASE III - final commands (maybe title?)

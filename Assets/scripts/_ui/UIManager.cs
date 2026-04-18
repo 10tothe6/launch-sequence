@@ -47,6 +47,9 @@ public class UIManager : MonoBehaviour
 
     public void EnterMainMenu()
     {
+        GameManager.gameState = GameState.InMenu;
+
+        
         SwitchMenu("main menu");
         g_console.SetActive(false);
 

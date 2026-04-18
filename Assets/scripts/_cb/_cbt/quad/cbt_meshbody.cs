@@ -279,7 +279,7 @@ public class cbt_meshbody : MonoBehaviour
         if (GetComponent<cbr_litbody>() != null)
         {
             GetComponent<cbr_litbody>().UpdateChildren();
-            GetComponent<cbr_litbody>().Initialize();
+            GetComponent<cbr_litbody>().AssignStaticValues();
         }
     }
 

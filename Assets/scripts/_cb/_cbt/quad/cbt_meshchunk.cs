@@ -142,13 +142,15 @@ public class cbt_meshchunk : MonoBehaviour
 
         Vector3 clampedPosition = a + diff;
         
+        float rad;
         if (directRadius != 0)
         {
-            return clampedPosition.normalized * directRadius;
+            rad=directRadius;
         } else
         {
-            return clampedPosition.normalized * cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius;
+            rad = cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius;
         }
+        return clampedPosition.normalized * (rad + GetHeightAt(clampedPosition) * (rad / 1000f));
     }
 
     // what is the height of the terrain (from [0..1]) at a given point on the planet

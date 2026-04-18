@@ -271,7 +271,7 @@ MonoBehaviour:
   parentChunks: []
   detailLevelThresholds:
   - 0
-  - 2000
+  - 5000
   - 10000
   - 25000
   - 50000
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fa0a1d5a7d5f14195d1d32962e10e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_coloredmeshchunks
-  coloringMode: 0
+  coloringMode: 1
   refreshOnUpdate: 1
   debugColors:
   - {r: 1, g: 0.4509434, b: 0.4509434, a: 1}

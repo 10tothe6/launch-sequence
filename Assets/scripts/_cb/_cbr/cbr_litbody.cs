@@ -13,9 +13,20 @@ public class cbr_litbody : MonoBehaviour
     {
         UpdateChildren();
 
-        Initialize();
+        AssignStaticValues();
+    }  
+    void Update() {
+        if (fullbright != oldFullbright)
+        {
+            oldFullbright = fullbright;
+            AssignStaticValues();
+        }
+
+        AssignPeriodicValues();
     }
-    public void Initialize()
+
+    // assigns values that don't need to be updated every frame
+    public void AssignStaticValues()
     {
         // we dont really need to update the position every frame,
         // but I want to for now to make my life easier
@@ -43,13 +54,10 @@ public class cbr_litbody : MonoBehaviour
             }
         }
     }
-    void Update() {
-        if (fullbright != oldFullbright)
-        {
-            oldFullbright = fullbright;
-            UpdateChildren();
-            Initialize();
-        }
+
+    // values that DO need to be updated
+    public void AssignPeriodicValues()
+    {
         if (useIndex)
         {
             for (int i = 0; i < children.Length; i++) {
@@ -69,11 +77,13 @@ public class cbr_litbody : MonoBehaviour
         }
     }
 
+    // update which mesh renderers are tracked
+    // just called at the start, and when new chunks are subdivided
     public void UpdateChildren()
     {
         if (!useSpecificObjects)
         {
-            children = GetComponentsInChildren<MeshRenderer>();
+            children = GetComponentsInChildren<MeshRenderer>(false);
         }
     }
 }

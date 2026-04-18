@@ -48,33 +48,37 @@ public class GameManager : MonoBehaviour
     // into the main menu - this is what player's get
     public static void StartFullGame()
     {
-        StartGame();
-
-
-        UIManager.Instance.EnterMainMenu(); // this will change the gameState from InGame (thanks to StartGame() ) to InMenu
+        EnterMainMenu(); // this will change the gameState to InMenu
     }
 
     // straight into the sandbox of a singleplayer server
     public static void StartSingleplayerSandbox()
     {
-        StartGame();
+        gameState = GameState.InGame;
 
 
+        
+
+        // TODO: moving into the sandbox upon server/game start
     }
 
     // ditto as above, but for a multiplayer server
     public static void StartMultiplayerSandbox()
     {
-        StartGame();
+        gameState = GameState.InGame;
+
 
         
+
+        // TODO: moving into the sandbox  upon server/game start
     }
 
     // straight into the main game of a singleplayer server
     public static void StartSingleplayerGame()
     {
-        StartGame();
+        gameState = GameState.InGame;
 
+        
 
 
         NetworkHelper.Instance.StartSingleplayerGame();
@@ -84,13 +88,23 @@ public class GameManager : MonoBehaviour
     // straight into the main game of a multiplayer server
     public static void StartMultiplayerGame()
     {
-        StartGame();
+        gameState = GameState.InGame;
+
+
+        
     }
 
-    // called by the above five functions, before they move on to their specific duties
-    private static void StartGame()
+    public static void EnterMainMenu()
     {
-        gameState = GameState.InGame;
+        gameState = GameState.InMenu;
+
+
+
+        UIManager.Instance.EnterMainMenu();
+    }
+
+    public static void EnterSandbox() {
+        
     }
 
 

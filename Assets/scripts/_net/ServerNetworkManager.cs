@@ -166,19 +166,20 @@ public class ServerNetworkManager : MonoBehaviour
         BeginMulticastBroadcast(port);
         isServerActive = true;
     }
-    
-    // hosting and joining a server
-    public void StartAndJoinServer(ushort port, ushort maxClientCount)
+
+    public void StartMultiplayerServer(ushort clientCount)
     {
-        StartServer(port, maxClientCount);
+        cmd.LogRaw("[Server] Setting up multiplayer server on port " + NetworkResources.defaultServerPort + "...", Color.cyan);
+        StartServer(NetworkResources.defaultServerPort, clientCount);
+        ClientNetworkManager.Instance.username = "localplayer";
         ClientNetworkManager.Instance.ConnectToLocalServer();
     }
 
     // starting a singleplayer world
     public void StartSingleplayerServer()
     {
-        cmd.LogRaw("[Server] Setting up singleplayer server on port " + 7770 + "...", Color.cyan);
-        StartServer(7770, 1);
+        cmd.LogRaw("[Server] Setting up singleplayer server on port " + NetworkResources.defaultServerPort + "...", Color.cyan);
+        StartServer(NetworkResources.defaultServerPort, 1);
         ClientNetworkManager.Instance.username = "localplayer";
         ClientNetworkManager.Instance.ConnectToLocalServer();
     }

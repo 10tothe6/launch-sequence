@@ -36,4 +36,10 @@ public class NetworkHelper : MonoBehaviour
     {
         ServerNetworkManager.Instance.StartSingleplayerServer();
     }
+
+    public void StartMultiplayerGame()
+    {
+        // 4 clients default
+        ServerNetworkManager.Instance.StartMultiplayerServer(4);
+    }
 }

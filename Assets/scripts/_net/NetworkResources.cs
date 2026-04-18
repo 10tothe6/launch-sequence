@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// variables/data for the network
+
 public class NetworkResources : MonoBehaviour
 {
     private static NetworkResources _instance;
@@ -24,10 +26,16 @@ public class NetworkResources : MonoBehaviour
     void Awake()
     {
         Instance = this;
+
+
         lanMulticastAddress = ins_lanMulticastAddress;
+        defaultServerPort = ins_defaultServerPort;
     }
 
     public Sprite[] permissionLevelIcons;
     public string ins_lanMulticastAddress;
     public static string lanMulticastAddress;
+
+    public ushort ins_defaultServerPort;
+    public static ushort defaultServerPort;
 }

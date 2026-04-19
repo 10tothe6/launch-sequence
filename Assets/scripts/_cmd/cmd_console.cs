@@ -192,7 +192,7 @@ public class cmd_console : MonoBehaviour
                     }
                 }
 
-                ClientNetworkManager.Instance.SendChatMessageToServer(chatMessage);
+                ClientSenders.Instance.SendChatMessageToServer(chatMessage);
             } else
             {
                 cmd.Log("you need to provide a chat message when using the 'chat' command.");

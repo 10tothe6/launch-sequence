@@ -116,7 +116,7 @@ public class ServerNetworkManager : MonoBehaviour
             GetClientFromUsername(username).permissionLevel = newPermissionLevel;
         } else
         {
-            ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("p"), new string[] {username, newPermissionLevel.ToString()});
+            ClientSenders.Instance.SendCommandRequest(cmd_console.GetCommandData("p"), new string[] {username, newPermissionLevel.ToString()});
         }
     }
 
@@ -131,7 +131,7 @@ public class ServerNetworkManager : MonoBehaviour
         } else
         {
             // sending a 'command request' over to the server
-            ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("wlist"), new string[] {username});
+            ClientSenders.Instance.SendCommandRequest(cmd_console.GetCommandData("wlist"), new string[] {username});
         }
     }
     public void BlacklistPlayer(string username)
@@ -148,7 +148,7 @@ public class ServerNetworkManager : MonoBehaviour
             if (LocalPlayer.localClient.CanUseCommands())
             {
                 // sending a 'command request' over to the server
-                ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("blist"), new string[] {username});
+                ClientSenders.Instance.SendCommandRequest(cmd_console.GetCommandData("blist"), new string[] {username});
             }
         }
     }
@@ -161,7 +161,7 @@ public class ServerNetworkManager : MonoBehaviour
             SendPlayerKickRequest(username, "kicked via command");
         } else
         {
-            ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("kick"), new string[] {username});
+            ClientSenders.Instance.SendCommandRequest(cmd_console.GetCommandData("kick"), new string[] {username});
         }
     }
 

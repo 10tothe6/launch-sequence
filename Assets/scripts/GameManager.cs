@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
     public static void TrySwitchToSandbox() {
         ServerNetworkManager.Instance.onJoinServer.RemoveListener(TrySwitchToSandbox);
 
-        ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("sbox"), new string[] {LocalPlayer.localClient.username});
+        ClientSenders.Instance.SendCommandRequest(cmd_console.GetCommandData("sbox"), new string[] {LocalPlayer.localClient.username});
     }
 
     // once we've actually done the beforehand work

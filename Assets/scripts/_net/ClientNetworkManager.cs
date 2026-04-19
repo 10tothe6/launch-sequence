@@ -168,6 +168,16 @@ public class ClientNetworkManager : MonoBehaviour
         Instance.client.Disconnect();
     }
 
+    [MessageHandler((ushort)ServerToClientId.spawn_entity)]
+    private static void HandleSpawnEntity(Message message)
+    {
+        string data = message.GetString();
+        int index = message.GetInt();
+
+        cmd.LogRaw($"[Client] Spawning new entity...", Color.yellow);
+        EntityManager.Instance.SpawnNewEntity(index, data);
+    }
+
     [MessageHandler((ushort)ServerToClientId.join_denied)]
     private static void HandleJoinDenial(Message message)
     {

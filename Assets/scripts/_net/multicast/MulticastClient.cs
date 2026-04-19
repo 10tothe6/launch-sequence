@@ -118,7 +118,7 @@ public class MulticastClient : MonoBehaviour
             {
                 if (Time.time > periodicMessages[i].lastBroadcastTime + periodicMessages[i].broadcastFrequency)
                 {
-                    cmd.LogRaw("[Server] broadcasting server info...",Color.green);
+                    //cmd.LogRaw("[Server] broadcasting server info...",Color.green);
 
                     // do the broadcast, and update the last broadcast time
                     SetSendAddress(periodicMessages[i].ip);

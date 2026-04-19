@@ -71,6 +71,38 @@ public class EntityManager : MonoBehaviour
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
 
+
+    // this function ONLY runs on the server
+    public void RemoveEntity(int entityIndex)
+    {
+        e_genericentity toRemove = GetEntityFromIndex(entityIndex);
+
+
+        // removing from the main list
+        allEntities.Remove(toRemove);
+        
+
+        // removing from the specific lists
+        if (toRemove.GetComponent<e_fixedentity>() != null)
+        {
+            fixedEntities.Remove(toRemove.GetComponent<e_fixedentity>());
+        } else if (toRemove.GetComponent<e_floatingentity>() != null)
+        {
+            floatingEntities.Remove(toRemove.GetComponent<e_floatingentity>());
+        } else if (toRemove.GetComponent<e_mimicentity>() != null)
+        {
+            mimicEntities.Remove(toRemove.GetComponent<e_mimicentity>());
+        }
+
+
+        // last but not least, we kill the game object
+        Destroy(toRemove.gameObject);
+
+
+        // updating all the other clients of the murder
+        ServerSenders.Instance.SendKillEntity(entityIndex);
+    }
+
     public void UpdateAllEntityPositions()
     {
         for (int i = 0; i < allEntities.Count; i++)

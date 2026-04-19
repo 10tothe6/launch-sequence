@@ -28,7 +28,15 @@ public class ServerSenders : MonoBehaviour
     }
 
 
+    public void SendKillEntity(int index)
+    {
+        Message kill = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.kill_entity);
 
+        kill.AddInt(index);
+
+        // because this is only run on the server, we can assume the local client has been updated already
+        SendToAllExceptLocal(kill);
+    }
 
     public void SendPlayerKickRequest(string username, string reason)
     {

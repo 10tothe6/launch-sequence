@@ -99,6 +99,9 @@ public class cmd_console : MonoBehaviour
         new cmd_consolecommand(new string[]{"exception","exc"},false),
 
 
+        new cmd_consolecommand(new string[]{"kill"},false), // killing an entity
+
+
         // FUTURE:
         new cmd_consolecommand(new string[]{"timeset","t"},false), // set time 
         new cmd_consolecommand(new string[]{"title"},false), // big text for all players
@@ -206,6 +209,16 @@ public class cmd_console : MonoBehaviour
         {
             // this command literally just tries to throw an error
             MakeException();
+        }
+
+
+        else if (GetCommandData("kill").IsValid(items[0]))
+        {
+            int entityIndex;
+            if (int.TryParse(items[1], out entityIndex))
+            {
+                EntityManager.Instance.RemoveEntity(entityIndex);
+            }
         }
 
         else if (GetCommandData("spawn").IsValid(items[0])) // spawn

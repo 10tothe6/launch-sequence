@@ -54,28 +54,35 @@ public class ui_connectionmenu : MonoBehaviour
 
     public void ReceiveMulticastUpdate(string ip, string data)
     {
-        string serverIP = ip;
+        string[] splitData = util_string.SplitByChar(data,':');
+
+        
+
+        string serverIP = splitData[0];
 
         if (!util_network.IsValidIP(serverIP))
         {
             return;
         }
 
-        string[] splitData = util_string.SplitByChar(data,':');
+        
 
         ushort port;
-        if (!ushort.TryParse(splitData[0], out port))
+        if (!ushort.TryParse(splitData[1], out port))
         {
             return;
         }
 
-        string serverName = splitData[1];
+        
+
+        string serverName = splitData[2];
 
         TryAddLANGame(serverIP, port, serverName);
     }
 
     public void TryAddLANGame(string ip, ushort port, string name)
     {
+        if (!gameObject.activeSelf) {return;}
         int gameIndex = LANGameIndex(ip);
 
         if (gameIndex != -1)
@@ -83,16 +90,21 @@ public class ui_connectionmenu : MonoBehaviour
             lastHeardFromServers[gameIndex] = Time.time; // refreshing an existing game
         } else
         {
+           
             net_serverdata newServer = new net_serverdata();
+           
 
             newServer.ip = ip;
             newServer.port = port;
             // no need for maxclients here
             newServer.name = name;
+            
 
             foundServerData.Add(newServer);
+           
             lastHeardFromServers.Add(Time.time);
 
+           
             GameObject g_newElement = lanGames.AddItem(name);
 
             // here is where we tell the button component what to do when clicked

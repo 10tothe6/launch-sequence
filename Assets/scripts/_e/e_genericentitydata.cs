@@ -58,7 +58,15 @@ public class e_genericentitydata
 
     public string GetRawPackagedData()
     {
-        return "";
+        string result = "";
+
+        result += index;
+        result += ":";
+        result += entityName;
+        result += ":";
+        result += localPosition.AsRawString();
+
+        return result;
     }
 
     public net_packagedentitydata GetPackagedData()
@@ -73,7 +81,12 @@ public class e_genericentitydata
 
     public void SetPackagedData(string data)
     {
-        
+        string[] split = util_string.SplitByChar(data, ':');
+
+        index = int.Parse(split[0]);
+        entityName = split[1];
+
+        localPosition = num_precisevector3.FromString(split[2]);
     }
 
     public num_precisevector3 GetPosition()

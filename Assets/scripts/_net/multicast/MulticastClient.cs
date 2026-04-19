@@ -42,6 +42,7 @@ public class MulticastClient : MonoBehaviour
 
         monitoredAddresses = new List<string>();
         periodicMessages = new List<net_periodicmessage>();
+        caughtMessages = new string[0];
     }
 
     void Start()
@@ -60,6 +61,8 @@ public class MulticastClient : MonoBehaviour
     public UnityEvent<string,string> onReceiveMessage;
 
     public List<net_periodicmessage> periodicMessages;
+
+    private string[] caughtMessages; // this is dumb
 
     void OnApplicationQuit()
     {
@@ -112,7 +115,13 @@ public class MulticastClient : MonoBehaviour
         if (updatePeriodically)
         {
             // TODO: run less periodically
-            Task.Run(() => UpdateClient());
+            Task.Run(() => {caughtMessages = UpdateClient();});
+
+            for (int i = 0; i < caughtMessages.Length; i++)
+            {
+                if (string.IsNullOrEmpty(caughtMessages[i])) {continue;}
+                onReceiveMessage.Invoke(monitoredAddresses[i],caughtMessages[i]);
+            }
 
             for (int i = 0; i < periodicMessages.Count; i++)
             {
@@ -130,8 +139,9 @@ public class MulticastClient : MonoBehaviour
         }
     }
 
-    public void UpdateClient()
+    public string[] UpdateClient()
     {
+        string[] result = new string[monitoredAddresses.Count];
         // check if any messages have come through on the addresses we're watching out for
         for (int i = 0; i < monitoredAddresses.Count; i++)
         {
@@ -141,8 +151,9 @@ public class MulticastClient : MonoBehaviour
             string msg = Encoding.UTF8.GetString(data);
 
             // we include which address the message came from
-            onReceiveMessage.Invoke(monitoredAddresses[i],msg);
+            result[i] = msg;
         }
+        return result;
     }
     
     public void SendMulticastMessage(string msg)

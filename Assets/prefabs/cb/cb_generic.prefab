@@ -372,7 +372,7 @@ MonoBehaviour:
   useSpecificObjects: 0
   useIndex: 0
   bodyIndex: 0
-  fullbright: 0
+  fullbright: 1
 --- !u!1 &8827367443003885876
 GameObject:
   m_ObjectHideFlags: 0

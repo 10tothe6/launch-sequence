@@ -98,9 +98,7 @@ public class cb_renderingmanager : MonoBehaviour
         inflationRadius = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].data.tConfig.equitorialRadius + 300;
 
         if (LocalPlayer.localClient == null) {return;}
-        // we have merged cbp_poseinfo and e_floatingentity to serve the same function,
-        // so the position doesn't need to be updated
-
+        
         if (LocalPlayer.localClient.controllingEntity != null)
         {
             // this is the code that "corrects" the world when you get too far from the origin
@@ -110,12 +108,10 @@ public class cb_renderingmanager : MonoBehaviour
                 num_precisevector3 shoveFactor = new num_precisevector3(LocalPlayer.localClient.controllingEntity.data.reference.position).Mul(-1);
                 // player is too far from (0, 0, 0) so shove em' back
                 worldOffset = worldOffset.Add(shoveFactor);
-
-                // same with the spacecrafts, but this is unused rn
-                // for (int i = 0; i < spacecraft.Count; i++)
-                // {
-                //     spacecraft[i].reference.position += shoveFactor;
-                // }
+                if (LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>() != null)
+                {
+                    LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>().shoveFactor = shoveFactor.ToVector3();
+                }
 
                 LocalPlayer.localClient.controllingEntity.data.reference.position = Vector3.zero;
             }

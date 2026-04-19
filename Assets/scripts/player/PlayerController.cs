@@ -21,8 +21,6 @@ public enum player_movementmode
 // it's given keypresses through a public function, 
 // then uses those
 
-// TODO: have a peek at the old player controller and steal some of its tricks (like camera tilting)
-
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
@@ -113,6 +111,9 @@ public class PlayerController : MonoBehaviour
     private float walkingTime;
 
     private bool isFlying; // either flying OR noclip
+
+    public Vector3 shoveFactor;
+    private Vector3 oldPosition;
     /**/
     #endregion
 
@@ -155,6 +156,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!isActive) {return;}
+
+        // updating the entity position from the rigidbody
+        entityData.data.SetPosition(entityData.data.localPosition.Add(new num_precisevector3(transform.position - oldPosition -shoveFactor)));
+        shoveFactor = Vector3.zero;
+        oldPosition = transform.position;
+
         if (t_camera != null) t_camera.localPosition = new Vector3(0, currentCameraHeight, 0);
         float cameraTiltTarget = 0;
 

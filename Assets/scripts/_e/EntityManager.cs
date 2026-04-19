@@ -77,6 +77,7 @@ public class EntityManager : MonoBehaviour
     {
         e_genericentity toRemove = GetEntityFromIndex(entityIndex);
 
+        if (toRemove.data.entityPrefabIndex == 0) {return;} // no killing freecam entities!!!
 
         // removing from the main list
         allEntities.Remove(toRemove);

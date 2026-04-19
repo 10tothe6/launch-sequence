@@ -2350,6 +2350,8 @@ GameObject:
   - component: {fileID: 201656895}
   - component: {fileID: 201656897}
   - component: {fileID: 201656896}
+  - component: {fileID: 201656899}
+  - component: {fileID: 201656898}
   m_Layer: 0
   m_Name: network
   m_TagString: Untagged
@@ -2488,6 +2490,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff2d881561793f34f89f0e214f16a147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClientSenders
+--- !u!114 &201656898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201656889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24018f9aa3e92c48b6d366b18312e43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ServerSenders
+--- !u!114 &201656899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201656889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b9e552882be434b87e7460f4ce21da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ServerHandlers
 --- !u!1 &206394645
 GameObject:
   m_ObjectHideFlags: 0

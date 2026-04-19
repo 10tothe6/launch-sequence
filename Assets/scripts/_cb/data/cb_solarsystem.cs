@@ -213,8 +213,7 @@ public class cb_solarsystem : MonoBehaviour
     // makes more sense to throw this function inside the class itself... i think
     public void Generate(int worldSeed)
     {   
-        // TODO: make the world seed actually work
-
+        System.Random pRandom = new System.Random(worldSeed);
 
         // getting rid of any existing body objects
         ui_canvasutils.DestroyChildren(t_bodyContainer.gameObject);
@@ -241,7 +240,7 @@ public class cb_solarsystem : MonoBehaviour
         }
 
         // systems can't have no planets, but they CAN have one
-        int planetCap = Random.Range(Instance.minimumPlanetCount,Instance.maximumPlanetCount);
+        int planetCap = pRandom.Next(Instance.minimumPlanetCount,Instance.maximumPlanetCount);
 
         currentPlanetCount = planetCap;
 
@@ -254,7 +253,7 @@ public class cb_solarsystem : MonoBehaviour
 
         for (int i = 0; i < planetCap; i++)
         {
-            currentRadius += Random.Range(minimumPlanetSpacing * WorldData.universalScaleFactor, maximumPlanetSpacing * WorldData.universalScaleFactor);
+            currentRadius += util_math.ExpandToRange((float)pRandom.NextDouble(), minimumPlanetSpacing * WorldData.universalScaleFactor, maximumPlanetSpacing * WorldData.universalScaleFactor);
 
             if (currentRadius >= maximumSystemRadius * WorldData.universalScaleFactor)
             {
@@ -269,7 +268,7 @@ public class cb_solarsystem : MonoBehaviour
                 // planets further out should be more likely to be gas giants
                 float jovianChance = PercentChanceForJovian(currentRadius);
 
-                if (Random.Range(0f, 1000f) < 1000f * jovianChance)
+                if (util_math.ExpandToRange((float)pRandom.NextDouble(), 0f,1000f) < 1000f * jovianChance)
                 {
                     bodyType = (ushort)cb_bodytype.Jovian;
                 }
@@ -301,7 +300,7 @@ public class cb_solarsystem : MonoBehaviour
             {
                 // like planets, moons stop either when we reach the cap or the max radius
 
-                currentRadius += Random.Range(minimumMoonSpacing * WorldData.universalScaleFactor, maximumMoonSpacing * WorldData.universalScaleFactor);
+                currentRadius += util_math.ExpandToRange((float)pRandom.NextDouble(), minimumMoonSpacing * WorldData.universalScaleFactor, maximumMoonSpacing * WorldData.universalScaleFactor);
 
                 if (currentRadius >= maximumPlanetarySystemRadius * WorldData.universalScaleFactor)
                 {
@@ -319,7 +318,7 @@ public class cb_solarsystem : MonoBehaviour
             }
         }
 
-        temporalOffset = Random.Range(10f, 30f);
+        temporalOffset = util_math.ExpandToRange((float)pRandom.NextDouble(), 10f, 30f);
         SetTimeOffset(0);
 
         // making sure every cb knows what its moons are

@@ -9393,7 +9393,7 @@ MonoBehaviour:
     surfaceRadius: 50
     densityFalloff: 1
     scatterCoefficients: {x: 0.24011013, y: 0.16726786, z: 0.09221831}
-    planetScale: 0.8
+    planetScale: 0.001
     densityMultiplier: 0.15
     luminance: 50
     externalBrightness: 1

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class util_math
 {
+    public static float ExpandToRange(float val, float min, float max)
+    {
+        return Mathf.Lerp(min, max, val);
+    }
     public static float ProjectedMagnitude(UnityEngine.Vector3 a, UnityEngine.Vector3 b)
     {
         UnityEngine.Vector3 p = UnityEngine.Vector3.Project(a,b);

@@ -143,6 +143,8 @@ public class cb_trackedbody : MonoBehaviour
     // jovian plantes ALWAYS HAVE 2 EXOTIC GASSES, chance to have 3 or 4
     //      this is because collecting gas from a jovian planet's atmosphere and bringing it back is incredibly hard
     // moons, of course, have no atmosphere
+
+    // TODO: not use diceroll
     public void BuildAtmosphereBasedOnBodyType(ushort type)
     {
         data.tConfig.defaultAtmosphereGasTypes = new List<int>();
@@ -212,6 +214,7 @@ public class cb_trackedbody : MonoBehaviour
 
     public void FillDataBasedOnBodyType(ushort type)
     {
+        System.Random pRandom = new System.Random(WorldManager.Instance.worldSeed);
         data.bodyType = type;
 
         data.hasSurface = !(type == (ushort)cb_bodytype.Jovian);
@@ -220,7 +223,7 @@ public class cb_trackedbody : MonoBehaviour
 
         if (type == (ushort)cb_bodytype.Stellar)
         {
-            data.tConfig.equitorialRadius = Random.Range(
+            data.tConfig.equitorialRadius = util_math.ExpandToRange((float)pRandom.NextDouble(),
                 cb_solarsystem.Instance.minimumStellarSurfaceRadius,
                 cb_solarsystem.Instance.maximumStellarSurfaceRadius
             ) * WorldData.universalScaleFactor;
@@ -229,16 +232,17 @@ public class cb_trackedbody : MonoBehaviour
         // sizes are based on ranges for each planet type
         if (type == (ushort)cb_bodytype.Terran)
         {
-            data.tConfig.equitorialRadius = Random.Range(
+            data.tConfig.equitorialRadius = util_math.ExpandToRange((float)pRandom.NextDouble(),
                 cb_solarsystem.Instance.minimumTerranSurfaceRadius,
                 cb_solarsystem.Instance.maximumTerranSurfaceRadius
             ) * WorldData.universalScaleFactor;
 
+            // TODO: no diceroll
             data.hasAtmosphere = util_math.DiceRoll(cb_solarsystem.Instance.chanceForTerranAtmosphere);
 
             if (data.hasAtmosphere)
             {
-                data.tConfig.atmosphericRadius = Random.Range(
+                data.tConfig.atmosphericRadius = util_math.ExpandToRange((float)pRandom.NextDouble(),
                     cb_solarsystem.Instance.minimumTerranAtmosphereRadius,
                     cb_solarsystem.Instance.maximumTerranAtmosphereRadius
                 ) * WorldData.universalScaleFactor;
@@ -251,14 +255,14 @@ public class cb_trackedbody : MonoBehaviour
         } 
         else if (type == (ushort)cb_bodytype.Jovian)
         {
-            data.tConfig.equitorialRadius = Random.Range(
+            data.tConfig.equitorialRadius = util_math.ExpandToRange((float)pRandom.NextDouble(),
                 cb_solarsystem.Instance.minimumJovianSurfaceRadius,
                 cb_solarsystem.Instance.maximumJovianSurfaceRadius
             ) * WorldData.universalScaleFactor;
 
             data.hasAtmosphere = true; // if you think about it, the planet is ONLY atmosphere
 
-            data.tConfig.atmosphericRadius = Random.Range(
+            data.tConfig.atmosphericRadius = util_math.ExpandToRange((float)pRandom.NextDouble(),
                 cb_solarsystem.Instance.minimumJovianAtmosphereRadius,
                 cb_solarsystem.Instance.maximumJovianAtmosphereRadius
             ) * WorldData.universalScaleFactor;
@@ -267,7 +271,7 @@ public class cb_trackedbody : MonoBehaviour
         } 
         else if (type == (ushort)cb_bodytype.TerranMoon)
         {
-            data.tConfig.equitorialRadius = Random.Range(
+            data.tConfig.equitorialRadius = util_math.ExpandToRange((float)pRandom.NextDouble(),
                 cb_solarsystem.Instance.minimumTerranLunarSurfaceRadius,
                 cb_solarsystem.Instance.maximumTerranLunarSurfaceRadius
             ) * WorldData.universalScaleFactor;
@@ -277,7 +281,7 @@ public class cb_trackedbody : MonoBehaviour
         } 
         else if (type == (ushort)cb_bodytype.JovianMoon)
         {
-            data.tConfig.equitorialRadius = Random.Range(
+            data.tConfig.equitorialRadius = util_math.ExpandToRange((float)pRandom.NextDouble(),
                 cb_solarsystem.Instance.minimumJovianLunarSurfaceRadius,
                 cb_solarsystem.Instance.maximumJovianLunarSurfaceRadius
             ) * WorldData.universalScaleFactor;

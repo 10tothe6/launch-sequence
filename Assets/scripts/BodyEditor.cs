@@ -45,6 +45,7 @@ public class BodyEditor : MonoBehaviour
 
     public void SetupEditor()
     {
+        UIManager.Instance.SwitchMenu("");
         CameraController.SetControlMode(CameraControlMode.BodyEditor);
         isActive = true;
         comp.enabled = true;

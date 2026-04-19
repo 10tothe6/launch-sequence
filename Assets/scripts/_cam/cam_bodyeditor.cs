@@ -50,7 +50,7 @@ public class cam_bodyeditor : MonoBehaviour
             // the body is always located at (0,0,0) so we don't need a ref
             transform.position = -transform.forward * viewDist;
 
-            viewDist += Input.scrollWheelAxis * scrollSpeed;
+            viewDist += Input.scrollWheelAxis * -scrollSpeed;
         }
     }
 }

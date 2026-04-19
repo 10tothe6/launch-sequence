@@ -145,7 +145,7 @@ Shader "cbr/atmospheres"
             float opticalDepth(float3 rayOrigin, float3 rayDir, float rayLength) {
                 float3 samplePoint = rayOrigin;
 
-                int numOpticalDepthPoints = 4;
+                int numOpticalDepthPoints = 7;
                 float stepSize = rayLength / (numOpticalDepthPoints-1);
 
                 float opticalDepth = 0;
@@ -161,7 +161,7 @@ Shader "cbr/atmospheres"
 
             float3 calculateLight(float3 rayOrigin, float3 rayDir, float rayLength, float3 originalColor) { //
                 // no engine units here
-                int numInscatteringPoints = 4;
+                int numInscatteringPoints = 7;
                 float stepSize = rayLength / (numInscatteringPoints-1);
 
                 float3 inScatterPoint = rayOrigin;

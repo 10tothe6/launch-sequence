@@ -161,7 +161,7 @@ public class ServerHandlers : MonoBehaviour
             // we assume that if we're getting this message then the client has perms (i.e. the check is done client-side)
 
             // anyways, look at this look at how convinient this is
-            cmd_console.Instance.ProcessMessage(constructedMessage);
+            cmd_console.Instance.ProcessMessage(constructedMessage, fromClientId);
         } else
         {
             cmd.LogRaw($"[Server] blocked command ({cmdName}) request from client {fromClientId} cuz perms", Color.cyan);

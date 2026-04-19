@@ -234,8 +234,11 @@ public class ServerNetworkManager : MonoBehaviour
         if (client.controllingEntity != null) {client.controllingEntity.onExitControl.Invoke();}
 
         client.controllingEntity = entity;
-        cb_renderingmanager.Instance.RenderFrom(entity.data.GetPosition());
-        entity.onEnterControl.Invoke();
+        if (clientId == LocalPlayer.localClient.client_index)
+        {
+            cb_renderingmanager.Instance.RenderFrom(entity.data.GetPosition());
+            entity.onEnterControl.Invoke();
+        }
 
         if (ServerNetworkManager.Instance.isServerActive)
         {

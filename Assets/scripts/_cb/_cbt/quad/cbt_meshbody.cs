@@ -267,6 +267,7 @@ public class cbt_meshbody : MonoBehaviour
             {
                 // max detail chunks need colliders
                 input.children[i].t_model.gameObject.AddComponent<MeshCollider>();
+                input.children[i].t_model.gameObject.layer = 8; // walkable layer
             }
 
             newChunks.Add(input.children[i]);

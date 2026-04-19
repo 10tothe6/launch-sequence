@@ -157,6 +157,12 @@ public class PlayerController : MonoBehaviour
     {
         if (!isActive) {return;}
 
+        gravityDirection = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].pose.data.GetPosition().Sub(entityData.data.GetPosition()).Norm().ToVector3();
+        if (Vector3.Angle(transform.up, -gravityDirection) > 5)
+        {
+            transform.rotation *= Quaternion.FromToRotation(transform.up, -gravityDirection);
+        }
+
         // updating the entity position from the rigidbody
         entityData.data.SetPosition(entityData.data.localPosition.Add(new num_precisevector3(transform.position - oldPosition -shoveFactor)));
         shoveFactor = Vector3.zero;
@@ -291,7 +297,7 @@ public class PlayerController : MonoBehaviour
         if (!lockCameraHorizontal)
         {
             //transform.rotation *= Quaternion.Euler(new Vector3(0, 1, 0) * Input.GetAxis("Mouse X") * cameraTurnSpeed);
-            transform.Rotate(Vector3.up * lastPacket.horizontalMouse * turnSpeed * Time.deltaTime, Space.World);
+            transform.Rotate(-gravityDirection * lastPacket.horizontalMouse * turnSpeed * Time.deltaTime, Space.World);
         }
 
         // mouse y leads to a rotation around the CAMERA's right vector

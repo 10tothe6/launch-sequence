@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fa0a1d5a7d5f14195d1d32962e10e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_coloredmeshchunks
-  coloringMode: 0
+  coloringMode: 3
   refreshOnUpdate: 1
   debugColors:
   - {r: 1, g: 0.4509434, b: 0.4509434, a: 1}
@@ -6519,7 +6519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ui_rainbow
   i: {fileID: 0}
   tx: {fileID: 818223361}
-  speed: 0.5
+  speed: 1
 --- !u!1 &826572361
 GameObject:
   m_ObjectHideFlags: 0
@@ -14843,7 +14843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da38d6fc5ad2cde43b43e8e2cb1d9a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Program
-  version: mptest-1.0-rc14
+  version: mptest-1.0-rc15
   ins_buildMode: 0
   ins_startMode: 0
 --- !u!114 &2144568381

@@ -157,7 +157,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!isActive) {return;}
 
-        gravityDirection = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].pose.data.GetPosition().Sub(entityData.data.GetPosition()).Norm().ToVector3();
+        if (entityData.data.index < 0)
+        {
+            // sanbox
+            gravityDirection = -Vector3.up;
+        } else
+        {
+            gravityDirection = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].pose.data.GetPosition().Sub(entityData.data.GetPosition()).Norm().ToVector3();
+        }
         if (Vector3.Angle(transform.up, -gravityDirection) > 5)
         {
             transform.up = -gravityDirection;
@@ -177,10 +184,13 @@ public class PlayerController : MonoBehaviour
             t_foot.transform.localPosition = new Vector3(0,-col.height/2f*col.transform.localScale.y, 0);
         } else {col.height = colDefaultHeight;t_foot.transform.localPosition = new Vector3(0,-col.height/2f*col.transform.localScale.y, 0);}
 
+        //Debug.Log(ImprovedRaycast());
         if (!lockMovement && ImprovedRaycast() && !isFlying)
         {
+            
             if (lastPacket.forward)
             {
+                //Debug.Log(2222);
                 if (isSprinting)
                 {
                     walkingTime += Time.deltaTime * sprintBoost;
@@ -200,6 +210,7 @@ public class PlayerController : MonoBehaviour
                 if (lastPacket.sprint && sprintValue > 0 && allowSprint)
                 {
                     isSprinting = true;
+                    
                     rb.linearVelocity += transform.forward * moveSpeed * sprintBoost * Time.deltaTime;
 
                     if (Time.time > sprintTimer + 0.05f)
@@ -211,6 +222,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     isSprinting = false;
+                    //Debug.Log(3333);
                     rb.linearVelocity += transform.forward * moveSpeed * Time.deltaTime;
                 }
             }
@@ -361,19 +373,19 @@ public class PlayerController : MonoBehaviour
     // so we're shooting more rays now
     bool ImprovedRaycast()
     {
-        if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        if (Physics.Raycast(t_foot.position + -gravityDirection * 0.05f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
-        } else if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f + transform.right * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        } else if (Physics.Raycast(t_foot.position + -gravityDirection * 0.05f + transform.right * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
-        } else if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f + transform.right * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        } else if (Physics.Raycast(t_foot.position + -gravityDirection * 0.05f + transform.right * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
-        } else if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f + transform.forward * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        } else if (Physics.Raycast(t_foot.position + -gravityDirection * 0.05f + transform.forward * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
-        } else if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f + transform.forward * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        } else if (Physics.Raycast(t_foot.position + -gravityDirection * 0.05f + transform.forward * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
         }

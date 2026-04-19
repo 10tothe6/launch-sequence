@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
         WorldManager.Instance.GenerateNewWorld(worldSeed);
 
         SwitchToGame();
+        cb_mainmenucontroller.Instance.Hide();
         // the enabling of the component is done on cam_freecam.cs for now
     }
 
@@ -122,6 +123,7 @@ public class GameManager : MonoBehaviour
         gameState = GameState.InMenu;
 
         UIManager.Instance.EnterMainMenu();
+        cb_mainmenucontroller.Instance.Show();
     }
 
 

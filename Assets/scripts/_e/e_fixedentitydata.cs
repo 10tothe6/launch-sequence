@@ -30,7 +30,11 @@ public class e_fixedentitydata
 
         // }
         
-        if (LocalPlayer.localClient.controllingEntity != null) {
+        if (LocalPlayer.IsControllingEntity()) {
+            if (LocalPlayer.localClient.controllingEntity == generic)
+            {
+                return;
+            }
             num_precisevector3 pos = generic.data.GetPosition();
 
             // set the transform's position basee on the world offset

@@ -36,6 +36,16 @@ public class cb_mainmenucontroller : MonoBehaviour
         transform.GetChild(0).GetComponent<test_drawmeshbody>().Draw();
     }
 
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
     void Update()
     {
         t_body.Rotate(Vector3.up * Time.deltaTime * rotSpeed, Space.World);

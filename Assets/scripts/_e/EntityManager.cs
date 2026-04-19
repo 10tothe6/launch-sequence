@@ -180,7 +180,7 @@ public class EntityManager : MonoBehaviour
         if (ServerNetworkManager.Instance.isServerActive)
         {
             // since we're on a server, we need to tell everyone BUT the local clients
-            ServerNetworkManager.Instance.SendNewEntity(g_newEntity);
+            ServerSenders.Instance.SendNewEntity(g_newEntity);
         }
 
         return g_newEntity;
@@ -217,7 +217,7 @@ public class EntityManager : MonoBehaviour
         if (ServerNetworkManager.Instance.isServerActive)
         {
             // since we're on a server, we need to tell everyone BUT the local clients
-            ServerNetworkManager.Instance.SendNewEntity(g_newEntity);
+            ServerSenders.Instance.SendNewEntity(g_newEntity);
         }
 
         return g_newEntity;

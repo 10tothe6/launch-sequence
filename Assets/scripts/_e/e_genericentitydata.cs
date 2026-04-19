@@ -51,7 +51,7 @@ public class e_genericentitydata
 
             if (doICare)
             {
-                ServerNetworkManager.Instance.SendEntityPositionUpdates(new int[] {index});
+                ServerSenders.Instance.SendEntityPositionUpdates(new int[] {index});
             }
         }
     }

@@ -29,7 +29,7 @@ public class Sandbox : MonoBehaviour
 
     public GameObject g_parent;
 
-    private bool isActive;
+    //private bool isActive;
 
     // called when the game boots into sandbox mode
     // TODO: allow the user to enter sandbox mode from the console, not just the unity editor
@@ -37,13 +37,13 @@ public class Sandbox : MonoBehaviour
     public void EnterSandbox()
     {
         g_parent.SetActive(true);
-        isActive = true;
+        //isActive = true;
     }
 
     public void ExitSandbox()
     {
         g_parent.SetActive(false);
-        isActive = false;
+        //isActive = false;
     }
 
     public void UpdateSandbox()

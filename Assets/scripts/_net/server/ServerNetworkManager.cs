@@ -88,9 +88,9 @@ public class ServerNetworkManager : MonoBehaviour
         onPlayerLeave.Invoke(playerUsername);
 
         // now send the message that updates all of the other clients
-        SendPlayerRemoveNotice(GetClientFromUsername(playerUsername).client_index);
+        ServerSenders.Instance.SendPlayerRemoveNotice(GetClientFromUsername(playerUsername).client_index);
 
-        SendPlayerKickRequest(playerUsername, "you wanted to leave");
+        ServerSenders.Instance.SendPlayerKickRequest(playerUsername, "you wanted to leave");
         connectedClients.Remove(clientToRemove);
     }
 
@@ -158,7 +158,7 @@ public class ServerNetworkManager : MonoBehaviour
         if (isServerActive)
         {
             // like all other commands, we assume the local player is an admin because they are literally always an admin
-            SendPlayerKickRequest(username, "kicked via command");
+            ServerSenders.Instance.SendPlayerKickRequest(username, "kicked via command");
         } else
         {
             ClientSenders.Instance.SendCommandRequest(cmd_console.GetCommandData("kick"), new string[] {username});
@@ -220,292 +220,6 @@ public class ServerNetworkManager : MonoBehaviour
         } 
     }
 
-    public void StopServer()
-    {
-        // before actually stopping the server, we kick all clients - telling them the server was closed
-        for (int i = 0; i < connectedClients.Count; i++)
-        {
-            SendPlayerKickRequest(connectedClients[i].username, "server closed");
-        }
-        isServerActive = false;
-        server.Stop();
-    }
-
-    [MessageHandler((ushort)ClientToServerId.join_request)]
-    private static void HandleJoinRequest(ushort fromClientId, Message message)
-    {
-        string username = message.GetString();
-        string version = message.GetString();
-
-        cmd.LogRaw($"[Server] Received join request from '{username}'. Validating...", Color.cyan);        
-
-        if (Instance.IsUsernameTaken(username))
-        {
-            Instance.SendJoinDenial(fromClientId, "duplicate username");
-            cmd.LogRaw($"[Server] Client denied. Reason: duplicate username.", Color.cyan);
-        } 
-        else if (Program.Instance.version != version)
-        {
-            Instance.SendJoinDenial(fromClientId, "wrong version");
-            cmd.LogRaw($"[Server] Client denied. Reason: wrong game version.", Color.cyan);
-        }
-
-        
-        else
-        {
-            bool passedListCheck = false;
-
-            if (Instance.useWhitelist)
-            {
-                // whitelist check
-
-                // TODO: use the GetIP() function
-                if (Instance.whitelist.Contains(util_network.RemovePortFromIp(Instance.server.Clients[fromClientId-1].ToString())))
-                {
-                    // on the whitelist, so we good
-                    passedListCheck = true;
-                } else
-                {
-                    Instance.SendJoinDenial(fromClientId, "not whitelisted");
-                    cmd.LogRaw($"[Server] Client denied. Reason: not on whitelist.", Color.cyan);
-                }
-            } else
-            {
-                // blacklist check
-
-                // TODO: use the GetIP() function
-                if (!Instance.blacklist.Contains(util_network.RemovePortFromIp(Instance.server.Clients[fromClientId-1].ToString())))
-                {
-                    // not on blacklist, so we good
-                    passedListCheck = true;
-                } else
-                {
-                    Instance.SendJoinDenial(fromClientId, "blacklisted");
-                    cmd.LogRaw($"[Server] Client with denied. Reason: on blacklist.", Color.cyan);
-                }
-            }
-
-            if (passedListCheck)
-            {
-                cmd.LogRaw($"[Server] Client accepted.", Color.cyan);
-
-                net_connectedclient newClient = new net_connectedclient(username, fromClientId);
-
-                Instance.connectedClients.Add(newClient);
-
-
-                // okay yeah this assumes the first client is the local one, but when ISN'T that the case?
-                if (LocalPlayer.localClient == null) 
-                {
-                    LocalPlayer.localClient = newClient;
-
-                    // default permissions
-                    newClient.permissionLevel = 2;
-                } else
-                {
-                    newClient.permissionLevel = 0;
-                }
-                Instance.SendJoinConfirm(fromClientId);
-            }
-        }
-    }
-
-    [MessageHandler((ushort)ClientToServerId.chat_message_send)]
-    private static void HandleChatMessage(ushort fromClientId, Message message)
-    {
-        string msg = message.GetString();
-        Instance.ProcessChatMessage(fromClientId, msg);
-    }
-
-    [MessageHandler((ushort)ClientToServerId.leave_request)]
-    private static void HandleLeaveRequest(ushort fromClientId, Message message)
-    {
-        Instance.RemovePlayer(GetClient(fromClientId).username);
-    }
-
-    [MessageHandler((ushort)ClientToServerId.command_request)]
-    private static void HandleCommandRequest(ushort fromClientId, Message message)
-    {
-        string cmdName = message.GetString();
-        string[] args = message.GetStrings();
-
-        bool arePermissionsValid = false;
-
-        if (cmd_console.GetCommandData(cmdName).needsAdmin)
-        {
-            arePermissionsValid = GetClient(fromClientId).IsAdmin();
-        } else
-        {
-            arePermissionsValid = GetClient(fromClientId).CanUseCommands();
-        }
-
-        if (arePermissionsValid)
-        {
-            cmd.LogRaw($"[Server] putting through command ({cmdName}) request from client {fromClientId}.", Color.cyan);
-
-            string constructedMessage = "";
-            constructedMessage += cmdName;
-
-            for (int i = 0; i < args.Length; i++)
-            {
-                constructedMessage += " ";
-                constructedMessage += args[i];
-            }
-
-            // this is a SLIGHT security risk, but who cares its a video game
-            // we assume that if we're getting this message then the client has perms (i.e. the check is done client-side)
-
-            // anyways, look at this look at how convinient this is
-            cmd_console.Instance.ProcessMessage(constructedMessage);
-        } else
-        {
-            cmd.LogRaw($"[Server] blocked command ({cmdName}) request from client {fromClientId} cuz perms", Color.cyan);
-        }
-    }
-
-    public void ProcessChatMessage(ushort fromClientId, string msg)
-    {
-        // show the chat message in a UI
-        //Debug.Log("shit" + LocalPlayer.localClient.client_index + "    " + fromClientId);
-
-        SendChatMessage(fromClientId, msg);
-    }
-
-    public void SendPlayerKickRequest(string username, string reason)
-    {
-        Message kickRequest = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.kick_player);
-
-        kickRequest.AddString(reason);
-
-        // the nice part about the 'transient' entity system (see EntityManager.cs) is that I don't need to delete any entities
-        // the robot itself just isn't controlled anymore
-        // sure, I COULD delete the freecams but I don't have to
-
-        ushort kickedPlayerIndex = GetClientFromUsername(username).client_index;
-        server.Send(kickRequest, kickedPlayerIndex);
-
-        SendPlayerRemoveNotice(kickedPlayerIndex);
-    }
-
-    public void SendPlayerRemoveNotice(ushort indexOfPlayerRemoved)
-    {
-        Message noticeOfRemovedPlayer = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.player_disconnected);
-
-        // order is [username, reason]
-
-        // the username of the kicked player is all that we need, other info should already be on the client's side
-        noticeOfRemovedPlayer.AddString(GetClient(indexOfPlayerRemoved).username); 
-        noticeOfRemovedPlayer.AddString("kicked by the server");
-        
-        SendToAllExcept(indexOfPlayerRemoved, noticeOfRemovedPlayer);
-    }
-
-    public void SendNewEntity(GameObject g_new)
-    {
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.spawn_entity);
-
-        // the prefab index is stored in the int, anything else we need is in the string
-        e_genericentity comp = g_new.GetComponent<e_genericentity>();
-        message.AddString(comp.data.GetRawPackagedData());
-        message.AddInt(comp.data.entityPrefabIndex);
-
-        cmd.LogRaw($"[Server] spawning new {g_new.name} entity...", Color.cyan);
-
-        SendToAllExceptLocal(message);
-    }
-
-    // can't pass the index to the client bc they don't know what that is
-    public void SendChatMessage(ushort originalSenderId, string msg)
-    {
-        cmd.LogRaw($"[Server] updating clients with new chat message...", Color.cyan);
-
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.chat_message_update);
-        message.AddUShort(originalSenderId);
-        message.AddString(msg);
-
-        server.SendToAll(message);
-    }
-
-    public void SendJoinDenial(ushort toClientId, string reason)
-    {
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.join_denied);
-        message.AddString(reason);
-        Instance.server.Send(message, toClientId);
-
-        // nobody else really needs to see that someone tried to join
-    }
-
-    public void SendJoinConfirm(ushort toClientId)
-    {
-        cmd.LogRaw($"[Server] Sending player list to new client...", Color.cyan);
-
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.join_permitted);
-
-        // converting the connected client list to a string, then shipping it over
-        string[] connectedClients = new string[Instance.connectedClients.Count];
-        for (int i = 0; i < connectedClients.Length; i++)
-        {
-            connectedClients[i] = Instance.connectedClients[i].ParseToString();
-        }
-        message.AddStrings(connectedClients);
-
-        
-        net_packagedentitydata[] entityData = EntityManager.Instance.PackageAllEntityData();
-
-        string[] data1 = net_packagedentitydata.MakeDataArray(entityData);
-        int[] data2 = net_packagedentitydata.MakeIndexArray(entityData);
-
-        message.AddStrings(data1);
-        message.AddInts(data2);
-        message.AddInt(WorldManager.Instance.worldSeed);
-       
-        Instance.server.Send(message, toClientId);
-
-        // so the one client has been confirmed, great
-        // now we tell everyone else that there's a new player
-        Message toOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.player_connected);
-
-        // the username and permission level (net_connectedclient) get sent over
-        toOthers.AddString(GetClient(toClientId).ParseToString());
-        int otherPlayerCount = Instance.connectedClients.Count - 1;
-        cmd.LogRaw($"[Server] Sending player join notification to {otherPlayerCount} other clients...", Color.cyan);
-        SendToAllExcept(toClientId, toOthers);
-
-        // temp temp temp temp temp
-        EntityManager.Instance.PutClientInFreecam(toClientId);
-        // putting the player in the first planetary system (also temp)
-        Instance.SystemTeleport(ServerNetworkManager.GetClient(toClientId).controllingEntity, 0);
-    }
-
-    public void SystemTeleport(e_genericentity entity, int index)
-    {
-        if (entity == null) {cmd.Log("you can't system teleport nothing, dipshit"); return;}
-        entity.data.SetPosition(cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2));
-    }
-
-    public void SendEntityPositionUpdates(int[] entityIds)
-    {
-        // commenting this out cuz it fucking fills the entire console
-        //cmd.LogRaw($"[Server] sending entity position update for {entityIds.Length} entities...");
-
-        // we obviously don't need to update the server's client
-        Message toOthers = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_position_updates);
-
-        toOthers.AddInts(entityIds);
-
-        string[] positionData = new string[entityIds.Length];
-
-        for (int i = 0; i < positionData.Length; i++)
-        {
-            if (EntityManager.Instance.GetEntityFromIndex(entityIds[i]) == null) {continue;}
-            positionData[i] = EntityManager.Instance.GetEntityFromIndex(entityIds[i]).data.localPosition.AsRawString();
-        }
-
-        toOthers.AddStrings(positionData);
-
-        SendToAllExceptLocal(toOthers);
-    }
-
     public void SetControllingEntity(ushort clientId, e_genericentity entity)
     {
         CameraController.SetControlMode(CameraControlMode.None); // unparenting and stopping the camera so that it doesn't end up deleted/disabled
@@ -519,7 +233,7 @@ public class ServerNetworkManager : MonoBehaviour
         cb_renderingmanager.Instance.RenderFrom(entity.data.GetPosition());
         entity.onEnterControl.Invoke();
 
-        if (isServerActive)
+        if (ServerNetworkManager.Instance.isServerActive)
         {
             cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...", Color.cyan);
 
@@ -530,11 +244,36 @@ public class ServerNetworkManager : MonoBehaviour
             toOthers.AddInt(clientId);
             toOthers.AddInt(entity.data.index);
 
-            SendToAllExceptLocal(toOthers);
+            ServerSenders.SendToAllExceptLocal(toOthers);
         } else
         {
             cmd.LogRaw($"[Client] setting client {clientId} control to {entity.gameObject.name}...", Color.yellow);
         }
+    }
+
+    public void StopServer()
+    {
+        // before actually stopping the server, we kick all clients - telling them the server was closed
+        for (int i = 0; i < connectedClients.Count; i++)
+        {
+            ServerSenders.Instance.SendPlayerKickRequest(connectedClients[i].username, "server closed");
+        }
+        isServerActive = false;
+        server.Stop();
+    }
+
+    public void ProcessChatMessage(ushort fromClientId, string msg)
+    {
+        // show the chat message in a UI
+        //Debug.Log("shit" + LocalPlayer.localClient.client_index + "    " + fromClientId);
+
+        ServerSenders.Instance.SendChatMessage(fromClientId, msg);
+    }
+
+    public void SystemTeleport(e_genericentity entity, int index)
+    {
+        if (entity == null) {cmd.Log("you can't system teleport nothing, dipshit"); return;}
+        entity.data.SetPosition(cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * WorldManager.SeaLevelRadius(index + 2) * 2));
     }
 
     public static net_connectedclient GetClient(ushort id)
@@ -561,30 +300,7 @@ public class ServerNetworkManager : MonoBehaviour
         return null;
     }
 
-    public static void SendToAllExcept(ushort except, Message msg)
-    {
-        for (int i = 0; i < Instance.connectedClients.Count; i++)
-        {
-            if (Instance.connectedClients[i].client_index == except) {continue;}
-            Instance.server.Send(msg, (ushort)Instance.connectedClients[i].client_index);
-        }
-    }
-
-    public static void SendToAllExceptLocal(Message msg)
-    {
-        int localIndex = -1; // this effectively counts as nothing (no clients have index of -1)
-        if (LocalPlayer.localClient != null)
-        {
-            localIndex = LocalPlayer.localClient.client_index;
-        }
-
-        for (int i = 0; i < Instance.connectedClients.Count; i++)
-        {
-            if (Instance.connectedClients[i].client_index == localIndex) {continue;}
-            Debug.Log(i);
-            Instance.server.Send(msg, (ushort)Instance.connectedClients[i].client_index);
-        }
-    }
+    
 
     public string GetUsernameFromIndex(ushort index)
     {

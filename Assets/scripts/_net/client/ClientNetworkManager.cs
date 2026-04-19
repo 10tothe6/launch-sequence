@@ -23,6 +23,7 @@ using System.Linq;
 public enum ClientToServerId : ushort
 {
     join_request = 00000, // can i join this server?
+    leave_request = 00001, // 'fuck this shit I'm out'
 
     chat_message_send = 00100,
     command_request = 00101, // same message for any command, for simplicity
@@ -148,6 +149,17 @@ public class ClientNetworkManager : MonoBehaviour
 
         client.Send(message);
     }
+
+    public void SendLeaveRequest()
+    {
+        cmd.LogRaw($"[Client] requesting to leave the server...", Color.yellow);
+
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.leave_request);
+
+        // no args necessary for now
+
+        client.Send(message);
+    }
     
 
     // YOU ARE ENTERING THE HANDLER ZONE vvvv
@@ -159,10 +171,19 @@ public class ClientNetworkManager : MonoBehaviour
         string reason = message.GetString();
 
         cmd.LogRaw($"[Client] We were kicked from the server!. Reason: {reason}", Color.yellow);
-        // TODO: fullscreen info alert
+        
+        // TODO: clear any remaining entities and data
+
+        if (ServerNetworkManager.Instance.isServerActive)
+        {
+            // if we're running the server, we have to stop the server because we (the host) just left)
+            ServerNetworkManager.Instance.StopServer();
+        }
 
 
         Instance.client.Disconnect();
+
+        GameManager.SwitchToConnectionMenu();
     }
 
     [MessageHandler((ushort)ServerToClientId.spawn_entity)]
@@ -222,6 +243,8 @@ public class ClientNetworkManager : MonoBehaviour
         LocalPlayer.localClient = ServerNetworkManager.GetClient(Instance.client.Id);
 
         ServerNetworkManager.Instance.onJoinServer.Invoke();
+
+        // saying the local player has joined the game
         ui_chat.Instance.AddChatMessage($"{LocalPlayer.localClient.username} joined the game", Color.yellow);
     }
 
@@ -236,6 +259,8 @@ public class ClientNetworkManager : MonoBehaviour
         }
         ServerNetworkManager.Instance.onPlayerJoin.Invoke(newPlayer.username);
 
+
+        // saying a new player has joined the game
         ui_chat.Instance.AddChatMessage($"{newPlayer.username} joined the game", Color.yellow);
     }
 
@@ -253,8 +278,15 @@ public class ClientNetworkManager : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.player_disconnected)]
     private static void HandlePlayerDisconnect(Message message)
     {
-        net_connectedclient playerGone = net_connectedclient.ParseFromString(message.GetString());
-        ServerNetworkManager.Instance.onPlayerLeave.Invoke(playerGone.username);
+        string playerUsername = message.GetString();
+        if (!ServerNetworkManager.Instance.isServerActive)
+        {
+            // we only remove the player from the clients list if the server hasn't already done so
+            ServerNetworkManager.Instance.RemovePlayer(playerUsername);
+        }
+
+        // saying whatever player
+        ui_chat.Instance.AddChatMessage($"{playerUsername} left the game", Color.yellow);
     }
 
     [MessageHandler((ushort)ServerToClientId.entity_control)]

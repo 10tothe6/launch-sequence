@@ -1,0 +1,6 @@
+a note on the client/server scripts:
+
+I originally just had everything in the two NetworkManager scripts, but I was having trouble keeping track of everything
+
+so, to make sure I could find my way around my own project, I have given the senders and handlers their own scripts
+fyi - NO OTHER SCRIPT is allowed to have a sender OR a handler on it, because i'll be searching for those forever

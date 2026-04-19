@@ -43,12 +43,19 @@ public class UIManager : MonoBehaviour
     // for convinience
     public bool isInMapView;
 
+    [Space(30)]
+    [Header("Component References")]
     public ui_connectedclients connectedclients;
     public ui_bugreporter bugReporter;
+    public ui_pausemenu pauseMenu;
 
     public void ToggleBugReportWindow()
     {
         bugReporter.gameObject.SetActive(!bugReporter.gameObject.activeSelf);
+    }
+    public void TogglePauseMenu()
+    {
+        pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
     }
 
     public void EnterMainMenu()
@@ -57,6 +64,12 @@ public class UIManager : MonoBehaviour
         g_console.SetActive(false);
 
         cb_mainmenucontroller.Instance.Setup();
+    }
+
+    public void EnterConnectionMenu()
+    {
+        SwitchMenu("join server menu");
+        g_console.SetActive(false);
     }
 
     public void InMenuUpdate()
@@ -69,6 +82,11 @@ public class UIManager : MonoBehaviour
     public void InGameUpdate()
     {
         CameraController.Instance.UpdateCamera();
+
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            TogglePauseMenu();
+        }
 
         if (Keyboard.current.f1Key.wasPressedThisFrame)
         {

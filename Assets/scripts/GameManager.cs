@@ -120,9 +120,19 @@ public class GameManager : MonoBehaviour
     // ====================================
     public static void SwitchToMainMenu() // done
     {
+        UIManager.Instance.pauseMenu.gameObject.SetActive(false);
         gameState = GameState.InMenu;
 
         UIManager.Instance.EnterMainMenu();
+        cb_mainmenucontroller.Instance.Show();
+    }
+
+    public static void SwitchToConnectionMenu() // commonly used after leaving/being kicked from a server
+    {
+        UIManager.Instance.pauseMenu.gameObject.SetActive(false);
+        gameState = GameState.InMenu;
+
+        UIManager.Instance.EnterConnectionMenu();
         cb_mainmenucontroller.Instance.Show();
     }
 
@@ -145,6 +155,7 @@ public class GameManager : MonoBehaviour
     // entering back into the game
     public static void SwitchToGame()
     {
+        UIManager.Instance.pauseMenu.gameObject.SetActive(false);
         WorldManager.Instance.SetAllBodiesActive(true);
         Sandbox.Instance.ExitSandbox();
         gameState = GameState.InGame;

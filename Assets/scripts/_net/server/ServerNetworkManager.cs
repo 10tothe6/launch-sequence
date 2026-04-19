@@ -77,6 +77,23 @@ public class ServerNetworkManager : MonoBehaviour
     public UnityEvent<net_connectedclient> onClientConnect; // all the client data, instead of the username
     // ************
 
+
+    // called by the server, and the client if the server isn't running on that machine
+    public void RemovePlayer(string playerUsername)
+    {
+        net_connectedclient clientToRemove = GetClientFromUsername(playerUsername);
+
+        if (clientToRemove == null) {return;}// either they're already gone or the username never existed
+
+        onPlayerLeave.Invoke(playerUsername);
+
+        // now send the message that updates all of the other clients
+        SendPlayerRemoveNotice(GetClientFromUsername(playerUsername).client_index);
+
+        SendPlayerKickRequest(playerUsername, "you wanted to leave");
+        connectedClients.Remove(clientToRemove);
+    }
+
     public void BeginMulticastBroadcast(ushort port)
     {
         net_serverdata data = new net_serverdata();
@@ -141,7 +158,7 @@ public class ServerNetworkManager : MonoBehaviour
         if (isServerActive)
         {
             // like all other commands, we assume the local player is an admin because they are literally always an admin
-            SendPlayerKickRequest(username);
+            SendPlayerKickRequest(username, "kicked via command");
         } else
         {
             ClientNetworkManager.Instance.SendCommandRequest(cmd_console.GetCommandData("kick"), new string[] {username});
@@ -158,6 +175,8 @@ public class ServerNetworkManager : MonoBehaviour
     {
         connectedClients = new List<net_connectedclient>();
         server = new Server();
+
+        
     }
 
     public void StartServer(ushort port, ushort maxClientCount)
@@ -203,6 +222,11 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void StopServer()
     {
+        // before actually stopping the server, we kick all clients - telling them the server was closed
+        for (int i = 0; i < connectedClients.Count; i++)
+        {
+            SendPlayerKickRequest(connectedClients[i].username, "server closed");
+        }
         isServerActive = false;
         server.Stop();
     }
@@ -293,6 +317,12 @@ public class ServerNetworkManager : MonoBehaviour
         Instance.ProcessChatMessage(fromClientId, msg);
     }
 
+    [MessageHandler((ushort)ClientToServerId.leave_request)]
+    private static void HandleLeaveRequest(ushort fromClientId, Message message)
+    {
+        Instance.RemovePlayer(GetClient(fromClientId).username);
+    }
+
     [MessageHandler((ushort)ClientToServerId.command_request)]
     private static void HandleCommandRequest(ushort fromClientId, Message message)
     {
@@ -341,11 +371,10 @@ public class ServerNetworkManager : MonoBehaviour
         SendChatMessage(fromClientId, msg);
     }
 
-    public void SendPlayerKickRequest(string username)
+    public void SendPlayerKickRequest(string username, string reason)
     {
         Message kickRequest = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.kick_player);
 
-        string reason = "a reason was not given";
         kickRequest.AddString(reason);
 
         // the nice part about the 'transient' entity system (see EntityManager.cs) is that I don't need to delete any entities
@@ -355,16 +384,20 @@ public class ServerNetworkManager : MonoBehaviour
         ushort kickedPlayerIndex = GetClientFromUsername(username).client_index;
         server.Send(kickRequest, kickedPlayerIndex);
 
+        SendPlayerRemoveNotice(kickedPlayerIndex);
+    }
+
+    public void SendPlayerRemoveNotice(ushort indexOfPlayerRemoved)
+    {
         Message noticeOfRemovedPlayer = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.player_disconnected);
 
         // order is [username, reason]
 
         // the username of the kicked player is all that we need, other info should already be on the client's side
-        noticeOfRemovedPlayer.AddString(username); 
-
+        noticeOfRemovedPlayer.AddString(GetClient(indexOfPlayerRemoved).username); 
         noticeOfRemovedPlayer.AddString("kicked by the server");
         
-        SendToAllExcept(kickedPlayerIndex, noticeOfRemovedPlayer);
+        SendToAllExcept(indexOfPlayerRemoved, noticeOfRemovedPlayer);
     }
 
     public void SendNewEntity(GameObject g_new)

@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-
     // the static one is the one that scripts look for
     // the ins_ variable is just so that I can see
     [Header("vv READ ONLY vv")]

@@ -263,7 +263,7 @@ public class cbt_meshbody : MonoBehaviour
             input.children[i].ConstructMesh(bodyIndex);
 
             // input is one, meaning the children will be 0 (max detail)
-            if (input.levelOfDetail == 1)
+            if (input.levelOfDetail < 3)
             {
                 // max detail chunks need colliders
                 input.children[i].t_model.gameObject.AddComponent<MeshCollider>();

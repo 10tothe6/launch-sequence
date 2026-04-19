@@ -92,6 +92,12 @@ public class cb_renderingmanager : MonoBehaviour
         // as such, EVERYTHING NEEDS NULL CHECKS
     }
 
+    public void RenderFrom(num_precisevector3 position)
+    {
+        worldOffset = position.Mul(-1);
+        UpdateAllBodyPositions();
+    }
+
     // the periodic function, called by WorldManager.cs
     public void UpdateAllBodyPositions()
     {

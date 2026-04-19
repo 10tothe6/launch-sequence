@@ -40,9 +40,6 @@ public class e_floatingentitydata {
         if (LocalPlayer.localClient.controllingEntity != null) {
             num_precisevector3 pos = generic.data.GetPosition();
 
-            // set the transform's position basee on the world offset
-            generic.data.reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
-
             // get the position of the camera
             num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
 
@@ -61,7 +58,7 @@ public class e_floatingentitydata {
                 {
                     // inflate
                     generic.data.reference.localScale = Vector3.one / scaleFactor * defaultScale;
-                    generic.data.reference.position = generic.data.localPosition.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
+                    generic.data.reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
                 }
                 else
                 { // far from planet

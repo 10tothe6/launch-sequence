@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
         gravityDirection = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].pose.data.GetPosition().Sub(entityData.data.GetPosition()).Norm().ToVector3();
         if (Vector3.Angle(transform.up, -gravityDirection) > 5)
         {
-            transform.rotation *= Quaternion.FromToRotation(transform.up, -gravityDirection);
+            transform.up = -gravityDirection;
         }
 
         // updating the entity position from the rigidbody

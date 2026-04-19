@@ -14818,7 +14818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Program
   version: mptest-1.0-rc1
   ins_buildMode: 0
-  ins_startMode: 3
+  ins_startMode: 0
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0

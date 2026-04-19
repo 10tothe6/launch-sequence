@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class util_math
 {
+    public static float ProjectedMagnitude(UnityEngine.Vector3 a, UnityEngine.Vector3 b)
+    {
+        UnityEngine.Vector3 p = UnityEngine.Vector3.Project(a,b);
+        if (UnityEngine.Vector3.Dot(p, a) < 0)
+        {
+            return -p.magnitude;
+        } else
+        {
+            return p.magnitude;
+        }
+    }
     public static BigInteger Sqrt(BigInteger n)
     {
         if (n == 0) {return n;}

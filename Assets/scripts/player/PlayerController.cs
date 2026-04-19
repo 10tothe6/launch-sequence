@@ -252,14 +252,14 @@ public class PlayerController : MonoBehaviour
         if (!isFlying) {
             if (ImprovedRaycast())
             {
-                if (activeJump && rb.linearVelocity.y <= 0)
+                if (activeJump && util_math.ProjectedMagnitude(rb.linearVelocity, -gravityDirection) <= 0)
                 {
                     // originally I had the Vector3.up here as hit.normal, 
                     // but that seemed to cause really weird drifting bugs when walking/jumping on angled terrain
 
                     // so, we doin' Vector3.up now
 
-                    Vector3 lateralVelocity = rb.linearVelocity - Vector3.Project(rb.linearVelocity, Vector3.up);
+                    Vector3 lateralVelocity = rb.linearVelocity - Vector3.Project(rb.linearVelocity, gravityDirection);
                     rb.linearVelocity -= lateralVelocity;
 
                     activeJump = false;
@@ -269,7 +269,8 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // friction
-                rb.linearVelocity -= new Vector3(rb.linearVelocity.x * 0.1f, 0, rb.linearVelocity.z * 0.1f);
+                Vector3 fric = rb.linearVelocity * 0.1f;
+                rb.linearVelocity -= (fric - Vector3.Project(fric, gravityDirection));
             }
             else
             {
@@ -304,37 +305,38 @@ public class PlayerController : MonoBehaviour
         // it obeys limits to avoid rotational glitches when looking straight up
         if (!lockCameraVertical)
         {
-            float maxAngle = 0.3f;
-            if (Input.mouseMovement.y < 0)
-            {
-                // looking further down
-                if (t_camera.forward.y > -maxAngle)
-                {
-                    t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-                }
-                else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * turnSpeed * Time.deltaTime * Mathf.PI / 180)) > maxAngle)
-                {
-                    t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);  
-                }
-            }
-            else
-            {
-                // looking further down
-                if (t_camera.forward.y < maxAngle)
-                {
-                    t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-                }
-                else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * Time.deltaTime * turnSpeed * Mathf.PI / 180)) > maxAngle)
-                {
-                    t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-                }
-            }
+            t_camera.localRotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+            // float maxAngle = 0.3f;
+            // if (Input.mouseMovement.y < 0)
+            // {
+            //     // looking further down
+            //     if (t_camera.forward.y > -maxAngle)
+            //     {
+            //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+            //     }
+            //     else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * turnSpeed * Time.deltaTime * Mathf.PI / 180)) > maxAngle)
+            //     {
+            //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);  
+            //     }
+            // }
+            // else
+            // {
+            //     // looking further down
+            //     if (t_camera.forward.y < maxAngle)
+            //     {
+            //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+            //     }
+            //     else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * Time.deltaTime * turnSpeed * Mathf.PI / 180)) > maxAngle)
+            //     {
+            //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+            //     }
+            // }
         }
 
         /* jumping */
         if (lastPacket.jump && allowJump && !activeJump)
         {
-            rb.linearVelocity += new Vector3(0, jumpStrength, 0);
+            rb.linearVelocity += -gravityDirection.normalized * jumpStrength;
             activeJump = true;
 
             // TODO: investigate a bug with fall damage
@@ -359,19 +361,19 @@ public class PlayerController : MonoBehaviour
     // so we're shooting more rays now
     bool ImprovedRaycast()
     {
-        if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
-        } else if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f + transform.right * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        } else if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f + transform.right * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
-        } else if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f + transform.right * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        } else if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f + transform.right * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
-        } else if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f + transform.forward * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        } else if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f + transform.forward * 0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
-        } else if (Physics.Raycast(t_foot.position + Vector3.up * 0.05f + transform.forward * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
+        } else if (Physics.Raycast(t_foot.position + gravityDirection * 0.05f + transform.forward * -0.15f, -transform.up, out hit, raycastDistanceFromFoot + 0.001f, whatIsGround))
         {
             return true;
         }

@@ -195,14 +195,14 @@ public class num_precisevector3
 
     public string AsString()
     {
-        return (x.raw / new BigInteger(Mathf.Pow(10,x.numDecimalDigits))).ToString() + ", " + 
-        (y.raw / new BigInteger(Mathf.Pow(10,y.numDecimalDigits))).ToString() + ", " + 
+        return (x.raw / new BigInteger(Mathf.Pow(10,x.numDecimalDigits))).ToString() + "," + 
+        (y.raw / new BigInteger(Mathf.Pow(10,y.numDecimalDigits))).ToString() + "," + 
         (z.raw / new BigInteger(Mathf.Pow(10,z.numDecimalDigits))).ToString();
     }
     public string AsRawString()
     {
-        return x.raw.ToString() + ", " + 
-        y.raw.ToString() + ", " + 
+        return x.raw.ToString() + "," + 
+        y.raw.ToString() + "," + 
         z.raw.ToString();
     }
 

@@ -83,6 +83,8 @@ public class e_genericentitydata
     {
         string[] split = util_string.SplitByChar(data, ':');
 
+        Debug.Log(data);
+
         index = int.Parse(split[0]);
         entityName = split[1];
 

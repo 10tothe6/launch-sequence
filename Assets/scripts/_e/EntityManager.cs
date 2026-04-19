@@ -108,7 +108,8 @@ public class EntityManager : MonoBehaviour
     {
         GameObject p_entity = p_entities[entityIndex];
 
-        GameObject g_newEntity = SpawnNewEntity(p_entity, num_precisevector3.Zero());
+        // name need not be set cuz it'll be overwritten by data
+        GameObject g_newEntity = SpawnNewEntity(p_entity, "e", num_precisevector3.Zero());
 
         g_newEntity.GetComponent<e_genericentity>().data.SetPackagedData(data);
 
@@ -118,7 +119,7 @@ public class EntityManager : MonoBehaviour
     public GameObject SpawnNewEntity(int entityIndex, num_precisevector3 spawnPosition)
     {
         GameObject p_entity = p_entities[entityIndex];
-        return SpawnNewEntity(p_entity, spawnPosition);
+        return SpawnNewEntity(p_entity, "e", spawnPosition);
     }
 
     // okay so
@@ -129,16 +130,15 @@ public class EntityManager : MonoBehaviour
     {
         GameObject p_entity = GetEntityPrefabFromName(entityName);
 
-        return SpawnNewEntity(p_entity, spawnPosition);
+        return SpawnNewEntity(p_entity, "spawned", spawnPosition);
     }
 
     public GameObject SpawnNewEntity(string entityName, string nameToApply, num_precisevector3 spawnPosition)
     {
         GameObject p_entity = GetEntityPrefabFromName(entityName);
 
-        GameObject g_newEntity = SpawnNewEntity(p_entity, spawnPosition);
+        GameObject g_newEntity = SpawnNewEntity(p_entity, nameToApply, spawnPosition);
         g_newEntity.name = "e_" + nameToApply;
-        g_newEntity.GetComponent<e_genericentity>().data.entityName = nameToApply;
 
         return g_newEntity;
     }
@@ -186,7 +186,7 @@ public class EntityManager : MonoBehaviour
         return g_newEntity;
     }
 
-    public GameObject SpawnNewEntity(GameObject p_entity, num_precisevector3 spawnPosition)
+    public GameObject SpawnNewEntity(GameObject p_entity, string name, num_precisevector3 spawnPosition)
     {
         GameObject g_newEntity = Instantiate(p_entity, t_entityContainer);
 

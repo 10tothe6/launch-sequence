@@ -51,8 +51,11 @@ public class net_connectedclient
         result += permissionLevel;
         result += ",";
         result += client_index;
-        result += ",";
-        result += controllingEntity.data.index;
+        if (controllingEntity != null)
+        {
+            result += ",";
+            result += controllingEntity.data.index;
+        }
 
         return result;
     }
@@ -67,7 +70,10 @@ public class net_connectedclient
         // no need for ping
         result.client_index = ushort.Parse(elements[2]);
 
-        result.controllingEntity = EntityManager.Instance.GetEntityFromIndex(int.Parse(elements[3]));
+        if (elements.Length > 3)
+        {
+            result.controllingEntity = EntityManager.Instance.GetEntityFromIndex(int.Parse(elements[3]));
+        }
 
         return result;
     }

@@ -287,10 +287,10 @@ public class cb_solarsystem : MonoBehaviour
             // this means we can bias things toward no moons, or a median amount of moons
             if (addedPlanets[i].data.bodyType == (ushort)cb_bodytype.Jovian)
             {
-                moonCap = int.Parse(LootTableEntry.Get(jovianMoonCounts));
+                moonCap = int.Parse(LootTableEntry.Get(pRandom, jovianMoonCounts));
             } else if (addedPlanets[i].data.bodyType == (ushort)cb_bodytype.Terran)
             {
-                moonCap = int.Parse(LootTableEntry.Get(terranMoonCounts));
+                moonCap = int.Parse(LootTableEntry.Get(pRandom, terranMoonCounts));
             }
             // not sure how we could hit neither of those, but if we do then no moons
 

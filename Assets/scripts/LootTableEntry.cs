@@ -47,4 +47,27 @@ public class LootTableEntry
 
         return "";
     }
+
+    public static string Get(System.Random pRandom, LootTableEntry[] table)
+    {
+        // probably don't need to use 2 for loops here
+        int totalWeights = 0;
+        for (int i = 0; i < table.Length; i++) { totalWeights += table[i].weight; }
+
+        // TODO: pRandom?
+        int randomValue = pRandom.Next(1, totalWeights);
+
+        int previousWeightTotal = 0;
+        for (int i = 0; i < table.Length; i++)
+        {
+            if (randomValue >= previousWeightTotal && randomValue <= previousWeightTotal + table[i].weight)
+            {
+                return table[i].itemIndex;
+            }
+
+            previousWeightTotal += table[i].weight;
+        }
+
+        return "";
+    }
 }

@@ -125,10 +125,24 @@ public class cmd_console : MonoBehaviour
         ProcessMessage(input.text);
     }
 
+    public void ShipMessageToServer(TMP_InputField input)
+    {
+        string[] items = util_string.SplitIntoWords(input.text);
+
+        string[] args = new string[items.Length - 1];
+        for (int i = 1; i < items.Length; i++)
+        {
+            args[i-1] = items[i];
+        }
+
+        ClientSenders.Instance.SendCommandRequest(GetCommandData(items[0]), args);
+    }
+
+
+    // ONLY EVER CALLED ON THE SERVER SIDE
+    // NEVER ON CLIENT SIDE
     public void ProcessMessage(string text)
     {
-        Debug.Log("Processing console message...");
-        
         string[] items = util_string.SplitIntoWords(text);
 
         // the command type is the first word, hence items[0]

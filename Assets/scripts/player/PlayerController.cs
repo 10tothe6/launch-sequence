@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
     public void EnterControl()
     {
         // making sure its actually the local player taking control
-        if (LocalPlayer.localClient.controllingEntity != this)
+        if (LocalPlayer.localClient.controllingEntity != entityData)
         {
             return;
         }

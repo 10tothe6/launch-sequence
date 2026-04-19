@@ -14816,7 +14816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da38d6fc5ad2cde43b43e8e2cb1d9a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Program
-  version: mptest-1.0-rc1
+  version: mptest-1.0-rc2
   ins_buildMode: 0
   ins_startMode: 4
 --- !u!114 &2144568381

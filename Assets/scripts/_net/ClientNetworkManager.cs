@@ -184,7 +184,10 @@ public class ClientNetworkManager : MonoBehaviour
         string reason = message.GetString();
 
         cmd.LogRaw($"[Client] Join request denied by server. Reason: {reason}", Color.yellow);
+        ui_infoalerts.Instance.ShowFullscreenAlert($"[Client] Join request denied by server. Reason: {reason}");
+        
         Instance.client.Disconnect();
+        UIManager.Instance.SwitchMenu("join server menu");
     }
 
     [MessageHandler((ushort)ServerToClientId.join_permitted)]

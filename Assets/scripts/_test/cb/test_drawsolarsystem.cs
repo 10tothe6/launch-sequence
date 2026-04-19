@@ -59,7 +59,7 @@ public class test_drawsolarsystem : MonoBehaviour
 
         for (int i = 0; i < p.Length; i++)
         {
-            EditorGUIUtility.SetIconForObject(ss.monoBodies[i].gameObject, tx_cbIcons[ss.monoBodies[i].data.bodyType]);
+            //EditorGUIUtility.SetIconForObject(ss.monoBodies[i].gameObject, tx_cbIcons[ss.monoBodies[i].data.bodyType]);
             ss.monoBodies[i].transform.position = p[i] - p[focusIndex];
 
             if (i >= 2) 

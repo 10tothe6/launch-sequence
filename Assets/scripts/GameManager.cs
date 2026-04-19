@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
     {
         WorldManager.Instance.SetAllBodiesActive(true);
         Sandbox.Instance.ExitSandbox();
+        gameState = GameState.InGame;
         CameraController.cam_main.GetComponent<cbr_applyatmosphere>().isInGame = true;
     }
 

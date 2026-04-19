@@ -222,7 +222,7 @@ public class ClientNetworkManager : MonoBehaviour
         } else
         {
             LocalPlayer.localClient.permissionLevel = 0;
-            WorldManager.Instance.GenerateNewWorld(worldSeed);
+            GameManager.InitializeNewGame(worldSeed);
             
             for (int i = 0; i < rawEntityData1.Length; i++)
             {
@@ -264,6 +264,8 @@ public class ClientNetworkManager : MonoBehaviour
     {
         int clientIndex = message.GetInt();
         int entityIndex = message.GetInt();
+
+        Debug.Log(entityIndex);
         
         ServerNetworkManager.Instance.SetControllingEntity((ushort)clientIndex, EntityManager.Instance.GetEntityFromIndex(entityIndex));
     }
@@ -274,10 +276,11 @@ public class ClientNetworkManager : MonoBehaviour
         int[] entityIndices = message.GetInts();
         string[] entityPositions = message.GetStrings();
 
-        cmd.LogRaw($"[Client] got entity position update for {entityIndices} entities.", Color.yellow);
+        cmd.LogRaw($"[Client] got entity position update for {entityIndices.Length} entities.", Color.yellow);
 
         for (int i = 0; i < entityIndices.Length; i++)
         {
+            if (EntityManager.Instance.GetEntityFromIndex(entityIndices[i]) == null) {continue;}
             EntityManager.Instance.GetEntityFromIndex(entityIndices[i]).data.SetPosition(num_precisevector3.FromString(entityPositions[i]));
         }
     }

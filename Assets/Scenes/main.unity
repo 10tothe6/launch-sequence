@@ -2954,7 +2954,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &313439646
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5519,13 +5519,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 714867632}
+  - component: {fileID: 714867633}
   m_Layer: 5
   m_Name: '[m] host server menu'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &714867632
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5548,6 +5549,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &714867633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714867631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69114c073a9f9aa42af0490d59eb6309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ui_hostmenu
+  in_clientCount: {fileID: 191039695}
+  in_port: {fileID: 313439647}
 --- !u!1 &751265227
 GameObject:
   m_ObjectHideFlags: 0
@@ -11923,7 +11938,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1711970537}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 714867633}
+        m_TargetAssemblyTypeName: ui_hostmenu, Assembly-CSharp
+        m_MethodName: AttemptDirectServerConnection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1711970537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14816,9 +14843,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da38d6fc5ad2cde43b43e8e2cb1d9a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Program
-  version: mptest-1.0-rc2
+  version: mptest-1.0-rc5
   ins_buildMode: 0
-  ins_startMode: 4
+  ins_startMode: 0
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0

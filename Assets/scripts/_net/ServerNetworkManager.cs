@@ -495,7 +495,7 @@ public class ServerNetworkManager : MonoBehaviour
             Message toOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.entity_control);
 
             toOthers.AddInt(clientId);
-            toOthers.AddInt(entity.data.entityPrefabIndex);
+            toOthers.AddInt(entity.data.index);
 
             SendToAllExceptLocal(toOthers);
         } else

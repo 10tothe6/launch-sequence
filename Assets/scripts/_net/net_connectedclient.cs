@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,6 +16,9 @@ public enum net_permissionlevel
 [System.Serializable]
 public class net_connectedclient 
 {
+    public List<float> chatMessageTimes; // ONLY USED BY THE SERVER (for spam kicking)
+
+
     public bool isInSandbox; // this is just a shortcut
     
     public bool isLocal; // TODO:
@@ -27,9 +31,10 @@ public class net_connectedclient
 
     public float ping; // two-way ping
 
-    public net_connectedclient() {}    
+    public net_connectedclient() {chatMessageTimes = new List<float>();}    
     public net_connectedclient(string username, ushort client_index)
     {
+        chatMessageTimes = new List<float>();
         this.username = username;
         this.client_index = client_index;
         this.permissionLevel = 0;
@@ -37,9 +42,26 @@ public class net_connectedclient
 
     public net_connectedclient(string username, ushort client_index, ushort permissionLevel)
     {
+        chatMessageTimes = new List<float>();
         this.username = username;
         this.client_index = client_index;
         this.permissionLevel = permissionLevel;
+    }
+
+    public void CheckForSpam()
+    {
+        for (int i = chatMessageTimes.Count - 1; i >= 0; i--)
+        {
+            if (Time.time - chatMessageTimes[i] > NetworkResources.spamPeriod)
+            {
+                chatMessageTimes.RemoveAt(i);
+            }
+        }
+
+        if (chatMessageTimes.Count > NetworkResources.spamMessageCount) // are we still over the limit?
+        {
+            ServerSenders.Instance.SendPlayerKickRequest(username, "spamming");
+        }
     }
 
     public string ParseToString()

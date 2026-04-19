@@ -114,6 +114,11 @@ public class ServerHandlers : MonoBehaviour
     private static void HandleChatMessage(ushort fromClientId, Message message)
     {
         string msg = message.GetString();
+        ServerNetworkManager.GetClient(fromClientId).chatMessageTimes.Add(Time.time); // keeping track of when they send the message
+        if (ServerNetworkManager.GetClient(fromClientId).chatMessageTimes.Count > NetworkResources.spamMessageCount)
+        {
+            ServerNetworkManager.GetClient(fromClientId).CheckForSpam();
+        }
         ServerNetworkManager.Instance.ProcessChatMessage(fromClientId, msg);
     }
 

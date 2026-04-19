@@ -2443,6 +2443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9623a25afdff8d643bbd6067456552f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkResources
+  ins_spamMessageCount: 10
+  ins_spamPeriod: 6
   permissionLevelIcons:
   - {fileID: 21300000, guid: c00e68cc9760c2a428fd194972557cb7, type: 3}
   - {fileID: 21300000, guid: 95588d32461d9da44a2aed9ff461ec03, type: 3}

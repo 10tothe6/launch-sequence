@@ -276,10 +276,10 @@ public class ServerNetworkManager : MonoBehaviour
                     LocalPlayer.localClient = newClient;
 
                     // default permissions
-                    LocalPlayer.localClient.permissionLevel = 2;
+                    newClient.permissionLevel = 2;
                 } else
                 {
-                    LocalPlayer.localClient.permissionLevel = 0;
+                    newClient.permissionLevel = 0;
                 }
                 Instance.SendJoinConfirm(fromClientId);
             }
@@ -548,6 +548,7 @@ public class ServerNetworkManager : MonoBehaviour
         for (int i = 0; i < Instance.connectedClients.Count; i++)
         {
             if (Instance.connectedClients[i].client_index == localIndex) {continue;}
+            Debug.Log(i);
             Instance.server.Send(msg, (ushort)Instance.connectedClients[i].client_index);
         }
     }

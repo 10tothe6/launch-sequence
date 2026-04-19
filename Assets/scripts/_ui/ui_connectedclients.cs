@@ -12,8 +12,8 @@ public class ui_connectedclients : MonoBehaviour
         ServerNetworkManager.Instance.onJoinServer.AddListener(ConstructMenu);
 
         // both of these get the username of the player in question, and can just use that
-        ServerNetworkManager.Instance.onPlayerJoin.AddListener(RemovePlayerFromMenu);
-        ServerNetworkManager.Instance.onPlayerLeave.AddListener(AddPlayerToMenu);
+        ServerNetworkManager.Instance.onPlayerJoin.AddListener(AddPlayerToMenu);
+        ServerNetworkManager.Instance.onPlayerLeave.AddListener(RemovePlayerFromMenu);
     }
 
     void ConstructMenu()

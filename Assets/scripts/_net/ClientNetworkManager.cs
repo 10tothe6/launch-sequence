@@ -221,17 +221,6 @@ public class ClientNetworkManager : MonoBehaviour
         
         LocalPlayer.localClient = ServerNetworkManager.GetClient(Instance.client.Id);
 
-        // default permissions
-        if (ServerNetworkManager.Instance.isServerActive)
-        {
-            LocalPlayer.localClient.permissionLevel = 2;
-            // if we are the server, the world will have already been generated
-            // entities will already have been spawned as well
-        } else
-        {
-            LocalPlayer.localClient.permissionLevel = 0;
-        }
-
         ServerNetworkManager.Instance.onJoinServer.Invoke();
         ui_chat.Instance.AddChatMessage($"{LocalPlayer.localClient.username} joined the game", Color.yellow);
     }
@@ -240,7 +229,11 @@ public class ClientNetworkManager : MonoBehaviour
     private static void HandleNewPlayer(Message message)
     {
         net_connectedclient newPlayer = net_connectedclient.ParseFromString(message.GetString());
-        ServerNetworkManager.Instance.connectedClients.Add(newPlayer);
+        
+        if (!ServerNetworkManager.Instance.isServerActive)
+        {
+            ServerNetworkManager.Instance.connectedClients.Add(newPlayer);
+        }
         ServerNetworkManager.Instance.onPlayerJoin.Invoke(newPlayer.username);
 
         ui_chat.Instance.AddChatMessage($"{newPlayer.username} joined the game", Color.yellow);

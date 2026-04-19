@@ -65,6 +65,8 @@ public class e_genericentitydata
         result += entityName;
         result += ":";
         result += localPosition.AsRawString();
+        result += ":";
+        result += entityPrefabIndex;
 
         return result;
     }
@@ -91,6 +93,8 @@ public class e_genericentitydata
         reference.gameObject.name = "e_" + entityName;
 
         localPosition = num_precisevector3.FromString(split[2]);
+
+        entityPrefabIndex = ushort.Parse(split[3]);
     }
 
     public num_precisevector3 GetPosition()

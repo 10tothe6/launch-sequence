@@ -192,6 +192,7 @@ public class EntityManager : MonoBehaviour
 
         e_genericentity genericComp = g_newEntity.GetComponent<e_genericentity>();
         genericComp.data.entityName = name;
+        genericComp.data.entityPrefabIndex = (ushort)System.Array.IndexOf(p_entities, p_entity);
         allEntities.Add(genericComp);
         genericComp.data.index = allEntities.Count;
         genericComp.data.SetPosition(spawnPosition);

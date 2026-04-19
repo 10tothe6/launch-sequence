@@ -336,7 +336,8 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void ProcessChatMessage(ushort fromClientId, string msg)
     {
-        // TODO: display the chat message in a chat UI
+        // show the chat message in a UI
+        if (LocalPlayer.localClient.client_index != fromClientId) {ui_chat.Instance.AddChatMessage($"<{GetClient(fromClientId).username}> " + msg);}
 
         SendChatMessage(fromClientId, msg);
     }

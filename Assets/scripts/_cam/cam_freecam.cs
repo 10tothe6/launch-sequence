@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -66,10 +67,13 @@ public class cam_freecam : MonoBehaviour
                 t_player.transform.Rotate(Vector3.up * -Input.mouseMovement.x + transform.right * Input.mouseMovement.y, Space.World);
             }
 
-            LocalPlayer.Instance.MoveBy(
+            if (!UIManager.isTyping)
+            {
+                LocalPlayer.Instance.MoveBy(
             (transform.forward * Input.inputAxisForward +
             transform.right * Input.inputAxisHorizontal + 
             transform.up * Input.inputAxisVertical) * moveSpeed);
+            }
 
             // temporary for spawning a robot in
             if (Keyboard.current.gKey.wasPressedThisFrame)

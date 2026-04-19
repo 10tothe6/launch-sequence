@@ -99,18 +99,21 @@ public class LocalPlayer : MonoBehaviour
     {
         player_keypresspacket result = new player_keypresspacket();
 
-        result.forward = Keyboard.current.wKey.isPressed;
-        result.left = Keyboard.current.aKey.isPressed;
-        result.back = Keyboard.current.sKey.isPressed;
-        result.right = Keyboard.current.dKey.isPressed;
+        if (!UIManager.isTyping)
+        {
+            result.forward = Keyboard.current.wKey.isPressed;
+            result.left = Keyboard.current.aKey.isPressed;
+            result.back = Keyboard.current.sKey.isPressed;
+            result.right = Keyboard.current.dKey.isPressed;
 
-        result.jump = Keyboard.current.spaceKey.isPressed;
+            result.jump = Keyboard.current.spaceKey.isPressed;
 
-        result.sprint = Keyboard.current.shiftKey.isPressed;
-        result.crouch = Keyboard.current.leftCtrlKey.isPressed;
+            result.sprint = Keyboard.current.shiftKey.isPressed;
+            result.crouch = Keyboard.current.leftCtrlKey.isPressed;
 
-        result.horizontalMouse = Input.mouseMovement.x;
-        result.verticalMouse = Input.mouseMovement.y;
+            result.horizontalMouse = Input.mouseMovement.x;
+            result.verticalMouse = Input.mouseMovement.y;
+        }
 
         return result;
     }

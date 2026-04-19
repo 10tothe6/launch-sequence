@@ -33,6 +33,17 @@ public class UIManager : MonoBehaviour
         LoadMenuObjects();
     }
 
+    public static bool isTyping;
+
+    public void StartTyping()
+    {
+        isTyping = true;
+    }
+    public void StopTyping()
+    {
+        isTyping = false;
+    }
+
     public Transform t_canvas;
 
     public GameObject g_console;
@@ -83,34 +94,37 @@ public class UIManager : MonoBehaviour
     {
         CameraController.Instance.UpdateCamera();
 
-        if (Keyboard.current.pKey.wasPressedThisFrame)
+        if (!isTyping)
         {
-            TogglePauseMenu();
-        }
-
-        if (Keyboard.current.f1Key.wasPressedThisFrame)
-        {
-            connectedclients.Toggle();
-        }
-        
-        if (Keyboard.current.backquoteKey.wasPressedThisFrame)
-        {
-            ToggleConsole();
-        }
-
-        // map-related keypress checks
-        if (isInMapView)
-        {
-            if (Keyboard.current.mKey.wasPressedThisFrame)
+            if (Keyboard.current.pKey.wasPressedThisFrame)
             {
-                ExitMapView();
+                TogglePauseMenu();
             }
-        }
-        else if (LocalPlayer.IsControllingEntity())
-        {
-            if (Keyboard.current.mKey.wasPressedThisFrame && !LocalPlayer.localClient.isInSandbox)
+
+            if (Keyboard.current.f1Key.wasPressedThisFrame)
             {
-                EnterMapView();
+                connectedclients.Toggle();
+            }
+            
+            if (Keyboard.current.backquoteKey.wasPressedThisFrame)
+            {
+                ToggleConsole();
+            }
+
+            // map-related keypress checks
+            if (isInMapView)
+            {
+                if (Keyboard.current.mKey.wasPressedThisFrame)
+                {
+                    ExitMapView();
+                }
+            }
+            else if (LocalPlayer.IsControllingEntity())
+            {
+                if (Keyboard.current.mKey.wasPressedThisFrame && !LocalPlayer.localClient.isInSandbox)
+                {
+                    EnterMapView();
+                }
             }
         }
     }

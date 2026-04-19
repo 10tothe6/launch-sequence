@@ -163,7 +163,7 @@ public class EntityManager : MonoBehaviour
     {
         GameObject p_entity = GetEntityPrefabFromName(entityName);
 
-        return SpawnNewEntity(p_entity, "spawned", spawnPosition);
+        return SpawnNewEntity(p_entity, "spawned_" + allEntities.Count, spawnPosition);
     }
 
     public GameObject SpawnNewEntity(string entityName, string nameToApply, num_precisevector3 spawnPosition)

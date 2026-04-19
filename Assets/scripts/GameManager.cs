@@ -104,6 +104,8 @@ public class GameManager : MonoBehaviour
     {
         ui_playerhud.Instance.SetupDebugInfo();
         UIManager.Instance.HideConsole();
+
+        UIManager.Instance.SwitchMenu("");
         
         WorldManager.Instance.GenerateNewWorld(worldSeed);
 

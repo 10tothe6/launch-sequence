@@ -265,7 +265,7 @@ public class ClientNetworkManager : MonoBehaviour
         int clientIndex = message.GetInt();
         int entityIndex = message.GetInt();
 
-        Debug.Log(entityIndex);
+        //Debug.Log(entityIndex);
         
         ServerNetworkManager.Instance.SetControllingEntity((ushort)clientIndex, EntityManager.Instance.GetEntityFromIndex(entityIndex));
     }

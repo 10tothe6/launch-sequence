@@ -29,7 +29,6 @@ public class ui_hostmenu : MonoBehaviour
 
             // port is actually not considered rn
             ServerNetworkManager.Instance.StartMultiplayerServer(clientCount);
-            UIManager.Instance.SwitchMenu("");
         } else
         {
             ui_infoalerts.Instance.ShowFullscreenAlert("please enter valid server data!",Color.purple);

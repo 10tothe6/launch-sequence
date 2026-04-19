@@ -191,6 +191,7 @@ public class EntityManager : MonoBehaviour
         GameObject g_newEntity = Instantiate(p_entity, t_entityContainer);
 
         e_genericentity genericComp = g_newEntity.GetComponent<e_genericentity>();
+        genericComp.data.entityName = name;
         allEntities.Add(genericComp);
         genericComp.data.index = allEntities.Count;
         genericComp.data.SetPosition(spawnPosition);

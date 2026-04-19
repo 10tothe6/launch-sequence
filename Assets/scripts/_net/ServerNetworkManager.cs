@@ -390,7 +390,7 @@ public class ServerNetworkManager : MonoBehaviour
         message.AddUShort(originalSenderId);
         message.AddString(msg);
 
-        SendToAllExcept(originalSenderId, message);
+        server.SendToAll(message);
     }
 
     public void SendJoinDenial(ushort toClientId, string reason)

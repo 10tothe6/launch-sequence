@@ -128,9 +128,6 @@ public class ClientNetworkManager : MonoBehaviour
     {
         cmd.LogRaw($"[Client] sending chat message to server...", Color.yellow);
         
-        // showing the chat message locally
-        ui_chat.Instance.AddChatMessage($"<{LocalPlayer.localClient.username}> " + msg);
-
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.chat_message_send);
         
         // no need for any id/credentials because we can see the fromClientId on the other end
@@ -284,7 +281,7 @@ public class ClientNetworkManager : MonoBehaviour
         int[] entityIndices = message.GetInts();
         string[] entityPositions = message.GetStrings();
 
-        cmd.LogRaw($"[Client] got entity position update for {entityIndices.Length} entities.", Color.yellow);
+        //cmd.LogRaw($"[Client] got entity position update for {entityIndices.Length} entities.", Color.yellow);
 
         for (int i = 0; i < entityIndices.Length; i++)
         {

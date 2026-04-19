@@ -94,6 +94,11 @@ public class UIManager : MonoBehaviour
     {
         CameraController.Instance.UpdateCamera();
 
+        if (Keyboard.current.backquoteKey.wasPressedThisFrame)
+        {
+            ToggleConsole();
+        }
+
         if (!isTyping)
         {
             if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -104,11 +109,6 @@ public class UIManager : MonoBehaviour
             if (Keyboard.current.f1Key.wasPressedThisFrame)
             {
                 connectedclients.Toggle();
-            }
-            
-            if (Keyboard.current.backquoteKey.wasPressedThisFrame)
-            {
-                ToggleConsole();
             }
 
             // map-related keypress checks
@@ -142,6 +142,13 @@ public class UIManager : MonoBehaviour
     public void ToggleConsole()
     {
         g_console.SetActive(!g_console.activeSelf);
+        if (g_console.activeSelf)
+        {
+            StartTyping();
+        } else
+        {
+            StopTyping();
+        }
     }
 
     // some functions, like  this one, build off of the SwitchMenu() function

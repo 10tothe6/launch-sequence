@@ -110,7 +110,6 @@ public class ui_mapview : MonoBehaviour
 
                 e_mapentity comp = g_newIcon.GetComponent<e_mapentity>();
 
-                // temp temp temp
                 comp.reference = ServerNetworkManager.Instance.connectedClients[i].controllingEntity;
                 comp.showName = true;
 

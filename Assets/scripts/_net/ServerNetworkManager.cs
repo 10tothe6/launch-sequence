@@ -282,6 +282,7 @@ public class ServerNetworkManager : MonoBehaviour
                     LocalPlayer.localClient.permissionLevel = 0;
                 }
 
+                ui_chat.Instance.AddChatMessage($"{newClient.username} joined the game", Color.yellow);
                 Instance.SendJoinConfirm(fromClientId);
             }
         }
@@ -337,6 +338,7 @@ public class ServerNetworkManager : MonoBehaviour
     public void ProcessChatMessage(ushort fromClientId, string msg)
     {
         // show the chat message in a UI
+        Debug.Log("shit" + LocalPlayer.localClient.client_index + "    " + fromClientId);
         if (LocalPlayer.localClient.client_index != fromClientId) {ui_chat.Instance.AddChatMessage($"<{GetClient(fromClientId).username}> " + msg);}
 
         SendChatMessage(fromClientId, msg);
@@ -534,7 +536,7 @@ public class ServerNetworkManager : MonoBehaviour
         for (int i = 0; i < Instance.connectedClients.Count; i++)
         {
             if (Instance.connectedClients[i].client_index == except) {continue;}
-            Instance.server.Send(msg, (ushort)i);
+            Instance.server.Send(msg, (ushort)Instance.connectedClients[i].client_index);
         }
     }
 

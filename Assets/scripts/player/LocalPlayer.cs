@@ -88,10 +88,10 @@ public class LocalPlayer : MonoBehaviour
 
     void Update()
     {
-        if (IsControllingEntity())
-        {
-            Debug.Log(localClient.controllingEntity.data.GetPosition().AsRawString());
-        }
+        // if (IsControllingEntity())
+        // {
+        //     Debug.Log(localClient.controllingEntity.data.GetPosition().AsRawString());
+        // }
     }
 
     // grabs which keys the player is pressing and turns them into this nice, clean, standard format

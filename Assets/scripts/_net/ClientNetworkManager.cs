@@ -194,6 +194,23 @@ public class ClientNetworkManager : MonoBehaviour
     private static void HandleJoinConfirmation(Message message)
     {
         string[] rawClientData = message.GetStrings();
+        string[] rawEntityData1 = message.GetStrings();
+        int[] rawEntityData2 = message.GetInts();
+        int worldSeed = message.GetInt();
+
+        cmd.LogRaw($"[Client] Setting entity list ({rawEntityData1.Length})...");
+
+        if (!ServerNetworkManager.Instance.isServerActive)
+        {
+            GameManager.InitializeNewGame(worldSeed);
+            
+            for (int i = 0; i < rawEntityData1.Length; i++)
+            {
+                // first, make the new prefab
+                EntityManager.Instance.SpawnNewEntity(rawEntityData2[i], rawEntityData1[i]); 
+            }
+        }
+        
         net_connectedclient[] clientData = net_connectedclient.ParseFromStringArray(rawClientData);
 
         if (!ServerNetworkManager.Instance.isServerActive)
@@ -204,13 +221,7 @@ public class ClientNetworkManager : MonoBehaviour
         {
             cmd.LogRaw($"[Client] Join request accepted. Client list skipped cuz we're a server", Color.yellow);
         }
-
-        string[] rawEntityData1 = message.GetStrings();
-        int[] rawEntityData2 = message.GetInts();
-        cmd.LogRaw($"[Client] Setting entity list ({rawEntityData1.Length})...");
-        int worldSeed = message.GetInt();
         
-
         LocalPlayer.localClient = ServerNetworkManager.GetClient(Instance.client.Id);
 
         // default permissions
@@ -222,17 +233,9 @@ public class ClientNetworkManager : MonoBehaviour
         } else
         {
             LocalPlayer.localClient.permissionLevel = 0;
-            GameManager.InitializeNewGame(worldSeed);
-            
-            for (int i = 0; i < rawEntityData1.Length; i++)
-            {
-                // first, make the new prefab
-                EntityManager.Instance.SpawnNewEntity(rawEntityData2[i], rawEntityData1[i]); 
-            }
         }
 
         ServerNetworkManager.Instance.onJoinServer.Invoke();
-        ui_chat.Instance.AddChatMessage($"{LocalPlayer.localClient.username} joined the game", Color.yellow);
     }
 
     [MessageHandler((ushort)ServerToClientId.player_connected)]

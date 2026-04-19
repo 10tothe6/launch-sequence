@@ -47,7 +47,7 @@ public class MulticastClient : MonoBehaviour
 
     void Start()
     {
-        Initialize(54236);
+        Initialize(54000);
     }
 
     public bool updatePeriodically; // false if you have another script controlling the updates
@@ -120,6 +120,7 @@ public class MulticastClient : MonoBehaviour
             for (int i = 0; i < caughtMessages.Length; i++)
             {
                 if (string.IsNullOrEmpty(caughtMessages[i])) {continue;}
+                Debug.Log("got multicast message");
                 onReceiveMessage.Invoke(monitoredAddresses[i],caughtMessages[i]);
             }
 

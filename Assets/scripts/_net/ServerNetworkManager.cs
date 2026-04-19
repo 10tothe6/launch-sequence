@@ -378,7 +378,7 @@ public class ServerNetworkManager : MonoBehaviour
 
         cmd.LogRaw($"[Server] spawning new {g_new.name} entity...", Color.cyan);
 
-        SendToAllExcept(LocalPlayer.localClient.client_index, message);
+        SendToAllExceptLocal(message);
     }
 
     // can't pass the index to the client bc they don't know what that is
@@ -548,7 +548,7 @@ public class ServerNetworkManager : MonoBehaviour
         for (int i = 0; i < Instance.connectedClients.Count; i++)
         {
             if (Instance.connectedClients[i].client_index == localIndex) {continue;}
-            Instance.server.Send(msg, (ushort)i);
+            Instance.server.Send(msg, (ushort)Instance.connectedClients[i].client_index);
         }
     }
 

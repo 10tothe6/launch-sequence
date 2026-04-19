@@ -44,6 +44,12 @@ public class UIManager : MonoBehaviour
     public bool isInMapView;
 
     public ui_connectedclients connectedclients;
+    public ui_bugreporter bugReporter;
+
+    public void ToggleBugReportWindow()
+    {
+        bugReporter.gameObject.SetActive(!bugReporter.gameObject.activeSelf);
+    }
 
     public void EnterMainMenu()
     {

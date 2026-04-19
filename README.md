@@ -1,3 +1,7 @@
+![alt text](Assets/sprites/branding/title_new_black.png)
+
+***
+
 # Temporary roadmap
 * mptest-1 "brave new world"      🕑
 * mptest-2 "boots on the ground"

@@ -236,6 +236,7 @@ public class ClientNetworkManager : MonoBehaviour
         }
 
         ServerNetworkManager.Instance.onJoinServer.Invoke();
+        ui_chat.Instance.AddChatMessage($"{LocalPlayer.localClient.username} joined the game", Color.yellow);
     }
 
     [MessageHandler((ushort)ServerToClientId.player_connected)]

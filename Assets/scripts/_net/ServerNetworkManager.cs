@@ -281,8 +281,6 @@ public class ServerNetworkManager : MonoBehaviour
                 {
                     LocalPlayer.localClient.permissionLevel = 0;
                 }
-
-                ui_chat.Instance.AddChatMessage($"{newClient.username} joined the game", Color.yellow);
                 Instance.SendJoinConfirm(fromClientId);
             }
         }

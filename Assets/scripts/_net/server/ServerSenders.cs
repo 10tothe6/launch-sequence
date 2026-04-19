@@ -27,6 +27,14 @@ public class ServerSenders : MonoBehaviour
         Instance = this;
     }
 
+    public void SendPermissionUpdate(ushort clientIndex, ushort newPerm)
+    {
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.player_permission_update);
+        message.AddUShort(clientIndex);
+        message.AddUShort(newPerm);
+
+        ServerNetworkManager.Instance.server.SendToAll(message);
+    }
 
     public void SendKillEntity(int index)
     {

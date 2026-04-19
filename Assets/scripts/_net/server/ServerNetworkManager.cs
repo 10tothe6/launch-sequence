@@ -17,6 +17,7 @@ public enum ServerToClientId : ushort
     player_connected = 10002, // new player joined (tell to all clients)
     player_disconnected = 10003, // new player quit OR WAS BANNED (tell to all clients))
     kick_player = 10004, // force a client to leave
+    player_permission_update = 10005,
 
     chat_message_update = 10100, // tell to all clients
 
@@ -113,7 +114,7 @@ public class ServerNetworkManager : MonoBehaviour
     {
         if (Instance.isServerActive)
         {
-            GetClientFromUsername(username).permissionLevel = newPermissionLevel;
+            ServerSenders.Instance.SendPermissionUpdate(GetClientFromUsername(username).client_index, newPermissionLevel);
         } else
         {
             ClientSenders.Instance.SendCommandRequest(cmd_console.GetCommandData("p"), new string[] {username, newPermissionLevel.ToString()});

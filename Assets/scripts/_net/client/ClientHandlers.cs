@@ -41,7 +41,15 @@ public class ClientHandlers : MonoBehaviour
 
 
 
+    [MessageHandler((ushort)ServerToClientId.player_permission_update)]
+    private static void HandlePermissionChange(Message message)
+    {
+        ushort clientIndex = message.GetUShort();
+        ushort newPerm = message.GetUShort();
 
+        ServerNetworkManager.GetClient(clientIndex).permissionLevel = newPerm;
+        UIManager.Instance.connectedclients.ConstructMenu();
+    }
 
 
     [MessageHandler((ushort)ServerToClientId.entity_position_updates)]

@@ -16,13 +16,13 @@ public class ui_connectedclients : MonoBehaviour
         ServerNetworkManager.Instance.onPlayerLeave.AddListener(RemovePlayerFromMenu);
     }
 
-    void ConstructMenu()
+    public void ConstructMenu()
     {
         clientList.SetItems(ServerNetworkManager.Instance.GetClientUsernames());
 
         // updating the height of the menu
         rt_menuParent.sizeDelta = new Vector2(rt_menuParent.sizeDelta.x, clientList.GetEffectiveHeight());
-    }
+    } 
 
     void RemovePlayerFromMenu(string username)
     {

@@ -38,6 +38,19 @@ public class ui_chat : MonoBehaviour
         net_chatmessage newMessage = new net_chatmessage();
         newMessage.msg = msg;
         newMessage.timestamp = Time.time;
+        newMessage.col = Color.white;
+
+        chatMessages.Add(newMessage);
+
+        Refresh();
+    }
+
+    public void AddChatMessage(string msg, Color col)
+    {
+        net_chatmessage newMessage = new net_chatmessage();
+        newMessage.msg = msg;
+        newMessage.timestamp = Time.time;
+        newMessage.col = col;
 
         chatMessages.Add(newMessage);
 
@@ -55,5 +68,10 @@ public class ui_chat : MonoBehaviour
         }
 
         messageList.SetItems(messages);
+
+        for (int i = 0; i < l; i++)
+        {
+            messageList.t_listContainer.GetChild(i).GetComponent<ui_stringdisplay>().SetColor(chatMessages[chatMessages.Count - i - 1].col);
+        }
     }
 }

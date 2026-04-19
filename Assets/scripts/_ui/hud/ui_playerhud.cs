@@ -59,5 +59,13 @@ public class ui_playerhud : MonoBehaviour
         ui_debugmenu.Instance.AddEntry("eq radius", 
         () => util_game.FormatRawDistance(WorldManager.SeaLevelRadius()),
         "game_main");
+
+        ui_debugmenu.Instance.AddEntry("entity count", 
+        () => EntityManager.Instance.allEntities.Count.ToString(),
+        "game_main");
+
+        // ui_debugmenu.Instance.AddEntry("entity count", 
+        // () => EntityManager.Instance.allEntities.Count.ToString(),
+        // "game_main");
     }
 }

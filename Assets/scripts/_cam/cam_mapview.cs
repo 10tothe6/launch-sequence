@@ -28,6 +28,7 @@ public class cam_mapview : MonoBehaviour
     {
         if (storedRotation != Quaternion.identity) {CameraController.t_cam.parent.rotation = storedRotation;}
         CameraController.cam_main.cullingMask = mapCullingMask;
+        CameraController.ZeroOut();
         transform.SetParent(null);
     }
     public void ExitControl()

@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
   data:
-    reference: {fileID: 0}
+    reference: {fileID: 7571074227628741643}
     entityType: 0
     entityPrefabIndex: 0
     index: 0

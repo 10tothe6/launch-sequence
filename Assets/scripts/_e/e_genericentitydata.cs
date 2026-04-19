@@ -88,6 +88,8 @@ public class e_genericentitydata
         index = int.Parse(split[0]);
         entityName = split[1];
 
+        reference.gameObject.name = "e_" + entityName;
+
         localPosition = num_precisevector3.FromString(split[2]);
     }
 

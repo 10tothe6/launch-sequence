@@ -1,4 +1,5 @@
 using System.Linq;
+using Riptide;
 using TMPro;
 using UnityEngine;
 
@@ -210,7 +211,26 @@ public class cmd_console : MonoBehaviour
         else if (GetCommandData("spawn").IsValid(items[0])) // spawn
         {
             string entityName = items[1];
-            EntityManager.Instance.SpawnNewEntity(entityName, LocalPlayer.localClient.controllingEntity.data.GetPosition());
+
+            net_connectedclient client = LocalPlayer.localClient;
+            if (items.Length > 2)
+            {
+                // the player has given another username to spawn the thing
+                string username = items[2];
+                if (ServerNetworkManager.GetClientFromUsername(username) != null)
+                {
+                    client = ServerNetworkManager.GetClientFromUsername(username);
+                }
+                
+            }
+            
+            if (client.isInSandbox)
+            {
+                EntityManager.Instance.SpawnNewEntityInSandbox(entityName, client.controllingEntity.data.GetPosition());
+            } else
+            {
+                EntityManager.Instance.SpawnNewEntity(entityName, client.controllingEntity.data.GetPosition());
+            }
         }
 
         else if (GetCommandData("sbox").IsValid(items[0])) // in/out of sandbox

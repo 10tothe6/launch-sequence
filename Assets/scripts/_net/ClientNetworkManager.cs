@@ -232,13 +232,17 @@ public class ClientNetworkManager : MonoBehaviour
         }
 
         ServerNetworkManager.Instance.onJoinServer.Invoke();
+        ui_chat.Instance.AddChatMessage($"{LocalPlayer.localClient.username} joined the game", Color.yellow);
     }
 
     [MessageHandler((ushort)ServerToClientId.player_connected)]
     private static void HandleNewPlayer(Message message)
     {
         net_connectedclient newPlayer = net_connectedclient.ParseFromString(message.GetString());
+        ServerNetworkManager.Instance.connectedClients.Add(newPlayer);
         ServerNetworkManager.Instance.onPlayerJoin.Invoke(newPlayer.username);
+
+        ui_chat.Instance.AddChatMessage($"{newPlayer.username} joined the game", Color.yellow);
     }
 
     [MessageHandler((ushort)ServerToClientId.chat_message_update)]

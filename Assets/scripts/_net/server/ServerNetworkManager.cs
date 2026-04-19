@@ -222,7 +222,10 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void SetControllingEntity(ushort clientId, e_genericentity entity)
     {
-        CameraController.SetControlMode(CameraControlMode.None); // unparenting and stopping the camera so that it doesn't end up deleted/disabled
+        if (clientId == LocalPlayer.localClient.client_index)
+        {
+            CameraController.SetControlMode(CameraControlMode.None);
+        } // unparenting and stopping the camera so that it doesn't end up deleted/disabled
 
         entity.gameObject.SetActive(true);
 

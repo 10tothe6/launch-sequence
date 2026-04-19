@@ -1,8 +1,29 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class util_string
 {   
+    public static string Vector3ToString(Vector3 v)
+    {
+        string result = "";
+
+        result += v.x.ToString();
+        result += ",";
+        result += v.y.ToString();
+        result += ",";
+        result += v.z.ToString();
+
+        return result;
+    }
+    public static Vector3 StringToVector3(string s)
+    {
+        string[] split = SplitByChar(s, ',');
+        return new Vector3(float.Parse(split[0]), float.Parse(split[1]), float.Parse(split[2]));
+    }
+
+
+
     public static string[] AddToArray(string[] old, string toAdd)
     {
         string[] result = new string[old.Length + 1];

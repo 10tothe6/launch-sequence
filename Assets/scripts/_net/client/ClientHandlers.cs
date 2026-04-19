@@ -49,6 +49,7 @@ public class ClientHandlers : MonoBehaviour
     {
         int[] entityIndices = message.GetInts();
         string[] entityPositions = message.GetStrings();
+        //string[] entityRotations = message.GetStrings();
 
         //cmd.LogRaw($"[Client] got entity position update for {entityIndices.Length} entities.", Color.yellow);
 
@@ -56,6 +57,7 @@ public class ClientHandlers : MonoBehaviour
         {
             if (EntityManager.Instance.GetEntityFromIndex(entityIndices[i]) == null) {continue;}
             EntityManager.Instance.GetEntityFromIndex(entityIndices[i]).data.SetPosition(num_precisevector3.FromString(entityPositions[i]));
+            //EntityManager.Instance.GetEntityFromIndex(entityIndices[i]).transform.up = util_string.StringToVector3(entityRotations[i]);
         }
     }
 

@@ -156,14 +156,17 @@ public class ServerSenders : MonoBehaviour
         toOthers.AddInts(entityIds);
 
         string[] positionData = new string[entityIds.Length];
+        //[] rotationData = new string[entityIds.Length];
 
         for (int i = 0; i < positionData.Length; i++)
         {
             if (EntityManager.Instance.GetEntityFromIndex(entityIds[i]) == null) {continue;}
             positionData[i] = EntityManager.Instance.GetEntityFromIndex(entityIds[i]).data.localPosition.AsRawString();
+            //rotationData[i] = util_string.Vector3ToString(transform.up);
         }
 
         toOthers.AddStrings(positionData);
+        //toOthers.AddStrings(rotationData);
 
         SendToAllExceptLocal(toOthers);
     }

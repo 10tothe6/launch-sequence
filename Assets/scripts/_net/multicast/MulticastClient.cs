@@ -163,6 +163,6 @@ public class MulticastClient : MonoBehaviour
 
         IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(multicastAddress), multicastPort);
 
-        client.Send(data, data.Length, endPoint);
+        //client.Send(data, data.Length, endPoint);
     }
 }

@@ -1,11 +1,25 @@
 using UnityEngine;
 
+// the kind of variable that is being stored 
 public enum prefs_entrytype
 {
     Double,
     Float,
     String,
     Bool,
+}
+
+// how exactly that variable gets displayed
+// I might in the future add some sort of "possible variables" check (you can't display booleans with a slider)
+// but for now it'll just be common sense
+public enum prefs_entrydisplaytype
+{
+    Slider,
+    Checkbox,
+    InputField,
+    ColorPicker, // TODO:
+    DropDown,
+    Text,
 }
 
 // like everything else, the way this game handles settings is much more complicated than what I usually do

@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
     // ====================================
     public static void SwitchToMainMenu() // done
     {
+        UIManager.Instance.SetBugReporterActive(false);
         UIManager.Instance.pauseMenu.gameObject.SetActive(false);
         gameState = GameState.InMenu;
 
@@ -155,6 +156,7 @@ public class GameManager : MonoBehaviour
     // entering back into the game
     public static void SwitchToGame()
     {
+        UIManager.Instance.SetBugReporterActive(false);
         UIManager.Instance.pauseMenu.gameObject.SetActive(false);
         WorldManager.Instance.SetAllBodiesActive(true);
         Sandbox.Instance.ExitSandbox();

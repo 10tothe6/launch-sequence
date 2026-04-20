@@ -60,10 +60,11 @@ public class UIManager : MonoBehaviour
     public ui_bugreporter bugReporter;
     public ui_pausemenu pauseMenu;
 
-    public void ToggleBugReportWindow()
+    public void SetBugReporterActive(bool active)
     {
-        bugReporter.gameObject.SetActive(!bugReporter.gameObject.activeSelf);
+        bugReporter.gameObject.SetActive(active);
     }
+    
     public void TogglePauseMenu()
     {
         pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);

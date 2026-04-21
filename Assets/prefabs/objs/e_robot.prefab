@@ -185,9 +185,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7571074227628741643}
   - component: {fileID: 8184121651257132309}
-  - component: {fileID: 3092532290964612513}
+  - component: {fileID: 5027030714323127773}
   - component: {fileID: 1461875249874814483}
-  - component: {fileID: -6093451512030076741}
+  - component: {fileID: 3092532290964612513}
   m_Layer: 0
   m_Name: e_robot
   m_TagString: Untagged
@@ -268,33 +268,21 @@ MonoBehaviour:
     m_Bits: 0
   mode: 0
   shoveFactor: {x: 0, y: 0, z: 0}
---- !u!54 &3092532290964612513
-Rigidbody:
+--- !u!114 &5027030714323127773
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8782933785179873280}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 1
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad9ce86291c3364faf86db3023ee7ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::player_genericcontroller
+  onPacketUpate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1461875249874814483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,11 +296,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
   data:
+    monoComp: {fileID: 0}
     reference: {fileID: 7571074227628741643}
     entityType: 0
+    state: 0
     entityPrefabIndex: 0
     index: 0
-    entityName: 
     parent: {fileID: 0}
     rotation: {x: 0, y: 0, z: 0, w: 0}
     velocity:
@@ -322,16 +311,6 @@ MonoBehaviour:
         numDecimalDigits: 4
       z:
         numDecimalDigits: 4
-    fixedData:
-      generic: {fileID: 0}
-    floatingData:
-      generic: {fileID: 0}
-      isCelestial: 0
-      defaultScale: 0
-      scaleFactor: 1
-    mimicData:
-      generic: {fileID: 0}
-      defaultScale: 0
   onEnterControl:
     m_PersistentCalls:
       m_Calls:
@@ -362,15 +341,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &-6093451512030076741
-MonoBehaviour:
+--- !u!54 &3092532290964612513
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8782933785179873280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dce172d9a17053741a54da9857497c14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::e_fixedentity
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1

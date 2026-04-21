@@ -51,17 +51,17 @@ public class ServerHandlers : MonoBehaviour
         string username = message.GetString();
         string version = message.GetString();
 
-        cmd.LogRaw($"[Server] Received join request from '{username}'. Validating...", Color.cyan);        
+        cmd.LogRaw($"[Server] Received join request from '{username}'. Validating...", NetworkResources.Instance.serverUpdateColor);        
 
         if (ServerNetworkManager.Instance.IsUsernameTaken(username))
         {
             ServerSenders.Instance.SendJoinDenial(fromClientId, "duplicate username");
-            cmd.LogRaw($"[Server] Client denied. Reason: duplicate username.", Color.cyan);
+            cmd.LogRaw($"[Server] Client denied. Reason: duplicate username.", NetworkResources.Instance.serverUpdateColor);
         } 
         else if (Program.Instance.version != version)
         {
             ServerSenders.Instance.SendJoinDenial(fromClientId, "wrong version");
-            cmd.LogRaw($"[Server] Client denied. Reason: wrong game version.", Color.cyan);
+            cmd.LogRaw($"[Server] Client denied. Reason: wrong game version.", NetworkResources.Instance.serverUpdateColor);
         }
 
         
@@ -81,7 +81,7 @@ public class ServerHandlers : MonoBehaviour
                 } else
                 {
                     ServerSenders.Instance.SendJoinDenial(fromClientId, "not whitelisted");
-                    cmd.LogRaw($"[Server] Client denied. Reason: not on whitelist.", Color.cyan);
+                    cmd.LogRaw($"[Server] Client denied. Reason: not on whitelist.", NetworkResources.Instance.serverUpdateColor);
                 }
             } else
             {
@@ -95,13 +95,13 @@ public class ServerHandlers : MonoBehaviour
                 } else
                 {
                     ServerSenders.Instance.SendJoinDenial(fromClientId, "blacklisted");
-                    cmd.LogRaw($"[Server] Client with denied. Reason: on blacklist.", Color.cyan);
+                    cmd.LogRaw($"[Server] Client with denied. Reason: on blacklist.", NetworkResources.Instance.serverUpdateColor);
                 }
             }
 
             if (passedListCheck)
             {
-                cmd.LogRaw($"[Server] Client accepted.", Color.cyan);
+                cmd.LogRaw($"[Server] Client accepted.", NetworkResources.Instance.serverUpdateColor);
 
                 net_connectedclient newClient = new net_connectedclient(username, fromClientId);
 
@@ -161,7 +161,7 @@ public class ServerHandlers : MonoBehaviour
 
         if (arePermissionsValid)
         {
-            cmd.LogRaw($"[Server] putting through command ({cmdName}) request from client {fromClientId}.", Color.cyan);
+            cmd.LogRaw($"[Server] putting through command ({cmdName}) request from client {fromClientId}.", NetworkResources.Instance.serverUpdateColor);
 
             string constructedMessage = "";
             constructedMessage += cmdName;
@@ -179,7 +179,7 @@ public class ServerHandlers : MonoBehaviour
             cmd_console.Instance.ProcessMessage(constructedMessage, fromClientId);
         } else
         {
-            cmd.LogRaw($"[Server] blocked command ({cmdName}) request from client {fromClientId} cuz perms", Color.cyan);
+            cmd.LogRaw($"[Server] blocked command ({cmdName}) request from client {fromClientId} cuz perms", NetworkResources.Instance.serverUpdateColor);
         }
     }
 }

@@ -84,7 +84,7 @@ public class ServerSenders : MonoBehaviour
         message.AddString(comp.data.GetRawPackagedData());
         message.AddInt(comp.data.entityPrefabIndex);
 
-        cmd.LogRaw($"[Server] spawning new {g_new.name} entity...", Color.cyan);
+        cmd.LogRaw($"[Server] spawning new {g_new.name} entity...", NetworkResources.Instance.serverUpdateColor);
 
         SendToAllExceptLocal(message);
     }
@@ -92,7 +92,7 @@ public class ServerSenders : MonoBehaviour
     // can't pass the index to the client bc they don't know what that is
     public void SendChatMessage(ushort originalSenderId, string msg)
     {
-        cmd.LogRaw($"[Server] updating clients with new chat message...", Color.cyan);
+        cmd.LogRaw($"[Server] updating clients with new chat message...", NetworkResources.Instance.serverUpdateColor);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.chat_message_update);
         message.AddUShort(originalSenderId);
@@ -112,7 +112,7 @@ public class ServerSenders : MonoBehaviour
 
     public void SendJoinConfirm(ushort toClientId)
     {
-        cmd.LogRaw($"[Server] Sending player list to new client...", Color.cyan);
+        cmd.LogRaw($"[Server] Sending player list to new client...", NetworkResources.Instance.serverUpdateColor);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.join_permitted);
 
@@ -143,7 +143,7 @@ public class ServerSenders : MonoBehaviour
         // the username and permission level (net_connectedclient) get sent over
         toOthers.AddString(ServerNetworkManager.GetClient(toClientId).ParseToString());
         int otherPlayerCount = ServerNetworkManager.Instance.connectedClients.Count - 1;
-        cmd.LogRaw($"[Server] Sending player join notification to {otherPlayerCount} other clients...", Color.cyan);
+        cmd.LogRaw($"[Server] Sending player join notification to {otherPlayerCount} other clients...", NetworkResources.Instance.serverUpdateColor);
         SendToAllExcept(toClientId, toOthers);
 
         // temp temp temp temp temp

@@ -37,6 +37,10 @@ public class NetworkResources : MonoBehaviour
         defaultClientPermissionLevel = ins_defaultClientPermissionLevel;
     }
 
+    [Header("CONSOLE DATA")]
+    public Color serverUpdateColor;
+    public Color clientUpdateColor;
+
     [Header("ENTITY DATA")]
     // sleeping entities get no updates
     public float controlledEntityPacketFrequency;
@@ -44,6 +48,8 @@ public class NetworkResources : MonoBehaviour
     public float localizedEntityPacketFrequency;
     // independent entities get updates all the time
 
+
+    // using the ins_/static format to make these ones a bit less verbose when accessing them
     [Header("GENERAL")]
     public ushort ins_defaultClientPermissionLevel;
     public static ushort defaultClientPermissionLevel;

@@ -47,7 +47,7 @@ public class ClientSenders : MonoBehaviour
 
     public void SendChatMessageToServer(string msg)
     {
-        cmd.LogRaw($"[Client] sending chat message to server...", Color.yellow);
+        cmd.LogRaw($"[Client] sending chat message to server...", NetworkResources.Instance.clientUpdateColor);
         
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.chat_message_send);
         
@@ -60,7 +60,7 @@ public class ClientSenders : MonoBehaviour
 
     public void SendCommandRequest(cmd_consolecommand command, string[] args)
     {
-        cmd.LogRaw($"[Client] requesting {command.names[0]} command from server...", Color.yellow);
+        cmd.LogRaw($"[Client] requesting {command.names[0]} command from server...", NetworkResources.Instance.clientUpdateColor);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.command_request);
 
@@ -72,7 +72,7 @@ public class ClientSenders : MonoBehaviour
 
     public void SendLeaveRequest()
     {
-        cmd.LogRaw($"[Client] requesting to leave the server...", Color.yellow);
+        cmd.LogRaw($"[Client] requesting to leave the server...", NetworkResources.Instance.clientUpdateColor);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.leave_request);
 

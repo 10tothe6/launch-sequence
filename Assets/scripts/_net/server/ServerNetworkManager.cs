@@ -182,7 +182,7 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void StartServer(ushort port, ushort maxClientCount)
     {
-        cmd.LogRaw("[Server] Starting server ...", Color.cyan);
+        cmd.LogRaw("[Server] Starting server ...", NetworkResources.Instance.serverUpdateColor);
         server.Start(port, maxClientCount);
         BeginMulticastBroadcast(port);
         isServerActive = true;
@@ -193,7 +193,7 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void StartMultiplayerServer(ushort clientCount)
     {
-        cmd.LogRaw("[Server] Setting up multiplayer server on port " + NetworkResources.defaultServerPort + "...", Color.cyan);
+        cmd.LogRaw("[Server] Setting up multiplayer server on port " + NetworkResources.defaultServerPort + "...", NetworkResources.Instance.serverUpdateColor);
         StartServer(NetworkResources.defaultServerPort, clientCount);
         ClientNetworkManager.Instance.username = "localplayer";
         ClientNetworkManager.Instance.ConnectToLocalServer();
@@ -202,7 +202,7 @@ public class ServerNetworkManager : MonoBehaviour
     // starting a singleplayer world
     public void StartSingleplayerServer()
     {
-        cmd.LogRaw("[Server] Setting up singleplayer server on port " + NetworkResources.defaultServerPort + "...", Color.cyan);
+        cmd.LogRaw("[Server] Setting up singleplayer server on port " + NetworkResources.defaultServerPort + "...", NetworkResources.Instance.serverUpdateColor);
         StartServer(NetworkResources.defaultServerPort, 1);
         ClientNetworkManager.Instance.username = "localplayer";
         ClientNetworkManager.Instance.ConnectToLocalServer();
@@ -242,7 +242,7 @@ public class ServerNetworkManager : MonoBehaviour
 
         if (ServerNetworkManager.Instance.isServerActive)
         {
-            cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...", Color.cyan);
+            cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...", NetworkResources.Instance.serverUpdateColor);
 
             // great, now its done on the server side
             // we still need to update everyone (except the local client, obviously)
@@ -254,7 +254,7 @@ public class ServerNetworkManager : MonoBehaviour
             ServerSenders.SendToAllExceptLocal(toOthers);
         } else
         {
-            cmd.LogRaw($"[Client] setting client {clientId} control to {entity.gameObject.name}...", Color.yellow);
+            cmd.LogRaw($"[Client] setting client {clientId} control to {entity.gameObject.name}...", NetworkResources.Instance.clientUpdateColor);
         }
     }
 

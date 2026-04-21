@@ -59,7 +59,7 @@ public class ClientHandlers : MonoBehaviour
         string[] entityPositions = message.GetStrings();
         string[] entityRotations = message.GetStrings();
 
-        //cmd.LogRaw($"[Client] got entity position update for {entityIndices.Length} entities.", Color.yellow);
+        //cmd.LogRaw($"[Client] got entity position update for {entityIndices.Length} entities.", NetworkResources.Instance.clientUpdateColor);
 
         for (int i = 0; i < entityIndices.Length; i++)
         {
@@ -85,7 +85,7 @@ public class ClientHandlers : MonoBehaviour
     {
         string reason = message.GetString();
 
-        cmd.LogRaw($"[Client] We were kicked from the server!. Reason: {reason}", Color.yellow);
+        cmd.LogRaw($"[Client] We were kicked from the server!. Reason: {reason}", NetworkResources.Instance.clientUpdateColor);
         
         // TODO: clear any remaining entities and data
 
@@ -107,7 +107,7 @@ public class ClientHandlers : MonoBehaviour
         string data = message.GetString();
         int index = message.GetInt();
 
-        cmd.LogRaw($"[Client] Spawning new entity...", Color.yellow);
+        cmd.LogRaw($"[Client] Spawning new entity...", NetworkResources.Instance.clientUpdateColor);
         EntityManager.Instance.SpawnNewEntity(index, data);
     }
 
@@ -116,7 +116,7 @@ public class ClientHandlers : MonoBehaviour
     {
         string reason = message.GetString();
 
-        cmd.LogRaw($"[Client] Join request denied by server. Reason: {reason}", Color.yellow);
+        cmd.LogRaw($"[Client] Join request denied by server. Reason: {reason}", NetworkResources.Instance.clientUpdateColor);
         ui_infoalerts.Instance.ShowFullscreenAlert($"[Client] Join request denied by server. Reason: {reason}");
         
         ClientNetworkManager.Instance.client.Disconnect();
@@ -148,11 +148,11 @@ public class ClientHandlers : MonoBehaviour
 
         if (!ServerNetworkManager.Instance.isServerActive)
         {
-            cmd.LogRaw($"[Client] Join request accepted. Setting client list ({rawClientData.Length})...", Color.yellow);
+            cmd.LogRaw($"[Client] Join request accepted. Setting client list ({rawClientData.Length})...", NetworkResources.Instance.clientUpdateColor);
             ServerNetworkManager.Instance.connectedClients = clientData.ToList();
         } else
         {
-            cmd.LogRaw($"[Client] Join request accepted. Client list skipped cuz we're a server", Color.yellow);
+            cmd.LogRaw($"[Client] Join request accepted. Client list skipped cuz we're a server", NetworkResources.Instance.clientUpdateColor);
         }
         
         LocalPlayer.localClient = ServerNetworkManager.GetClient(ClientNetworkManager.Instance.client.Id);
@@ -160,7 +160,7 @@ public class ClientHandlers : MonoBehaviour
         ServerNetworkManager.Instance.onJoinServer.Invoke();
 
         // saying the local player has joined the game
-        ui_chat.Instance.AddChatMessage($"{LocalPlayer.localClient.username} joined the game", Color.yellow);
+        ui_chat.Instance.AddChatMessage($"{LocalPlayer.localClient.username} joined the game", NetworkResources.Instance.clientUpdateColor);
     }
 
     [MessageHandler((ushort)ServerToClientId.player_connected)]
@@ -176,13 +176,13 @@ public class ClientHandlers : MonoBehaviour
 
 
         // saying a new player has joined the game
-        ui_chat.Instance.AddChatMessage($"{newPlayer.username} joined the game", Color.yellow);
+        ui_chat.Instance.AddChatMessage($"{newPlayer.username} joined the game", NetworkResources.Instance.clientUpdateColor);
     }
 
     [MessageHandler((ushort)ServerToClientId.chat_message_update)]
     private static void HandleIncomingChatMessage(Message message)
     {
-        cmd.LogRaw($"[Client] got chat message!", Color.yellow);
+        cmd.LogRaw($"[Client] got chat message!", NetworkResources.Instance.clientUpdateColor);
 
         ushort senderId = message.GetUShort();
         string data = message.GetString();
@@ -201,6 +201,6 @@ public class ClientHandlers : MonoBehaviour
         }
 
         // saying whatever player
-        ui_chat.Instance.AddChatMessage($"{playerUsername} left the game", Color.yellow);
+        ui_chat.Instance.AddChatMessage($"{playerUsername} left the game", NetworkResources.Instance.clientUpdateColor);
     }
 }

@@ -2482,6 +2482,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9623a25afdff8d643bbd6067456552f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkResources
+  serverUpdateColor: {r: 0.351221, g: 0.47322592, b: 0.7660377, a: 1}
+  clientUpdateColor: {r: 0.487744, g: 0.7283019, b: 0.34491274, a: 1}
+  controlledEntityPacketFrequency: 0
+  influencedEntityPacketFrequency: 0
+  localizedEntityPacketFrequency: 0
+  ins_defaultClientPermissionLevel: 0
   ins_spamMessageCount: 10
   ins_spamPeriod: 6
   permissionLevelIcons:
@@ -6876,9 +6882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69679ed513c2216478998b01c4f7af2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityManager
-  floatingEntities: []
-  fixedEntities: []
-  mimicEntities: []
   allEntities: []
   p_entities:
   - {fileID: 7055245852948794534, guid: 083e66ef02e75bd40ade347ca27702f9, type: 3}

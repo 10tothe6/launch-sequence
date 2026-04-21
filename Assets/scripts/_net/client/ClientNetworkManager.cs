@@ -78,11 +78,11 @@ public class ClientNetworkManager : MonoBehaviour
     public void ConnectToServer(string ip, ushort port)
     {
         if (username.Length < 1) {
-            cmd.LogRaw("[Client] Username has not been set! Cannot join server.", Color.yellow); 
+            cmd.LogRaw("[Client] Username has not been set! Cannot join server.", NetworkResources.Instance.clientUpdateColor); 
             return;
         }
         
-        cmd.LogRaw("[Client] Connecting to local server ...", Color.yellow);
+        cmd.LogRaw("[Client] Connecting to local server ...", NetworkResources.Instance.clientUpdateColor);
         ServerNetworkManager.Instance.serverIP = ip;
         ServerNetworkManager.Instance.serverPort = port;
         client.Connect($"{ip}:{port}");
@@ -92,7 +92,7 @@ public class ClientNetworkManager : MonoBehaviour
     private void DidConnect(object sender, EventArgs e)
     {
         // send basic info to server
-        cmd.LogRaw("[Client] Found server at ip: " + ServerNetworkManager.Instance.serverIP + ". Sending handshake...", Color.yellow);
+        cmd.LogRaw("[Client] Found server at ip: " + ServerNetworkManager.Instance.serverIP + ". Sending handshake...", NetworkResources.Instance.clientUpdateColor);
         ClientSenders.Instance.SendJoinRequestToServer();
     }
     private void FailedToConnect(object sender, EventArgs e)

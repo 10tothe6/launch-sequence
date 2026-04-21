@@ -6288,6 +6288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldData
   ins_universalScaleFactor: 0.01
+  items: []
 --- !u!1 &751265227
 GameObject:
   m_ObjectHideFlags: 0

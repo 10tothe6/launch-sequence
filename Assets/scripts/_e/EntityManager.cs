@@ -95,6 +95,9 @@ public class EntityManager : MonoBehaviour
                 allEntities[i].data.ClearUpdatedData();
             }
         }
+        
+        result.independentIndices = independedIndices.ToArray();
+        result.independentData = independentUpdates.ToArray();
 
         return result;
     }

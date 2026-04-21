@@ -22,7 +22,7 @@ public class e_genericentitydata
     // precision is only needed here for position
     // it's faster for calculations to keep rotation not precise
     // oh also, I can't be bothered to make a precise quaternion class
-    public Quaternion rotation;
+    public Quaternion rotation {get; private set;}
 
     // velocity COULD just be a normal vector3, but may as well do things right
     public num_precisevector3 velocity;
@@ -32,6 +32,14 @@ public class e_genericentitydata
     public List<string> dataKeys {get; private set;}
     public List<string> dataValues {get; private set;}
     public List<string> updatedDataKeys {get; private set;} // updated since the last packet went out
+    public bool hasTransformBeenUpdated;
+
+    public e_genericentitydata()
+    {
+        dataKeys = new List<string>();
+        dataValues = new List<string>();
+        updatedDataKeys = new List<string>();
+    }
 
     public bool HasUpdatedValues()
     {
@@ -40,6 +48,7 @@ public class e_genericentitydata
     public void ClearUpdatedData()
     {
         updatedDataKeys.Clear();
+        hasTransformBeenUpdated = false;
     }
 
     // data coming down from the server, parsed using the format used in the function directly below this one
@@ -135,7 +144,7 @@ public class e_genericentitydata
     {
         if (LocalPlayer.IsControllingEntity()) {
             
-            if (entityType == (ushort)e_entitytype.Floating)
+            if (entityType == (ushort)e_entitytype.Fixed)
                 {
                     if (LocalPlayer.localClient.controllingEntity == monoComp)
                 {
@@ -164,7 +173,6 @@ public class e_genericentitydata
             {
                 float scaleFactor = float.Parse(GetDataEntry("scaleFactor"));
                 float defaultScale = float.Parse(GetDataEntry("defaultScale"));
-
 
                 num_precisevector3 pos = GetPosition();
 
@@ -212,9 +220,7 @@ public class e_genericentitydata
     {
         localPosition = pos;
         
-        
-        // we originally had an update packet sent from here
-        // of course that was dumb (and temp) so that's gone
+        hasTransformBeenUpdated = true;
     }
 
     public string GetRawPackagedData()

@@ -1,4 +1,4 @@
-Shader "Custom/DrawOnTop"
+Shader "debug/drawontop"
 {
     Properties
     {

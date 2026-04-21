@@ -7,8 +7,6 @@ public class cam_freecam : MonoBehaviour
     public Transform t_player;
     public LayerMask cullingMask;
 
-    public float moveSpeed;
-
     private Quaternion storedRotation;
 
     void Awake()
@@ -67,19 +65,7 @@ public class cam_freecam : MonoBehaviour
                 t_player.transform.Rotate(Vector3.up * -Input.mouseMovement.x + transform.right * Input.mouseMovement.y, Space.World);
             }
 
-            if (!UIManager.isTyping)
-            {
-                LocalPlayer.Instance.MoveBy(
-            (transform.forward * Input.inputAxisForward +
-            transform.right * Input.inputAxisHorizontal + 
-            transform.up * Input.inputAxisVertical) * moveSpeed);
-            }
-
-            // temporary for spawning a robot in
-            if (Keyboard.current.gKey.wasPressedThisFrame)
-            {
-                
-            }
+            // NO MOVEMENT HERE
         }
     }
 }

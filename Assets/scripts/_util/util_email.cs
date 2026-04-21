@@ -35,6 +35,8 @@ public class util_email
         };
 
         messageToSend.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+        
+        // TODO: error protection
         StmpServer.Send(messageToSend);
     }
 

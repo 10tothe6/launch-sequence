@@ -1,3 +1,5 @@
+using UnityEngine;
+
 [System.Serializable]
 public class player_keypresspacket
 {
@@ -30,18 +32,21 @@ public class player_keypresspacket
     {
         string result = "";
 
-        result += (forward ? 1 : 0) + ',';
-        result += (back ? 1 : 0) + ',';
-        result += (left ? 1 : 0) + ',';
-        result += (right ? 1 : 0) + ',';
+        result += (forward ? "1" : "0") + ',';
+       
+        result += (back ? "1" : "0") + ',';
+        result += (left ? "1" : "0") + ',';
+        result += (right ? "1" : "0") + ',';
 
-        result += (jump ? 1 : 0) + ',';
+        result += (jump ? "1" : "0") + ',';
 
-        result += (crouch ? 1 : 0) + ',';
-        result += (sprint ? 1 : 0) + ',';
+        result += (crouch ? "1" : "0") + ',';
+        result += (sprint ? "1" : "0") + ',';
 
-        result += horizontalMouse + ',';
-        result += verticalMouse + ',';
+        result += horizontalMouse.ToString() + ',';
+        result += verticalMouse.ToString();
+
+        
 
         return result;
     }
@@ -51,6 +56,7 @@ public class player_keypresspacket
         player_keypresspacket result = new player_keypresspacket();
 
         string[] split = util_string.SplitByChar(s,',');
+        //Debug.Log(s);
 
         result.forward = split[0] == "1";
         result.back = split[1] == "1";

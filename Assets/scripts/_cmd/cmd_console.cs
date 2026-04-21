@@ -200,8 +200,9 @@ public class cmd_console : MonoBehaviour
             } 
             else if (GetCommandData("fspeed").IsValid(items[0])) // fspeed
             {
-                CameraController.Instance.GetComponent<cam_freecam>().moveSpeed = float.Parse(items[1]);
-                PostToConsole("[CONSOLE] Set freecam speed to " + items[1]);
+                // TODO:
+                // CameraController.Instance.GetComponent<cam_freecam>().moveSpeed = float.Parse(items[1]);
+                // PostToConsole("[CONSOLE] Set freecam speed to " + items[1]);
             } 
             
             else if (GetCommandData("whitelist").IsValid(items[0])) // whitelist

@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class FreecamController : MonoBehaviour
 {
+    private player_genericcontroller gComp;
     private e_genericentity entityData;
     void Awake()
     {
+        gComp = GetComponent<player_genericcontroller>();
         entityData = GetComponent<e_genericentity>();
 
         entityData.onEnterControl.AddListener(EnterControl);
@@ -14,6 +17,8 @@ public class FreecamController : MonoBehaviour
 
     public bool isActive;
     public LayerMask mask;
+
+    public float moveSpeed;
 
     void EnterControl()
     {
@@ -45,6 +50,20 @@ public class FreecamController : MonoBehaviour
                     }
                 }
             }
+
+            float forward = gComp.mostRecentPacket.forward ? 1f : 0f;
+            float backward = gComp.mostRecentPacket.back ? -1f : 0f;
+
+            float left = gComp.mostRecentPacket.left ? -1f : 0f;
+            float right = gComp.mostRecentPacket.right ? 1f : 0f;
+
+            float up = 0;
+            float down = 0;
+
+            LocalPlayer.Instance.MoveBy(
+        (transform.forward * (forward + backward) +
+        transform.right * (left + right) + 
+        transform.up * (up + down)) * moveSpeed);
 
             if (interactingWithRobot)
             {

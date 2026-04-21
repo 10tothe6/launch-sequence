@@ -49,6 +49,9 @@ public class cb_trackedbody : MonoBehaviour
         
         gameObject.GetComponent<cbr_litbody>().useIndex = true;
         gameObject.GetComponent<cbr_litbody>().bodyIndex = data.pConfig.selfIndex;
+
+        pose.data.SetDataEntry("scaleFactor","1");
+        pose.data.SetDataEntry("defaultScale","1");
     }
 
     public void SetActive(bool active)

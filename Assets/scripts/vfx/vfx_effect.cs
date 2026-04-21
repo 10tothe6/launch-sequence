@@ -3,7 +3,7 @@ using UnityEngine;
 // generic script for applying post-processing materials to a camera
 // "pst_" stands for "post"
 
-public class pst_effect : MonoBehaviour
+public class vfx_effect : MonoBehaviour
 {
     // the material to apply to the camera's output texture
     [Header("(applies from top to bottom)")]

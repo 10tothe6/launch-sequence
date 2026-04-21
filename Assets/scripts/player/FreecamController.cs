@@ -51,7 +51,7 @@ public class FreecamController : MonoBehaviour
 
             if (gComp.mostRecentPacket.mouseRight)
             {
-                transform.Rotate(Vector3.up * -Input.mouseMovement.x + transform.right * Input.mouseMovement.y, Space.World);
+                transform.Rotate(Vector3.up * -gComp.mostRecentPacket.horizontalMouse + transform.right * gComp.mostRecentPacket.verticalMouse, Space.World);
                 entityData.data.SetRotation(transform.rotation);
 
             }

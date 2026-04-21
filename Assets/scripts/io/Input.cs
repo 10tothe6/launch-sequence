@@ -53,6 +53,30 @@ public class Input : MonoBehaviour
         UpdateValues(Time.deltaTime);
     }
 
+    // grabs which keys the player is pressing and turns them into this nice, clean, standard format
+    public static player_keypresspacket GetKeypressPacket()
+    {
+        player_keypresspacket result = new player_keypresspacket();
+
+        if (!UIManager.isTyping)
+        {
+            result.forward = Keyboard.current.wKey.isPressed;
+            result.left = Keyboard.current.aKey.isPressed;
+            result.back = Keyboard.current.sKey.isPressed;
+            result.right = Keyboard.current.dKey.isPressed;
+
+            result.jump = Keyboard.current.spaceKey.isPressed;
+
+            result.sprint = Keyboard.current.shiftKey.isPressed;
+            result.crouch = Keyboard.current.leftCtrlKey.isPressed;
+
+            result.horizontalMouse = Input.mouseMovement.x;
+            result.verticalMouse = Input.mouseMovement.y;
+        }
+
+        return result;
+    }
+
     public void UpdateValues(float dt)
     { 
         mousePosition = Mouse.current.position.ReadValue();

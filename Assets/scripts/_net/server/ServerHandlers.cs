@@ -27,7 +27,22 @@ public class ServerHandlers : MonoBehaviour
         Instance = this;
     }
 
+    [MessageHandler((ushort)ClientToServerId.key_presses)]
+    private static void HandleKeyPresses(ushort fromClientId, Message message)
+    {
+        string msg = message.GetString();
+        player_keypresspacket p = player_keypresspacket.ParseFromString(msg);
 
+        net_connectedclient c = ServerNetworkManager.GetClient(fromClientId);
+
+        if (c.controllingEntity != null)
+        {
+            if (c.controllingEntity.GetComponent<player_genericcontroller>() != null)
+            {
+                c.controllingEntity.GetComponent<player_genericcontroller>().AcceptKeyPresses(p);
+            }
+        }
+    }
 
 
     [MessageHandler((ushort)ClientToServerId.join_request)]

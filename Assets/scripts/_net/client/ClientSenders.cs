@@ -30,7 +30,12 @@ public class ClientSenders : MonoBehaviour
 
 
 
-
+    public void SendKeyPressesToServer()
+    {
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.key_presses);
+        message.AddString(Input.GetKeypressPacket().ParseToString());
+        ClientNetworkManager.Instance.client.Send(message);
+    }
 
     public void SendJoinRequestToServer()
     {

@@ -185,6 +185,8 @@ public class GameManager : MonoBehaviour
                 // we're in the main game, and so need to render celestial bodies
                 WorldManager.Instance.UpdateWorld();
             }
+
+            ClientSenders.Instance.SendKeyPressesToServer(); // the idea is to send these every frame
         } else
         {
             // if we're not controlling an entity, we're not in the actual game

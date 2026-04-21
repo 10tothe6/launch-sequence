@@ -56,10 +56,12 @@ public class e_genericentitydata
     {
         string[] splitByEntry = util_string.SplitByChar(data,'|');
 
+        Debug.Log(splitByEntry[0]);
+
         // first, handle position, rotation and all the other normal stuff
-        localPosition = num_precisevector3.FromString(splitByEntry[0]);
-        velocity = num_precisevector3.FromString(splitByEntry[1]);
-        rotation = util_string.ParseQuaternion(splitByEntry[2]);
+        localPosition = num_precisevector3.FromString(splitByEntry[0].Substring(splitByEntry[0].IndexOf(':') + 1));
+        velocity = num_precisevector3.FromString(splitByEntry[1].Substring(splitByEntry[0].IndexOf(':') + 1));
+        rotation = util_string.ParseQuaternion(splitByEntry[2].Substring(splitByEntry[0].IndexOf(':') + 1));
 
         // start at 3 cuz that's where the variable data begins
         for (int i = 3; i < splitByEntry.Length; i++)

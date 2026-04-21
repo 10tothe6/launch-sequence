@@ -102,7 +102,7 @@ public class ServerHandlers : MonoBehaviour
                     newClient.permissionLevel = 2;
                 } else
                 {
-                    newClient.permissionLevel = 0;
+                    newClient.permissionLevel = NetworkResources.defaultClientPermissionLevel;
                 }
                 ServerSenders.Instance.SendJoinConfirm(fromClientId);
             }

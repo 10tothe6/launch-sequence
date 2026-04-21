@@ -33,7 +33,20 @@ public class NetworkResources : MonoBehaviour
 
         spamPeriod = ins_spamPeriod;
         spamMessageCount = ins_spamMessageCount;
+
+        defaultClientPermissionLevel = ins_defaultClientPermissionLevel;
     }
+
+    [Header("ENTITY DATA")]
+    // sleeping entities get no updates
+    public float controlledEntityPacketFrequency;
+    public float influencedEntityPacketFrequency;
+    public float localizedEntityPacketFrequency;
+    // independent entities get updates all the time
+
+    [Header("GENERAL")]
+    public ushort ins_defaultClientPermissionLevel;
+    public static ushort defaultClientPermissionLevel;
 
     public int ins_spamMessageCount; // how many messages to send in order to get kicked
     public static int spamMessageCount;

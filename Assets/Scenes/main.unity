@@ -6523,7 +6523,6 @@ MonoBehaviour:
   cullingMask:
     serializedVersion: 2
     m_Bits: 375
-  moveSpeed: 1
 --- !u!114 &751265232
 MonoBehaviour:
   m_ObjectHideFlags: 0

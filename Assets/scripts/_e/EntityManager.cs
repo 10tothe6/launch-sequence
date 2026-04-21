@@ -57,6 +57,8 @@ public class EntityManager : MonoBehaviour
         
     }
 
+    public GameObject p_debugText;
+
     // the master lists for all entities
     // THIS IS A CLIENT OR SERVER BASED THING, THEY SHARE
     // why? because I don't want two entity manager classes
@@ -190,6 +192,7 @@ public class EntityManager : MonoBehaviour
 
         GameObject g_newEntity = SpawnNewEntity(p_entity, spawnPosition);
         g_newEntity.name = "e_" + nameToApply;
+        g_newEntity.GetComponent<e_genericentity>().data.SetDataEntry("name", nameToApply);
 
         return g_newEntity;
     }

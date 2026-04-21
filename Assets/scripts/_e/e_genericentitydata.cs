@@ -43,7 +43,7 @@ public class e_genericentitydata
 
     public bool HasUpdatedValues()
     {
-        return updatedDataKeys.Count > 0;
+        return updatedDataKeys.Count > 0 || hasTransformBeenUpdated;
     }
     public void ClearUpdatedData()
     {

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,12 +18,20 @@ public class e_genericentity : MonoBehaviour
 
     public UnityEvent onEnterControl;
     public UnityEvent onExitControl;
+    public bool showEntityId;
 
     void Awake()
     {
         data.reference = transform;
         
         data.monoComp = this;
+
+        if (showEntityId)
+        {
+            // spawning the debug text on the entity
+            GameObject g_debugText = Instantiate(EntityManager.Instance.p_debugText, transform); // this'll just end up going to the bottom of the child list
+            g_debugText.GetComponent<TextMeshPro>().text = data.index.ToString();
+        }
     }
 
     public int GetControllingPlayer()

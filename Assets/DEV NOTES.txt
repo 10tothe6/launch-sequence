@@ -6,3 +6,4 @@
 notes:
 * terrain jitter was fixed by increasing the inflation radius, maybe in the future I can find a better way to do that
 * no idea why the weird terrain ridge exists
+* i might be using too many parse functions - i should think about better data types

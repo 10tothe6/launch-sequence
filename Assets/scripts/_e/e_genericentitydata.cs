@@ -28,9 +28,29 @@ public class e_genericentitydata
     public num_precisevector3 velocity;
 
     // DATA SYSTEM (the backbone of the entire project, more or less)
+    // very similar, in concept at least, to minecraft's NBT data system
     public List<string> dataKeys {get; private set;}
     public List<string> dataValues {get; private set;}
     public List<string> updatedDataKeys {get; private set;} // updated since the last packet went out
+
+    // data coming down from the server, parsed using the format used in the function directly below this one
+    public void UpdateData(string data)
+    {
+        string[] splitByEntry = util_string.SplitByChar(data,'|');
+
+        // first, handle position, rotation and all the other normal stuff
+        localPosition = num_precisevector3.FromString(splitByEntry[0]);
+        velocity = num_precisevector3.FromString(splitByEntry[1]);
+        rotation = util_string.ParseQuaternion(splitByEntry[2]);
+
+        // start at 3 cuz that's where the variable data begins
+        for (int i = 3; i < splitByEntry.Length; i++)
+        {
+            string[] split = util_string.SplitByChar(splitByEntry[i],':');
+
+            SetDataEntry(split[0], split[1]); // thankfully the value can just stay as a string
+        }
+    }
 
     public string GetUpdatedData()
     {
@@ -44,7 +64,7 @@ public class e_genericentitydata
         result += velocity.AsRawString();
         result += "|";
         result += "rotation:";
-        result += rotation; // maybe change to transform.rotation? having this var seems redundant
+        result += util_string.ParseQuaternion(rotation); // maybe change to transform.rotation? having this var seems redundant
         result += "|";
 
         // now for the data that is variable

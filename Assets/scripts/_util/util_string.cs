@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class util_string
 {   
+    public static string ParseQuaternion(Quaternion q)
+    {
+        string result = "";
+
+        result += q.x;
+        result += ",";
+        result += q.y;
+        result += ",";
+        result += q.z;
+        result += ",";
+        result += q.w;
+
+        return result;
+    }
+    public static Quaternion ParseQuaternion(string s)
+    {
+        string[] split = SplitByChar(s,',');
+        return new Quaternion(
+            float.Parse(split[0]),
+            float.Parse(split[1]),
+            float.Parse(split[2]),
+            float.Parse(split[3])
+            );
+    }
     public static string Vector3ToString(Vector3 v)
     {
         string result = "";

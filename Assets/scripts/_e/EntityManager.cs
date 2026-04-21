@@ -255,6 +255,19 @@ public class EntityManager : MonoBehaviour
         return g_newEntity;
     }
 
+    public e_genericentity GetEntityFromName(string name)
+    {
+        for (int i = 0; i < allEntities.Count; i++)
+        {
+            if (allEntities[i].data.GetDataEntry("name") == name)
+            {
+                return allEntities[i];
+            }
+        }
+
+        return null;
+    }
+
     public e_genericentity GetEntityFromIndex(int index)
     {
         for (int i = 0; i < allEntities.Count; i++)

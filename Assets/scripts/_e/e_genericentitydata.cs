@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -28,6 +29,58 @@ public class e_genericentitydata
     public e_floatingentitydata floatingData;
     public e_mimicentitydata mimicData;
     // ****************************
+
+
+    // DATA SYSTEM (the backbone of the entire project, more or less)
+    public List<string> dataKeys {get; private set;}
+    public List<string> dataValues {get; private set;}
+    public List<string> updatedDataKeys {get; private set;} // updated since the last packet went out
+
+    public int GetDataEntryIndex(string key)
+    {
+        for (int i = 0; i < dataKeys.Count; i++)
+        {
+            if (dataKeys[i] == key)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public string GetDataEntry(string key)
+    {
+        for (int i = 0; i < dataKeys.Count; i++)
+        {
+            if (dataKeys[i] == key)
+            {
+                return dataValues[i];
+            }
+        }
+        return "";
+    }
+
+    public void SetDataEntry(string key, string newValue)
+    {
+        int index = GetDataEntryIndex(key);
+
+        if (index == -1)
+        {
+            dataKeys.Add(key);
+            dataValues.Add(newValue);
+        }
+        else
+        {
+            dataValues[index] = newValue;
+        }
+
+        if (!updatedDataKeys.Contains(key))
+        {
+            updatedDataKeys.Add(key);
+        }
+    }
+
 
     public void SetPosition(num_precisevector3 pos)
     {

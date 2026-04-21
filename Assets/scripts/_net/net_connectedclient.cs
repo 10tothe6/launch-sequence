@@ -153,16 +153,21 @@ public class net_connectedclient
         // we just have to find it, and take control
 
 
-        
-        // e_genericentity freecam = EntityManager.Instance.GetEntityFromName("freecam_" + username);
 
-        // // controlling it
-        // ServerNetworkManager.Instance.SetControllingEntity(client_index, freecam);
+        e_genericentity freecam = EntityManager.Instance.GetEntityFromName("freecam_" + username);
+        if (freecam == null)
+        {
+            // TODO: 
+            return;
+        }
 
-        // GameManager.SwitchToGame();
+        // controlling it
+        ServerNetworkManager.Instance.SetControllingEntity(client_index, freecam);
 
-        // // let everyone know we're not in the sandbox
-        // isInSandbox = false;
+        GameManager.SwitchToGame();
+
+        // let everyone know we're not in the sandbox
+        isInSandbox = false;
     }
 
     // ******************************************************

@@ -230,6 +230,14 @@ public class e_genericentitydata
         localPosition = pos;
         
         hasTransformBeenUpdated = true;
+
+        if (LocalPlayer.IsControllingEntity())
+        {
+            if (LocalPlayer.localClient.controllingEntity == monoComp)
+            {
+                cb_renderingmanager.Instance.RenderFrom(GetPosition());
+            }
+        }
     }
 
     public string GetRawPackagedData()

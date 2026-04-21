@@ -142,7 +142,7 @@ public class EntityManager : MonoBehaviour
         GameObject p_entity = p_entities[entityIndex];
 
         // name need not be set cuz it'll be overwritten by data
-        GameObject g_newEntity = SpawnNewEntity(p_entity, "e", num_precisevector3.Zero());
+        GameObject g_newEntity = SpawnNewEntity(p_entity, num_precisevector3.Zero());
 
         g_newEntity.GetComponent<e_genericentity>().data.SetPackagedData(data);
 
@@ -152,7 +152,7 @@ public class EntityManager : MonoBehaviour
     public GameObject SpawnNewEntity(int entityIndex, num_precisevector3 spawnPosition)
     {
         GameObject p_entity = p_entities[entityIndex];
-        return SpawnNewEntity(p_entity, "e", spawnPosition);
+        return SpawnNewEntity(p_entity, spawnPosition);
     }
 
     // okay so
@@ -163,14 +163,14 @@ public class EntityManager : MonoBehaviour
     {
         GameObject p_entity = GetEntityPrefabFromName(entityName);
 
-        return SpawnNewEntity(p_entity, "spawned_" + allEntities.Count, spawnPosition);
+        return SpawnNewEntity(p_entity, spawnPosition);
     }
 
     public GameObject SpawnNewEntity(string entityName, string nameToApply, num_precisevector3 spawnPosition)
     {
         GameObject p_entity = GetEntityPrefabFromName(entityName);
 
-        GameObject g_newEntity = SpawnNewEntity(p_entity, nameToApply, spawnPosition);
+        GameObject g_newEntity = SpawnNewEntity(p_entity, spawnPosition);
         g_newEntity.name = "e_" + nameToApply;
 
         return g_newEntity;
@@ -219,12 +219,11 @@ public class EntityManager : MonoBehaviour
         return g_newEntity;
     }
 
-    public GameObject SpawnNewEntity(GameObject p_entity, string name, num_precisevector3 spawnPosition)
+    public GameObject SpawnNewEntity(GameObject p_entity, num_precisevector3 spawnPosition)
     {
         GameObject g_newEntity = Instantiate(p_entity, t_entityContainer);
 
         e_genericentity genericComp = g_newEntity.GetComponent<e_genericentity>();
-        genericComp.data.entityName = name;
         genericComp.data.entityPrefabIndex = (ushort)System.Array.IndexOf(p_entities, p_entity);
         allEntities.Add(genericComp);
         genericComp.data.index = allEntities.Count;
@@ -254,20 +253,6 @@ public class EntityManager : MonoBehaviour
         }
 
         return g_newEntity;
-    }
-
-    public e_genericentity GetEntityFromName(string name)
-    {
-        for (int i = 0; i < allEntities.Count; i++)
-        {
-            if  (allEntities[i].data.entityName == name)
-            {
-                return allEntities[i];
-            }
-        }
-
-        // maybe I could return some sort of 'error' entity, like an untextured block from Minecraft?
-        return null;
     }
 
     public e_genericentity GetEntityFromIndex(int index)

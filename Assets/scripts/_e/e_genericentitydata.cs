@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 [System.Serializable]
 public class e_genericentitydata
@@ -12,9 +11,6 @@ public class e_genericentitydata
     // the in-game index of the entity
     // a unique identifier, basically
     public int index;
-    // the name of the entity, helps when trying to refer to it
-    // (gameobject name will always be "e_" plus the entity name)
-    public string entityName;
 
     public num_precisevector3 localPosition {get; private set;}
     public e_genericentity parent;
@@ -62,8 +58,6 @@ public class e_genericentitydata
 
         result += index;
         result += ":";
-        result += entityName;
-        result += ":";
         result += localPosition.AsRawString();
         result += ":";
         result += entityPrefabIndex;
@@ -88,13 +82,10 @@ public class e_genericentitydata
         //Debug.Log(data);
 
         index = int.Parse(split[0]);
-        entityName = split[1];
 
-        reference.gameObject.name = "e_" + entityName;
+        localPosition = num_precisevector3.FromString(split[1]);
 
-        localPosition = num_precisevector3.FromString(split[2]);
-
-        entityPrefabIndex = ushort.Parse(split[3]);
+        entityPrefabIndex = ushort.Parse(split[2]);
     }
 
     public num_precisevector3 GetPosition()

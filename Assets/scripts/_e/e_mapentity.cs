@@ -13,7 +13,7 @@ public class e_mapentity : MonoBehaviour
     public void Initialize()
     {
         if (reference == null) {cmd.Log("problem when creating map entity"); return;}
-        tx_name.text = reference.data.entityName;
+        tx_name.text = "entity";
 
         tx_name.gameObject.SetActive(showName);
 

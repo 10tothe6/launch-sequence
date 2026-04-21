@@ -151,15 +151,18 @@ public class net_connectedclient
     {
         // every client has a freecam entity in the main game, these are not destroyed
         // we just have to find it, and take control
-        e_genericentity freecam = EntityManager.Instance.GetEntityFromName("freecam_" + username);
 
-        // controlling it
-        ServerNetworkManager.Instance.SetControllingEntity(client_index, freecam);
 
-        GameManager.SwitchToGame();
+        
+        // e_genericentity freecam = EntityManager.Instance.GetEntityFromName("freecam_" + username);
 
-        // let everyone know we're not in the sandbox
-        isInSandbox = false;
+        // // controlling it
+        // ServerNetworkManager.Instance.SetControllingEntity(client_index, freecam);
+
+        // GameManager.SwitchToGame();
+
+        // // let everyone know we're not in the sandbox
+        // isInSandbox = false;
     }
 
     // ******************************************************

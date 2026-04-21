@@ -3,6 +3,11 @@ using Riptide;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum e_possibleentitystates
+{
+    
+}
+
 // here's a quick note on player entity handling specifically,
 // derived from a thinking session during a night-walk that I did
 
@@ -40,10 +45,6 @@ public class EntityManager : MonoBehaviour
     {
         Instance = this;
 
-        floatingEntities = new List<e_floatingentity>();
-        fixedEntities = new List<e_fixedentity>();
-        mimicEntities = new List<e_mimicentity>();
-
         allEntities = new List<e_genericentity>();
     }
 
@@ -55,9 +56,6 @@ public class EntityManager : MonoBehaviour
     // the master lists for all entities
     // THIS IS A CLIENT OR SERVER BASED THING, THEY SHARE
     // why? because I don't want two entity manager classes
-    public List<e_floatingentity> floatingEntities;
-    public List<e_fixedentity> fixedEntities;
-    public List<e_mimicentity> mimicEntities;
     public List<e_genericentity> allEntities;
     // sandbox and main-world entities are shared between these lists
     // sandbox entities just have a negative index
@@ -81,19 +79,6 @@ public class EntityManager : MonoBehaviour
 
         // removing from the main list
         allEntities.Remove(toRemove);
-        
-
-        // removing from the specific lists
-        if (toRemove.GetComponent<e_fixedentity>() != null)
-        {
-            fixedEntities.Remove(toRemove.GetComponent<e_fixedentity>());
-        } else if (toRemove.GetComponent<e_floatingentity>() != null)
-        {
-            floatingEntities.Remove(toRemove.GetComponent<e_floatingentity>());
-        } else if (toRemove.GetComponent<e_mimicentity>() != null)
-        {
-            mimicEntities.Remove(toRemove.GetComponent<e_mimicentity>());
-        }
 
 
         // last but not least, we kill the game object
@@ -193,22 +178,6 @@ public class EntityManager : MonoBehaviour
         genericComp.data.index = allEntities.Count * -1; // negative index because sandbox
         genericComp.data.SetPosition(spawnPosition);
 
-        // depending on what type of entity we're dealing with
-        if (g_newEntity.GetComponent<e_floatingentity>() != null)
-        {
-            e_floatingentity comp = g_newEntity.GetComponent<e_floatingentity>();
-            floatingEntities.Add(comp);
-        } else if (g_newEntity.GetComponent<e_fixedentity>() != null)
-        {
-            e_fixedentity comp = g_newEntity.GetComponent<e_fixedentity>();
-            fixedEntities.Add(comp);
-        } else if (g_newEntity.GetComponent<e_mimicentity>() != null)
-        {
-            // TODO: mimics
-        } else
-        {
-            cmd.Log("There was an issue with the entity prefab '" + p_entity.name + "'. It has no entity component!");
-        }
         // better just to have the logic automatically here instead of making a whole separate function
         if (ServerNetworkManager.Instance.isServerActive)
         {
@@ -229,22 +198,6 @@ public class EntityManager : MonoBehaviour
         genericComp.data.index = allEntities.Count;
         genericComp.data.SetPosition(spawnPosition);
 
-        // depending on what type of entity we're dealing with
-        if (g_newEntity.GetComponent<e_floatingentity>() != null)
-        {
-            e_floatingentity comp = g_newEntity.GetComponent<e_floatingentity>();
-            floatingEntities.Add(comp);
-        } else if (g_newEntity.GetComponent<e_fixedentity>() != null)
-        {
-            e_fixedentity comp = g_newEntity.GetComponent<e_fixedentity>();
-            fixedEntities.Add(comp);
-        } else if (g_newEntity.GetComponent<e_mimicentity>() != null)
-        {
-            // TODO: mimics
-        } else
-        {
-            cmd.Log("There was an issue with the entity prefab '" + p_entity.name + "'. It has no entity component!");
-        }
         // better just to have the logic automatically here instead of making a whole separate function
         if (ServerNetworkManager.Instance.isServerActive)
         {

@@ -65,7 +65,7 @@ public class cbt_meshbody : MonoBehaviour
         {
             if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius > 100000f)
             {
-                cb_solarsystem.Instance.monoBodies[bodyIndex].pose.data.floatingData.scaleFactor = 10000f / cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius;
+                cb_solarsystem.Instance.monoBodies[bodyIndex].pose.data.SetDataEntry("scaleFactor", (10000f / cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius).ToString());
             }
         }
 

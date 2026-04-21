@@ -20,11 +20,9 @@ public class e_genericentity : MonoBehaviour
 
     void Awake()
     {
-        data.floatingData.generic = this;
-        data.fixedData.generic = this;
-        data.mimicData.generic = this;
-
         data.reference = transform;
+        
+        data.monoComp = this;
     }
 
     public void Refresh()
@@ -39,12 +37,9 @@ public class e_genericentity : MonoBehaviour
             gameObject.SetActive(data.index < 0);
         } else
         {
-            gameObject.SetActive(data.index > 0);
+            gameObject.SetActive(data.index >= 0);
         }
-        
-        if (data.entityType == (ushort)e_entitytype.Fixed)
-        {
-            data.fixedData.Refresh();
-        }
+
+        data.RefreshRenderedPosition();
     }
 }

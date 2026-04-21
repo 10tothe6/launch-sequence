@@ -129,17 +129,13 @@ public class cb_renderingmanager : MonoBehaviour
         // they do need to be refreshed tho
         for (int i = 0; i < bodyEntities.Length; i++)
         {
-            bodyEntities[i].data.floatingData.Refresh();
+            bodyEntities[i].Refresh();
         }
     }
 
     // where is (0,0,0) in the unity engine, in game space?
     public num_precisevector3 GetOriginInGameSpace() {
         return worldOffset;
-    }
-
-    public bool EntityInsideRenderRadius(e_floatingentity _entity) {
-        return true; // TODO: change this
     }
 
     // ******** helpers *********

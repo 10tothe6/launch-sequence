@@ -25,6 +25,20 @@ public class e_genericentity : MonoBehaviour
         data.monoComp = this;
     }
 
+    public int GetControllingPlayer()
+    {
+        for (int i = 0; i < ServerNetworkManager.Instance.connectedClients.Count; i++)
+        {
+            if (ServerNetworkManager.Instance.connectedClients[i].controllingEntity == this)
+            {
+                return i;
+            }
+        }
+
+
+        return -1;
+    }
+
     public void Refresh()
     {
         if (!LocalPlayer.IsControllingEntity()) {return;}

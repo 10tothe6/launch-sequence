@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Riptide;
 using UnityEngine;
 
@@ -152,27 +153,21 @@ public class ServerSenders : MonoBehaviour
         ServerNetworkManager.Instance.SystemTeleport(ServerNetworkManager.GetClient(toClientId).controllingEntity, 0);
     }
 
-
-    public void SendEntityPositionUpdates(int[] entityIds)
+    // the function originally took in an int[] for the entity ids,
+    // we have replaced it with an e_entityupdatepackage that has all the data in it
+    // SORTING IS DONE ON THE FUNCTION THAT CALLS THIS ONE, NOT DONE HERE
+    public void SendEntityPositionUpdates(e_entityupdatepackage package)
     {
-        // commenting this out cuz it fucking fills the entire console
-        
+        // we're using MULTIPLE messages here, because not all clients need all the data
+        // all messages use the entity_position_updates index
         // we obviously don't need to update the server's client
-        Message toOthers = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_position_updates);
+        Message toAll = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_position_updates);
 
-        toOthers.AddInts(entityIds);
-
-        string[] data = new string[entityIds.Length];
-
-        for (int i = 0; i < data.Length; i++)
-        {
-            if (EntityManager.Instance.GetEntityFromIndex(entityIds[i]) == null) {continue;}
-            data[i] = EntityManager.Instance.GetEntityFromIndex(entityIds[i]).data.GetUpdatedData();
-        }
-
-        toOthers.AddStrings(data);
-
-        SendToAllExceptLocal(toOthers);
+        // independent goes to all clients, always
+        // entity system V1 has only independent, nothing else
+        toAll.AddStrings(package.independentData); 
+        
+        SendToAllExceptLocal(toAll);
     }
 
 

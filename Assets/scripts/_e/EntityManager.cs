@@ -5,7 +5,11 @@ using UnityEngine.Events;
 
 public enum e_possibleentitystates
 {
-    
+    Independent, // a normal, updated entity
+    Localized, // left to local physics
+    Sleeping,
+    Influenced,
+    Controlled,
 }
 
 // here's a quick note on player entity handling specifically,
@@ -68,6 +72,30 @@ public class EntityManager : MonoBehaviour
 
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
+
+    // seems like the most logical place to put this function
+    public e_entityupdatepackage PrepareEntityUpdatePackage()
+    {
+        e_entityupdatepackage result = new e_entityupdatepackage();
+
+        List<string> independentUpdates = new List<string>();
+        
+
+        for (int i = 0; i < allEntities.Count; i++)
+        {
+            if (allEntities[i].data.HasUpdatedValues())
+            {
+                // so we gotta decide where to put this entity's data
+                // for entity system V1 its all independent
+                
+                independentUpdates.Add(allEntities[i].data.GetUpdatedData());
+
+                allEntities[i].data.ClearUpdatedData();
+            }
+        }
+
+        return result;
+    }
 
 
     // this function ONLY runs on the server

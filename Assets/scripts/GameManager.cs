@@ -204,5 +204,11 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.InMenuUpdate();
         }
+
+        // its right at the end, after all logic has been done, where we send entity updates
+        if (ServerNetworkManager.Instance.isServerActive)
+        {
+            ServerSenders.Instance.SendEntityPositionUpdates(EntityManager.Instance.PrepareEntityUpdatePackage());
+        }
     }
 }

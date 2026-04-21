@@ -33,6 +33,15 @@ public class e_genericentitydata
     public List<string> dataValues {get; private set;}
     public List<string> updatedDataKeys {get; private set;} // updated since the last packet went out
 
+    public bool HasUpdatedValues()
+    {
+        return updatedDataKeys.Count > 0;
+    }
+    public void ClearUpdatedData()
+    {
+        updatedDataKeys.Clear();
+    }
+
     // data coming down from the server, parsed using the format used in the function directly below this one
     public void UpdateData(string data)
     {
@@ -202,11 +211,10 @@ public class e_genericentitydata
     public void SetPosition(num_precisevector3 pos)
     {
         localPosition = pos;
-        // make sure that the change is communicated to all clients
-        if (ServerNetworkManager.Instance.isServerActive)
-        {
-            ServerSenders.Instance.SendEntityPositionUpdates(new int[] {index});
-        }
+        
+        
+        // we originally had an update packet sent from here
+        // of course that was dumb (and temp) so that's gone
     }
 
     public string GetRawPackagedData()

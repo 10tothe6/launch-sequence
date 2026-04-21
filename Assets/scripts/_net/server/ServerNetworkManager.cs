@@ -78,6 +78,37 @@ public class ServerNetworkManager : MonoBehaviour
     public UnityEvent<net_connectedclient> onClientConnect; // all the client data, instead of the username
     // ************
 
+    // update timers for deciding when to send infrequent updates
+    // sleeping has no updates
+    private float lastLocalizedUpdate;
+    private float lastInfluencedUpdate;
+    private float lastControlledUpdate;
+    // independent is FREQUENT updates (no timer)
+
+
+    // a quick software design note here:
+    // using one timer for infrequent updates does overload the network when the updates come through, sure
+    // but having a timer for each entity (another possible approach) would be far more complex logic-wise
+    // if we use a batched messaging system we should avoid the downsides of this approach, and its simple
+    public bool IsReadyToSendEntityUpdate(e_possibleentitystates state)
+    {
+        if (state == e_possibleentitystates.Independent)
+        {
+            return true;
+        } else if (state == e_possibleentitystates.Localized)
+        {
+            return Time.time > lastLocalizedUpdate + NetworkResources.Instance.localizedEntityPacketFrequency;
+        } else if (state == e_possibleentitystates.Influenced)
+        {
+            return Time.time > lastInfluencedUpdate + NetworkResources.Instance.influencedEntityPacketFrequency;
+        } else if (state == e_possibleentitystates.Controlled)
+        {
+            return Time.time > lastControlledUpdate + NetworkResources.Instance.controlledEntityPacketFrequency;
+        }
+
+        return false; // we should never get here
+    }
+
 
     // called by the server, and the client if the server isn't running on that machine
     public void RemovePlayer(string playerUsername)

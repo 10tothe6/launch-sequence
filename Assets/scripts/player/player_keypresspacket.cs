@@ -16,6 +16,12 @@ public class player_keypresspacket
     public float horizontalMouse;
     public float verticalMouse;
 
+    public bool mouseLeft;
+    public bool mouseRight;
+
+    public bool up; // e
+    public bool down; // q
+
     public player_keypresspacket() {}
 
     public float GetHorizontal()
@@ -44,9 +50,13 @@ public class player_keypresspacket
         result += (sprint ? "1" : "0") + ',';
 
         result += horizontalMouse.ToString() + ',';
-        result += verticalMouse.ToString();
+        result += verticalMouse.ToString() + ',';
 
-        
+        result += (up ? "1" : "0") + ',';
+        result += (down ? "1" : "0") + ',';
+
+        result += (mouseLeft ? "1" : "0") + ',';
+        result += (mouseRight ? "1" : "0") + ',';
 
         return result;
     }
@@ -70,6 +80,12 @@ public class player_keypresspacket
 
         result.horizontalMouse = float.Parse(split[7]);
         result.verticalMouse = float.Parse(split[8]);
+
+        result.up = split[9] == "1";
+        result.down = split[10] == "1";
+
+        result.mouseLeft = split[11] == "1";
+        result.mouseRight = split[12] == "1";
 
         return result;
     }

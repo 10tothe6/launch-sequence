@@ -72,6 +72,12 @@ public class Input : MonoBehaviour
 
             result.horizontalMouse = Input.mouseMovement.x;
             result.verticalMouse = Input.mouseMovement.y;
+
+            result.up = Keyboard.current.eKey.isPressed;
+            result.down = Keyboard.current.qKey.isPressed;
+
+            result.mouseLeft = Input.mouseButtonLeft;
+            result.mouseRight = Input.mouseButtonRight;
         }
 
         return result;

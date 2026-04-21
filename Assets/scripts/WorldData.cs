@@ -35,6 +35,8 @@ public class WorldData : MonoBehaviour
     public float ins_universalScaleFactor;
     public static float universalScaleFactor;
 
+    public Item[] items;
+
     
     // returns the index of the newly created gas so it can be easily referenced
     public int CreateExoticGas()

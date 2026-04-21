@@ -144,7 +144,6 @@ MonoBehaviour:
     entityPrefabIndex: 0
     index: 0
     parent: {fileID: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
     velocity:
       x:
         numDecimalDigits: 4
@@ -152,6 +151,7 @@ MonoBehaviour:
         numDecimalDigits: 4
       z:
         numDecimalDigits: 4
+    hasTransformBeenUpdated: 0
   onEnterControl:
     m_PersistentCalls:
       m_Calls: []
@@ -189,3 +189,4 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 1
+  moveSpeed: 1

@@ -51,7 +51,9 @@ public class FreecamController : MonoBehaviour
                 }
             }
 
-            float forward = gComp.mostRecentPacket.forward ? 1f : 0f;
+            if (gComp.mostRecentPacket != null)
+            {
+                float forward = gComp.mostRecentPacket.forward ? 1f : 0f;
             float backward = gComp.mostRecentPacket.back ? -1f : 0f;
 
             float left = gComp.mostRecentPacket.left ? -1f : 0f;
@@ -64,6 +66,7 @@ public class FreecamController : MonoBehaviour
         (transform.forward * (forward + backward) +
         transform.right * (left + right) + 
         transform.up * (up + down)) * moveSpeed);
+            }
 
             if (interactingWithRobot)
             {

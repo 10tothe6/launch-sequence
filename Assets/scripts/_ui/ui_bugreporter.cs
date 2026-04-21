@@ -19,5 +19,6 @@ public class ui_bugreporter : MonoBehaviour
         // so the player has at least written SOMETHING, 
         // this is the part where we send it
         
+        util_email.SendEmail(new System.Collections.Generic.List<string>(){"maximilianmcdiarmid@gmail.com"}, name, description);
     }
 }

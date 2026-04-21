@@ -7043,6 +7043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69679ed513c2216478998b01c4f7af2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityManager
+  p_debugText: {fileID: 0}
   allEntities: []
   p_entities:
   - {fileID: 7055245852948794534, guid: 083e66ef02e75bd40ade347ca27702f9, type: 3}
@@ -17403,7 +17404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da38d6fc5ad2cde43b43e8e2cb1d9a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Program
-  version: mptest-1.0-rc20
+  version: mptest-1.0-rc21
   ins_buildMode: 0
   ins_startMode: 0
 --- !u!114 &2144568381

@@ -34,6 +34,12 @@ public class e_genericentitydata
     public List<string> updatedDataKeys {get; private set;} // updated since the last packet went out
     public bool hasTransformBeenUpdated;
 
+    public void SetRotation(Quaternion rot)
+    {
+        rotation = rot;
+        hasTransformBeenUpdated = true;
+    }
+
     public e_genericentitydata()
     {
         dataKeys = new List<string>();
@@ -60,8 +66,9 @@ public class e_genericentitydata
 
         // first, handle position, rotation and all the other normal stuff
         localPosition = num_precisevector3.FromString(splitByEntry[0].Substring(splitByEntry[0].IndexOf(':') + 1));
-        velocity = num_precisevector3.FromString(splitByEntry[1].Substring(splitByEntry[0].IndexOf(':') + 1));
-        rotation = util_string.ParseQuaternion(splitByEntry[2].Substring(splitByEntry[0].IndexOf(':') + 1));
+        velocity = num_precisevector3.FromString(splitByEntry[1].Substring(splitByEntry[1].IndexOf(':') + 1));
+        rotation = util_string.ParseQuaternion(splitByEntry[2].Substring(splitByEntry[2].IndexOf(':') + 1));
+        monoComp.transform.rotation = rotation;
 
         // start at 3 cuz that's where the variable data begins
         for (int i = 3; i < splitByEntry.Length; i++)

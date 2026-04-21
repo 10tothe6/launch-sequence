@@ -33,6 +33,30 @@ public class FreecamController : MonoBehaviour
 
     void Update()
     {
+        if (gComp.mostRecentPacket != null)
+        {
+            float forward = gComp.mostRecentPacket.forward ? 1f : 0f;
+            float backward = gComp.mostRecentPacket.back ? -1f : 0f;
+
+            float left = gComp.mostRecentPacket.left ? -1f : 0f;
+            float right = gComp.mostRecentPacket.right ? 1f : 0f;
+
+            float up = 0;
+            float down = 0;
+
+            LocalPlayer.Instance.MoveBy(
+                (transform.forward * (forward + backward) +
+                transform.right * (left + right) + 
+                transform.up * (up + down)) * moveSpeed);
+
+            if (gComp.mostRecentPacket.mouseRight)
+            {
+                transform.Rotate(Vector3.up * -Input.mouseMovement.x + transform.right * Input.mouseMovement.y, Space.World);
+                entityData.data.SetRotation(transform.rotation);
+
+            }
+        }
+
         if (isActive)
         {
             bool interactingWithRobot =false;
@@ -49,23 +73,6 @@ public class FreecamController : MonoBehaviour
                         interactingWithRobot = true;
                     }
                 }
-            }
-
-            if (gComp.mostRecentPacket != null)
-            {
-                float forward = gComp.mostRecentPacket.forward ? 1f : 0f;
-            float backward = gComp.mostRecentPacket.back ? -1f : 0f;
-
-            float left = gComp.mostRecentPacket.left ? -1f : 0f;
-            float right = gComp.mostRecentPacket.right ? 1f : 0f;
-
-            float up = 0;
-            float down = 0;
-
-            LocalPlayer.Instance.MoveBy(
-        (transform.forward * (forward + backward) +
-        transform.right * (left + right) + 
-        transform.up * (up + down)) * moveSpeed);
             }
 
             if (interactingWithRobot)

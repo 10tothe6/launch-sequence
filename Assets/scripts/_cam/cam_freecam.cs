@@ -60,12 +60,7 @@ public class cam_freecam : MonoBehaviour
     {
         if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.Freecam && t_player != null)
         {
-            if (Input.mouseButtonRight)
-            {
-                t_player.transform.Rotate(Vector3.up * -Input.mouseMovement.x + transform.right * Input.mouseMovement.y, Space.World);
-            }
-
-            // NO MOVEMENT HERE
+            
         }
     }
 }

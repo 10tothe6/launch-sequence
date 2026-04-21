@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class util_math
 {
+
     public static float ExpandToRange(float val, float min, float max)
     {
         return Mathf.Lerp(min, max, val);

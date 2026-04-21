@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class e_entityupdatepackage
 {
+    public int[] independentIndices;
     public string[] independentData;
     //public string[] localizedData; // unused rn
 

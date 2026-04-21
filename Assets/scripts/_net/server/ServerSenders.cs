@@ -163,6 +163,7 @@ public class ServerSenders : MonoBehaviour
         // we obviously don't need to update the server's client
         Message toAll = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_position_updates);
 
+        toAll.AddInts(package.independentIndices);
         // independent goes to all clients, always
         // entity system V1 has only independent, nothing else
         toAll.AddStrings(package.independentData); 

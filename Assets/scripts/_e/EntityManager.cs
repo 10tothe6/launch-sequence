@@ -79,6 +79,7 @@ public class EntityManager : MonoBehaviour
         e_entityupdatepackage result = new e_entityupdatepackage();
 
         List<string> independentUpdates = new List<string>();
+        List<int> independedIndices = new List<int>();
         
 
         for (int i = 0; i < allEntities.Count; i++)
@@ -89,6 +90,7 @@ public class EntityManager : MonoBehaviour
                 // for entity system V1 its all independent
                 
                 independentUpdates.Add(allEntities[i].data.GetUpdatedData());
+                independedIndices.Add(allEntities[i].data.index);
 
                 allEntities[i].data.ClearUpdatedData();
             }

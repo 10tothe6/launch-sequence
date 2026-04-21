@@ -28,6 +28,8 @@ public enum ClientToServerId : ushort
     chat_message_send = 00100,
     command_request = 00101, // same message for any command, for simplicity
     // ^ this includes kicking, banning, and so on
+
+    key_presses = 00200, // what keys the player is holding
 }
 
 public class ClientNetworkManager : MonoBehaviour

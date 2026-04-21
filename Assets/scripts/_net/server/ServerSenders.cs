@@ -156,25 +156,21 @@ public class ServerSenders : MonoBehaviour
     public void SendEntityPositionUpdates(int[] entityIds)
     {
         // commenting this out cuz it fucking fills the entire console
-        //cmd.LogRaw($"[Server] sending entity position update for {entityIds.Length} entities...");
-
+        
         // we obviously don't need to update the server's client
         Message toOthers = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_position_updates);
 
         toOthers.AddInts(entityIds);
 
-        string[] positionData = new string[entityIds.Length];
-        string[] rotationData = new string[entityIds.Length];
+        string[] data = new string[entityIds.Length];
 
-        for (int i = 0; i < positionData.Length; i++)
+        for (int i = 0; i < data.Length; i++)
         {
             if (EntityManager.Instance.GetEntityFromIndex(entityIds[i]) == null) {continue;}
-            positionData[i] = EntityManager.Instance.GetEntityFromIndex(entityIds[i]).data.localPosition.AsRawString();
-            rotationData[i] = util_string.Vector3ToString(transform.up);
+            data[i] = EntityManager.Instance.GetEntityFromIndex(entityIds[i]).data.GetUpdatedData();
         }
 
-        toOthers.AddStrings(positionData);
-        toOthers.AddStrings(rotationData);
+        toOthers.AddStrings(data);
 
         SendToAllExceptLocal(toOthers);
     }

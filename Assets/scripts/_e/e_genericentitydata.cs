@@ -32,6 +32,31 @@ public class e_genericentitydata
     public List<string> dataValues {get; private set;}
     public List<string> updatedDataKeys {get; private set;} // updated since the last packet went out
 
+    public string GetUpdatedData()
+    {
+        // '|' splits entries, ':' splits key and value and ',' is for multiple values (like a vector)
+        string result = "";
+
+        result += "localPosition:";
+        result += localPosition.AsRawString();
+        result += "|";
+        result += "velocity:";
+        result += velocity.AsRawString();
+        result += "|";
+        result += "rotation:";
+        result += rotation; // maybe change to transform.rotation? having this var seems redundant
+        result += "|";
+
+        // now for the data that is variable
+        for (int i = 0; i < updatedDataKeys.Count; i++)
+        {
+            result += updatedDataKeys[i] + ":";
+            result += GetDataEntry(updatedDataKeys[i]) + "|";
+        }
+
+        return result;
+    }
+
     public int GetDataEntryIndex(string key)
     {
         for (int i = 0; i < dataKeys.Count; i++)

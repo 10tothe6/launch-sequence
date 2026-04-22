@@ -101,8 +101,7 @@ public class cb_renderingmanager : MonoBehaviour
     // the periodic function, called by WorldManager.cs
     public void UpdateAllBodyPositions()
     {
-        Debug.Log(worldOffset.AsRawString());
-        
+        Debug.Log(LocalPlayer.localClient.controllingEntity.data.GetPosition().AsRawString() + "        " + worldOffset.AsRawString());
         inflationRadius = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].data.tConfig.equitorialRadius + 300;
 
         if (LocalPlayer.localClient == null) {return;}
@@ -111,9 +110,9 @@ public class cb_renderingmanager : MonoBehaviour
         {
             // this is the code that "corrects" the world when you get too far from the origin
             // ofc this doesn't apply if there's no controlling entity
-            if (LocalPlayer.localClient.controllingEntity.data.reference.position.magnitude > originSnapBackRadius)
+            if (LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(worldOffset).Mag().AsDouble() > originSnapBackRadius)
             {
-                num_precisevector3 shoveFactor = new num_precisevector3(LocalPlayer.localClient.controllingEntity.data.reference.position).Mul(-1);
+                num_precisevector3 shoveFactor = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(worldOffset).Mul(-1);
                 // player is too far from (0, 0, 0) so shove em' back
                 worldOffset = worldOffset.Add(shoveFactor);
                 if (LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>() != null)

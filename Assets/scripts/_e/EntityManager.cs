@@ -75,6 +75,30 @@ public class EntityManager : MonoBehaviour
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
 
+    public void PutClientInFreecam(ushort clientId)
+    {
+        // first, we have to spawn a new freecam entity
+
+        GameObject g_newFreecam = SpawnNewEntity("freecam", "freecam_" + ServerNetworkManager.GetClient(clientId).username, num_precisevector3.Zero());
+        // ^^ THIS WILL AUTOMATICALLY NOTIFY ALL CLIETNS OF THE NEW ENTITY
+
+        // then, we have to set the client to control that freecam
+        ServerNetworkManager.Instance.SetControllingEntity(clientId, g_newFreecam.GetComponent<e_genericentity>());
+    }
+
+
+
+    public void PutClientInRobot(ushort clientId)
+    {
+        // first, we have to spawn a new freecam entity
+
+        GameObject g_newRobot = SpawnNewEntity("robot", "robot_" + ServerNetworkManager.GetClient(clientId).username, num_precisevector3.Zero());
+        // ^^ THIS WILL AUTOMATICALLY NOTIFY ALL CLIETNS OF THE NEW ENTITY
+
+        // then, we have to set the client to control that freecam
+        ServerNetworkManager.Instance.SetControllingEntity(clientId, g_newRobot.GetComponent<e_genericentity>());
+    }
+
     // seems like the most logical place to put this function
     public e_entityupdatepackage PrepareEntityUpdatePackage()
     {
@@ -130,17 +154,6 @@ public class EntityManager : MonoBehaviour
         {
             allEntities[i].Refresh();
         }
-    }
-
-    public void PutClientInFreecam(ushort clientId)
-    {
-        // first, we have to spawn a new freecam entity
-
-        GameObject g_newFreecam = SpawnNewEntity("freecam", "freecam_" + ServerNetworkManager.GetClient(clientId).username, num_precisevector3.Zero());
-        // ^^ THIS WILL AUTOMATICALLY NOTIFY ALL CLIETNS OF THE NEW ENTITY
-
-        // then, we have to set the client to control that freecam
-        ServerNetworkManager.Instance.SetControllingEntity(clientId, g_newFreecam.GetComponent<e_genericentity>());
     }
 
 

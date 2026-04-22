@@ -11,6 +11,7 @@ public class player_genericcontroller : MonoBehaviour
     public player_keypresspacket mostRecentPacket {get; private set;}
 
     public UnityEvent onPacketUpate;
+    public UnityEvent onTeleport;
 
     public void AcceptKeyPresses(player_keypresspacket packet)
     {

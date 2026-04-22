@@ -167,8 +167,6 @@ public class WorldManager : MonoBehaviour
         if (LocalPlayer.localClient == null) {return 0;}
         if (LocalPlayer.localClient.controllingEntity == null) {return 0;}
 
-        Vector3 playerPos = Vector3.zero;
-
         // I can't use the 'getbodypositions' function or whatever bc i have to use the CURRENT position
 
         float[] gravForces = new float[cb_solarsystem.Instance.monoBodies.Count];

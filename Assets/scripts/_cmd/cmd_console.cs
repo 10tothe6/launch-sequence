@@ -190,7 +190,7 @@ public class cmd_console : MonoBehaviour
                     double y = double.Parse(items[2]);
                     double z = double.Parse(items[3]);
 
-                    LocalPlayer.Instance.Teleport(new num_precisevector3(x,y,z));
+                    //LocalPlayer.Instance.Teleport(new num_precisevector3(x,y,z));
                 }
             } 
             else if (GetCommandData("systp").IsValid(items[0])) // systp

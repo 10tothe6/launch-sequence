@@ -79,11 +79,7 @@ public class LocalPlayer : MonoBehaviour
     public void MoveBy(Vector3 amt)
     {
         localClient.controllingEntity.data.SetPosition(localClient.controllingEntity.data.localPosition.Add(new num_precisevector3(amt)));
-    }
-
-    public void Teleport(num_precisevector3 pos)
-    {
-        
+        localClient.controllingEntity.data.reference.position = localClient.controllingEntity.data.localPosition.Add(new num_precisevector3(amt)).Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
     }
 
     void Update()

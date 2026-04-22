@@ -52,10 +52,7 @@ public class cam_firstperson : MonoBehaviour
         // otherwise we'd just be running this constantly
         if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.PlayerFirstPerson)
         {
-            player_keypresspacket toSend = Input.GetKeypressPacket();
-            // this ends up doing most of the work
-            // really more like all of it
-            controller.SetKeypresses(toSend);
+            
         }
     }
 }

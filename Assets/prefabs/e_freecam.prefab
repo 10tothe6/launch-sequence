@@ -248,7 +248,7 @@ MonoBehaviour:
   onExitControl:
     m_PersistentCalls:
       m_Calls: []
-  showEntityId: 0
+  showEntityId: 1
 --- !u!114 &7187654269786608961
 MonoBehaviour:
   m_ObjectHideFlags: 0

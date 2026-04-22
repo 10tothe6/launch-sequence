@@ -62,7 +62,7 @@ public class e_genericentitydata
     {
         string[] splitByEntry = util_string.SplitByChar(data,'|');
 
-        Debug.Log(splitByEntry[0]);
+        //Debug.Log(splitByEntry[0]);
 
         // first, handle position, rotation and all the other normal stuff
         localPosition = num_precisevector3.FromString(splitByEntry[0].Substring(splitByEntry[0].IndexOf(':') + 1));
@@ -154,8 +154,8 @@ public class e_genericentitydata
         if (LocalPlayer.IsControllingEntity()) {
             
             if (entityType == (ushort)e_entitytype.Fixed)
-                {
-                    if (LocalPlayer.localClient.controllingEntity == monoComp)
+            {
+                if (LocalPlayer.localClient.controllingEntity == monoComp)
                 {
                     return;
                 }
@@ -230,14 +230,6 @@ public class e_genericentitydata
         localPosition = pos;
         
         hasTransformBeenUpdated = true;
-
-        if (LocalPlayer.IsControllingEntity())
-        {
-            if (LocalPlayer.localClient.controllingEntity == monoComp)
-            {
-                cb_renderingmanager.Instance.RenderFrom(GetPosition());
-            }
-        }
     }
 
     public string GetRawPackagedData()

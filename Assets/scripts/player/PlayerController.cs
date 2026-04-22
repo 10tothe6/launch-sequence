@@ -24,6 +24,7 @@ public enum player_movementmode
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    private player_genericcontroller gComp;
     public bool isActive; // very, very important
     public Vector3 gravityDirection; // the most important addition to this controller
     public float gravitationalAcceleration;
@@ -120,6 +121,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         // setting references
+        gComp = GetComponent<player_genericcontroller>();
         rb = GetComponent<Rigidbody>();
         hit = new RaycastHit();
 
@@ -128,6 +130,8 @@ public class PlayerController : MonoBehaviour
 
         colDefaultHeight = col.height;
         sprintValue = maxSprint;
+
+        //gComp.onTeleport.AddListener(() => {rb.linearVelocity = Vector3.zero;});
     }
 
     // called when the someone assumes control
@@ -155,8 +159,13 @@ public class PlayerController : MonoBehaviour
     // just doing this through Update() and using Time.deltaTime instead of FixedUpdate()
     void Update()
     {
-        if (!isActive) {return;}
+        float cameraTiltTarget = 0;
+        lastPacket = gComp.mostRecentPacket;
+        if (lastPacket == null) {return;}
 
+        entityData.data.SetRotation(transform.rotation);
+
+        // this stuff applies to server too, so outside the isActive check
         if (entityData.data.index < 0)
         {
             // sanbox
@@ -175,22 +184,17 @@ public class PlayerController : MonoBehaviour
         shoveFactor = Vector3.zero;
         oldPosition = transform.position;
 
-        if (t_camera != null) t_camera.localPosition = new Vector3(0, currentCameraHeight, 0);
-        float cameraTiltTarget = 0;
-
         if (isCrouching)
         {
             col.height = colDefaultHeight * crouchPercentHeight;
             t_foot.transform.localPosition = new Vector3(0,-col.height/2f*col.transform.localScale.y, 0);
         } else {col.height = colDefaultHeight;t_foot.transform.localPosition = new Vector3(0,-col.height/2f*col.transform.localScale.y, 0);}
 
-        //Debug.Log(ImprovedRaycast());
         if (!lockMovement && ImprovedRaycast() && !isFlying)
         {
             
             if (lastPacket.forward)
             {
-                //Debug.Log(2222);
                 if (isSprinting)
                 {
                     walkingTime += Time.deltaTime * sprintBoost;
@@ -222,7 +226,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     isSprinting = false;
-                    //Debug.Log(3333);
+                    
                     rb.linearVelocity += transform.forward * moveSpeed * Time.deltaTime;
                 }
             }
@@ -295,6 +299,54 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (isActive)
+        {
+            Cursor.lockState = CursorLockMode.Locked; // temp temp temp
+
+            if (t_camera != null) t_camera.localPosition = new Vector3(0, currentCameraHeight, 0);
+
+            // mouse x leads to a rotation AROUND the players's up vector
+            // (not the camera's)
+            if (!lockCameraHorizontal)
+            {
+                //transform.rotation *= Quaternion.Euler(new Vector3(0, 1, 0) * Input.GetAxis("Mouse X") * cameraTurnSpeed);
+                transform.Rotate(-gravityDirection * lastPacket.horizontalMouse * turnSpeed * Time.deltaTime, Space.World);
+            }
+
+            // mouse y leads to a rotation around the CAMERA's right vector
+            // it obeys limits to avoid rotational glitches when looking straight up
+            if (!lockCameraVertical)
+            {
+                t_camera.localRotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+                // float maxAngle = 0.3f;
+                // if (Input.mouseMovement.y < 0)
+                // {
+                //     // looking further down
+                //     if (t_camera.forward.y > -maxAngle)
+                //     {
+                //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+                //     }
+                //     else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * turnSpeed * Time.deltaTime * Mathf.PI / 180)) > maxAngle)
+                //     {
+                //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);  
+                //     }
+                // }
+                // else
+                // {
+                //     // looking further down
+                //     if (t_camera.forward.y < maxAngle)
+                //     {
+                //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+                //     }
+                //     else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * Time.deltaTime * turnSpeed * Mathf.PI / 180)) > maxAngle)
+                //     {
+                //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
+                //     }
+                // }
+            }
+            
+        }
+
         if (!lastPacket.sprint && sprintValue < maxSprint)
         {
             sprintValue += 0.5f;
@@ -302,48 +354,6 @@ public class PlayerController : MonoBehaviour
         isCrouching = lastPacket.crouch;
 
         lastWalkingTime = walkingTime;
-
-        Cursor.lockState = CursorLockMode.Locked; // temp temp temp
-
-        // mouse x leads to a rotation AROUND the players's up vector
-        // (not the camera's)
-        if (!lockCameraHorizontal)
-        {
-            //transform.rotation *= Quaternion.Euler(new Vector3(0, 1, 0) * Input.GetAxis("Mouse X") * cameraTurnSpeed);
-            transform.Rotate(-gravityDirection * lastPacket.horizontalMouse * turnSpeed * Time.deltaTime, Space.World);
-        }
-
-        // mouse y leads to a rotation around the CAMERA's right vector
-        // it obeys limits to avoid rotational glitches when looking straight up
-        if (!lockCameraVertical)
-        {
-            t_camera.localRotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-            // float maxAngle = 0.3f;
-            // if (Input.mouseMovement.y < 0)
-            // {
-            //     // looking further down
-            //     if (t_camera.forward.y > -maxAngle)
-            //     {
-            //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-            //     }
-            //     else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * turnSpeed * Time.deltaTime * Mathf.PI / 180)) > maxAngle)
-            //     {
-            //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);  
-            //     }
-            // }
-            // else
-            // {
-            //     // looking further down
-            //     if (t_camera.forward.y < maxAngle)
-            //     {
-            //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-            //     }
-            //     else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * Time.deltaTime * turnSpeed * Mathf.PI / 180)) > maxAngle)
-            //     {
-            //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-            //     }
-            // }
-        }
 
         /* jumping */
         if (lastPacket.jump && allowJump && !activeJump)
@@ -360,13 +370,6 @@ public class PlayerController : MonoBehaviour
 
         // GRAVITY
         rb.linearVelocity += gravityDirection * gravitationalAcceleration * Time.deltaTime;
-    }
-
-    // keypresses will not change unless updated, 
-    // meaning the game will think you are holding down keys if packets stop at the wrong time
-    public void SetKeypresses(player_keypresspacket keys)
-    {
-        lastPacket = keys;
     }
 
     // kept getting stuck on everything because the raycast was missing (like standing on a ledge)

@@ -159,6 +159,12 @@ public class PlayerController : MonoBehaviour
     // just doing this through Update() and using Time.deltaTime instead of FixedUpdate()
     void Update()
     {
+        Vector3 test = t_camera.forward - Vector3.Project(t_camera.forward, transform.up);
+        if (Vector3.Angle(test, transform.forward) > 1f)
+        {
+            t_camera.rotation = transform.rotation;
+        }
+
         float cameraTiltTarget = 0;
         lastPacket = gComp.mostRecentPacket;
         if (lastPacket == null) {return;}
@@ -270,11 +276,6 @@ public class PlayerController : MonoBehaviour
             {
                 if (activeJump && util_math.ProjectedMagnitude(rb.linearVelocity, gravityDirection) >= 0)
                 {
-                    // originally I had the Vector3.up here as hit.normal, 
-                    // but that seemed to cause really weird drifting bugs when walking/jumping on angled terrain
-
-                    // so, we doin' Vector3.up now
-
                     Vector3 lateralVelocity = rb.linearVelocity - Vector3.Project(rb.linearVelocity, gravityDirection);
                     rb.linearVelocity -= lateralVelocity;
 
@@ -317,32 +318,24 @@ public class PlayerController : MonoBehaviour
             // it obeys limits to avoid rotational glitches when looking straight up
             if (!lockCameraVertical)
             {
-                t_camera.localRotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-                // float maxAngle = 0.3f;
-                // if (Input.mouseMovement.y < 0)
-                // {
-                //     // looking further down
-                //     if (t_camera.forward.y > -maxAngle)
-                //     {
-                //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-                //     }
-                //     else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * turnSpeed * Time.deltaTime * Mathf.PI / 180)) > maxAngle)
-                //     {
-                //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);  
-                //     }
-                // }
-                // else
-                // {
-                //     // looking further down
-                //     if (t_camera.forward.y < maxAngle)
-                //     {
-                //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-                //     }
-                //     else if (Vector3.Dot(Vector3.up, util_math.RotateVector(t_camera.up, new Vector3(-1, 0, 0), Input.mouseMovement.y * Time.deltaTime * turnSpeed * Mathf.PI / 180)) > maxAngle)
-                //     {
-                //         t_camera.rotation *= Quaternion.Euler(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime);
-                //     }
-                // }
+                float maxAngle = 0.8f;
+
+                if (lastPacket.verticalMouse < 0)
+                {
+                    // looking further down
+                    if (util_math.ProjectedMagnitude(t_camera.forward, gravityDirection) < maxAngle)
+                    {
+                        t_camera.Rotate(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime, Space.Self);
+                    }
+                }
+                else
+                {
+                    // looking further down
+                    if (util_math.ProjectedMagnitude(t_camera.forward, -gravityDirection) < maxAngle)
+                    {
+                        t_camera.Rotate(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime, Space.Self);
+                    }
+                }
             }
             
         }

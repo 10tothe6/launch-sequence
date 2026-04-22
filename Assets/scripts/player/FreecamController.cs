@@ -41,8 +41,8 @@ public class FreecamController : MonoBehaviour
             float left = gComp.mostRecentPacket.left ? -1f : 0f;
             float right = gComp.mostRecentPacket.right ? 1f : 0f;
 
-            float up = 0;
-            float down = 0;
+            float up = gComp.mostRecentPacket.up ? 1f : 0f;
+            float down = gComp.mostRecentPacket.down ? -1f : 0f;
 
             LocalPlayer.Instance.MoveBy(
                 (transform.forward * (forward + backward) +

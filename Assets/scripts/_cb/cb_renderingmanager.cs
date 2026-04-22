@@ -119,7 +119,7 @@ public class cb_renderingmanager : MonoBehaviour
                 worldOffset = worldOffset.Add(shoveFactor);
                 if (LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>() != null)
                 {
-                    LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>().shoveFactor = shoveFactor.ToVector3();
+                    LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>().shoveFactor = -LocalPlayer.localClient.controllingEntity.data.reference.position;
                 }
 
                 LocalPlayer.localClient.controllingEntity.data.reference.position = Vector3.zero;

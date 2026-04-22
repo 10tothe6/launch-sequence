@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
     /* tracking variables */
     public player_movementmode mode;
 
-    private bool activeJump;
+    public bool activeJump;
     private float sprintTimer;
 
 
@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
         if (!isFlying) {
             if (ImprovedRaycast())
             {
-                if (activeJump && util_math.ProjectedMagnitude(rb.linearVelocity, -gravityDirection) <= 0)
+                if (activeJump && util_math.ProjectedMagnitude(rb.linearVelocity, gravityDirection) >= 0)
                 {
                     // originally I had the Vector3.up here as hit.normal, 
                     // but that seemed to cause really weird drifting bugs when walking/jumping on angled terrain

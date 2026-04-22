@@ -148,7 +148,7 @@ public class ServerSenders : MonoBehaviour
         SendToAllExcept(toClientId, toOthers);
 
         // temp temp temp temp temp
-        EntityManager.Instance.PutClientInFreecam(toClientId);
+        EntityManager.Instance.PutClientInRobot(toClientId);
         // putting the player in the first planetary system (also temp)
         ServerNetworkManager.Instance.SystemTeleport(ServerNetworkManager.GetClient(toClientId).controllingEntity, 0);
     }

@@ -317,7 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   isActive: 0
   gravityDirection: {x: 0, y: -1, z: 0}
-  gravitationalAcceleration: 9.81
+  gravitationalAcceleration: 19.62
   col: {fileID: 7685948419648131301}
   lastPacket:
     forward: 0
@@ -361,6 +361,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   mode: 0
+  activeJump: 0
   shoveFactor: {x: 0, y: 0, z: 0}
 --- !u!114 &5027030714323127773
 MonoBehaviour:

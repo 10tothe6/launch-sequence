@@ -9,19 +9,6 @@ public enum prefs_entrytype
     Bool,
 }
 
-// how exactly that variable gets displayed
-// I might in the future add some sort of "possible variables" check (you can't display booleans with a slider)
-// but for now it'll just be common sense
-public enum prefs_entrydisplaytype
-{
-    Slider,
-    Checkbox,
-    InputField,
-    ColorPicker, // TODO:
-    DropDown,
-    Text,
-}
-
 // like everything else, the way this game handles settings is much more complicated than what I usually do
 
 // like in Drivetools, I'm using strings as a sort of universal data type,
@@ -33,6 +20,7 @@ public enum prefs_entrydisplaytype
 public class prefs_genericentry
 {
     public prefs_entrytype type;
+    public uim_displaytype displayType;
 
     public bool isFilled; // a temporary flag that we use when reading the settings in
     public string key;
@@ -40,6 +28,9 @@ public class prefs_genericentry
     public string lowerLimit;
     public string upperLimit;
     public string defaultValue;
+
+    public prefs_genericentry() {}
+    
 
     public bool IsWithinLimits(string val)
     {

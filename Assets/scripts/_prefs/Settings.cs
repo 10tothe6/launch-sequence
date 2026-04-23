@@ -54,20 +54,29 @@ public class Settings : MonoBehaviour
 
 
     // annoying conversion, but the modular menu system does need to be standardized
-    public static ui_modularmenuentry[] GetModularEntries()
+    public static uim_modularmenuentry[] GetModularEntries()
     {
-        List<ui_modularmenuentry> result = new List<ui_modularmenuentry>();
+        List<uim_modularmenuentry> result = new List<uim_modularmenuentry>();
 
         for (int i = 0; i < settings.Count; i++)
         {
-            ui_modularmenuentry newEntry = new ui_modularmenuentry();
+            // first, add the title
+            uim_modularmenuentry newTitle = new uim_modularmenuentry();
+
+            newTitle.data = settings[i].key;
+            newTitle.displayInfo = "";
+            newTitle.displayType = (ushort)uim_displaytype.Text;
+
+            // then the data itself
+            uim_modularmenuentry newEntry = new uim_modularmenuentry();
 
             int j = i;
             newEntry.data = settings[j].value;
             newEntry.onDataUpdate.AddListener((x) => {settings[j].value = x;});
-            newEntry.displayInfo = ""; // TODO: display info
-            new
+            newEntry.displayInfo = settings[j].lowerLimit + "," + settings[j].upperLimit;
+            newEntry.displayType = (ushort)settings[j].displayType;
 
+            result.Add(newTitle);
             result.Add(newEntry);
         }
 

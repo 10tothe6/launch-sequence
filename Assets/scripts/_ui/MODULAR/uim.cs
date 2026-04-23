@@ -11,9 +11,12 @@ public class uim : MonoBehaviour // short name so that it can be referenced quic
     {
         text = p_text;
         inputField = p_inputField;
-        vectorField = p_vectorField;
-        imageList = p_imageList;
         button = p_button;
+
+        colorPicker = p_colorPicker;
+        checkbox = p_checkbox;
+        dropdown = p_dropdown;
+        slider = p_slider;
     }
 
     // technically these are ALL PREFABS, I'm just only using the prefix on the inspector ones
@@ -24,12 +27,44 @@ public class uim : MonoBehaviour // short name so that it can be referenced quic
     public GameObject p_inputField;
     public static GameObject inputField;
 
-    public GameObject p_vectorField;
-    public static GameObject vectorField;
-
-    public GameObject p_imageList;
-    public static GameObject imageList;
-
     public GameObject p_button;
     public static GameObject button;
+
+    public GameObject p_colorPicker;
+    public static GameObject colorPicker;
+
+    public GameObject p_checkbox;
+    public static GameObject checkbox;
+
+    public GameObject p_dropdown;
+    public static GameObject dropdown;
+
+    public GameObject p_slider;
+    public static GameObject slider;
+
+    public static GameObject GetPrefabForType(ushort displayType)
+    {
+        if (displayType == (ushort)uim_displaytype.Checkbox)
+        {
+            return checkbox;
+        } else if (displayType == (ushort)uim_displaytype.ColorPicker)
+        {
+            return colorPicker;
+        } else if (displayType == (ushort)uim_displaytype.DropDown)
+        {
+            return dropdown;
+        } else if (displayType == (ushort)uim_displaytype.InputField)
+        {
+            return inputField;
+        } else if (displayType == (ushort)uim_displaytype.Slider)
+        {
+            return slider;
+        } else if (displayType == (ushort)uim_displaytype.Text)
+        {
+            return text;
+        } else
+        {
+            return null;
+        }
+    }
 }

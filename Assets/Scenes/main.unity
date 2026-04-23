@@ -5852,6 +5852,7 @@ GameObject:
   m_Component:
   - component: {fileID: 657973541}
   - component: {fileID: 657973542}
+  - component: {fileID: 657973543}
   m_Layer: 0
   m_Name: ui
   m_TagString: Untagged
@@ -5894,6 +5895,25 @@ MonoBehaviour:
   connectedclients: {fileID: 383437683}
   bugReporter: {fileID: 113384003}
   pauseMenu: {fileID: 1221786033}
+--- !u!114 &657973543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657973540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32bd996e25ea3e34993f70c6634a8342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::uim
+  p_text: {fileID: 3056452861527140488, guid: 0333749f324712c49b3545c69b313b6f, type: 3}
+  p_inputField: {fileID: 3056452861527140488, guid: de435fd0574e67846a1a22f48a84418a, type: 3}
+  p_button: {fileID: 3056452861527140488, guid: 86c57edda2ae7094295bda221a0029ce, type: 3}
+  p_colorPicker: {fileID: 3056452861527140488, guid: ce9ea10c425e8bc4ca43aa563ff5d87f, type: 3}
+  p_checkbox: {fileID: 3056452861527140488, guid: 5a70b1b3273e04d439483c166fc98509, type: 3}
+  p_dropdown: {fileID: 3056452861527140488, guid: 0b2eefb516805bf47a284d714d823a88, type: 3}
+  p_slider: {fileID: 3056452861527140488, guid: 5d2060b4c9be4af47992189a8c8a1d43, type: 3}
 --- !u!1 &671438107
 GameObject:
   m_ObjectHideFlags: 0
@@ -11021,6 +11041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Settings
   ins_settings:
   - type: 0
+    displayType: 0
     isFilled: 0
     key: fov
     value: 
@@ -12423,7 +12444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -327, y: 235}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1499684718
@@ -12438,6 +12459,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d93d740eb143e64893dcacf9c163833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_modularmenu
+  t_entryContainer: {fileID: 1499684717}
+  spaceBetweenItems: 10
 --- !u!114 &1499684719
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,16 +2,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class ui_modularmenuentry
+public class uim_modularmenuentry
 {
     public string data;
     public string displayInfo;
     public UnityEvent<string> onDataUpdate;
     public ushort displayType;
     
-    public ui_modularmenuentry() {}
+    public uim_modularmenuentry() {onDataUpdate = new UnityEvent<string>();}
 
-    public ui_modularmenuentry(string data, string displayInfo, UnityEvent<string> onDataUpdate, ushort displayType)
+    public uim_modularmenuentry(string data, string displayInfo, UnityEvent<string> onDataUpdate, ushort displayType)
     {
         
     }

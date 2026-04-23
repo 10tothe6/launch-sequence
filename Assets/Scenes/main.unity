@@ -10329,8 +10329,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.03
-  far clip plane: 1000
+  near clip plane: 0.01
+  far clip plane: 2000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -16890,8 +16890,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.03
-  far clip plane: 1000
+  near clip plane: 0.01
+  far clip plane: 2000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -17775,7 +17775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Program
   version: mptest-1.0-rc1
   ins_buildMode: 0
-  ins_startMode: 3
+  ins_startMode: 1
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0

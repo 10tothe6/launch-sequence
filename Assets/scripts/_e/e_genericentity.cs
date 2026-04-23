@@ -25,11 +25,15 @@ public class e_genericentity : MonoBehaviour
         data.reference = transform;
         
         data.monoComp = this;
+    }
 
+    void Start()
+    {
         if (showEntityId)
         {
             // spawning the debug text on the entity
             GameObject g_debugText = Instantiate(EntityManager.Instance.p_debugText, transform); // this'll just end up going to the bottom of the child list
+            g_debugText.transform.localPosition = Vector3.zero;
             g_debugText.GetComponent<TextMeshPro>().text = data.index.ToString();
         }
     }

@@ -62,7 +62,14 @@ public class num_precise
     }
     public num_precise Div(double num)
     {
-        return new num_precise(raw / new BigInteger(num));
+        if (num < 1f)
+        {
+            return new num_precise(raw * new BigInteger(1/num));
+        }
+        else
+        {
+            return new num_precise(raw / new BigInteger(num));
+        }
     }
     public num_precise Div(float num)
     {

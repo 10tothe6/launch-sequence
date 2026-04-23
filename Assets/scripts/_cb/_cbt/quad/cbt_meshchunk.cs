@@ -150,35 +150,7 @@ public class cbt_meshchunk : MonoBehaviour
         {
             rad = cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius;
         }
-        return clampedPosition.normalized * (rad + GetHeightAt(clampedPosition) * (rad / 1000f));
-    }
-
-    // what is the height of the terrain (from [0..1]) at a given point on the planet
-    public float GetHeightAt(Vector3 v) {
-        v = v.normalized;
-
-        if (directRadius == 0)
-        {
-            // stars have flat terrain, there is no variation in height
-            if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.bodyType == (ushort)cb_bodytype.Stellar)
-            {
-                return 0;
-            }
-        }
-
-        // bad getcomp call
-        bool usingTempPerlin = false;
-        if (transform.parent.parent.GetComponent<cbt_meshbody>() != null)
-        {
-            usingTempPerlin = transform.parent.parent.GetComponent<cbt_meshbody>().useTemporaryPerlin;
-        }
-        if (usingTempPerlin)
-        {
-            return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 40f;
-        } else
-        {
-            return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 20f, v.y * 20f, v.z * 20f) * 25f;
-        }
+        return clampedPosition.normalized * (rad + body.GetHeightAt(clampedPosition) * (rad / 1000f));
     }
 
     public void ConstructMesh(int bodyIndex)
@@ -225,12 +197,12 @@ public class cbt_meshchunk : MonoBehaviour
                 Vector3 altVertB1 = (vertices[i] - axisB * 0.05f).normalized * rad;
                 Vector3 altVertB2 = (vertices[i] + axisB * 0.05f).normalized * rad;
                 
-                vertices[i] += pointOnUnitCube.normalized * GetHeightAt(vertices[i].normalized) * (rad / 1000f);
+                vertices[i] += pointOnUnitCube.normalized * body.GetHeightAt(vertices[i].normalized) * (rad / 1000f);
 
-                altVertA1 += altVertA1.normalized * GetHeightAt(altVertA1.normalized) * (rad / 1000f);
-                altVertA2 += altVertA2.normalized * GetHeightAt(altVertA2.normalized) * (rad / 1000f);
-                altVertB1 += altVertB1.normalized * GetHeightAt(altVertB1.normalized) * (rad / 1000f);
-                altVertB2 += altVertB2.normalized * GetHeightAt(altVertB2.normalized) * (rad / 1000f);
+                altVertA1 += altVertA1.normalized * body.GetHeightAt(altVertA1.normalized) * (rad / 1000f);
+                altVertA2 += altVertA2.normalized * body.GetHeightAt(altVertA2.normalized) * (rad / 1000f);
+                altVertB1 += altVertB1.normalized * body.GetHeightAt(altVertB1.normalized) * (rad / 1000f);
+                altVertB2 += altVertB2.normalized * body.GetHeightAt(altVertB2.normalized) * (rad / 1000f);
 
                 Vector3 altA = (altVertA2 - altVertA1).normalized;
                 Vector3 altB = (altVertB2 - altVertB1).normalized;

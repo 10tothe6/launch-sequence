@@ -64,6 +64,19 @@ public class ui_playerhud : MonoBehaviour
         // () => util_game.FormatDistance(WorldManager.Instance.GetCoreAltitudeAsDouble()),
         // "game_main");
 
+        ui_debugmenu.Instance.AddEntry("radar altitude", 
+        () =>
+        {
+            if (LocalPlayer.IsControllingEntity())
+            {
+               return util_game.FormatRawDistance(WorldManager.Instance.GetCoreAltitude().AsDouble() - WorldManager.Instance.GetHeightAtSurface(LocalPlayer.localClient.controllingEntity.data.GetPosition())); 
+            } else
+            {
+                return "0";
+            }
+        },
+        "game_main");
+
         ui_debugmenu.Instance.AddEntry("eq radius", 
         () => util_game.FormatRawDistance(WorldManager.SeaLevelRadius()),
         "game_main");

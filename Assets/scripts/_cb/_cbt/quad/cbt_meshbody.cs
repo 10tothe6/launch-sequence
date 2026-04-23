@@ -284,6 +284,34 @@ public class cbt_meshbody : MonoBehaviour
         }
     }
 
+    // what is the height of the terrain (from [0..1]) at a given point on the planet
+    public float GetHeightAt(Vector3 v) {
+        v = v.normalized;
+
+        if (directRadius == 0)
+        {
+            // stars have flat terrain, there is no variation in height
+            if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.bodyType == (ushort)cb_bodytype.Stellar)
+            {
+                return 0;
+            }
+        }
+
+        // bad getcomp call
+        bool usingTempPerlin = false;
+        if (transform.parent.parent.GetComponent<cbt_meshbody>() != null)
+        {
+            usingTempPerlin = transform.parent.parent.GetComponent<cbt_meshbody>().useTemporaryPerlin;
+        }
+        if (usingTempPerlin)
+        {
+            return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 40f;
+        } else
+        {
+            return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 20f, v.y * 20f, v.z * 20f) * 25f;
+        }
+    }
+
     // ********************
     // below here, there be draagons
     // (old, untested neighbour-finding code)

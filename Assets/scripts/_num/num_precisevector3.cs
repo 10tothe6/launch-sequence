@@ -156,6 +156,7 @@ public class num_precisevector3
     public num_precisevector3 Norm()
     {
         num_precise l = Mag();
+        if (l.AsDouble() == 0) {return new num_precisevector3(0,0,0);}
         return new num_precisevector3(x.Div(l), y.Div(l), z.Div(l));
     }
     public double MagDouble()

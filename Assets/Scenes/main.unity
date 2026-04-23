@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &664868
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1285,9 +1285,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'confirm
-
-'
+  m_text: start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1657,7 +1655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &113384002
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5147,7 +5145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &580338642
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5747,7 +5745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -459, y: -141}
+  m_AnchoredPosition: {x: -777, y: -146}
   m_SizeDelta: {x: 219.7084, y: 58.2323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645047621
@@ -5794,13 +5792,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 314687045}
-        m_TargetAssemblyTypeName: WorldManager, Assembly-CSharp
-        m_MethodName: StartGame
-        m_Mode: 2
+      - m_Target: {fileID: 2144568381}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StartSingleplayerGame
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 1493324382}
-          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_InputField, Unity.TextMeshPro
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5911,7 +5909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &671438108
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11124,6 +11122,18 @@ MonoBehaviour:
           m_StringArgument: settings menu
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1499684719}
+        m_TargetAssemblyTypeName: ui_settingsmenu, Assembly-CSharp
+        m_MethodName: EnterMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1285539536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12144,7 +12154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1493324381
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12389,6 +12399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1499684717}
   - component: {fileID: 1499684718}
+  - component: {fileID: 1499684719}
   m_Layer: 5
   m_Name: settings elements
   m_TagString: Untagged
@@ -12427,6 +12438,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d93d740eb143e64893dcacf9c163833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_modularmenu
+--- !u!114 &1499684719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499684716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a419cfb6e3e3924b85dc74c2cb68fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ui_settingsmenu
 --- !u!1 &1550529923
 GameObject:
   m_ObjectHideFlags: 0
@@ -16680,7 +16703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2108618641
 RectTransform:
   m_ObjectHideFlags: 0

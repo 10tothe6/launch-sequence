@@ -61,6 +61,12 @@ public class Settings : MonoBehaviour
 
         return entry.value;
     }
+    public static ui_modularmenuentry[] GetEntries()
+    {
+        List<ui_modularmenuentry> result = new List<ui_modularmenuentry>();
+
+        return result.ToArray();
+    }
     public static double GetDouble(string key)
     {
         prefs_genericentry entry = Instance.GetEntryByName(key);

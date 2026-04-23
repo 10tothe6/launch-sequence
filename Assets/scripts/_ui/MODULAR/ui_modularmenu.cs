@@ -6,5 +6,13 @@ using UnityEngine;
 
 public class ui_modularmenu : MonoBehaviour
 {
-    
+    public void DrawMenu(ui_modularmenuentry[] entries)
+    {
+        ClearAllEntries();
+    }
+
+    public void ClearAllEntries()
+    {
+        
+    }
 }

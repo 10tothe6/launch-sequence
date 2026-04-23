@@ -107,6 +107,8 @@ public class cb_renderingmanager : MonoBehaviour
         inflationRadius = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].data.tConfig.equitorialRadius + 300;
 
         if (LocalPlayer.localClient == null) {return;}
+
+        if (LocalPlayer.localClient.isInSandbox) {return;}
         
         if (LocalPlayer.localClient.controllingEntity != null)
         {
@@ -123,6 +125,8 @@ public class cb_renderingmanager : MonoBehaviour
                 }
 
                 LocalPlayer.localClient.controllingEntity.data.reference.position = Vector3.zero;
+
+                EntityManager.Instance.ShoveEntities(shoveFactor.ToVector3());
             }
 
             // player

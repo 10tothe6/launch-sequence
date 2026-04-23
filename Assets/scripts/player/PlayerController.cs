@@ -120,13 +120,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        // setting references
-        gComp = GetComponent<player_genericcontroller>();
-        rb = GetComponent<Rigidbody>();
-        hit = new RaycastHit();
-
-        entityData = GetComponent<e_genericentity>();
-        t_camera = transform.GetChild(0);
+        SetupReferences();
 
         colDefaultHeight = col.height;
         sprintValue = maxSprint;
@@ -134,9 +128,22 @@ public class PlayerController : MonoBehaviour
         //gComp.onTeleport.AddListener(() => {rb.linearVelocity = Vector3.zero;});
     }
 
+    void SetupReferences()
+    {
+        // setting references
+        gComp = GetComponent<player_genericcontroller>();
+        rb = GetComponent<Rigidbody>();
+        hit = new RaycastHit();
+
+        entityData = GetComponent<e_genericentity>();
+        t_camera = transform.GetChild(0);
+    }
+
     // called when the someone assumes control
     public void EnterControl()
     {
+        SetupReferences(); // in case Awake() doesn't fire
+        
         // making sure its actually the local player taking control
         if (LocalPlayer.localClient.controllingEntity != entityData)
         {

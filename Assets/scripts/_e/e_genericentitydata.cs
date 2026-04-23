@@ -155,27 +155,27 @@ public class e_genericentitydata
             
             if (entityType == (ushort)e_entitytype.Fixed)
             {
-                if (LocalPlayer.localClient.controllingEntity == monoComp)
-                {
-                    return;
-                }
-                num_precisevector3 pos = GetPosition();
+                // if (LocalPlayer.localClient.controllingEntity == monoComp)
+                // {
+                //     return;
+                // }
+                // num_precisevector3 pos = GetPosition();
 
-                // set the transform's position basee on the world offset
-                reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
+                // // set the transform's position basee on the world offset
+                // reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
 
-                // get the position of the camera
-                num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
+                // // get the position of the camera
+                // num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
 
-                if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
-                {
-                    // do not render at all
-                }
-                else
-                {
-                    reference.localScale = Vector3.one * 1;
-                    reference.position = localPosition.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
-                }
+                // if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
+                // {
+                //     // do not render at all
+                // }
+                // else
+                // {
+                //     reference.localScale = Vector3.one * 1;
+                //     reference.position = localPosition.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
+                // }
             }
 
             else if (entityType == (ushort)e_entitytype.Floating)

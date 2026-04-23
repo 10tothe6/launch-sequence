@@ -75,6 +75,18 @@ public class EntityManager : MonoBehaviour
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
 
+    public void ShoveEntities(Vector3 shoveFactor)
+    {
+        for (int i = 0; i < allEntities.Count; i++)
+        {
+            if (allEntities[i].data.entityType == (ushort)e_entitytype.Fixed && allEntities[i].GetComponent<e_physicsobject>() != null)
+            {
+                allEntities[i].transform.localPosition += shoveFactor;
+                allEntities[i].GetComponent<e_physicsobject>().shoveFactor = shoveFactor;
+            }
+        }
+    }
+
     public void PutClientInFreecam(ushort clientId)
     {
         // first, we have to spawn a new freecam entity

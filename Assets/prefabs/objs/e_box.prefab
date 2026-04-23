@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 8970655020132970038}
   - component: {fileID: 8504010423235747788}
   - component: {fileID: 1652907655450353396}
-  m_Layer: 0
+  - component: {fileID: 2101249598720846335}
+  m_Layer: 8
   m_Name: e_box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 61e9ac623b03b684789400d8b240f7cc, type: 2}
+  - {fileID: 2100000, guid: d9e7e47d45926af43ab22bd6a3a4aa17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,7 +161,6 @@ MonoBehaviour:
     entityPrefabIndex: 0
     index: 0
     parent: {fileID: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
     velocity:
       x:
         numDecimalDigits: 4
@@ -168,9 +168,24 @@ MonoBehaviour:
         numDecimalDigits: 4
       z:
         numDecimalDigits: 4
+    hasTransformBeenUpdated: 0
   onEnterControl:
     m_PersistentCalls:
       m_Calls: []
   onExitControl:
     m_PersistentCalls:
       m_Calls: []
+  showEntityId: 0
+--- !u!114 &2101249598720846335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5274448053916560533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0204c3b3fe1ce6d4ead30851d4e9f180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_physicsobject
+  shoveFactor: {x: 0, y: 0, z: 0}

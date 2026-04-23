@@ -33,6 +33,37 @@ Transform:
   - {fileID: 8942503268780432280}
   m_Father: {fileID: 197765977777609892}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3503401608635138484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7998202107076819637}
+  m_Layer: 0
+  m_Name: place point
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7998202107076819637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3503401608635138484}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.622, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 197765977777609892}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4625790284682153621
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,7 +76,7 @@ GameObject:
   - component: {fileID: 2472962210567963326}
   - component: {fileID: 1933165250278511316}
   m_Layer: 0
-  m_Name: base
+  m_Name: pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,8 +91,8 @@ Transform:
   m_GameObject: {fileID: 4625790284682153621}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0000004768371, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.392, z: 0.308}
-  m_LocalScale: {x: 0.18214, y: 1.0746456, z: 0.25692555}
+  m_LocalPosition: {x: 0, y: -0.5462, z: 0}
+  m_LocalScale: {x: 0.1, y: 2.1671302, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2396736478018352443}
@@ -134,7 +165,7 @@ GameObject:
   - component: {fileID: 116976986699753190}
   - component: {fileID: 5130894387688511139}
   m_Layer: 0
-  m_Name: panel
+  m_Name: face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,13 +179,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4653486696419952583}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000014901159, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1592102, z: 0.27569962}
-  m_LocalScale: {x: 1, y: 0.069358826, z: 1.6367}
+  m_LocalRotation: {x: -0.000000010536728, y: 0.000000010536696, z: -0.70710576, w: 0.70710784}
+  m_LocalPosition: {x: 0, y: 0.353, z: -0.4736}
+  m_LocalScale: {x: 0.5598, y: 0.069358826, z: 0.9938043}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2396736478018352443}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!33 &116976986699753190
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -220,8 +251,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 197765977777609892}
+  - component: {fileID: 6822175521811459267}
+  - component: {fileID: 7909974342299331858}
   m_Layer: 0
-  m_Name: small solar panel
+  m_Name: e_flag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,9 +270,57 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2396736478018352443}
+  - {fileID: 7998202107076819637}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6822175521811459267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822226269603175813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3aaa985ed445f43861b5c96dd856ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
+  data:
+    monoComp: {fileID: 0}
+    reference: {fileID: 0}
+    entityType: 0
+    state: 0
+    entityPrefabIndex: 0
+    index: 0
+    parent: {fileID: 0}
+    velocity:
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
+    hasTransformBeenUpdated: 0
+  onEnterControl:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitControl:
+    m_PersistentCalls:
+      m_Calls: []
+  showEntityId: 0
+--- !u!114 &7909974342299331858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822226269603175813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1ae36a0d1ebf94ca3cebf5372a37c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_alignwithground

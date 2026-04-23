@@ -7275,6 +7275,8 @@ MonoBehaviour:
   - {fileID: 7055245852948794534, guid: 083e66ef02e75bd40ade347ca27702f9, type: 3}
   - {fileID: 5274448053916560533, guid: dbd07a8a16128804fbd66fc419f734d9, type: 3}
   - {fileID: 8782933785179873280, guid: d9b535f823432a043ba06a314e3a8496, type: 3}
+  - {fileID: 6822226269603175813, guid: 43e95cd84d553354fba0a18a7aae2e99, type: 3}
+  - {fileID: 6822226269603175813, guid: b6156c60fcc2d5e45b7649eeb2e7e8f2, type: 3}
   onSpawnEntity:
     m_PersistentCalls:
       m_Calls: []

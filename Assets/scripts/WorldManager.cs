@@ -83,19 +83,26 @@ public class WorldManager : MonoBehaviour
     public GameObject p_robot;
     private bool isShowingMapIcons;
 
-
+    public double GetHeightAtDirection(Vector3 dir, int index)
+    {
+        float rad = cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius ;
+        return rad + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].GetComponent<cbt_meshbody>().GetHeightAt(dir) * (rad/ 1000f);
+    }
     public double GetHeightAtSurface( num_precisevector3 point)
     {
+        float rad = cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius ;
         num_precisevector3 diff = point.Sub(cb_solarsystem.Instance.monoBodies[GetSOIIndex()].pose.data.GetPosition()).Norm();
 
-        return cb_solarsystem.Instance.monoBodies[GetSOIIndex()].GetComponent<cbt_meshbody>().GetHeightAt(diff.ToVector3());
+        return rad + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].GetComponent<cbt_meshbody>().GetHeightAt(diff.ToVector3()) * (rad/ 1000f);
     }
     // given any point and the index of the cb, find a point on the surface for that body
     public double GetHeightAtSurface(int cbIndex, num_precisevector3 point)
     {
+        float rad = cb_solarsystem.Instance.monoBodies[cbIndex].data.tConfig.equitorialRadius;
+
         num_precisevector3 diff = point.Sub(cb_solarsystem.Instance.monoBodies[cbIndex].pose.data.GetPosition()).Norm();
 
-        return cb_solarsystem.Instance.monoBodies[cbIndex].GetComponent<cbt_meshbody>().GetHeightAt(diff.ToVector3());
+        return rad + cb_solarsystem.Instance.monoBodies[cbIndex].GetComponent<cbt_meshbody>().GetHeightAt(diff.ToVector3()) * (rad / 1000f);
     }
 
     public void ToggleMapIcons()

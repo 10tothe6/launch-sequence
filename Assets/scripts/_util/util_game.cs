@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class util_game
 {
+    
     public static string FormatDistance(num_precise distInMeters)
     {
         // the threshold for distance readouts is four digits

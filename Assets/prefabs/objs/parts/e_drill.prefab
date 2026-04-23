@@ -580,8 +580,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 197765977777609892}
+  - component: {fileID: 8773662054318990567}
   m_Layer: 0
-  m_Name: portable drill
+  m_Name: e_drill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,10 +597,45 @@ Transform:
   m_GameObject: {fileID: 6822226269603175813}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 743.6811, y: 493.16684, z: 15.9571}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2396736478018352443}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8773662054318990567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822226269603175813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3aaa985ed445f43861b5c96dd856ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
+  data:
+    monoComp: {fileID: 0}
+    reference: {fileID: 0}
+    entityType: 0
+    state: 0
+    entityPrefabIndex: 0
+    index: 0
+    parent: {fileID: 0}
+    velocity:
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
+    hasTransformBeenUpdated: 0
+  onEnterControl:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitControl:
+    m_PersistentCalls:
+      m_Calls: []
+  showEntityId: 0

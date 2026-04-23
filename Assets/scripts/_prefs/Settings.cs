@@ -52,8 +52,31 @@ public class Settings : MonoBehaviour
     // realistically, this will never be accessed directly
     public static List<prefs_genericentry> settings;
 
+
+    // annoying conversion, but the modular menu system does need to be standardized
+    public static ui_modularmenuentry[] GetModularEntries()
+    {
+        List<ui_modularmenuentry> result = new List<ui_modularmenuentry>();
+
+        for (int i = 0; i < settings.Count; i++)
+        {
+            ui_modularmenuentry newEntry = new ui_modularmenuentry();
+
+            int j = i;
+            newEntry.data = settings[j].value;
+            newEntry.onDataUpdate.AddListener((x) => {settings[j].value = x;});
+            newEntry.displayInfo = ""; // TODO: display info
+            new
+
+            result.Add(newEntry);
+        }
+
+        return result.ToArray();
+    }
+
     // this part works similarly to the OLD WPILib communications protocol
     // ************************************
+    
     public static string GetString(string key)
     {
         prefs_genericentry entry = Instance.GetEntryByName(key);
@@ -61,12 +84,8 @@ public class Settings : MonoBehaviour
 
         return entry.value;
     }
-    public static ui_modularmenuentry[] GetEntries()
-    {
-        List<ui_modularmenuentry> result = new List<ui_modularmenuentry>();
 
-        return result.ToArray();
-    }
+
     public static double GetDouble(string key)
     {
         prefs_genericentry entry = Instance.GetEntryByName(key);

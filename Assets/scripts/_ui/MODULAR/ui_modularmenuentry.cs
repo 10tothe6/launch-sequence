@@ -4,8 +4,15 @@ using UnityEngine.Events;
 [System.Serializable]
 public class ui_modularmenuentry
 {
-    public UnityEvent<string> dataSource;
+    public string data;
+    public string displayInfo;
     public UnityEvent<string> onDataUpdate;
+    public ushort displayType;
+    
+    public ui_modularmenuentry() {}
 
-    public ushort displayType; // references prefs_entrydisplaytype
+    public ui_modularmenuentry(string data, string displayInfo, UnityEvent<string> onDataUpdate, ushort displayType)
+    {
+        
+    }
 }

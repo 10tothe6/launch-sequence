@@ -38,6 +38,18 @@ public class util_geo
         return points;
     }
 
+    public static List<Vector3> GetLinearPoints(Vector3 p1, Vector3 p2, int segments = 20)
+    {
+        List<Vector3> points = new List<Vector3>();
+
+        for (int i = 0; i <= segments; i ++)
+        {
+            points.Add(Vector3.Lerp(p1, p2, (float)i / (segments)));
+        }
+
+        return points;
+    }
+
     private static Vector3 CalculateQuadraticBezier(Vector3 start, Vector3 control, Vector3 end, float t)
     {
         // Standard Quadratic Bezier Formula: (1-t)^2 * P0 + 2(1-t)t * P1 + t^2 * P2

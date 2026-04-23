@@ -163,6 +163,8 @@ public class cmd_console : MonoBehaviour
     {
         string[] items = util_string.SplitIntoWords(text);
 
+        if (items.Length == 0) {return;}
+
         // the VERY FIRST THING WE HAVE TO DO IS CHECK IF THE COMMAND CAN BE LOCAL
         cmd_consolecommand selectedCommand = GetSelectedCommand(items[0]);
         if (selectedCommand == null) {return;}

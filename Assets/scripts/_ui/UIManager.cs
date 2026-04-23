@@ -38,10 +38,12 @@ public class UIManager : MonoBehaviour
     public void StartTyping()
     {
         isTyping = true;
+        Cursor.lockState = CursorLockMode.None;
     }
     public void StopTyping()
     {
         isTyping = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public Transform t_canvas;

@@ -150,6 +150,8 @@ public class PlayerController : MonoBehaviour
 
         mode = player_movementmode.Walking;
         isActive = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
     public void ExitControl()
     {
@@ -302,8 +304,6 @@ public class PlayerController : MonoBehaviour
 
         if (isActive)
         {
-            Cursor.lockState = CursorLockMode.Locked; // temp temp temp
-
             if (t_camera != null) t_camera.localPosition = new Vector3(0, currentCameraHeight, 0);
 
             // mouse x leads to a rotation AROUND the players's up vector
@@ -325,7 +325,7 @@ public class PlayerController : MonoBehaviour
                     // looking further down
                     if (util_math.ProjectedMagnitude(t_camera.forward, gravityDirection) < maxAngle)
                     {
-                        t_camera.Rotate(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime, Space.Self);
+                        t_camera.Rotate(new Vector3(-1, 0, 0) * lastPacket.verticalMouse * turnSpeed * Time.deltaTime, Space.Self);
                     }
                 }
                 else
@@ -333,7 +333,7 @@ public class PlayerController : MonoBehaviour
                     // looking further down
                     if (util_math.ProjectedMagnitude(t_camera.forward, -gravityDirection) < maxAngle)
                     {
-                        t_camera.Rotate(new Vector3(-1, 0, 0) * Input.mouseMovement.y * turnSpeed * Time.deltaTime, Space.Self);
+                        t_camera.Rotate(new Vector3(-1, 0, 0) * lastPacket.verticalMouse * turnSpeed * Time.deltaTime, Space.Self);
                     }
                 }
             }

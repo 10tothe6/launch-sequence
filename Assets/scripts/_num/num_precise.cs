@@ -73,7 +73,14 @@ public class num_precise
     // ********************
     public num_precise Mul(num_precise num)
     {
-        return Mul(num.AsDouble()); // again, just manipulating the raw numbers should be fine
+        if (num.AsDouble() < 1 && num.AsDouble() > 0)
+        {
+            return Div(1 / num.AsDouble()); // again, just manipulating the raw numbers should be fine
+        }
+        else
+        {
+            return Mul(num.AsDouble()); // again, just manipulating the raw numbers should be fine
+        }
     }
     public num_precise Mul(double num)
     {

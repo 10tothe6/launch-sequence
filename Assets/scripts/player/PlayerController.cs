@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
         CameraController.SetControlMode(CameraControlMode.PlayerFirstPerson); // auto-sets the parent
 
-        defaultCameraHeight = CameraController.Instance.transform.localPosition.y;
+        defaultCameraHeight = t_camera.localPosition.y;
         currentCameraHeight = defaultCameraHeight;
 
         mode = player_movementmode.Walking;

@@ -256,7 +256,7 @@ public class WorldManager : MonoBehaviour
         if (GetSOIIndex() == -1) {return 0f;}
 
         //Debug.Log(GetCoreAltitude() + "     " + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius);
-        return GetCoreAltitudeAsDouble() - (double)cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius;
+        return new num_precise(GetCoreAltitudeAsDouble()).Sub(new num_precise(cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius)).AsDouble();
     }
 
     public num_precise GetCoreAltitude()

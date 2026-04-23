@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
@@ -149,6 +150,7 @@ public class GameManager : MonoBehaviour
     // and are now actually entering the sandbox
     public static void SwitchToSandbox()
     {
+        RenderSettings.ambientIntensity = 1f;
         WorldManager.Instance.SetAllBodiesActive(false);
         Sandbox.Instance.EnterSandbox();
     }
@@ -156,6 +158,7 @@ public class GameManager : MonoBehaviour
     // entering back into the game
     public static void SwitchToGame()
     {
+        RenderSettings.ambientIntensity = 0f;
         UIManager.Instance.SetBugReporterActive(false);
         UIManager.Instance.pauseMenu.gameObject.SetActive(false);
         WorldManager.Instance.SetAllBodiesActive(true);

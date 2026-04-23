@@ -33,7 +33,7 @@ public class util_math
                 root += n / root;
                 root /= 2;
             }
-
+            
             return root;
         }
 
@@ -48,6 +48,7 @@ public class util_math
     }
     public static double RoundToInterval(double raw, double interval)
     {
+       
         return Math.Round(raw / interval) * interval;
     }
     public static float RoundToInterval(float raw, float interval)

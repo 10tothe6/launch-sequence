@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4090919233002837129}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.45, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -295,7 +295,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.34, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4364858803652921769}
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   isActive: 0
   gravityDirection: {x: 0, y: -1, z: 0}
-  gravitationalAcceleration: 19.62
+  gravitationalAcceleration: 0.981
   col: {fileID: 7685948419648131301}
   lastPacket:
     forward: 0
@@ -344,12 +344,12 @@ MonoBehaviour:
   t_foot: {fileID: 3478920282292739920}
   raycastDistanceFromFoot: 0.3
   crouchPercentHeight: 0.5
-  moveSpeed: 50
+  moveSpeed: 5
   sprintBoost: 2
-  strafeSpeed: 20
+  strafeSpeed: 2
   turnSpeed: 15
   flySpeed: 0
-  jumpStrength: 10
+  jumpStrength: 0.5
   cameraBounceAmplitude: 0.075
   cameraBounceFrequency: 15
   maxSprint: 0

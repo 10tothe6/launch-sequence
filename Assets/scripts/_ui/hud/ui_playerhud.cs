@@ -53,16 +53,16 @@ public class ui_playerhud : MonoBehaviour
         ui_debugmenu.Instance.AddEntry("sea level altitude", 
         () => util_game.FormatRawDistance(WorldManager.Instance.GetSeaLevelAltitudeAsDouble()),
         "game_main");
-        ui_debugmenu.Instance.AddEntry("backend sea level altitude", 
-        () => util_game.FormatDistance(WorldManager.Instance.GetSeaLevelAltitudeAsDouble()),
-        "game_main");
+        // ui_debugmenu.Instance.AddEntry("backend sea level altitude", 
+        // () => util_game.FormatDistance(WorldManager.Instance.GetSeaLevelAltitudeAsDouble()),
+        // "game_main");
         // similar, but distance to center
         ui_debugmenu.Instance.AddEntry("core altitude", 
         () => util_game.FormatRawDistance(WorldManager.Instance.GetCoreAltitude()),
         "game_main");
-        ui_debugmenu.Instance.AddEntry("backend core altitude", 
-        () => util_game.FormatDistance(WorldManager.Instance.GetCoreAltitudeAsDouble()),
-        "game_main");
+        // ui_debugmenu.Instance.AddEntry("backend core altitude", 
+        // () => util_game.FormatDistance(WorldManager.Instance.GetCoreAltitudeAsDouble()),
+        // "game_main");
 
         ui_debugmenu.Instance.AddEntry("eq radius", 
         () => util_game.FormatRawDistance(WorldManager.SeaLevelRadius()),

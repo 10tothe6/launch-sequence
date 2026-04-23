@@ -37,19 +37,19 @@ public class util_game
         if (distInMeters < 10000)
         {
             // meters
-            return util_math.RoundToInterval(distInMeters, 0.01f).ToString() + "m";
+            return util_math.RoundToInterval(distInMeters, 0.01f) + "m";
         } else if (distInMeters < 10000000)
         {
             // kilometers
-            return util_math.RoundToInterval(distInMeters / 1000f, 0.01f).ToString() + "km";
+            return util_math.RoundToInterval(distInMeters / 1000f, 0.01f) + "km";
         } else if (distInMeters < 10000000000)
         {
             // megameters
-            return util_math.RoundToInterval(distInMeters / 1000000f, 0.01f).ToString() + "Mm";
+            return util_math.RoundToInterval(distInMeters / 1000000f, 0.01f) + "Mm";
         } else if (distInMeters < 10000000000000)
         {
             // gigameters
-            return util_math.RoundToInterval(distInMeters / 1000000000f, 0.01f).ToString() + "Gm";
+            return util_math.RoundToInterval(distInMeters / 1000000000f, 0.01f) + "Gm";
         }
 
         // should never get here
@@ -63,19 +63,19 @@ public class util_game
         if (distInMeters < 10000)
         {
             // meters
-            return util_math.RoundToInterval(distInMeters, 0.1f).ToString() + "m";
+            return util_math.RoundToInterval(distInMeters, 0.1f) + "m";
         } else if (distInMeters < 10000000)
         {
             // kilometers
-            return util_math.RoundToInterval(distInMeters / 1000f, 0.1f).ToString() + "km";
+            return util_math.RoundToInterval(distInMeters / 1000f, 0.1f) + "km";
         } else if (distInMeters < 10000000000)
         {
             // megameters
-            return util_math.RoundToInterval(distInMeters / 1000000f, 0.1f).ToString() + "Mm";
+            return util_math.RoundToInterval(distInMeters / 1000000f, 0.1f) + "Mm";
         } else if (distInMeters < 10000000000000)
         {
             // gigameters
-            return util_math.RoundToInterval(distInMeters / 1000000000f, 0.1f).ToString() + "Gm";
+            return util_math.RoundToInterval(distInMeters / 1000000000f, 0.1f) + "Gm";
         }
 
         // should never get here

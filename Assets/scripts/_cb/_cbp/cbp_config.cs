@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // config specifically for orbital parameters
@@ -64,23 +65,23 @@ public class cbp_config
     // ********************************
 
     // the polar function for an elipse, adapted
-    public float DistFromFocus(float angle)
+    public double DistFromFocus(double angle)
     {
-        return 1 / (iM + iN * Mathf.Cos(angle + iPhaseShift));
+        return 1 / (iM + iN * Math.Cos(angle + iPhaseShift));
     }
 
-    public float MeanAnomaly(float time)
+    public double MeanAnomaly(float time)
     {
         return Mathf.Pow((iM * iM - iN * iN), 3f / 2f) / iM * iRadius * iTransverseVelocity * time + 2 * Mathf.Atan(Mathf.Sqrt((iM - iN) / (iM + iN)) * Mathf.Tan((iAngle + iPhaseShift) / 2)) - orbit.orbitalEccentricity * Mathf.Sqrt(iM * iM - iN * iN) * Mathf.Sin(iAngle + iPhaseShift) * DistFromFocus(iAngle);
     }
 
-    public float EccentricAnomaly(float time, int p)
+    public double EccentricAnomaly(float time, int p)
     {
-        float meanAnomaly = MeanAnomaly(time);
+        double meanAnomaly = MeanAnomaly(time);
 
         int n = p; // precision of integral
         float step = (Mathf.PI - 0) / (float)n;
-        float sum = (EccentricIntegrationValue(0, meanAnomaly) + EccentricIntegrationValue(Mathf.PI, meanAnomaly)) * 0.5f;
+        double sum = (EccentricIntegrationValue(0, meanAnomaly) + EccentricIntegrationValue(Mathf.PI, meanAnomaly)) * 0.5f;
 
         for (int i = 1; i < n; i++)
         {
@@ -90,26 +91,26 @@ public class cbp_config
         return sum * step;
     }
 
-    public float EccentricIntegrationValue(float phi, float meanAnomaly)
+    public double EccentricIntegrationValue(double phi, double meanAnomaly)
     {
-        return Mathf.Floor((phi - orbit.orbitalEccentricity * Mathf.Sin(phi) + meanAnomaly) / (Mathf.PI * 2f)) - Mathf.Floor((phi - orbit.orbitalEccentricity * Mathf.Sin(phi) - meanAnomaly) / (Mathf.PI * 2f));
+        return Math.Floor((phi - orbit.orbitalEccentricity * Math.Sin(phi) + meanAnomaly) / (Math.PI * 2f)) - Math.Floor((phi - orbit.orbitalEccentricity * Math.Sin(phi) - meanAnomaly) / (Math.PI * 2f));
     }
 
-    public float TrueAnomaly(float time, int p)
+    public double TrueAnomaly(float time, int p)
     {
-        float eccentricAnomaly = EccentricAnomaly(time, p);
+        double eccentricAnomaly = EccentricAnomaly(time, p);
 
-        return 2 * Mathf.Atan(Mathf.Tan(eccentricAnomaly / 2f) * Mathf.Sqrt((iM + iN) / (iM - iN))) - iPhaseShift;
+        return 2 * Math.Atan(Math.Tan(eccentricAnomaly / 2f) * Math.Sqrt((iM + iN) / (iM - iN))) - iPhaseShift;
     }
 
     public num_precisevector3 GetPositionAtTime(float time, int precision)
     {
-        float trueAnomaly = TrueAnomaly(time, precision);
-        float radius = DistFromFocus(trueAnomaly);
+        double trueAnomaly = TrueAnomaly(time, precision);
+        num_precise radius = new num_precise(DistFromFocus(trueAnomaly));
 
-        Vector3 result = new Vector3(radius * Mathf.Cos(trueAnomaly), 0, radius * Mathf.Sin(trueAnomaly));
+        num_precisevector3 result = new num_precisevector3(radius.Mul(Math.Cos(trueAnomaly)), new num_precise(0), radius.Mul(Math.Sin(trueAnomaly)));
         //data.pose.position = new DoubleVector3(result).Add(parent.data.pose.position);
-        return new num_precisevector3(result);
+        return result;
     }
 
     public Vector3[] SampleFullOrbit(float scaleFactor, int pointCount)

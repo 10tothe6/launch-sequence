@@ -63,9 +63,9 @@ public class cbt_meshbody : MonoBehaviour
     {
         if (!useDirectObject)
         {
-            if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius > 100000f)
+            if (cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius > 1000000f)
             {
-                cb_solarsystem.Instance.monoBodies[bodyIndex].pose.data.SetDataEntry("scaleFactor", (10000f / cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius).ToString());
+                cb_solarsystem.Instance.monoBodies[bodyIndex].pose.data.SetDataEntry("scaleFactor", (100000f / cb_solarsystem.Instance.monoBodies[bodyIndex].data.tConfig.equitorialRadius).ToString());
             }
         }
 
@@ -298,12 +298,7 @@ public class cbt_meshbody : MonoBehaviour
         }
 
         // bad getcomp call
-        bool usingTempPerlin = false;
-        if (transform.parent.parent.GetComponent<cbt_meshbody>() != null)
-        {
-            usingTempPerlin = transform.parent.parent.GetComponent<cbt_meshbody>().useTemporaryPerlin;
-        }
-        if (usingTempPerlin)
+        if (useTemporaryPerlin)
         {
             return (float)WorldManager.Instance.perlin.Noise(v.x * 50f, v.y * 50f, v.z * 50f) * 40f;
         } else

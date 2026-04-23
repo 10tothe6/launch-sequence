@@ -188,13 +188,14 @@ public class WorldManager : MonoBehaviour
         
         for (int i = 0; i < cb_solarsystem.Instance.monoBodies.Count; i++)
         {
-            float dist = Vector3.Distance(
-                cb_solarsystem.Instance.monoBodies[i].pose.data.GetPosition().ToVector3(), 
-            LocalPlayer.localClient.controllingEntity.data.GetPosition().ToVector3());
+            float dist = 
+                cb_solarsystem.Instance.monoBodies[i].pose.data.GetPosition().Sub(
+            LocalPlayer.localClient.controllingEntity.data.GetPosition()).Mag().AsFloat();
             // big G times big M divided by distance^2
             float force = cb_solarsystem.gravConstant * cb_solarsystem.Instance.monoBodies[i].data.mass / (dist * dist);
 
             gravForces[i] = force;
+            //Debug.Log(i + "    " + cb_solarsystem.Instance.monoBodies[i].pose.data.GetPosition().AsRawString());
         }
 
         int kingIndex = 0;

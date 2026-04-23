@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fa0a1d5a7d5f14195d1d32962e10e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_coloredmeshchunks
-  coloringMode: 3
+  coloringMode: 0
   refreshOnUpdate: 1
   debugColors:
   - {r: 1, g: 0.4509434, b: 0.4509434, a: 1}
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::cbt_meshbody
   useTemporaryPerlin: 1
   useDirectRadius: 1
-  directRadius: 15
+  directRadius: 20
   enableChunkCulling: 0
   chunkCullingAngle: 90
   updateChunksPeriodically: 1
@@ -6636,7 +6636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3a2749bdc90fa4cb7f776f10b645a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldData
-  ins_universalScaleFactor: 0.1
+  ins_universalScaleFactor: 0.05
   items:
   - name: 
     stackSize: 0
@@ -15986,9 +15986,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cb_renderingmanager
   originSnapBackRadius: 50
-  primaryCullingRadius: 1000000
+  primaryCullingRadius: 10000000
   secondaryCullingRadius: 900
-  inflationRadius: 50000
+  inflationRadius: 500000
   t_bodyContainer: {fileID: 1663306513}
   bodyEntities: []
   worldOffset:

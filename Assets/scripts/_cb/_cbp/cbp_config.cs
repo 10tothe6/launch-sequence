@@ -67,7 +67,7 @@ public class cbp_config
     // the polar function for an elipse, adapted
     public double DistFromFocus(double angle)
     {
-        return 1 / (iM + iN * Math.Cos(angle + iPhaseShift));
+        return 1d / (iM + iN * Math.Cos(angle + iPhaseShift));
     }
 
     public double MeanAnomaly(float time)
@@ -106,10 +106,15 @@ public class cbp_config
     public num_precisevector3 GetPositionAtTime(float time, int precision)
     {
         double trueAnomaly = TrueAnomaly(time, precision);
-        num_precise radius = new num_precise(DistFromFocus(trueAnomaly));
+        double radius = DistFromFocus(trueAnomaly);
+        // Debug.Log(radius.AsDouble());
+        // Debug.Log("x     " + Math.Cos(trueAnomaly));
+        // Debug.Log("x2      " + radius.Mul(Math.Cos(trueAnomaly)).AsDouble());
 
-        num_precisevector3 result = new num_precisevector3(radius.Mul(Math.Cos(trueAnomaly)), new num_precise(0), radius.Mul(Math.Sin(trueAnomaly)));
+        num_precisevector3 result = new num_precisevector3(radius * Math.Cos(trueAnomaly), 0, radius * Math.Sin(trueAnomaly));
         //data.pose.position = new DoubleVector3(result).Add(parent.data.pose.position);
+
+        Debug.Log(result.AsRawString());
         return result;
     }
 

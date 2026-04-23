@@ -195,6 +195,7 @@ public class e_genericentitydata
                     if (camPosition.Sub(pos).Mag().AsDouble() < cb_renderingmanager.Instance.inflationRadius)
                     {
                         // inflate
+
                         reference.localScale = Vector3.one / scaleFactor * defaultScale;
                         reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
                     }
@@ -227,6 +228,7 @@ public class e_genericentitydata
 
     public void SetPosition(num_precisevector3 pos)
     {
+        //Debug.Log(monoComp.gameObject.name + "    " + pos.AsRawString());
         localPosition = pos;
         
         hasTransformBeenUpdated = true;

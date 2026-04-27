@@ -17952,13 +17952,13 @@ MonoBehaviour:
   lineWidth: 0.01
   generateOnAwake: 1
   p_segment: {fileID: 3125778042671148047, guid: a14e4fa2200749d449dfd04bda046972, type: 3}
-  segmentSpacing: 0.1
-  pointMass: 0.1
-  segmentCount: 10
+  pointMass: 0.9
+  segmentCount: 15
+  rigidity: 0.8
   useLineRenderer: 1
   points: []
   sticks: []
-  iterationsPerUpdate: 5
+  iterationsPerUpdate: 15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

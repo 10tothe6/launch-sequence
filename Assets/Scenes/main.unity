@@ -17777,7 +17777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Program
   version: mptest-1.0-rc1
   ins_buildMode: 0
-  ins_startMode: 0
+  ins_startMode: 2
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17800,7 +17800,7 @@ Transform:
   m_GameObject: {fileID: 4836904108589230374}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.03, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17949,12 +17949,12 @@ MonoBehaviour:
   useColor: 1
   lineColor: {r: 1, g: 0, b: 0, a: 1}
   lineMaterial: {fileID: 2100000, guid: f6423c32c8ba3a746a3994e60a5752c7, type: 2}
-  lineWidth: 0.01
+  lineWidth: 0.001
   generateOnAwake: 1
   p_segment: {fileID: 3125778042671148047, guid: a14e4fa2200749d449dfd04bda046972, type: 3}
+  segmentSpacing: 0
   pointMass: 0.9
   segmentCount: 15
-  rigidity: 0.8
   useLineRenderer: 1
   points: []
   sticks: []

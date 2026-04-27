@@ -18,6 +18,7 @@ public enum ProgramBuildMode
 // saves me a lot of time that would have been wasted hanging around the main menu
 public enum ProgramStartMode
 {
+    SceneOnly, // don't run any game logic at all
     FullGame,
 
     // sandbox is like the 'dev scene' thing from White Knuckle

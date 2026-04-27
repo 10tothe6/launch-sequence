@@ -4,6 +4,8 @@ using UnityEngine;
 // re-purposing the vast majority of this class from the original Drivetrain,
 // so that we can have physics-based hanging lights among other things
 
+// TODO: make more bouncy
+
 public class phys_rope : MonoBehaviour
 {
     private LineRenderer lr;

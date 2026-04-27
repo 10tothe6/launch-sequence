@@ -1,16 +1,32 @@
 using UnityEngine;
 
+// an entity, like a crate, that has an inventory
+
 public class e_itemcarrier : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public e_genericentity e;
+
+    public ItemStack[] items;
+
+    void Awake()
     {
+        e = GetComponent<e_genericentity>();
         
     }
 
-    // Update is called once per frame
-    void Update()
+    
+
+
+    public void UpdateEntityData()
     {
-        
+        string str = ItemStack.ParseArrayToString(items);
+
+        e.data.SetDataEntry("inventory", str);
+    }
+    public void UpdateFromData()
+    {
+        string data = e.data.GetDataEntry("inventory");
+
+        items = ItemStack.ParseArrayFromString(data);
     }
 }

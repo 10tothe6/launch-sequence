@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// if we consider ItemStack.cs to be "instanced" data, 
+// then we can consider this to be "static" data
+
 [System.Serializable]
 public class Item
 {
@@ -24,16 +27,6 @@ public class Item
     
     // item tags, used to identify weapons, consumables, and such
     public string[] tags;
-
-    // status effects that are applied when the item is used
-    
-
-    // there USED TO BE a status effect array here, but that has changed since the cooking system
-
-    // now every potion has its OWN CUSTOM set of effects, and as for ingredients their info is in CookingData
-
-    // some items have unique codes associated with them, like keys
-    public bool isEncoded;
 
     public Item() {}
 }

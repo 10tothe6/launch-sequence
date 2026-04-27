@@ -2,15 +2,39 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-//this class is for cursor stuff
+// data for an item that is being held by the cursor
+// we MUST keep track of this, because all inventory scripts expect it and use it to allow you to move items
+
+
 public class CursorData : MonoBehaviour
 {
-    public ItemStack heldItem;
+    private static CursorData _instance;
+
+    public static CursorData Instance
+    {
+        get => _instance;
+        private set
+        {
+            if (_instance == null)
+            {
+                _instance = value;
+            }
+            else if (_instance != value)
+            {
+                Debug.Log("You messed up buddy.");
+                Destroy(value);
+            }
+        }
+    }
 
     void Awake()
     {
+        Instance = this;
+
         heldItem = null;
     }
+
+    public ItemStack heldItem;
 
     void Update()
     {

@@ -33,6 +33,11 @@ public class UIManager : MonoBehaviour
         LoadMenuObjects();
     }
 
+    void Start()
+    {
+        inventory.Initialize();
+    }
+
     public static bool isTyping;
 
     public void StartTyping()
@@ -61,6 +66,7 @@ public class UIManager : MonoBehaviour
     public ui_connectedclients connectedclients;
     public ui_bugreporter bugReporter;
     public ui_pausemenu pauseMenu;
+    public Inventory inventory;
 
     public void SetBugReporterActive(bool active)
     {
@@ -70,6 +76,10 @@ public class UIManager : MonoBehaviour
     public void TogglePauseMenu()
     {
         pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
+    }
+    public void ToggleInventory()
+    {
+        inventory.gameObject.SetActive(!inventory.gameObject.activeSelf);
     }
 
     public void EnterMainMenu()
@@ -112,6 +122,11 @@ public class UIManager : MonoBehaviour
             if (Keyboard.current.f1Key.wasPressedThisFrame)
             {
                 connectedclients.Toggle();
+            }
+
+            if (Keyboard.current.iKey.wasPressedThisFrame)
+            {
+                ToggleInventory();
             }
 
             // map-related keypress checks

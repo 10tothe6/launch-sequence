@@ -369,7 +369,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(int type, int amount)
     {
-        ItemStack.AddItem(type, amount, items);
+        items = ItemStack.AddItem(type, amount, items).data;
         Refresh();
     }
 }

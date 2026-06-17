@@ -1,4 +1,4 @@
-    Shader "Custom/water_spherewaves" {
+    Shader "vfx/water_spherewaves" {
         Properties{
             [Space]
             [Header(Tesselation)]
@@ -37,14 +37,14 @@
             int isUnderWater;
             float timeValue;
     
-            inline half4 LightingToonRamp(SurfaceOutput s, half3 lightDir, half3 viewDir, half atten)
+            half4 LightingToonRamp(SurfaceOutput s, half3 lightDir, half atten)
             {
                 lightDir = normalize(lightDir);
-                viewDir = normalize(viewDir);
+               
 
                 half4 c;
                 
-                c.rgb = dot(lightDir, s.Normal);
+                c.rgb = saturate(dot(lightDir, s.Normal));
                 
                 c.a = 0;
                 return c;
@@ -110,31 +110,49 @@
                 }
             }
 
-            float getHeight(float3 pos) {
-                float sum = 0;
+            float3 getHeight(float3 pos) {
+                float3 sum = 0;
+                float freq = 30;
+                float amp = 0.1;
 
                 int waveCount = 2;
 
                 for (int i = 0; i < waveCount; i++) {
-                    
-                    sum += (1 + sin(getAdvancing(waveVectors[i], pos)*100)/10);
+                    float3 dir = normalize(cross(cross(waveVectors[i], pos), waveVectors[i]));
+                    sum += dir * exp(sin(getAdvancing(waveVectors[i], pos) * freq) - 1) * amp;
                 }
 
                 return sum;
             }
 
             float3 getNormal(float3 pos) {
-                return normalize(pos);
+                float3 sum = 0;
+
+                float freq = 30;
+                float amp = 0.1;
+
+                int waveCount = 2;
+
+                for (int i = 0; i < waveCount; i++) {
+                    
+                    float3 dir = normalize(cross(cross(waveVectors[i], pos), waveVectors[i]));
+
+                    float x = getAdvancing(waveVectors[i], pos);
+                    float slope = exp(sin(x * freq) - 1) * cos(x * freq) * amp;
+                    
+                    sum += normalize(dir * amp + -waveVectors[i] * slope);
+                }
+
+                return normalize(sum);
             }
     
             void vert(inout appdata_full v)
             {   
                 
                 float3 worldPosition = mul(unity_ObjectToWorld, v.vertex).xyz;
-                float waterHeight = getHeight(worldPosition);
                 
-                // move vertices up where snow is, and where there is no path   
-                v.vertex.xyz += normalize(v.normal) * waterHeight;
+                // move vertices up where snow is, and where there is no path  
+                v.vertex.xyz += getHeight(worldPosition);
                 v.normal = getNormal(worldPosition);
             }
     

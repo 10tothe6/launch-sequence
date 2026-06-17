@@ -1,0 +1,10 @@
+* I have already named a folder "_test" after single-use debug scripts that I use
+* this folder is for a similar but different purpose - scripts that run DURING THE GAME and are supposed to validate different game processes
+* (as opposed to random scripts that run in different developer scenes)
+
+
+* one day I might change "_test" to something else, but for now that folder is "_test" and this folder is "_valid"
+
+stands for validation, obviously
+ 
+*** TESTS ARE RUN AT THE COMMAND OF THE USER, NOT AUTOMATICALLY ***

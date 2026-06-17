@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class util_string
 {   
+    public static string ReplaceAll(string raw, string toLookFor, string toReplace)
+    {
+        raw = raw.Replace(toLookFor, toReplace);
+
+        return raw;
+    }
+
+
     public static string ParseQuaternion(Quaternion q)
     {
         string result = "";

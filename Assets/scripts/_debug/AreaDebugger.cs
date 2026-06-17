@@ -27,7 +27,7 @@ public class AreaDebugger : MonoBehaviour
                 points[i] = transform.InverseTransformPoint(transform.GetChild(transform.childCount - 1-i).position);
             } else {points[i] = transform.InverseTransformPoint(transform.GetChild(i).position);}
         }
-        GetComponent<MeshFilter>().sharedMesh = util_mesh.GeneratePolygonMesh(points, Vector3.up, 1);
+        GetComponent<MeshFilter>().sharedMesh = util_meshgeneration.GeneratePolygonMesh(points, Vector3.up, 1);
         GetComponent<MeshRenderer>().sharedMaterial = m_area;
     }
 }

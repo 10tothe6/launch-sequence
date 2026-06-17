@@ -8,4 +8,6 @@ public class vfx_rocketflamecontroller : MonoBehaviour
     public float ambientAirPressure; // in kPa
 
     public bool isActive;
+
+    public ParticleSystem ps;
 }

@@ -85,6 +85,18 @@ public class ServerNetworkManager : MonoBehaviour
     private float lastControlledUpdate;
     // independent is FREQUENT updates (no timer)
 
+    public ushort GetRandomClientIndex()
+    {
+        int rand = Random.Range(0,connectedClients.Count);
+
+        return connectedClients[rand].client_index;
+    }
+
+    public string GetRandomClientUsername()
+    {
+        return GetUsernameFromIndex(GetRandomClientIndex());
+    }
+
 
     // a quick software design note here:
     // using one timer for infrequent updates does overload the network when the updates come through, sure

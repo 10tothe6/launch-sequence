@@ -74,6 +74,8 @@ public class cmd_console : MonoBehaviour
         Instance = this;
     }
 
+    #region data
+
     public ui_console menu;
 
     public static cmd_consolecommand[] possibleCommands = new cmd_consolecommand[]
@@ -123,6 +125,8 @@ public class cmd_console : MonoBehaviour
         return null;
     }
 
+    #endregion
+
 
     // this is called from the UI
     // it will call ProcessMessage(), and then call ShipMessageToServer() if needed
@@ -156,10 +160,58 @@ public class cmd_console : MonoBehaviour
         return null;
     }
 
+    #region running
+
+    // this is the function that should actually be called
+    public void ProcessAndRunMessage(string text, ushort fromClientIndex)
+    {
+        string[] processedMessages = ProcessMessage(text, fromClientIndex);
+
+        RunMessage(processedMessages, fromClientIndex);
+    }
+
+    // pre-processing step that runs on all commands
+    // (deals with shorthands like @a, @s, @r, etc.)
+    public string[] ProcessMessage(string text, ushort fromClientIndex)
+    {
+        // first, replace all instances of @s
+        text = util_string.ReplaceAll(text, "@s", ServerNetworkManager.Instance.GetUsernameFromIndex(fromClientIndex));
+        // and @r (non-seeded cuz who cares)
+        string randomUsername = ServerNetworkManager.Instance.GetRandomClientUsername();
+        text = util_string.ReplaceAll(text, "@s", randomUsername);
+
+        // now @a gets replaced with every player, separately
+        if (text.Contains("@a"))
+        {
+            string[] split = new string[ServerNetworkManager.Instance.connectedClients.Count];
+
+            for (int i = 0; i < split.Length; i++)
+            {
+                split[i] = util_string.ReplaceAll(text, "@a", 
+                ServerNetworkManager.Instance.GetUsernameFromIndex(
+                    ServerNetworkManager.Instance.connectedClients[i].client_index));
+            }
+
+            return split;
+        } else
+        {
+            return new string[] {text};
+        }
+    }
+
+    // runs that
+    public void RunMessage(string[] text, ushort fromClientIndex)
+    {
+        for (int i = 0; i < text.Length; i++)
+        {
+            RunMessage(text[i], fromClientIndex);
+        }
+    }
+
 
     // ONLY EVER CALLED ON THE SERVER SIDE
     // NEVER ON CLIENT SIDE
-    public void ProcessMessage(string text, ushort fromClientIndex)
+    public void RunMessage(string text, ushort fromClientIndex)
     {
         string[] items = util_string.SplitIntoWords(text);
 
@@ -177,7 +229,7 @@ public class cmd_console : MonoBehaviour
 
         else
         {
-            // we CAN run it locally
+            // we CAN run it locally (or we are actually the server)
 
 
             // the command type is the first word, hence items[0]
@@ -322,6 +374,8 @@ public class cmd_console : MonoBehaviour
             }
         }
     }
+
+    #endregion
 
     public static void MakeError()
     {

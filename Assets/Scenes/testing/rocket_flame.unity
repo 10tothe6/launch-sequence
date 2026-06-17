@@ -44385,7 +44385,7 @@ Transform:
   m_GameObject: {fileID: 889274745}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: -25, z: -80}
+  m_LocalPosition: {x: 9.8, y: -28.5, z: -10.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -64019,7 +64019,18 @@ MonoBehaviour:
   throttle: 0
   ambientAirPressure: 0
   isActive: 0
-  ps: {fileID: 0}
+  ps:
+  - {fileID: 1403444574}
+  - {fileID: 2038216267}
+  - {fileID: 597113252}
+  - {fileID: 1235952291}
+  - {fileID: 13976763}
+  startLifetimesMax: []
+  startLifetimesMin: []
+  startSizesMin: []
+  startSizesMax: []
+  defaultScales: []
+  defaultPositions: []
 --- !u!1 &1167723467
 GameObject:
   m_ObjectHideFlags: 0
@@ -64029,7 +64040,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1167723468}
-  - component: {fileID: 1167723469}
   m_Layer: 0
   m_Name: h rocket
   m_TagString: Untagged
@@ -64054,19 +64064,6 @@ Transform:
   - {fileID: 1124621230}
   m_Father: {fileID: 1690588663}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1167723469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1167723467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e49eaf3ecc203743bd241dad89d78d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::test_rotate
-  speed: 0
 --- !u!1 &1217214703
 GameObject:
   m_ObjectHideFlags: 0
@@ -78731,7 +78728,13 @@ MonoBehaviour:
   throttle: 0
   ambientAirPressure: 0
   isActive: 0
-  ps: {fileID: 0}
+  ps: []
+  startLifetimesMax: []
+  startLifetimesMin: []
+  startSizesMin: []
+  startSizesMax: []
+  defaultScales: []
+  defaultPositions: []
 --- !u!1 &1358046037
 GameObject:
   m_ObjectHideFlags: 0
@@ -93426,7 +93429,13 @@ MonoBehaviour:
   throttle: 0
   ambientAirPressure: 0
   isActive: 0
-  ps: {fileID: 0}
+  ps: []
+  startLifetimesMax: []
+  startLifetimesMin: []
+  startSizesMin: []
+  startSizesMax: []
+  defaultScales: []
+  defaultPositions: []
 --- !u!1 &1649926347
 GameObject:
   m_ObjectHideFlags: 0
@@ -93492,7 +93501,13 @@ MonoBehaviour:
   throttle: 0
   ambientAirPressure: 0
   isActive: 0
-  ps: {fileID: 0}
+  ps: []
+  startLifetimesMax: []
+  startLifetimesMin: []
+  startSizesMin: []
+  startSizesMax: []
+  defaultScales: []
+  defaultPositions: []
 --- !u!1 &1684843261
 GameObject:
   m_ObjectHideFlags: 0
@@ -93597,7 +93612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1690203750
 Transform:
   m_ObjectHideFlags: 0
@@ -93630,7 +93645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1690588663
 Transform:
   m_ObjectHideFlags: 0
@@ -98583,7 +98598,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1962757667}
   - component: {fileID: 1962757668}
-  - component: {fileID: 1962757669}
   m_Layer: 0
   m_Name: flame
   m_TagString: Untagged
@@ -98626,20 +98640,18 @@ MonoBehaviour:
   throttle: 0
   ambientAirPressure: 0
   isActive: 0
-  ps: {fileID: 0}
---- !u!114 &1962757669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962757666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e49eaf3ecc203743bd241dad89d78d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::test_rotate
-  speed: 0
+  ps:
+  - {fileID: 1740701058}
+  - {fileID: 1003653514}
+  - {fileID: 492048625}
+  - {fileID: 1611761433}
+  - {fileID: 912827516}
+  startLifetimesMax: []
+  startLifetimesMin: []
+  startSizesMin: []
+  startSizesMax: []
+  defaultScales: []
+  defaultPositions: []
 --- !u!1 &2038216264
 GameObject:
   m_ObjectHideFlags: 0

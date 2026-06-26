@@ -1,9 +1,33 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class util_string
 {   
+    public static char[] illegalChars = new char[]
+    {
+        ',',
+        '.',
+        ')',
+        '(',
+    };
+
+
+    public static bool CheckForIlligelCharacters(string toCheck)
+    {
+        bool isOkay = true;
+
+        for (int i = 0; i < illegalChars.Length; i++)
+        {
+            if (toCheck.Contains(illegalChars[i]))
+            {
+                isOkay = false;
+            }
+        }
+
+        return isOkay;
+    }
     public static string ReplaceAll(string raw, string toLookFor, string toReplace)
     {
         raw = raw.Replace(toLookFor, toReplace);

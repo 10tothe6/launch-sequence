@@ -56,8 +56,6 @@ public class ui_selector : MonoBehaviour
         negativeArrow.onClick.AddListener(DecreaseValue);
         positiveArrow.onClick.AddListener(IncreaseValue);
 
-        SetValue(0);
-
         iComp = GetComponent<ui_instantiatable>();
     }
 

@@ -14,8 +14,10 @@ public enum net_gamemode
 public class net_serverhostingdata
 {
     public string server_name;
+    public string server_description;
+    public ushort server_port;
 
-    public ushort net_gamemode;
+    public ushort gamemode;
     public ushort bot_count; // only if permadeath
 
     public ushort max_player_count;

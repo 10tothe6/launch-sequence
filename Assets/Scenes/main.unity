@@ -2846,6 +2846,13 @@ MonoBehaviour:
   controlledEntityPacketFrequency: 0
   influencedEntityPacketFrequency: 0
   localizedEntityPacketFrequency: 0
+  ins_defaultServerHostingData:
+    server_name: hamilton
+    net_gamemode: 1
+    bot_count: 0
+    max_player_count: 4
+    flag: {fileID: 2800000, guid: 6fecefecec5aebd41b08fa0295720c9f, type: 3}
+    col1: {r: 0.029010534, g: 1, b: 0, a: 1}
   ins_defaultClientPermissionLevel: 2
   ins_spamMessageCount: 10
   ins_spamPeriod: 6
@@ -3994,11 +4001,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 329500876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69114c073a9f9aa42af0490d59eb6309, type: 3}
+  m_Script: {fileID: 11500000, guid: daf0b225c18b3804590df0fb424d718f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ui_hostmenu
-  in_clientCount: {fileID: 1619735592}
-  in_port: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::ui_hostservermenu
 --- !u!1 &368806315
 GameObject:
   m_ObjectHideFlags: 0
@@ -7245,8 +7250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69114c073a9f9aa42af0490d59eb6309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_hostmenu
-  in_clientCount: {fileID: 191039695}
-  in_port: {fileID: 313439647}
 --- !u!1 &727865121
 GameObject:
   m_ObjectHideFlags: 0
@@ -13092,9 +13095,37 @@ MonoBehaviour:
     isFilled: 0
     key: fov
     value: 
+    tags: []
     lowerLimit: 30
     upperLimit: 100
     defaultValue: 90
+  - type: 0
+    displayType: 0
+    isFilled: 0
+    key: vol_music
+    value: 
+    tags: []
+    lowerLimit: 0
+    upperLimit: 100
+    defaultValue: 50
+  - type: 0
+    displayType: 0
+    isFilled: 0
+    key: vol_sfx
+    value: 
+    tags: []
+    lowerLimit: 0
+    upperLimit: 100
+    defaultValue: 50
+  - type: 0
+    displayType: 0
+    isFilled: 0
+    key: vol_ambient
+    value: 
+    tags: []
+    lowerLimit: 0
+    upperLimit: 100
+    defaultValue: 50
 --- !u!1 &1285539533
 GameObject:
   m_ObjectHideFlags: 0
@@ -13302,6 +13333,57 @@ MonoBehaviour:
     minCloudRadius: 0
     maxCloudRadius: 0
   g_testPlanet: {fileID: 704434971}
+--- !u!1 &1293151977
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1293151978}
+  - component: {fileID: 1293151979}
+  m_Layer: 5
+  m_Name: gm selector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1293151978
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293151977}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1466235770}
+  - {fileID: 1639616012}
+  - {fileID: 2089509385}
+  m_Father: {fileID: 2000053512}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1293151979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293151977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c00983c07b7b3d42ae307f9cc1e85e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ui_selector
 --- !u!1 &1314254079
 GameObject:
   m_ObjectHideFlags: 0
@@ -14298,7 +14380,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2000053512}
+  m_Father: {fileID: 1293151978}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16367,7 +16449,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2000053512}
+  m_Father: {fileID: 1293151978}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -269.999}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -17740,7 +17822,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329500878}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ui_hostmenu, Assembly-CSharp
         m_MethodName: AttemptDirectServerConnection
         m_Mode: 1
@@ -19410,9 +19492,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1466235770}
-  - {fileID: 1639616012}
-  - {fileID: 2089509385}
+  - {fileID: 1293151978}
   - {fileID: 124137941}
   - {fileID: 739649374}
   - {fileID: 1271764071}
@@ -20533,13 +20613,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089509384}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 138905513}
-  m_Father: {fileID: 2000053512}
+  m_Father: {fileID: 1293151978}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -1,8 +1,40 @@
 using UnityEngine;
 
+// TODO: store all constants used here in some sort of data structure 
+// (distance and temp change thresholds, mainly)
+
 public class util_game
 {
-    
+    // -3 to 3, used for displaying temp change to the player
+    // (takes in deg C per second)
+    public static int FormatTemperatureChange(float val)
+    {
+        // just a bunch of if statements for now
+        // why complicate life?
+        if (val < -10f)
+        {
+            return -3;
+        } else if (val < -5f)
+        {
+            return -2;
+        } else if (val < -0.1f)
+        {
+            return -1;
+        } else if (val < 0.1f)
+        {
+            return 0;
+        } else if (val < 5f)
+        {
+            return 1;
+        } else if (val < 10f)
+        {
+            return 2;
+        } else
+        {
+            return 3;
+        }
+    }
+
     public static string FormatDistance(num_precise distInMeters)
     {
         // the threshold for distance readouts is four digits

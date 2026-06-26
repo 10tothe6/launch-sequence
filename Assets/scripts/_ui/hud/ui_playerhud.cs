@@ -1,3 +1,5 @@
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
 
 
@@ -27,6 +29,53 @@ public class ui_playerhud : MonoBehaviour
     void Awake()
     {
         Instance = this;
+    }
+
+    public GameObject g_playerBars; // container for the below readouts on elec, temp and oxy
+
+    public Sprite[] temperatureChangeIcons;
+    public Image temperatureChangeDisplay;
+
+    public TextMeshProUGUI temperatureDisplay;
+    public TextMeshProUGUI oxygenDisplay;
+    public TextMeshProUGUI electricityDisplay;
+
+    // TODO: not call in update
+    void Update()
+    {
+        if (GameManager.gameState == GameState.InGame)
+        {
+            g_playerBars.SetActive(true); // TODO: not periodic
+            UpdatePlayerBars();
+        } else
+        {
+            g_playerBars.SetActive(false); // TODO: not periodic
+        }
+    }
+
+    // electricity, temperature, and health right now
+    public void UpdatePlayerBars()
+    {
+        // first, get the values you need
+        // TODO: this
+        float playerTemperature = 30f; // in degrees celcius
+        float playerTempChange = 1; // in deg C/sec
+
+        float playerElectricity = 1000f; // in "units of charge"
+        float playerMaxElectricity = 1500f; // in "units of charge"
+
+        float playerOxygen = 5.5f; // in m^3
+        float playerMaxOxygen = 20f; // in m^3
+
+
+
+        // now to actually display the values
+        oxygenDisplay.text = playerOxygen.ToString() + " / " + playerMaxOxygen.ToString();
+        electricityDisplay.text = playerElectricity.ToString() + " / " + playerMaxElectricity.ToString();
+
+        temperatureDisplay.text = playerTemperature.ToString() + "°C";
+
+        temperatureChangeDisplay.sprite = temperatureChangeIcons[util_game.FormatTemperatureChange(playerTempChange) + 3];
     }
 
     public void SetupDebugInfo()

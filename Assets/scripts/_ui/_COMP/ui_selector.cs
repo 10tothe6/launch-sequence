@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,6 +27,8 @@ public class ui_selector : MonoBehaviour
 
     public UnityEvent<ushort> onValueChanged;
 
+    private ui_instantiatable iComp;
+
     
 
     void Awake()
@@ -52,6 +55,10 @@ public class ui_selector : MonoBehaviour
 
         negativeArrow.onClick.AddListener(DecreaseValue);
         positiveArrow.onClick.AddListener(IncreaseValue);
+
+        SetValue(0);
+
+        iComp = GetComponent<ui_instantiatable>();
     }
 
     public void SetValue(ushort index)
@@ -62,6 +69,11 @@ public class ui_selector : MonoBehaviour
 
         // any additional logic that runs as the component is changed
         onValueChanged.Invoke(currentIndex);
+
+        if (iComp != null )
+        {
+            iComp.SetData(currentIndex.ToString());
+        }
     }
 
     public void UpdateDisplay()

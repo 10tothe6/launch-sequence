@@ -13097,7 +13097,7 @@ MonoBehaviour:
     value: 
     tags: []
     lowerLimit: 30
-    upperLimit: 100
+    upperLimit: 120
     defaultValue: 90
   - type: 0
     displayType: 0

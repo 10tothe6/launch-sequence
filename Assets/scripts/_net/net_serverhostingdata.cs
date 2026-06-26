@@ -23,4 +23,8 @@ public class net_serverhostingdata
     // mission visual stuff
     public Texture2D flag;
     public Color col1; 
+
+    
+
+    public net_serverhostingdata() {}
 }

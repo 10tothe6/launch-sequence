@@ -234,10 +234,11 @@ public class ServerNetworkManager : MonoBehaviour
         GameManager.InitializeNewGame(-1); // random world seed
     }
 
-    public void StartMultiplayerServer(ushort clientCount)
+    public void StartMultiplayerServer(net_serverhostingdata hostData)
     {
+        // TODO: actually use the rest of the data
         cmd.LogRaw("[Server] Setting up multiplayer server on port " + NetworkResources.defaultServerPort + "...", NetworkResources.Instance.serverUpdateColor);
-        StartServer(NetworkResources.defaultServerPort, clientCount);
+        StartServer(NetworkResources.defaultServerPort, hostData.max_player_count);
         ClientNetworkManager.Instance.username = "localplayer";
         ClientNetworkManager.Instance.ConnectToLocalServer();
     }

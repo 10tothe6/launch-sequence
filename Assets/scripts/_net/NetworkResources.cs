@@ -51,6 +51,10 @@ public class NetworkResources : MonoBehaviour
 
     // using the ins_/static format to make these ones a bit less verbose when accessing them
     [Header("GENERAL")]
+
+    public net_serverhostingdata ins_defaultServerHostingData;
+    public static net_serverhostingdata defaultServerHostingData;
+
     public ushort ins_defaultClientPermissionLevel;
     public static ushort defaultClientPermissionLevel;
 

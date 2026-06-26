@@ -1,10 +1,10 @@
-using TMPro;
 using UnityEngine;
 
-public class ui_hostmenu : MonoBehaviour
+public class ui_hostservermenu : MonoBehaviour
 {
     // public TMP_InputField in_clientCount;
     // public TMP_InputField in_port;
+
 
     // public void AttemptDirectServerConnection()
     // {

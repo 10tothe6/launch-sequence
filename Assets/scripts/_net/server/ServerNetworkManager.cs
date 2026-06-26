@@ -140,7 +140,7 @@ public class ServerNetworkManager : MonoBehaviour
 
     public void BeginMulticastBroadcast(ushort port)
     {
-        net_serverdata data = new net_serverdata();
+        net_serverpreviewdata data = new net_serverpreviewdata();
         data.name = "super cool server";
         data.ip = util_network.GetLocalIPAddress();
         data.port = port;   

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // the kind of variable that is being stored 
@@ -25,11 +26,12 @@ public class prefs_genericentry
     public bool isFilled; // a temporary flag that we use when reading the settings in
     public string key;
     public string value;
+    public List<string> tags; // so that settings can be organized into categories
     public string lowerLimit;
     public string upperLimit;
     public string defaultValue;
 
-    public prefs_genericentry() {}
+    public prefs_genericentry() {tags = new List<string>();}
     
 
     public bool IsWithinLimits(string val)

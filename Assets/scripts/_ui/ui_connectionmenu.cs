@@ -13,14 +13,14 @@ public class ui_connectionmenu : MonoBehaviour
     public TMP_InputField in_ip;
     public TMP_InputField in_username;
 
-    public List<net_serverdata> foundServerData;
+    public List<net_serverpreviewdata> foundServerData;
     // any servers not heard from for more than 10s will be removed
     public List<float> lastHeardFromServers;
     public float serverFadeTime;
 
     void Awake()
     {
-        foundServerData = new List<net_serverdata>();
+        foundServerData = new List<net_serverpreviewdata>();
         lastHeardFromServers = new List<float>();
     }
 
@@ -91,7 +91,7 @@ public class ui_connectionmenu : MonoBehaviour
         } else
         {
            
-            net_serverdata newServer = new net_serverdata();
+            net_serverpreviewdata newServer = new net_serverpreviewdata();
            
 
             newServer.ip = ip;

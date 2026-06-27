@@ -34,6 +34,13 @@ public class ClientSenders : MonoBehaviour
     {
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.key_presses);
         message.AddString(Input.GetKeypressPacket().ParseToString());
+        if (!ServerNetworkManager.Instance.isServerActive && LocalPlayer.IsControllingEntity())
+        {
+            if (LocalPlayer.localClient.controllingEntity.GetComponent<player_genericcontroller>() != null)
+            {
+                LocalPlayer.localClient.controllingEntity.GetComponent<player_genericcontroller>().AcceptKeyPresses(Input.GetKeypressPacket());
+            }
+        }
         ClientNetworkManager.Instance.client.Send(message);
     }
 

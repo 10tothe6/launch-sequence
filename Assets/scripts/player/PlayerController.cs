@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour
                 {
                     isSprinting = true;
                     
-                    rb.linearVelocity += transform.forward * moveSpeed * sprintBoost * Time.deltaTime;
+                    if (ServerNetworkManager.Instance.isServerActive)rb.linearVelocity += transform.forward * moveSpeed * sprintBoost * Time.deltaTime;
 
                     if (Time.time > sprintTimer + 0.05f)
                     {
@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
                 {
                     isSprinting = false;
                     
-                    rb.linearVelocity += transform.forward * moveSpeed * Time.deltaTime;
+                    if (ServerNetworkManager.Instance.isServerActive)rb.linearVelocity += transform.forward * moveSpeed * Time.deltaTime;
                 }
             }
             else {
@@ -254,18 +254,18 @@ public class PlayerController : MonoBehaviour
 
             if (lastPacket.back)
             {
-                rb.linearVelocity -= transform.forward * moveSpeed * Time.deltaTime;
+                if (ServerNetworkManager.Instance.isServerActive)rb.linearVelocity -= transform.forward * moveSpeed * Time.deltaTime;
             }
             if (lastPacket.right)
             {
-                rb.linearVelocity += transform.right * moveSpeed * Time.deltaTime;
+                if (ServerNetworkManager.Instance.isServerActive)rb.linearVelocity += transform.right * moveSpeed * Time.deltaTime;
                 cameraTiltTarget = -1;
 
             }
 
             if (lastPacket.left)
             {
-                rb.linearVelocity -= transform.right * moveSpeed * Time.deltaTime;
+                if (ServerNetworkManager.Instance.isServerActive)rb.linearVelocity -= transform.right * moveSpeed * Time.deltaTime;
                 cameraTiltTarget = 1;
             }
 
@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isFlying) {
             transform.position += (transform.right * Input.inputAxisHorizontal + transform.forward * Input.inputAxisForward + transform.up * Input.inputAxisVertical) * (lastPacket.sprint ? 2.5f : 1) * flySpeed;
-            rb.linearVelocity = Vector3.zero;
+            if (ServerNetworkManager.Instance.isServerActive)rb.linearVelocity = Vector3.zero;
         } else {
             cameraTiltTarget = 0;
         }
@@ -299,7 +299,7 @@ public class PlayerController : MonoBehaviour
 
                 // friction
                 Vector3 fric = rb.linearVelocity * 0.1f;
-                rb.linearVelocity -= (fric - Vector3.Project(fric, gravityDirection));
+                if (ServerNetworkManager.Instance.isServerActive)rb.linearVelocity -= (fric - Vector3.Project(fric, gravityDirection));
             }
             else
             {
@@ -359,7 +359,7 @@ public class PlayerController : MonoBehaviour
         lastWalkingTime = walkingTime;
 
         /* jumping */
-        if (lastPacket.jump && allowJump && !activeJump)
+        if (lastPacket.jump && allowJump && !activeJump && ServerNetworkManager.Instance.isServerActive)
         {
             rb.linearVelocity += -gravityDirection.normalized * jumpStrength;
             activeJump = true;
@@ -372,7 +372,7 @@ public class PlayerController : MonoBehaviour
 
 
         // GRAVITY
-        rb.linearVelocity += gravityDirection * gravitationalAcceleration * Time.deltaTime;
+        if (ServerNetworkManager.Instance.isServerActive) rb.linearVelocity += gravityDirection * gravitationalAcceleration * Time.deltaTime;
     }
 
     // kept getting stuck on everything because the raycast was missing (like standing on a ledge)

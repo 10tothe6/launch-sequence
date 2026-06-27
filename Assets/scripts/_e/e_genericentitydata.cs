@@ -158,8 +158,13 @@ public class e_genericentitydata
     {
         if (LocalPlayer.IsControllingEntity()) {
             
-            if (entityType == (ushort)e_entitytype.Fixed && !ServerNetworkManager.Instance.isServerActive)
+            if (entityType == (ushort)e_entitytype.Fixed)
             {
+                if (ServerNetworkManager.Instance.isServerActive && monoComp.GetControllingPlayer() != -1)
+                {
+                    return;
+                }
+
                 if (LocalPlayer.localClient.controllingEntity == monoComp)
                 {
                     return;

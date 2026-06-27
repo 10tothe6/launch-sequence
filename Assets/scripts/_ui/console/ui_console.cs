@@ -45,8 +45,14 @@ public class ui_console : MonoBehaviour
     public void PostMessage(string msg, Color col)
     {
         // first, move all existing messages up
-        for (int i = 0; i < t_messageContainer.childCount; i++)
+        for (int i = t_messageContainer.childCount - 1; i >= 0; i--)
         {
+            // delete a message if its old (more than 30 messages ago)
+            if (t_messageContainer.childCount - 1 - i > 30f)
+            {
+                Destroy(t_messageContainer.GetChild(i).gameObject);
+                continue;
+            }
             t_messageContainer.GetChild(i).position += Vector3.up * messageSpacing;
         }
 

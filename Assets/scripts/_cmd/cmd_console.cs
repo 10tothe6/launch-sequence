@@ -93,7 +93,7 @@ public class cmd_console : MonoBehaviour
 
         new cmd_consolecommand(new string[]{"spawn"},false,false), // spawn entity
 
-        new cmd_consolecommand(new string[]{"chat","c"},false,false), // big text for all players
+        new cmd_consolecommand(new string[]{"chat","c"},false,true), // big text for all players
 
         new cmd_consolecommand(new string[]{"p","perm"},true,false), // change permission
 

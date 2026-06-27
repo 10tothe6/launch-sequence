@@ -136,6 +136,11 @@ public class UIManager : MonoBehaviour
                 // TODO: enter build mode
             }
 
+            if (Keyboard.current.cKey.wasPressedThisFrame)
+            {
+                // TODO: enter character editor
+            }
+
             // map-related keypress checks
             if (isInMapView)
             {

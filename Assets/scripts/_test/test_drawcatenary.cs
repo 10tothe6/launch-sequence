@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using NUnit.Framework.Constraints;
-using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEngine;
 
 public class test_drawcatenary : MonoBehaviour

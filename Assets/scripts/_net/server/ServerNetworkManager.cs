@@ -284,6 +284,11 @@ public class ServerNetworkManager : MonoBehaviour
             entity.onEnterControl.Invoke();
         }
 
+        if (entity.GetComponent<PlayerController>() != null)
+        {
+            entity.GetComponent<PlayerController>().isActive = true;
+        }
+
         if (ServerNetworkManager.Instance.isServerActive)
         {
             cmd.LogRaw($"[Server] setting client {clientId} control to {entity.gameObject.name}...", NetworkResources.Instance.serverUpdateColor);

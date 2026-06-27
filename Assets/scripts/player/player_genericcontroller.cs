@@ -17,6 +17,8 @@ public class player_genericcontroller : MonoBehaviour
     {
         mostRecentPacket = packet;
 
+        Debug.Log("got key presses");
+
         onPacketUpate.Invoke(); // tell whoever that we got key presses
     }
 }

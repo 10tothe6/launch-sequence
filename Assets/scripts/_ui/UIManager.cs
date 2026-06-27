@@ -87,6 +87,8 @@ public class UIManager : MonoBehaviour
         SwitchMenu("main menu");
         g_console.SetActive(false);
 
+        AudioManager.Instance.PlayMusic(0);
+
         cb_mainmenucontroller.Instance.Setup();
     }
 
@@ -126,7 +128,12 @@ public class UIManager : MonoBehaviour
 
             if (Keyboard.current.iKey.wasPressedThisFrame)
             {
-                ToggleInventory();
+                //ToggleInventory();
+            }
+
+            if (Keyboard.current.bKey.wasPressedThisFrame)
+            {
+                // TODO: enter build mode
             }
 
             // map-related keypress checks

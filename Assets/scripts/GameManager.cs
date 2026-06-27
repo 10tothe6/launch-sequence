@@ -158,6 +158,8 @@ public class GameManager : MonoBehaviour
     // entering back into the game
     public static void SwitchToGame()
     {
+        AudioManager.Instance.StopAllMusic();
+        
         RenderSettings.ambientIntensity = 0f;
         UIManager.Instance.SetBugReporterActive(false);
         UIManager.Instance.pauseMenu.gameObject.SetActive(false);

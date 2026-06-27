@@ -107,7 +107,7 @@ public class WorldManager : MonoBehaviour
 
     public void ToggleMapIcons()
     {
-        
+        // TODO: this
     }
     public void SetMapIconsActive(bool active)
     {

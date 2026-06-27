@@ -25,4 +25,40 @@ public class AudioManager : MonoBehaviour
     {
         Instance = this;
     }
+
+    public audio_musictrack[] musicTracks;
+
+    public GameObject p_audioChannel;
+
+    public void PlayMusic(int index)
+    {
+        // dont want 2 or more tracks at the same time
+        StopAllMusic();
+
+        // creating a parent audio channel
+        GameObject g_channelParent = new GameObject();
+        g_channelParent.transform.SetParent(transform);
+        g_channelParent.name = "music " + index;
+
+        for (int i = 0; i < musicTracks[index].layers.Length; i++)
+        {
+            GameObject g_newChannel = Instantiate(p_audioChannel, g_channelParent.transform);
+
+            AudioSource comp = g_newChannel.GetComponent<AudioSource>();
+            comp.clip = musicTracks[index].layers[i];
+
+            comp.Play();
+        }
+    }
+
+    public void StopAllMusic()
+    {
+        for (int i = transform.childCount - 1; i>=0;i--)
+        {
+            if (transform.GetChild(i).gameObject.name.Contains("music"))
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+        }
+    }
 }

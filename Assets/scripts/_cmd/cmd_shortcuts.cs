@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// might move all this later (probably will) 
-// but I wanted to put all the 'ctrl+' keyboard shortcuts in one place
+// all the 'ctrl+' keyboard shortcuts in one place
 
 public class cmd_shortcuts : MonoBehaviour
 {
@@ -11,8 +10,19 @@ public class cmd_shortcuts : MonoBehaviour
     {
         if (Keyboard.current.ctrlKey.isPressed)
         {
+            
             // ctrl+i is toggle map icons
-            WorldManager.Instance.ToggleMapIcons();
-        }
+            if (Keyboard.current.iKey.wasPressedThisFrame)
+            {
+                WorldManager.Instance.ToggleMapIcons();
+            }
+
+
+            // ctrl+f is toggle flight
+            if (Keyboard.current.fKey.wasPressedThisFrame)
+            {
+                // TODO: this
+            }
+        } 
     }
 }

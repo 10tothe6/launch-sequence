@@ -70,6 +70,11 @@ public class e_genericentitydata
         rotation = util_string.ParseQuaternion(splitByEntry[2].Substring(splitByEntry[2].IndexOf(':') + 1));
         monoComp.transform.rotation = rotation;
 
+        if (LocalPlayer.localClient.controllingEntity == monoComp && !ServerNetworkManager.Instance.isServerActive)
+        {
+            cb_renderingmanager.Instance.RenderFrom(localPosition);
+        }
+
         // start at 3 cuz that's where the variable data begins
         for (int i = 3; i < splitByEntry.Length; i++)
         {
@@ -153,12 +158,13 @@ public class e_genericentitydata
     {
         if (LocalPlayer.IsControllingEntity()) {
             
-            if (entityType == (ushort)e_entitytype.Fixed)
+            if (entityType == (ushort)e_entitytype.Fixed && !ServerNetworkManager.Instance.isServerActive)
             {
                 if (LocalPlayer.localClient.controllingEntity == monoComp)
                 {
                     return;
                 }
+
                 num_precisevector3 pos = GetPosition();
 
                 // set the transform's position basee on the world offset

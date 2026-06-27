@@ -132,7 +132,7 @@ public class cmd_console : MonoBehaviour
     // it will call ProcessMessage(), and then call ShipMessageToServer() if needed
     public void TryRunCommand(TMP_InputField input)
     {
-        ProcessMessage(input.text, LocalPlayer.localClient.client_index);
+        ProcessAndRunMessage(input.text, LocalPlayer.localClient.client_index);
     }
     
     public void ShipMessageToServer(string msg)
@@ -178,7 +178,7 @@ public class cmd_console : MonoBehaviour
         text = util_string.ReplaceAll(text, "@s", ServerNetworkManager.Instance.GetUsernameFromIndex(fromClientIndex));
         // and @r (non-seeded cuz who cares)
         string randomUsername = ServerNetworkManager.Instance.GetRandomClientUsername();
-        text = util_string.ReplaceAll(text, "@s", randomUsername);
+        text = util_string.ReplaceAll(text, "@r", randomUsername);
 
         // now @a gets replaced with every player, separately
         if (text.Contains("@a"))

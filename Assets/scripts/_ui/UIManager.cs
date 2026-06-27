@@ -133,7 +133,7 @@ public class UIManager : MonoBehaviour
 
             if (Keyboard.current.bKey.wasPressedThisFrame)
             {
-                // TODO: enter build mode
+                
             }
 
             if (Keyboard.current.cKey.wasPressedThisFrame)

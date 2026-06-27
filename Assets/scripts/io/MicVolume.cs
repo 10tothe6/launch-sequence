@@ -11,30 +11,36 @@ public class MicInput : MonoBehaviour{
 
     public float testSound;
     public static float MicLoudness;
+    
+    [SerializeField]
     private string _device;
     private AudioClip _clipRecord;
     private int _sampleWindow = 128;
     private bool _isInitialized;
 
+
+    // temp?
+    public ui_seriesdisplay volumeIndicator;
+
     void InitMic()
     {
-        if (_device == null) {
+        if (string.IsNullOrEmpty(_device)) {
             _device = Microphone.devices [deviceIndex];
             _clipRecord = Microphone.Start (_device, true, 999, 44100);
-            Debug.Log (_clipRecord);
+            Debug.Log(_clipRecord == null);
         }
     }
 
     void StopMicrophone()
     {
-        Microphone.End (_device);
+        //Microphone.End (_device);
     }
 
     float LevelMax()
     {
         float levelMax = 0;
         float[] waveData = new float[_sampleWindow];
-        int micPosition = Microphone.GetPosition (null) - (_sampleWindow + 1);
+        int micPosition = Microphone.GetPosition (_device) - (_sampleWindow + 1);
         if (micPosition < 0) {
             return 0;
         }
@@ -53,9 +59,10 @@ public class MicInput : MonoBehaviour{
         MicLoudness = LevelMax ();
         testSound = MicLoudness;
 
+        volumeIndicator.SetValue(MicLoudness);
     }
 
-    void OnEnable()
+    void Start()
     {
         InitMic ();
         _isInitialized = true;
@@ -71,19 +78,19 @@ public class MicInput : MonoBehaviour{
         StopMicrophone ();
     }
 
-    void OnApplicationFocus(bool focus)
-    {
-        if (focus) {
-            if (!_isInitialized) {
-                InitMic ();
-                _isInitialized = true;
-            }
-        }
+    // void OnApplicationFocus(bool focus)
+    // {
+    //     if (focus) {
+    //         if (!_isInitialized) {
+    //             InitMic ();
+    //             _isInitialized = true;
+    //         }
+    //     }
 
-        if (!focus) {
-            StopMicrophone ();
-            _isInitialized = false;
-        }
-    }
+    //     if (!focus) {
+    //         StopMicrophone ();
+    //         _isInitialized = false;
+    //     }
+    // }
 
 }

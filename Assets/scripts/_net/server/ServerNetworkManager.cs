@@ -329,7 +329,7 @@ public class ServerNetworkManager : MonoBehaviour
     public void SystemTeleport(e_genericentity entity, int index)
     {
         if (entity == null) {cmd.Log("you can't system teleport nothing, dipshit"); return;}
-        entity.data.SetPosition(cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * (float)((3f + WorldManager.SeaLevelRadius(index + 2) + WorldManager.Instance.GetHeightAtDirection(Vector3.right, index)))));
+        entity.data.SetPosition(cb_solarsystem.Instance.monoBodies[index + 2].pose.data.GetPosition().Add(Vector3.right * (float)((3f + WorldManager.SeaLevelRadius(index + 2) + WorldManager.Instance.GetHeightAtDirection(Vector3.right, index + 2)))));
     }
 
     public static net_connectedclient GetClient(ushort id)

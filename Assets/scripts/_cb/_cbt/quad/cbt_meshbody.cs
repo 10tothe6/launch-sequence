@@ -299,10 +299,12 @@ public class cbt_meshbody : MonoBehaviour
 
         if (useTemporaryPerlin)
         {
-            return (float)WorldManager.Instance.perlin.Noise(v.x * 5000f, v.y * 5000f, v.z * 5000f) * 0.4f;
+            return 0.5f;
+            //return (float)WorldManager.Instance.perlin.Noise(v.x * 5000f, v.y * 5000f, v.z * 5000f) * 0.4f;
         } else
         {
-            return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 2000f, v.y * 2000f, v.z * 2000f) * 0.25f;
+            return 0.5f;
+            //return (float)TemporaryPerlin.Instance.perlin.Noise(v.x * 2000f, v.y * 2000f, v.z * 2000f) * 0.25f;
         }
     }
 

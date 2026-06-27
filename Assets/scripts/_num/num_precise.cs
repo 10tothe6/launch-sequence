@@ -13,6 +13,7 @@ public class num_precise
 
     public num_precise(string data)
     {
+        numDecimalDigits = 4;
         raw = BigInteger.Parse(data);
     }
 

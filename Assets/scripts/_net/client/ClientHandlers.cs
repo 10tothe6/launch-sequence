@@ -76,6 +76,11 @@ public class ClientHandlers : MonoBehaviour
         //Debug.Log(entityIndex);
         
         ServerNetworkManager.Instance.SetControllingEntity((ushort)clientIndex, EntityManager.Instance.GetEntityFromIndex(entityIndex));
+
+        if (clientIndex == LocalPlayer.localClient.client_index)
+        {
+            cb_renderingmanager.Instance.RenderFrom(EntityManager.Instance.GetEntityFromIndex(entityIndex).data.GetPosition());
+        }
     }
 
     [MessageHandler((ushort)ServerToClientId.kick_player)]

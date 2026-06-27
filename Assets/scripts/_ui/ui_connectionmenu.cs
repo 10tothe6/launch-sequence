@@ -22,6 +22,15 @@ public class ui_connectionmenu : MonoBehaviour
     {
         foundServerData = new List<net_serverpreviewdata>();
         lastHeardFromServers = new List<float>();
+
+        SetDefaultValues();
+    }
+
+    public void SetDefaultValues()
+    {
+        in_port.text = NetworkResources.defaultServerPort.ToString();
+        in_ip.text = "127.0.0.1";
+        in_username.text = "max 2";
     }
 
     void Start()

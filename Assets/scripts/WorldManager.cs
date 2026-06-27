@@ -85,8 +85,8 @@ public class WorldManager : MonoBehaviour
 
     public double GetHeightAtDirection(Vector3 dir, int index)
     {
-        float rad = cb_solarsystem.Instance.monoBodies[GetSOIIndex()].data.tConfig.equitorialRadius ;
-        return rad + cb_solarsystem.Instance.monoBodies[GetSOIIndex()].GetComponent<cbt_meshbody>().GetHeightAt(dir) * (rad/ 1000f);
+        float rad = cb_solarsystem.Instance.monoBodies[index].data.tConfig.equitorialRadius ;
+        return cb_solarsystem.Instance.monoBodies[index].GetComponent<cbt_meshbody>().GetHeightAt(dir) * (rad/ 1000f);
     }
     public double GetHeightAtSurface( num_precisevector3 point)
     {

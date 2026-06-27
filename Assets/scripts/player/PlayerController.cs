@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -166,6 +167,9 @@ public class PlayerController : MonoBehaviour
     // just doing this through Update() and using Time.deltaTime instead of FixedUpdate()
     void Update()
     {
+        //cmd.LogRaw(GetComponent<e_genericentity>().data.index + "   " + GetComponent<e_genericentity>().data.GetPosition().AsRawString());
+        //cmd.LogRaw(GetComponent<e_genericentity>().data.index + "v   " + GetComponent<e_genericentity>().data.GetPosition().ToVector3());
+
         Vector3 test = t_camera.forward - Vector3.Project(t_camera.forward, transform.up);
         if (Vector3.Angle(test, transform.forward) > 1f)
         {

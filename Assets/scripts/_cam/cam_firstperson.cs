@@ -17,10 +17,10 @@ public class cam_firstperson : MonoBehaviour
     // ************************************
     public void ProcessChangeInControlMode()
     {
-        if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.PlayerFirstPerson)
+        if (CameraController.controlMode == (ushort)CameraControlMode.PlayerFirstPerson)
         {
             EnterControl();
-        } else {ExitControl();}
+        } else if (CameraController.previousControlMode == (ushort)CameraControlMode.PlayerFirstPerson){ExitControl();}
     }
 
     public void SetControllingObject(GameObject g_toControl)
@@ -37,6 +37,8 @@ public class cam_firstperson : MonoBehaviour
         transform.SetParent(t_controlling.GetChild(0));
         
         CameraController.ZeroOut();
+
+        Cursor.lockState = CursorLockMode.Locked;
         
     }
     public void ExitControl()

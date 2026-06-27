@@ -27,7 +27,7 @@ public class cam_freecam : MonoBehaviour
         if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.Freecam)
         {
             EnterControl();
-        } else {ExitControl();}
+        } else if (CameraController.previousControlMode == (ushort)CameraControlMode.Freecam ){ExitControl();}
     }
 
     public void EnterControl()

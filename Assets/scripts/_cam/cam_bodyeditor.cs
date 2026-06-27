@@ -19,10 +19,10 @@ public class cam_bodyeditor : MonoBehaviour
 
     public void ProcessChangeInControlMode()
     {
-        if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.BodyEditor)
+        if (CameraController.controlMode == (ushort)CameraControlMode.BodyEditor)
         {
             EnterControl();
-        } else {ExitControl();}
+        } else if (CameraController.previousControlMode == (ushort)CameraControlMode.BodyEditor) {ExitControl();}
     }
 
     public void EnterControl()

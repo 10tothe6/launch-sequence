@@ -89,7 +89,7 @@ public class CameraController : MonoBehaviour
         Instance.transform.localPosition = Vector3.zero;
         t_cam.localPosition = Vector3.zero;
 
-        Instance.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        Instance.transform.rotation =Quaternion.identity;
     }
 
 

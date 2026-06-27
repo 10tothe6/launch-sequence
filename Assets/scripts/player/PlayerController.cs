@@ -157,8 +157,6 @@ public class PlayerController : MonoBehaviour
 
         mode = player_movementmode.Walking;
         isActive = true;
-
-        Cursor.lockState = CursorLockMode.Locked;
     }
     public void ExitControl()
     {

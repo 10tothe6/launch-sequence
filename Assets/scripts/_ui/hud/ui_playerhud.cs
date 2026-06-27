@@ -43,7 +43,7 @@ public class ui_playerhud : MonoBehaviour
     // TODO: not call in update
     void Update()
     {
-        if (GameManager.gameState == GameState.InGame)
+        if (GameManager.gameState == GameState.InGame && !UIManager.Instance.isInMapView)
         {
             g_playerBars.SetActive(true); // TODO: not periodic
             UpdatePlayerBars();

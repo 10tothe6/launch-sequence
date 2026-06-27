@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,18 +19,23 @@ public class cam_mapview : MonoBehaviour
 
     public void ProcessChangeInControlMode()
     {
-        if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.MapView)
+        if (CameraController.controlMode == (ushort)CameraControlMode.MapView)
         {
             EnterControl();
-        } else {ExitControl();}
+        } else if (CameraController.previousControlMode == (ushort)CameraControlMode.MapView ){ExitControl();}
     }
 
     public void EnterControl()
     {
+        
+
+
+        CameraController.ZeroOut();
         if (storedRotation != Quaternion.identity) {CameraController.t_cam.parent.rotation = storedRotation;}
         CameraController.cam_main.cullingMask = mapCullingMask;
-        CameraController.ZeroOut();
+        
         transform.SetParent(null);
+        Cursor.lockState = CursorLockMode.None;
     }
     public void ExitControl()
     {
@@ -38,6 +44,7 @@ public class cam_mapview : MonoBehaviour
 
     void Update()
     {
+        
         // this script only does anything if the camera is in map view mode
         if (CameraController.controlMode == (ushort)CameraControlMode.MapView)
         {

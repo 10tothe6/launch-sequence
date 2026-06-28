@@ -42,8 +42,11 @@ public class ui_usernamedisplay : MonoBehaviour
     void Update()
     {
         // always make sure that the display faces towards the camera, while still staying upright
+        // keep in mind that the display has its forward vector facing backwards
+        Vector3 axis = Vector3.Cross(-transform.forward, CameraController.t_cam.position - transform.position);
+        axis = Vector3.Project(axis, transform.up);
 
-        transform.forward = (CameraController.t_cam.position - transform.position) * -1; // multiply by -1 because the display has its forward vector facing backwards
+        transform.Rotate(axis * Vector3.Angle(CameraController.t_cam.position, transform.position) * 0.99f, Space.World);
 
 
         // TODO: make this not periodic
@@ -58,7 +61,7 @@ public class ui_usernamedisplay : MonoBehaviour
             }
         }
 
-        if (!usernameFound)
+        if (!usernameFound || LocalPlayer.localClient.controllingEntity == transform.parent.GetComponent<e_genericentity>())
         {
             Hide();
         }

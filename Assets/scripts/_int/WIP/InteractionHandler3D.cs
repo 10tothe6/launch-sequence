@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-// reworked 12/13/2025
 
 // main class for general handling of the interaction system
 

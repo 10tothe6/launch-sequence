@@ -982,7 +982,6 @@ MonoBehaviour:
   data:
     isPhysicsBased: 1
     monoComp: {fileID: 0}
-    reference: {fileID: 7571074227628741643}
     entityType: 0
     state: 0
     entityPrefabIndex: 0

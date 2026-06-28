@@ -40,10 +40,12 @@ public class ui_boundingbox : MonoBehaviour
             // keep the sprite as none
         }
 
-        topEdge = transform.GetChild(0).GetComponent<RectTransform>();
-        bottomEdge = transform.GetChild(1).GetComponent<RectTransform>();
-        leftEdge = transform.GetChild(2).GetComponent<RectTransform>();
-        rightEdge = transform.GetChild(3).GetComponent<RectTransform>();
+        int existingChildCount = transform.childCount-4;
+
+        topEdge = transform.GetChild(0+existingChildCount).GetComponent<RectTransform>();
+        bottomEdge = transform.GetChild(1+existingChildCount).GetComponent<RectTransform>();
+        leftEdge = transform.GetChild(2+existingChildCount).GetComponent<RectTransform>();
+        rightEdge = transform.GetChild(3+existingChildCount).GetComponent<RectTransform>();
     }   
 
     void Update()

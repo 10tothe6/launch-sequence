@@ -60,7 +60,7 @@ public class ui_usernamedisplay : MonoBehaviour
         Vector3 axis = Vector3.Cross(-transform.forward, CameraController.t_cam.position - transform.position);
         axis = Vector3.Project(axis, transform.parent.up);
 
-        transform.Rotate(axis * Vector3.Angle(CameraController.t_cam.position, transform.position) * 0.99f, Space.World);
+        transform.Rotate(axis * Vector3.Angle(CameraController.t_cam.position, transform.position) * 50f, Space.World);
 
 
         // TODO: make this not periodic

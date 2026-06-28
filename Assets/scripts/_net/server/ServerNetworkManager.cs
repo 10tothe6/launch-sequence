@@ -283,7 +283,7 @@ public class ServerNetworkManager : MonoBehaviour
         client.controllingEntity = entity;
         if (clientId == LocalPlayer.localClient.client_index)
         {
-            cb_renderingmanager.Instance.RenderFrom(entity.data.GetPosition());
+            //cb_renderingmanager.Instance.RenderFrom(entity.data.GetPosition());
             entity.onEnterControl.Invoke();
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class e_genericentitydata
 {
+    public bool isPhysicsBased;
     public e_genericentity monoComp;
 
     public Transform reference;
@@ -186,7 +187,7 @@ public class e_genericentitydata
                 num_precisevector3 pos = GetPosition();
 
                 // set the transform's position basee on the world offset
-                if (monoComp.GetControllingPlayer() != LocalPlayer.localClient.client_index - 1) {reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();}
+                if (monoComp.GetControllingPlayer() != LocalPlayer.localClient.client_index - 1) {reference.position = pos.Add(Coord.originPosition).ToVector3();}
 
                 // // get the position of the camera
                 // num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
@@ -216,7 +217,7 @@ public class e_genericentitydata
                         // inflate
 
                         reference.localScale = Vector3.one / scaleFactor * defaultScale;
-                        reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
+                        reference.position = pos.Add(Coord.originPosition).ToVector3();
                     }
                     else
                     { // far from planet

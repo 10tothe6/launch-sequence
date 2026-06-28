@@ -33,7 +33,6 @@ public class cb_renderingmanager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        worldOffset = new num_precisevector3(0,0,0);
     }
 
     // ************ NEW VARIABLES ************
@@ -53,10 +52,6 @@ public class cb_renderingmanager : MonoBehaviour
     // another shortcut
     // this is so that I don't have to use GetComponent<>()
     public e_genericentity[] bodyEntities; 
-
-
-    // TODO: make this a DoubleVector3?
-    public num_precisevector3 worldOffset; // the current offset of the world
 
     // ************************
 
@@ -92,12 +87,6 @@ public class cb_renderingmanager : MonoBehaviour
         // as such, EVERYTHING NEEDS NULL CHECKS
     }
 
-    public void RenderFrom(num_precisevector3 position)
-    {
-        worldOffset = position.Mul(-1);
-        UpdateAllBodyPositions();
-    }
-
     // the periodic function, called by WorldManager.cs
     public void UpdateAllBodyPositions()
     {
@@ -114,11 +103,11 @@ public class cb_renderingmanager : MonoBehaviour
         {
             // this is the code that "corrects" the world when you get too far from the origin
             // ofc this doesn't apply if there's no controlling entity
-            if (LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(worldOffset).Mag().AsDouble() > originSnapBackRadius)
+            if (LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(Coord.originPosition).Mag().AsDouble() > originSnapBackRadius)
             {
-                num_precisevector3 shoveFactor = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(worldOffset).Mul(-1);
+                num_precisevector3 shoveFactor = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(Coord.originPosition).Mul(-1);
                 // player is too far from (0, 0, 0) so shove em' back
-                worldOffset = worldOffset.Add(shoveFactor);
+                Coord.originPosition = Coord.originPosition.Add(shoveFactor);
                 if (LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>() != null)
                 {
                     LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>().shoveFactor = -LocalPlayer.localClient.controllingEntity.data.reference.position;
@@ -138,11 +127,6 @@ public class cb_renderingmanager : MonoBehaviour
         {
             bodyEntities[i].Refresh();
         }
-    }
-
-    // where is (0,0,0) in the unity engine, in game space?
-    public num_precisevector3 GetOriginInGameSpace() {
-        return worldOffset;
     }
 
     // ******** helpers *********

@@ -103,10 +103,10 @@ public class ClientHandlers : MonoBehaviour
         
         ServerNetworkManager.Instance.SetControllingEntity((ushort)clientIndex, EntityManager.Instance.GetEntityFromIndex(entityIndex));
 
-        if (clientIndex == LocalPlayer.localClient.client_index)
-        {
-            cb_renderingmanager.Instance.RenderFrom(EntityManager.Instance.GetEntityFromIndex(entityIndex).data.GetPosition());
-        }
+        // if (clientIndex == LocalPlayer.localClient.client_index)
+        // {
+        //     cb_renderingmanager.Instance.RenderFrom(EntityManager.Instance.GetEntityFromIndex(entityIndex).data.GetPosition());
+        // }
     }
 
     [MessageHandler((ushort)ServerToClientId.kick_player)]

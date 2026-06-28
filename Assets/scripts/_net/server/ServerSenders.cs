@@ -161,7 +161,7 @@ public class ServerSenders : MonoBehaviour
         // we're using MULTIPLE messages here, because not all clients need all the data
         // all messages use the entity_position_updates index
         // we obviously don't need to update the server's client
-        Message toAll = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_position_updates);
+        Message toAll = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.entity_data_update);
 
         toAll.AddInts(package.independentIndices);
         // independent goes to all clients, always

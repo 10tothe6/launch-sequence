@@ -90,6 +90,15 @@ public class CameraController : MonoBehaviour
         t_cam.localPosition = Vector3.zero;
 
         Instance.transform.rotation =Quaternion.identity;
+        t_cam.transform.rotation =Quaternion.identity;
+    }
+    public static void ZeroOutLocal()
+    {
+        Instance.transform.localPosition = Vector3.zero;
+        t_cam.localPosition = Vector3.zero;
+
+        Instance.transform.localRotation =Quaternion.identity;
+        t_cam.transform.localRotation =Quaternion.identity;
     }
 
 

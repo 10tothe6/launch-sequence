@@ -36,7 +36,7 @@ public class cam_firstperson : MonoBehaviour
         CameraController.cam_main.cullingMask = cullingMask;
         transform.SetParent(t_controlling.GetChild(0));
         
-        CameraController.ZeroOut();
+        CameraController.ZeroOutLocal();
 
         Cursor.lockState = CursorLockMode.Locked;
         

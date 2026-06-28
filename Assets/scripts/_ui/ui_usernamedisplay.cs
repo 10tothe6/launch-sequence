@@ -60,7 +60,9 @@ public class ui_usernamedisplay : MonoBehaviour
         Vector3 axis = Vector3.Cross(-transform.forward, CameraController.t_cam.position - transform.position);
         axis = Vector3.Project(axis, transform.parent.up).normalized;
 
-        transform.Rotate(axis * Vector3.Angle(CameraController.t_cam.position, transform.position) * 50f, Space.World);
+        Vector3 desiredVector = CameraController.t_cam.position - transform.position;
+        desiredVector -= Vector3.Project(desiredVector, transform.up);
+        transform.Rotate(axis * Vector3.Angle(-transform.forward, desiredVector) * 0.9f, Space.World);
 
 
         // TODO: make this not periodic

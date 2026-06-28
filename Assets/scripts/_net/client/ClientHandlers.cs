@@ -78,7 +78,7 @@ public class ClientHandlers : MonoBehaviour
     }
 
 
-    [MessageHandler((ushort)ServerToClientId.entity_position_updates)]
+    [MessageHandler((ushort)ServerToClientId.entity_data_update)]
     private static void HandleEntityPositionUpdates(Message message)
     {
         int[] entityIndices = message.GetInts();

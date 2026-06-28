@@ -71,6 +71,8 @@ public class e_genericentitydata
         // making sure that the transform obeys
         monoComp.transform.rotation = rotation;
         
+
+        // TODO: improve
         if (localPosition.Sub(oldPosition).ToVector3().magnitude > 1f || localPosition.Sub(Coord.originPosition).ToVector3().magnitude > 5f)
         {
             Coord.Instance.TeleportEntity(localPosition, monoComp);

@@ -24,7 +24,7 @@ public enum ServerToClientId : ushort
     spawn_entity = 10200,
     kill_entity = 10201,
     entity_control = 10202, // does this really need to be its own message?
-    entity_position_updates = 10203, // updates, plural (uses arrays)
+    entity_data_update = 10203, // updates, plural (uses arrays)
 
     // 04 is the voice-related category
     voice_packet = 10400,

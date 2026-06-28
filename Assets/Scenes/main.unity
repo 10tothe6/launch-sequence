@@ -5486,7 +5486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2138b24285e2c48a7bbffc5604fa0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::comment
-  text: 'this is a separate scene, because generating an entire solar system just
+  text: 'this is a separate thing, because generating an entire solar system just
     for one planet to show in the main menu is too much work
 
 
@@ -7624,6 +7624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 704178325}
   - component: {fileID: 704178326}
+  - component: {fileID: 704178327}
   m_Layer: 0
   m_Name: cmd
   m_TagString: Untagged
@@ -7659,6 +7660,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cmd_console
   menu: {fileID: 1721601048}
+--- !u!114 &704178327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704178324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747691be859352f40821c83adb092bfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cmd_shortcuts
 --- !u!1 &704434971
 GameObject:
   m_ObjectHideFlags: 0
@@ -10254,10 +10267,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 870557152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3f1c343001e7864fab0bcacd380695a, type: 3}
+  m_Script: {fileID: 11500000, guid: af65f533d0385674db9c65cf5f302aed, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ui_localmicvolume
-  display: {fileID: 1291526553}
+  m_EditorClassIdentifier: Assembly-CSharp::ui_micdisplay
+  iComp: {fileID: 1291526551}
+  useSpriteRenderer: 0
+  sComp: {fileID: 0}
+  icons:
+  - {fileID: 21300000, guid: eb62dde228afdd94197906c0caf10ff3, type: 3}
+  - {fileID: 21300000, guid: c7be483df4b966147b14a8b867d5874a, type: 3}
+  - {fileID: 21300000, guid: 87e9a162ae221cb4e9ed52c67d01ae9d, type: 3}
+  - {fileID: 21300000, guid: 786e0f0625c28ad4ea851090790e9b9e, type: 3}
+  talkingThreshold: 0.0025
+  updateFromLocal: 1
 --- !u!1 &872245801
 GameObject:
   m_ObjectHideFlags: 0
@@ -14782,7 +14804,6 @@ GameObject:
   - component: {fileID: 1291526550}
   - component: {fileID: 1291526552}
   - component: {fileID: 1291526551}
-  - component: {fileID: 1291526553}
   m_Layer: 5
   m_Name: mic volume indicator
   m_TagString: Untagged
@@ -14847,29 +14868,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291526549}
   m_CullTransparentMesh: 1
---- !u!114 &1291526553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1291526549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86479be390e86164c9408eccb6ff3d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ui_seriesdisplay
-  iComp: {fileID: 1291526551}
-  useSpriteRenderer: 0
-  sComp: {fileID: 0}
-  thresholds:
-  - 0
-  - 0.001
-  icons:
-  - {fileID: 21300000, guid: eb62dde228afdd94197906c0caf10ff3, type: 3}
-  - {fileID: 21300000, guid: c7be483df4b966147b14a8b867d5874a, type: 3}
-  updatePeriodic: 0
-  value: 0
 --- !u!1 &1293151977
 GameObject:
   m_ObjectHideFlags: 0

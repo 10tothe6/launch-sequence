@@ -31,7 +31,10 @@ public class ClientSenders : MonoBehaviour
     {
         Message message = Message.Create(MessageSendMode.Unreliable, (ushort)ClientToServerId.mic_status_update);
 
+        // how loud the mic is (so that players know whos talking)
         message.AddFloat(peakValue);
+        // whether the mic is muted, deafened or not
+        message.AddUShort(Input.micStatus);
 
         ClientNetworkManager.Instance.client.Send(message);
     }

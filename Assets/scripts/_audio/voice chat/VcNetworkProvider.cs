@@ -83,7 +83,10 @@ public class VcNetworkProvider : MonoBehaviour, INetProvider
         // this function is ONLY called when the LOCAL entity has data it wants to pass out
         // as such, no matter what, we just have one thing to do
         // send the data to the server
-        ClientSenders.Instance.SendVoicePacketToServer(frame);
+        if (Input.micStatus == (ushort)audio_micstatus.None) // ONLY TALK WHEN TALKING, yk?
+        {
+            ClientSenders.Instance.SendVoicePacketToServer(frame);
+        }
 
         FixedLengthArrayPool<byte>.Return(array);
     }
@@ -99,6 +102,11 @@ public class VcNetworkProvider : MonoBehaviour, INetProvider
     {
         if (MetaVc == null)
             return;
+
+        if (Input.micStatus == (ushort)audio_micstatus.Deafened)
+        {
+            return;
+        }
 
         // Don't apply server Time.deltaTime to additionalLatency -- this frame did not go over the network again.
         

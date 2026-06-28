@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class cmd_shortcuts : MonoBehaviour
 {
-    public cam_freecam freecam;
     void Update()
     {
         if (Keyboard.current.ctrlKey.isPressed)
@@ -24,5 +23,33 @@ public class cmd_shortcuts : MonoBehaviour
                 // TODO: this
             }
         } 
+
+        // ***
+        // temp mic controls
+        // ***
+
+        // ctrl + m is mute/unmute
+        if (Keyboard.current.kKey.wasPressedThisFrame)
+        {
+            if (Input.micStatus == (ushort)audio_micstatus.Muted)
+            {
+                Input.micStatus = (ushort)audio_micstatus.None;
+            } else
+            {
+                Input.micStatus = (ushort)audio_micstatus.Muted;
+            }
+        }
+
+        // ctrl + n is deafen/undeafen
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+        {
+            if (Input.micStatus == (ushort)audio_micstatus.Deafened)
+            {
+                Input.micStatus = (ushort)audio_micstatus.None;
+            } else
+            {
+                Input.micStatus = (ushort)audio_micstatus.Deafened;
+            }
+        }
     }
 }

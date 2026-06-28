@@ -33,8 +33,10 @@ public class ServerHandlers : MonoBehaviour
         // the entity we're updating, like with the voice packet, is just the sender
 
         float peak = message.GetFloat();
+        ushort status = message.GetUShort();
 
-        ServerNetworkManager.GetClient(fromClientId).controllingEntity.data.SetDataEntry("mic_status", peak.ToString());
+        ServerNetworkManager.GetClient(fromClientId).controllingEntity.data.SetDataEntry("mic_volume", peak.ToString());
+        ServerNetworkManager.GetClient(fromClientId).controllingEntity.data.SetDataEntry("mic_status", status.ToString());
     }
 
 

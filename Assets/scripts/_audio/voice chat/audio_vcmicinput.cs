@@ -1,6 +1,13 @@
 using MetaVoiceChat.Input.Mic;
 using UnityEngine;
 
+public enum audio_micstatus
+{
+    None,
+    Muted,
+    Deafened,
+}
+
 public class audio_vcmicinput : MonoBehaviour
 {
     public VcMicAudioInput input;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ui_usernamedisplay : MonoBehaviour
 {
-    public ui_seriesdisplay micVolumeDisplay;
+    public ui_micdisplay micVolumeDisplay;
     public TextMeshPro usernameText;
 
     void Awake()
@@ -42,12 +42,17 @@ public class ui_usernamedisplay : MonoBehaviour
     void Update()
     {
         // displaying mic volume from entity data
-        string rawStatus = transform.parent.GetComponent<e_genericentity>().data.GetDataEntry("mic_status");
-        float parsedStatus = 0;
+        string rawPeak = transform.parent.GetComponent<e_genericentity>().data.GetDataEntry("mic_volume");
+        string rawStatus  = transform.parent.GetComponent<e_genericentity>().data.GetDataEntry("mic_status");
+        float parsedPeak = 0;
+        ushort parsedStatus = 0;
 
-        if (float.TryParse(rawStatus, out parsedStatus))
+        if (float.TryParse(rawPeak, out parsedPeak))
         {
-            micVolumeDisplay.SetValue(parsedStatus);
+            if (ushort.TryParse(rawStatus, out parsedStatus))
+            {
+                micVolumeDisplay.SetData(parsedPeak, parsedStatus);
+            }
         }
 
         // always make sure that the display faces towards the camera, while still staying upright

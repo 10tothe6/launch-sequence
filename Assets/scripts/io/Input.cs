@@ -27,6 +27,10 @@ public class Input : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        // mute by default
+        // TEMP TEMP TEMP 
+        micStatus = (ushort)audio_micstatus.Muted;
     }
 
     [Header("CONFIG")]
@@ -51,6 +55,7 @@ public class Input : MonoBehaviour
     // the mic zone
     public static string selectedMicDevice;
     public static float micPeakValue; // updated from the prox chat network script
+    public static ushort micStatus;
 
     void Update()
     {

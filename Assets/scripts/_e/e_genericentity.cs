@@ -55,8 +55,9 @@ public class e_genericentity : MonoBehaviour
     public void Refresh()
     {
         if (!LocalPlayer.IsControllingEntity()) {return;}
-        // don't do this if the entity is being controlled
-        if (LocalPlayer.localClient.controllingEntity == this) {return;}
+        
+        
+        if (GetControllingPlayer() != -1) {Debug.Log(gameObject.name + "     " + data.localPosition.AsRawString());}
 
         // hide/show based on whether the client is in the sandbox or the main game
         if (LocalPlayer.localClient.isInSandbox)
@@ -67,6 +68,10 @@ public class e_genericentity : MonoBehaviour
             gameObject.SetActive(data.index >= 0);
         }
 
+        if (GetComponent<PlayerController>() != null)
+        {
+            GetComponent<PlayerController>().UpdatePlayer();
+        }
         data.RefreshRenderedPosition();
     }
 }

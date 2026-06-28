@@ -69,11 +69,11 @@ public class e_genericentitydata
         velocity = num_precisevector3.FromString(splitByEntry[1].Substring(splitByEntry[1].IndexOf(':') + 1));
         rotation = util_string.ParseQuaternion(splitByEntry[2].Substring(splitByEntry[2].IndexOf(':') + 1));
         monoComp.transform.rotation = rotation;
-
-        if (LocalPlayer.localClient.controllingEntity == monoComp && !ServerNetworkManager.Instance.isServerActive)
-        {
-            cb_renderingmanager.Instance.RenderFrom(localPosition);
-        }
+        // if (monoComp.GetControllingPlayer() == ServerNetworkManager.Instance.connectedClients.IndexOf(LocalPlayer.localClient))
+        // {
+        //     cb_renderingmanager.Instance.UpdateAllBodyPositions();
+        // }
+        // monoComp.transform.position = GetPosition().Add(cb_renderingmanager.Instance.GetOriginInGameSpace()).ToVector3();
 
         // start at 3 cuz that's where the variable data begins
         for (int i = 3; i < splitByEntry.Length; i++)
@@ -84,9 +84,8 @@ public class e_genericentitydata
         }
     }
 
-    public string GetUpdatedData()
+    public string BasicData()
     {
-        // '|' splits entries, ':' splits key and value and ',' is for multiple values (like a vector)
         string result = "";
 
         result += "localPosition:";
@@ -99,6 +98,14 @@ public class e_genericentitydata
         result += util_string.ParseQuaternion(rotation); // maybe change to transform.rotation? having this var seems redundant
         result += "|";
 
+        return result;
+    }
+
+    public string GetUpdatedData()
+    {
+        // '|' splits entries, ':' splits key and value and ',' is for multiple values (like a vector)
+        string result = BasicData();
+
         // now for the data that is variable
         for (int i = 0; i < updatedDataKeys.Count; i++)
         {
@@ -108,6 +115,22 @@ public class e_genericentitydata
 
         return result;
     }
+
+    public string GetRawPackagedData()
+    {
+        string result = BasicData();
+
+        // now for the data that is variable
+        // ALL the data keys
+        for (int i = 0; i < dataKeys.Count; i++)
+        {
+            result += dataKeys[i] + ":";
+            result += GetDataEntry(dataKeys[i]) + "|";
+        }
+
+        return result;
+    }
+
 
     public int GetDataEntryIndex(string key)
     {
@@ -160,28 +183,18 @@ public class e_genericentitydata
             
             if (entityType == (ushort)e_entitytype.Fixed)
             {
-                if (ServerNetworkManager.Instance.isServerActive && monoComp.GetControllingPlayer() != -1)
-                {
-                    return;
-                }
-
-                if (LocalPlayer.localClient.controllingEntity == monoComp)
-                {
-                    return;
-                }
-
                 num_precisevector3 pos = GetPosition();
 
                 // set the transform's position basee on the world offset
-                reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();
+                if (monoComp.GetControllingPlayer() != LocalPlayer.localClient.client_index - 1) {reference.position = pos.Add(cb_renderingmanager.Instance.worldOffset).ToVector3();}
 
-                // get the position of the camera
-                num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
+                // // get the position of the camera
+                // num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
 
-                if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
-                {
-                    // do not render at all
-                }
+                // if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
+                // {
+                //     // do not render at all
+                // }
             }
 
             else if (entityType == (ushort)e_entitytype.Floating)
@@ -240,19 +253,6 @@ public class e_genericentitydata
         hasTransformBeenUpdated = true;
     }
 
-    public string GetRawPackagedData()
-    {
-        string result = "";
-
-        result += index;
-        result += ":";
-        result += localPosition.AsRawString();
-        result += ":";
-        result += entityPrefabIndex;
-
-        return result;
-    }
-
     public net_packagedentitydata GetPackagedData()
     {
         net_packagedentitydata result = new net_packagedentitydata();
@@ -261,19 +261,6 @@ public class e_genericentitydata
         result.entityPrefabIndex = entityPrefabIndex;
 
         return result;
-    }
-
-    public void SetPackagedData(string data)
-    {
-        string[] split = util_string.SplitByChar(data, ':');
-
-        //Debug.Log(data);
-
-        index = int.Parse(split[0]);
-
-        localPosition = num_precisevector3.FromString(split[1]);
-
-        entityPrefabIndex = ushort.Parse(split[2]);
     }
 
     public num_precisevector3 GetPosition()

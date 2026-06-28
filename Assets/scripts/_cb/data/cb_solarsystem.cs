@@ -327,9 +327,12 @@ public class cb_solarsystem : MonoBehaviour
             monoBodies[i].naturalSatellites = monoBodies[i].GetMoons();
         }
 
-        // once all the terrain and shit is set up
-        // we spawn the cargo drop
-        cba_cargodrop.Instance.SpawnCargoDrop();
+        if (ServerNetworkManager.Instance.isServerActive)
+        {
+            // once all the terrain and shit is set up
+            // we spawn the cargo drop
+            cba_cargodrop.Instance.SpawnCargoDrop();
+        }
     }
 
     public bool IntersectBodies(Vector3 rayDir, float dist, int[] avoidBodies)

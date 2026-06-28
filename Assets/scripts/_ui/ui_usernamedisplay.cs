@@ -58,7 +58,7 @@ public class ui_usernamedisplay : MonoBehaviour
         // always make sure that the display faces towards the camera, while still staying upright
         // keep in mind that the display has its forward vector facing backwards
         Vector3 axis = Vector3.Cross(-transform.forward, CameraController.t_cam.position - transform.position);
-        axis = Vector3.Project(axis, transform.parent.up);
+        axis = Vector3.Project(axis, transform.parent.up).normalized;
 
         transform.Rotate(axis * Vector3.Angle(CameraController.t_cam.position, transform.position) * 50f, Space.World);
 

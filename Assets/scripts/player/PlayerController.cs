@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // just doing this through Update() and using Time.deltaTime instead of FixedUpdate()
-    void Update()
+    public void UpdatePlayer()
     {
         //cmd.LogRaw(GetComponent<e_genericentity>().data.index + "   " + rb.linearVelocity);
         //cmd.LogRaw(GetComponent<e_genericentity>().data.index + "   " + GetComponent<e_genericentity>().data.GetPosition().AsRawString());
@@ -198,9 +198,9 @@ public class PlayerController : MonoBehaviour
         }
 
         // updating the entity position from the rigidbody
-        if (ServerNetworkManager.Instance.isServerActive) {entityData.data.SetPosition(entityData.data.localPosition.Add(new num_precisevector3(transform.position - oldPosition -shoveFactor)));}
-        shoveFactor = Vector3.zero;
-        oldPosition = transform.position;
+        // if (ServerNetworkManager.Instance.isServerActive) {entityData.data.SetPosition(entityData.data.localPosition.Add(new num_precisevector3(transform.position - oldPosition -shoveFactor)));}
+        // shoveFactor = Vector3.zero;
+        // oldPosition = transform.position;
 
         if (isCrouching)
         {

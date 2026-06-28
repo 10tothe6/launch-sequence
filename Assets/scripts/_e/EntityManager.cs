@@ -189,7 +189,7 @@ public class EntityManager : MonoBehaviour
         // name need not be set cuz it'll be overwritten by data
         GameObject g_newEntity = SpawnNewEntity(p_entity, num_precisevector3.Zero());
 
-        g_newEntity.GetComponent<e_genericentity>().data.SetPackagedData(data);
+        g_newEntity.GetComponent<e_genericentity>().data.UpdateData(data);
 
         return g_newEntity;
     }

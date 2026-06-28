@@ -15,13 +15,14 @@ public class e_cargodrop : MonoBehaviour
 
     public void Position()
     {
-        if (!ServerNetworkManager.Instance.isServerActive) {return;}
+        if (!ServerNetworkManager.Instance.isServerActive) {hasBeenPositioned = true; return;}
 
         // pick a spawn position and go there
         RaycastHit hit;
 
         Vector3 upDir = GetComponent<e_genericentity>().data.GetPosition().Sub(cb_solarsystem.Instance.monoBodies[2].pose.data.GetPosition()).ToVector3().normalized;
         transform.up = upDir;
+        GetComponent<e_genericentity>().data.SetRotation(transform.rotation);
 
         if (Physics.Raycast(transform.position + upDir * 50f, -upDir, out hit, Mathf.Infinity, whatIsGround))
         {

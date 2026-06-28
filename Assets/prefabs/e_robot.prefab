@@ -859,6 +859,7 @@ GameObject:
   - component: {fileID: 5027030714323127773}
   - component: {fileID: 1461875249874814483}
   - component: {fileID: 3092532290964612513}
+  - component: {fileID: 6380978893164895525}
   - component: {fileID: 6867292380420441980}
   - component: {fileID: 8495638983981313670}
   m_Layer: 0
@@ -979,6 +980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
   data:
+    isPhysicsBased: 1
     monoComp: {fileID: 0}
     reference: {fileID: 7571074227628741643}
     entityType: 0
@@ -1025,6 +1027,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   showEntityId: 0
+  onEntityUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &3092532290964612513
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1052,6 +1057,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &6380978893164895525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782933785179873280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0204c3b3fe1ce6d4ead30851d4e9f180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_physicsbased
 --- !u!114 &6867292380420441980
 MonoBehaviour:
   m_ObjectHideFlags: 0

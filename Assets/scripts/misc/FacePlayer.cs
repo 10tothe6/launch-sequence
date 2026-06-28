@@ -6,7 +6,7 @@ public class FacePlayer : MonoBehaviour
     {
         if (LocalPlayer.IsControllingEntity())
         {
-            transform.forward = transform.position - LocalPlayer.localClient.controllingEntity.data.reference.position;
+            transform.forward = transform.position - LocalPlayer.localClient.controllingEntity.transform.position;
         }
     }
 }

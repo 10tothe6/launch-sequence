@@ -197,10 +197,7 @@ public class PlayerController : MonoBehaviour
             transform.up = -gravityDirection;
         }
 
-        // updating the entity position from the rigidbody
-        // if (ServerNetworkManager.Instance.isServerActive) {entityData.data.SetPosition(entityData.data.localPosition.Add(new num_precisevector3(transform.position - oldPosition -shoveFactor)));}
-        // shoveFactor = Vector3.zero;
-        // oldPosition = transform.position;
+        // updating the entity position from the rigidbody is done by e_physicsbased
 
         if (isCrouching)
         {

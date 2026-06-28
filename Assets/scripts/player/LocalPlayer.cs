@@ -79,7 +79,7 @@ public class LocalPlayer : MonoBehaviour
     public void MoveBy(Vector3 amt)
     {
         localClient.controllingEntity.data.SetPosition(localClient.controllingEntity.data.localPosition.Add(new num_precisevector3(amt)));
-        localClient.controllingEntity.data.reference.position = localClient.controllingEntity.data.localPosition.Add(new num_precisevector3(amt)).Add(Coord.originPosition).ToVector3();
+        localClient.controllingEntity.transform.position = localClient.controllingEntity.data.localPosition.Add(new num_precisevector3(amt)).Add(Coord.originPosition).ToVector3();
     }
 
     void Update()

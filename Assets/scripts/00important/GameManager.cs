@@ -173,8 +173,6 @@ public class GameManager : MonoBehaviour
     // called from the Program.cs Update() method
     public void UpdateGame()
     {
-        EntityManager.Instance.UpdateAllEntityPositions();
-
         // ====================================
         // updating the world, entities, etc.
         // ====================================
@@ -196,6 +194,9 @@ public class GameManager : MonoBehaviour
         {
             // if we're not controlling an entity, we're not in the actual game
         }
+
+        // entities are updated after planets are
+        EntityManager.Instance.UpdateAllEntities();
 
         // ====================================
         // updating UI (no distinction made here between sandbox and game)

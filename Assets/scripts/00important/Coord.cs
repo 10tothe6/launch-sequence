@@ -40,12 +40,24 @@ public class Coord : MonoBehaviour
     // what position in game space is the unity origin?
     public static num_precisevector3 originPosition;
 
+    public static Vector3 GetUnityPosition(e_genericentity entity)
+    {
+        return GetUnityPosition(entity.data.GetPosition());
+    }
+    public static Vector3 GetUnityPosition(num_precisevector3 gamePosition)
+    {
+        num_precisevector3 diff = gamePosition.Sub(originPosition);
+        return diff.ToVector3();
+    }
+
     public void SetPositionOfOrigin(num_precisevector3 v)
     {
         // move all of the physics objects so everything doesn't break
         OffsetAllEntities(originPosition.Sub(v));
 
         originPosition = v;
+
+        cb_renderingmanager.Instance.UpdateAllBodyPositions(); // updating all the planets with the new origin
     }
 
     // this function COULD be in the EntityManager, but it feels more organized to be here

@@ -7,8 +7,6 @@ public class e_genericentitydata
     public bool isPhysicsBased;
     public e_genericentity monoComp;
 
-    public Transform reference;
-
     public ushort entityType; // fixed, floating, mimic
     public ushort state; // see e_possibleentitystates
     public ushort entityPrefabIndex; // what prefab is this entity using?
@@ -63,18 +61,11 @@ public class e_genericentitydata
     {
         string[] splitByEntry = util_string.SplitByChar(data,'|');
 
-        //Debug.Log(splitByEntry[0]);
-
         // first, handle position, rotation and all the other normal stuff
         localPosition = num_precisevector3.FromString(splitByEntry[0].Substring(splitByEntry[0].IndexOf(':') + 1));
         velocity = num_precisevector3.FromString(splitByEntry[1].Substring(splitByEntry[1].IndexOf(':') + 1));
         rotation = util_string.ParseQuaternion(splitByEntry[2].Substring(splitByEntry[2].IndexOf(':') + 1));
         monoComp.transform.rotation = rotation;
-        // if (monoComp.GetControllingPlayer() == ServerNetworkManager.Instance.connectedClients.IndexOf(LocalPlayer.localClient))
-        // {
-        //     cb_renderingmanager.Instance.UpdateAllBodyPositions();
-        // }
-        // monoComp.transform.position = GetPosition().Add(cb_renderingmanager.Instance.GetOriginInGameSpace()).ToVector3();
 
         // start at 3 cuz that's where the variable data begins
         for (int i = 3; i < splitByEntry.Length; i++)
@@ -178,77 +169,8 @@ public class e_genericentitydata
         }
     }
 
-    public void RefreshRenderedPosition()
-    {
-        if (LocalPlayer.IsControllingEntity()) {
-            
-            if (entityType == (ushort)e_entitytype.Fixed)
-            {
-                num_precisevector3 pos = GetPosition();
-
-                // set the transform's position basee on the world offset
-                if (monoComp.GetControllingPlayer() != LocalPlayer.localClient.client_index - 1) {reference.position = pos.Add(Coord.originPosition).ToVector3();}
-
-                // // get the position of the camera
-                // num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
-
-                // if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
-                // {
-                //     // do not render at all
-                // }
-            }
-
-            else if (entityType == (ushort)e_entitytype.Floating)
-            {
-                float scaleFactor = float.Parse(GetDataEntry("scaleFactor"));
-                float defaultScale = float.Parse(GetDataEntry("defaultScale"));
-
-                num_precisevector3 pos = GetPosition();
-
-                // get the position of the camera
-                num_precisevector3 camPosition = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(CameraController.Instance.PositionRelativeToControlEntity());
-
-                // TODO: fix the below hot pile of garbage
-                // ******************************************************************************
-                if (camPosition.Sub(pos).Mag().AsDouble() > cb_renderingmanager.Instance.secondaryCullingRadius + 1)
-                {
-                    if (camPosition.Sub(pos).Mag().AsDouble() < cb_renderingmanager.Instance.inflationRadius)
-                    {
-                        // inflate
-
-                        reference.localScale = Vector3.one / scaleFactor * defaultScale;
-                        reference.position = pos.Add(Coord.originPosition).ToVector3();
-                    }
-                    else
-                    { // far from planet
-
-                    
-                    reference.localScale = Vector3.one / scaleFactor * defaultScale * (cb_renderingmanager.Instance.secondaryCullingRadius / (float)camPosition.Sub(GetPosition()).Mag().AsDouble());
-                    reference.position = pos.Sub(camPosition).Norm().Mul(cb_renderingmanager.Instance.secondaryCullingRadius).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
-
-
-                    }
-                }
-                else
-                {
-                    reference.localScale = Vector3.one / scaleFactor * defaultScale;
-                    reference.position = pos.Sub(camPosition).Add(CameraController.Instance.PositionRelativeToControlEntity().Add(LocalPlayer.localClient.controllingEntity.data.reference.position)).ToVector3();
-                }
-                // ******************************************************************************
-            }
-
-
-            else if (entityType == (ushort)e_entitytype.Mimic)
-            {
-                
-            }
-
-        }
-    }
-
     public void SetPosition(num_precisevector3 pos)
     {
-        //Debug.Log(monoComp.gameObject.name + "    " + pos.AsRawString());
         localPosition = pos;
         
         hasTransformBeenUpdated = true;

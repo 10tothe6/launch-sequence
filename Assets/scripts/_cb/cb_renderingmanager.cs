@@ -88,44 +88,45 @@ public class cb_renderingmanager : MonoBehaviour
     }
 
     // the periodic function, called by WorldManager.cs
+    // ***
+    // THIS DOES NOT DEAL WITH FLOATING ORIGIN
+    // LITERALLY THE ONLY THING THAT IT DOES IS MOVES THE CELESTIAL BODIES TO WHERE THEY SHOULD BE
+    // ITS MUCH CLEANER THAT WAY
+    // ***
     public void UpdateAllBodyPositions()
     {
-        //Debug.Log(LocalPlayer.localClient.controllingEntity.data.GetPosition().AsRawString() + "        " + worldOffset.AsRawString());
-
-        
         inflationRadius = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].data.tConfig.equitorialRadius + 300;
 
         if (LocalPlayer.localClient == null) {return;}
-
         if (LocalPlayer.localClient.isInSandbox) {return;}
         
-        if (LocalPlayer.localClient.controllingEntity != null)
-        {
-            // this is the code that "corrects" the world when you get too far from the origin
-            // ofc this doesn't apply if there's no controlling entity
-            if (LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(Coord.originPosition).Mag().AsDouble() > originSnapBackRadius)
-            {
-                num_precisevector3 shoveFactor = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(Coord.originPosition).Mul(-1);
-                // player is too far from (0, 0, 0) so shove em' back
-                Coord.originPosition = Coord.originPosition.Add(shoveFactor);
-                if (LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>() != null)
-                {
-                    LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>().shoveFactor = -LocalPlayer.localClient.controllingEntity.data.reference.position;
-                }
+        // if (LocalPlayer.localClient.controllingEntity != null)
+        // {
+        //     // this is the code that "corrects" the world when you get too far from the origin
+        //     // ofc this doesn't apply if there's no controlling entity
+        //     if (LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(Coord.originPosition).Mag().AsDouble() > originSnapBackRadius)
+        //     {
+        //         num_precisevector3 shoveFactor = LocalPlayer.localClient.controllingEntity.data.GetPosition().Add(Coord.originPosition).Mul(-1);
+        //         // player is too far from (0, 0, 0) so shove em' back
+        //         Coord.originPosition = Coord.originPosition.Add(shoveFactor);
+        //         if (LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>() != null)
+        //         {
+        //             LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>().shoveFactor = -LocalPlayer.localClient.controllingEntity.data.reference.position;
+        //         }
 
-                LocalPlayer.localClient.controllingEntity.data.reference.position = Vector3.zero;
+        //         LocalPlayer.localClient.controllingEntity.data.reference.position = Vector3.zero;
 
-                EntityManager.Instance.ShoveEntities(shoveFactor.ToVector3());
-            }
+        //         EntityManager.Instance.ShoveEntities(shoveFactor.ToVector3());
+        //     }
 
-            // player
-            //LocalPlayer.localClient.entityInControl.data.Refresh();
-        }
+        //     // player
+        //     //LocalPlayer.localClient.entityInControl.data.Refresh();
+        // }
 
         // they do need to be refreshed tho
         for (int i = 0; i < bodyEntities.Length; i++)
         {
-            bodyEntities[i].Refresh();
+            bodyEntities[i].UpdateEntity();
         }
     }
 

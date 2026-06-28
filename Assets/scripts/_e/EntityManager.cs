@@ -75,15 +75,17 @@ public class EntityManager : MonoBehaviour
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
 
-    public void ShoveEntities(Vector3 shoveFactor)
+
+    // probably one of the most important functions in this script
+    // it will update any entity logic on the entities, including potentially:
+    // changing position (not for physics entities)
+    // resource transfers
+    // etc.
+    public void UpdateAllEntities()
     {
         for (int i = 0; i < allEntities.Count; i++)
         {
-            if (allEntities[i].data.entityType == (ushort)e_entitytype.Fixed && allEntities[i].GetComponent<e_physicsobject>() != null)
-            {
-                allEntities[i].transform.localPosition += shoveFactor;
-                allEntities[i].GetComponent<e_physicsobject>().shoveFactor = shoveFactor;
-            }
+            allEntities[i].UpdateEntity();
         }
     }
 
@@ -158,14 +160,6 @@ public class EntityManager : MonoBehaviour
 
         // updating all the other clients of the murder
         ServerSenders.Instance.SendKillEntity(entityIndex);
-    }
-
-    public void UpdateAllEntityPositions()
-    {
-        for (int i = 0; i < allEntities.Count; i++)
-        {
-            allEntities[i].Refresh();
-        }
     }
 
 

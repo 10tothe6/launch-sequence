@@ -82,6 +82,8 @@ public class e_genericentity : MonoBehaviour
         // TODO: WHY IS THIS HERE???
         if (!LocalPlayer.IsControllingEntity()) {return;}
 
+        
+
         if (data.entityType == (ushort)e_entitytype.Fixed)
         {
             // literally just move, no scaling or anything

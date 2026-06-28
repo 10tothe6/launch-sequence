@@ -3383,6 +3383,18 @@ MonoBehaviour:
           m_StringArgument: multiplayer menu
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2102140179}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &248449640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7574,6 +7586,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: bug report
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2102140179}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &688051909
@@ -14534,6 +14558,15 @@ MonoBehaviour:
     lowerLimit: 0
     upperLimit: 100
     defaultValue: 50
+  - type: 0
+    displayType: 0
+    isFilled: 0
+    key: vol_ambient
+    value: 
+    tags: []
+    lowerLimit: 0
+    upperLimit: 100
+    defaultValue: 50
 --- !u!1 &1272854323
 GameObject:
   m_ObjectHideFlags: 0
@@ -14679,6 +14712,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: settings menu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2102140179}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1499684719}
@@ -17980,6 +18025,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: singleplayer menu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2102140179}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1633540023
@@ -22740,6 +22797,9 @@ MonoBehaviour:
   - layers:
     - {fileID: 8300000, guid: d47acd96b20bbc54881400e398918757, type: 3}
   p_audioChannel: {fileID: 6141387311390287772, guid: 516d4d9287620534b8da54d159d20dc2, type: 3}
+  variableSounds: []
+  staticSounds:
+  - {fileID: 8300000, guid: 4ea83376b7dbb5a4c9ab78f1a06a4673, type: 3}
 --- !u!1 &2103198240
 GameObject:
   m_ObjectHideFlags: 0
@@ -22908,6 +22968,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: singleplayer menu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2102140179}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2108618643

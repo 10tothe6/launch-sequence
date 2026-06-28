@@ -41,11 +41,11 @@ public class AudioManager : MonoBehaviour
 
     public void PlayStaticSound(int index)
     {
-        SpawnAudioTrack(variableSounds[index].Get());
+        SpawnAudioTrack(staticSounds[index]);
     }
     public void PlayVariableSound(int index)
     {
-        SpawnAudioTrack(staticSounds[index]);
+        SpawnAudioTrack(variableSounds[index].Get());
     }
 
     public void SpawnAudioTrack(AudioClip clip)
@@ -54,6 +54,8 @@ public class AudioManager : MonoBehaviour
 
         AudioSource comp = g_newChannel.GetComponent<AudioSource>();
         comp.clip = clip;
+        comp.loop = false;
+        comp.volume = Settings.GetFloat("vol_master") * Settings.GetFloat("vol_sfx");
         comp.Play();
     }
 
@@ -76,6 +78,7 @@ public class AudioManager : MonoBehaviour
 
             AudioSource comp = g_newChannel.GetComponent<AudioSource>();
             comp.clip = musicTracks[index].layers[i];
+            comp.volume = Settings.GetFloat("vol_master") * Settings.GetFloat("vol_music");
 
             comp.Play();
         }

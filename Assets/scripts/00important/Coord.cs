@@ -6,6 +6,8 @@ using UnityEngine;
 // aka. fixing the sync issues we were having
 // -10^6, june 28
 
+// only worried about server for now
+
 public class Coord : MonoBehaviour
 {
     private static Coord _instance;
@@ -40,23 +42,57 @@ public class Coord : MonoBehaviour
 
     public void SetPositionOfOrigin(num_precisevector3 v)
     {
-        originPosition = v;
-
         // move all of the physics objects so everything doesn't break
+        OffsetAllEntities(originPosition.Sub(v));
 
+        originPosition = v;
+    }
+
+    // this function COULD be in the EntityManager, but it feels more organized to be here
+    // ***
+    // this includes both physics and non-physics entities, even though the non-physics ones will offset themselves later
+    public void OffsetAllEntities(num_precisevector3 offsetToApply)
+    {
+        Vector3 v = offsetToApply.ToVector3();
+        OffsetAllEntities(v);
+    }
+    public void OffsetAllEntities(Vector3 v)
+    {
+        // literally just moving their transform positions
+        for (int i = 0; i < EntityManager.Instance.allEntities.Count; i++)
+        {
+            EntityManager.Instance.allEntities[i].transform.position += v;
+        }
     }
 
     // ***
     // TELEPORTING FUNCTIONS
+    #region TP FUNCTIONS
+    // THESE SHOULD ONLY BE CALLED ON THE SERVER SIDE, AND AS SUCH FORCE-RETURN IF A CLIENT CALLS THEM
     // ***
 
-    public void SystemTeleport()
+
+    // rides off of the below function
+    public void PlanetTeleport(e_genericentity entity, int celestialBodyIndex)
     {
-        
+        // see above
+        if (!ServerNetworkManager.Instance.isServerActive) {cmd.LogRaw("only the server teleports", Color.lightPink);return;}
+        // stars dont count as planets
+        if (celestialBodyIndex == 0 || celestialBodyIndex == 1) {cmd.LogRaw("that's not a planet!", Color.lightPink);}
+
+        cb_trackedbody body = cb_solarsystem.Instance.monoBodies[celestialBodyIndex];
+
+         // the extra 3 is just a margin to make sure the player doesn't end up underground
+        num_precisevector3 offsetVector = num_precisevector3.Right().Mul(WorldManager.Instance.GetHeightAtDirection(Vector3.right, celestialBodyIndex) + 3f);
+
+        num_precisevector3 desiredPosition = body.pose.data.GetPosition().Add(offsetVector);
+        TeleportEntity(desiredPosition, entity);
     }
 
-    // as per the new system:
 
+
+    // as per the new system:
+    // ----------------------------------------
     // for a physics entity
     // 1. set their new position in the backend
     // 2. move the world origin to that position
@@ -68,6 +104,9 @@ public class Coord : MonoBehaviour
 
     public void TeleportEntity(num_precisevector3 newPosition, e_genericentity entity)
     {
+        // see above
+        if (!ServerNetworkManager.Instance.isServerActive) {cmd.LogRaw("only the server teleports", Color.lightPink);return;}
+        
         if (entity.data.isPhysicsBased)
         {
             entity.data.SetPosition(newPosition);
@@ -77,6 +116,10 @@ public class Coord : MonoBehaviour
         {
             entity.data.SetPosition(newPosition);
             // origin stays where it is
+            
+            // TODO: add a check for moving the origin, which technically could happen if the player is controlling the entity we moved
         }
     }
+
+    #endregion
 }

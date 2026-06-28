@@ -90,6 +90,8 @@ namespace MetaVoiceChat
                 audioInput.StartLocalPlayer();
             }
 
+            
+
             decoder = new(config);
 
             jitter = new(config);

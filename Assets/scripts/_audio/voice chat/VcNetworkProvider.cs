@@ -10,7 +10,7 @@ public class VcNetworkProvider : MonoBehaviour, INetProvider
 {
     bool INetProvider.IsLocalPlayerDeafened => false;
 
-    void Awake()
+    void Start()
     {
         GetComponent<e_genericentity>().onEnterControl.AddListener(() =>
         {

@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
     {
         AudioManager.Instance.StopAllMusic();
         
-        RenderSettings.ambientIntensity = 0f;
+        RenderSettings.ambientIntensity = 0.5f;
         UIManager.Instance.SetBugReporterActive(false);
         UIManager.Instance.pauseMenu.gameObject.SetActive(false);
         WorldManager.Instance.SetAllBodiesActive(true);

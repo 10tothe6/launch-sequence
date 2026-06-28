@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class ui_seriesdisplay : MonoBehaviour
 {
+    [Header("pick one of these two")]
     public Image iComp;
+    public bool useSpriteRenderer; // if you want to not use an image component
+    public SpriteRenderer sComp;
+
+    [Space(20)]
     public float[] thresholds;
     public Sprite[] icons; // equal in length to 'thresholds'
 
@@ -35,7 +40,13 @@ public class ui_seriesdisplay : MonoBehaviour
         {
             if (value >= thresholds[i])
             {
-                iComp.sprite = icons[i];
+                if (useSpriteRenderer)
+                {
+                    sComp.sprite = icons[i];
+                } else
+                {
+                    iComp.sprite = icons[i];
+                }
             }
         }
     }

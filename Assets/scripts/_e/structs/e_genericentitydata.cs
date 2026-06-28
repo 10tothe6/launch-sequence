@@ -61,11 +61,23 @@ public class e_genericentitydata
     {
         string[] splitByEntry = util_string.SplitByChar(data,'|');
 
+        num_precisevector3 oldPosition = localPosition;
+
         // first, handle position, rotation and all the other normal stuff
         localPosition = num_precisevector3.FromString(splitByEntry[0].Substring(splitByEntry[0].IndexOf(':') + 1));
         velocity = num_precisevector3.FromString(splitByEntry[1].Substring(splitByEntry[1].IndexOf(':') + 1));
         rotation = util_string.ParseQuaternion(splitByEntry[2].Substring(splitByEntry[2].IndexOf(':') + 1));
+
+        // making sure that the transform obeys
         monoComp.transform.rotation = rotation;
+        
+        if (localPosition.Sub(oldPosition).ToVector3().magnitude > 1f || localPosition.Sub(Coord.originPosition).ToVector3().magnitude > 5f)
+        {
+            Coord.Instance.TeleportEntity(localPosition, monoComp);
+        } else
+        {
+            monoComp.transform.position = Coord.GetUnityPosition(monoComp);
+        }
 
         // start at 3 cuz that's where the variable data begins
         for (int i = 3; i < splitByEntry.Length; i++)

@@ -38,6 +38,7 @@ public class Coord : MonoBehaviour
 
 
     // what position in game space is the unity origin?
+    public string ins_originPosition;
     public static num_precisevector3 originPosition;
 
     public static Vector3 GetUnityPosition(e_genericentity entity)
@@ -59,6 +60,7 @@ public class Coord : MonoBehaviour
         OffsetAllEntities(originPosition.Sub(v));
 
         originPosition = v;
+        ins_originPosition = originPosition.AsString();
 
         cb_renderingmanager.Instance.UpdateAllBodyPositions(); // updating all the planets with the new origin
     }
@@ -83,15 +85,12 @@ public class Coord : MonoBehaviour
     // ***
     // TELEPORTING FUNCTIONS
     #region TP FUNCTIONS
-    // THESE SHOULD ONLY BE CALLED ON THE SERVER SIDE, AND AS SUCH FORCE-RETURN IF A CLIENT CALLS THEM
     // ***
 
 
     // rides off of the below function
     public void PlanetTeleport(e_genericentity entity, int celestialBodyIndex)
     {
-        // see above
-        if (!ServerNetworkManager.Instance.isServerActive) {cmd.LogRaw("only the server teleports", Color.lightPink);return;}
         // stars dont count as planets
         if (celestialBodyIndex == 0 || celestialBodyIndex == 1) {cmd.LogRaw("that's not a planet!", Color.lightPink);}
 
@@ -119,9 +118,6 @@ public class Coord : MonoBehaviour
 
     public void TeleportEntity(num_precisevector3 newPosition, e_genericentity entity)
     {
-        // see above
-        if (!ServerNetworkManager.Instance.isServerActive) {cmd.LogRaw("only the server teleports", Color.lightPink);return;}
-        
         if (entity.data.isPhysicsBased)
         {
             entity.data.SetPosition(newPosition);

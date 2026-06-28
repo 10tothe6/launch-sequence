@@ -32,7 +32,8 @@ public enum ClientToServerId : ushort
     key_presses = 00200, // what keys the player is holding
 
     // 04 is the voice related-category (on both ends)
-    voice_packet = 00400    
+    voice_packet = 00400,
+    mic_status_update = 00401,    
 }
 
 public class ClientNetworkManager : MonoBehaviour

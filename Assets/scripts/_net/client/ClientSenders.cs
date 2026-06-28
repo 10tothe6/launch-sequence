@@ -27,6 +27,16 @@ public class ClientSenders : MonoBehaviour
         Instance = this;
     }
 
+    public void SendMicStatusUpdate(float peakValue)
+    {
+        Message message = Message.Create(MessageSendMode.Unreliable, (ushort)ClientToServerId.mic_status_update);
+
+        message.AddFloat(peakValue);
+
+        ClientNetworkManager.Instance.client.Send(message);
+    }
+
+
     // sends a packet containing the user's voice (proximity chat) to the server
     public void SendVoicePacketToServer(audio_voiceframe packet)
     {

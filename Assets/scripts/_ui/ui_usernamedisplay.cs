@@ -41,10 +41,19 @@ public class ui_usernamedisplay : MonoBehaviour
 
     void Update()
     {
+        // displaying mic volume from entity data
+        string rawStatus = transform.parent.GetComponent<e_genericentity>().data.GetDataEntry("mic_status");
+        float parsedStatus = 0;
+
+        if (float.TryParse(rawStatus, out parsedStatus))
+        {
+            micVolumeDisplay.SetValue(parsedStatus);
+        }
+
         // always make sure that the display faces towards the camera, while still staying upright
         // keep in mind that the display has its forward vector facing backwards
         Vector3 axis = Vector3.Cross(-transform.forward, CameraController.t_cam.position - transform.position);
-        axis = Vector3.Project(axis, transform.up);
+        axis = Vector3.Project(axis, transform.parent.up);
 
         transform.Rotate(axis * Vector3.Angle(CameraController.t_cam.position, transform.position) * 0.99f, Space.World);
 

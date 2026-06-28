@@ -828,8 +828,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_seriesdisplay
   iComp: {fileID: 0}
-  useSpriteRenderer: 0
-  sComp: {fileID: 0}
+  useSpriteRenderer: 1
+  sComp: {fileID: 2900789736437388783}
   thresholds:
   - 0
   - 0.001

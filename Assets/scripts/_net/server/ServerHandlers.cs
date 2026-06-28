@@ -27,6 +27,17 @@ public class ServerHandlers : MonoBehaviour
         Instance = this;
     }
 
+    [MessageHandler((ushort)ClientToServerId.mic_status_update)]
+    private static void HandleMicStatusUpdate(ushort fromClientId, Message message)
+    {
+        // the entity we're updating, like with the voice packet, is just the sender
+
+        float peak = message.GetFloat();
+
+        ServerNetworkManager.GetClient(fromClientId).controllingEntity.data.SetDataEntry("mic_status", peak.ToString());
+    }
+
+
     [MessageHandler((ushort)ClientToServerId.voice_packet)]
     private static void HandleVoicePacket(ushort fromClientId, Message message)
     {

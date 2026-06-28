@@ -9,7 +9,10 @@ public class audio_vcmicinput : MonoBehaviour
     {
         if (input.IsInitialized)
         {
-            Input.micPeakValue = LevelMax();
+            float peak = LevelMax();
+
+            Input.micPeakValue = peak;
+            ClientSenders.Instance.SendMicStatusUpdate(peak);
         }
     }
 

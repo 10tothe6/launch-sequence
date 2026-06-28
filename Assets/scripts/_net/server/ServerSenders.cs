@@ -150,7 +150,7 @@ public class ServerSenders : MonoBehaviour
         // temp temp temp temp temp
         EntityManager.Instance.PutClientInRobot(toClientId);
         // putting the player in the first planetary system (also temp)
-        ServerNetworkManager.Instance.SystemTeleport(ServerNetworkManager.GetClient(toClientId).controllingEntity, 0);
+        Coord.Instance.PlanetTeleport(ServerNetworkManager.GetClient(toClientId).controllingEntity, 2);
     }
 
     // the function originally took in an int[] for the entity ids,

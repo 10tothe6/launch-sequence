@@ -82,7 +82,7 @@ public class e_genericentity : MonoBehaviour
         // TODO: WHY IS THIS HERE???
         if (!LocalPlayer.IsControllingEntity()) {return;}
 
-        
+
 
         if (data.entityType == (ushort)e_entitytype.Fixed)
         {
@@ -107,7 +107,7 @@ public class e_genericentity : MonoBehaviour
                     // inflate
 
                     transform.localScale = Vector3.one / scaleFactor * defaultScale;
-                    transform.position = pos.Add(Coord.originPosition).ToVector3();
+                    transform.position = pos.Sub(Coord.originPosition).ToVector3();
                 }
                 else
                 { // far from planet

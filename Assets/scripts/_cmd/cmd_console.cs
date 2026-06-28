@@ -249,7 +249,7 @@ public class cmd_console : MonoBehaviour
             } 
             else if (GetCommandData("systp").IsValid(items[0])) // systp
             {
-                ServerNetworkManager.Instance.SystemTeleport(LocalPlayer.localClient.controllingEntity, int.Parse(items[1]));
+                Coord.Instance.PlanetTeleport(LocalPlayer.localClient.controllingEntity, int.Parse(items[1]));
                 PostToConsole("[CONSOLE] Teleported to system " + items[1]);
             } 
             else if (GetCommandData("fspeed").IsValid(items[0])) // fspeed

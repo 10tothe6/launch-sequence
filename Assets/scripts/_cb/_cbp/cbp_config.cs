@@ -114,7 +114,7 @@ public class cbp_config
         num_precisevector3 result = new num_precisevector3(radius * Math.Cos(trueAnomaly), 0, radius * Math.Sin(trueAnomaly));
         //data.pose.position = new DoubleVector3(result).Add(parent.data.pose.position);
 
-        Debug.Log(result.AsRawString());
+        // Debug.Log(result.AsRawString());
         return result;
     }
 

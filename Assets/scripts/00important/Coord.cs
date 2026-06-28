@@ -42,6 +42,9 @@ public class Coord : MonoBehaviour
 
     public static Vector3 GetUnityPosition(e_genericentity entity)
     {
+        if (entity.data == null) {return Vector3.zero;}
+
+        
         return GetUnityPosition(entity.data.GetPosition());
     }
     public static Vector3 GetUnityPosition(num_precisevector3 gamePosition)
@@ -95,7 +98,7 @@ public class Coord : MonoBehaviour
         cb_trackedbody body = cb_solarsystem.Instance.monoBodies[celestialBodyIndex];
 
          // the extra 3 is just a margin to make sure the player doesn't end up underground
-        num_precisevector3 offsetVector = num_precisevector3.Right().Mul(WorldManager.Instance.GetHeightAtDirection(Vector3.right, celestialBodyIndex) + 3f);
+        num_precisevector3 offsetVector = num_precisevector3.Right().Mul(WorldManager.SeaLevelRadius(celestialBodyIndex) + WorldManager.Instance.GetHeightAtDirection(Vector3.right, celestialBodyIndex) + 3f);
 
         num_precisevector3 desiredPosition = body.pose.data.GetPosition().Add(offsetVector);
         TeleportEntity(desiredPosition, entity);

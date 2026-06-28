@@ -30,8 +30,38 @@ public class AudioManager : MonoBehaviour
 
     public GameObject p_audioChannel;
 
+    public audio_soundset[] variableSounds;
+    public AudioClip[] staticSounds;
+
+    // making this its own function so if I ever want to change the sound index I can
+    public void ButtonClick()
+    {
+        PlayStaticSound(0);
+    }
+
+    public void PlayStaticSound(int index)
+    {
+        SpawnAudioTrack(variableSounds[index].Get());
+    }
+    public void PlayVariableSound(int index)
+    {
+        SpawnAudioTrack(staticSounds[index]);
+    }
+
+    public void SpawnAudioTrack(AudioClip clip)
+    {
+        GameObject g_newChannel = Instantiate(p_audioChannel, transform);
+
+        AudioSource comp = g_newChannel.GetComponent<AudioSource>();
+        comp.clip = clip;
+        comp.Play();
+    }
+
     public void PlayMusic(int index)
     {
+        // cant just spawn an audio channel because we need a parent for organization purposes
+
+
         // dont want 2 or more tracks at the same time
         StopAllMusic();
 

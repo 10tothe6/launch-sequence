@@ -2183,7 +2183,6 @@ GameObject:
   m_Component:
   - component: {fileID: 158860747}
   - component: {fileID: 158860748}
-  - component: {fileID: 158860749}
   m_Layer: 0
   m_Name: inputs
   m_TagString: Untagged
@@ -2219,22 +2218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Input
   axisSpringAmount: 100
---- !u!114 &158860749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 158860746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93685093c65833b42b942308fe547bce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MicInput
-  deviceIndex: 1
-  testSound: 0
-  _device: 
-  volumeIndicator: {fileID: 1291526553}
 --- !u!1 &168563328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2795,7 +2778,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 95588d32461d9da44a2aed9ff461ec03, type: 3}
   - {fileID: 21300000, guid: 0e5621388cb88f347b600f639df646db, type: 3}
   ins_lanMulticastAddress: 224.69.69.0
-  ins_defaultServerPort: 7700
+  ins_defaultServerPort: 7701
 --- !u!114 &201656895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23315,7 +23298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Program
   version: mptest-1.0-rc1
   ins_buildMode: 0
-  ins_startMode: 4
+  ins_startMode: 1
 --- !u!114 &2144568381
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,6 +39,32 @@ public class ClientHandlers : MonoBehaviour
         Instance = this;
     }
 
+    [MessageHandler((ushort)ServerToClientId.voice_packet)]
+    private static void HandleVoicePacket(Message message)
+    {
+        ushort speakingIndex = message.GetUShort();
+
+        int index = message.GetInt();
+        double timestamp = message.GetDouble();
+        float additionalLatency = message.GetFloat();
+        byte[] array = message.GetBytes();
+
+        audio_voiceframe frame = new audio_voiceframe(index, timestamp, additionalLatency, array);
+
+        // now we find the entity corresponding to who is speaking
+        //Debug.Log("shit    " + speakingIndex);
+        VcNetworkProvider comp = ServerNetworkManager.GetClient(speakingIndex).controllingEntity.GetComponent<VcNetworkProvider>();
+
+        if (comp != null)
+        {
+            comp.ReceiveFrame(frame);
+        }
+        //  else
+        // {
+        //     Debug.Log("shitshit" + ServerNetworkManager.GetClient(speakingIndex).controllingEntity.gameObject.name);
+        // }
+    }
+
 
 
     [MessageHandler((ushort)ServerToClientId.player_permission_update)]

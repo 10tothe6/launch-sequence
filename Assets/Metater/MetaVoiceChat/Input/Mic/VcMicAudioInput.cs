@@ -20,11 +20,15 @@ namespace MetaVoiceChat.Input.Mic
             int samplesPerFrame = metaVc.config.samplesPerFrame;
 
             Mic = new(this, samplesPerFrame);
+            SetSelectedDevice(Microphone.devices [1]);
+
             Mic.OnFrameReady += SendAndFilterFrame;
             Mic.OnActiveDeviceChanged += Mic_OnActiveDeviceChanged;
-
+            
+            cmd.LogRaw("checking for devices...", Color.orange);
             if (Mic.Devices.Length > 0)
             {
+                cmd.LogRaw("starting mic recording", Color.orange);
                 Mic.StartRecording();
             }
 

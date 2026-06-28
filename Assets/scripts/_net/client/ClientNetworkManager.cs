@@ -30,6 +30,9 @@ public enum ClientToServerId : ushort
     // ^ this includes kicking, banning, and so on
 
     key_presses = 00200, // what keys the player is holding
+
+    // 04 is the voice related-category (on both ends)
+    voice_packet = 00400    
 }
 
 public class ClientNetworkManager : MonoBehaviour

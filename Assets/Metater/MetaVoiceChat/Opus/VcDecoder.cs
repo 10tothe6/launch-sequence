@@ -23,6 +23,11 @@ namespace MetaVoiceChat.Opus
 
         public ReadOnlySpan<float> DecodeFrame(ReadOnlySpan<byte> data, bool decodeFec = false)
         {
+            if (buffer.Length == 0)
+            {
+                return null;
+            }
+
             HasDecodedYet = true;
 
             int samplesDecoded = opusDecoder.Decode(data, buffer, buffer.Length, decodeFec);

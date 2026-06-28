@@ -1,5 +1,10 @@
 using UnityEngine;
-using System.Collections;
+
+
+// I think this started out as a ChatGPT script?
+// so thanks to ChatGPT I guess 
+
+// it's not being used rn, and is only being kept for posterity
 
 public class MicInput : MonoBehaviour{
 
@@ -16,7 +21,7 @@ public class MicInput : MonoBehaviour{
     private string _device;
     private AudioClip _clipRecord;
     private int _sampleWindow = 128;
-    private bool _isInitialized;
+    //private bool _isInitialized;
 
 
     // temp?
@@ -33,7 +38,7 @@ public class MicInput : MonoBehaviour{
 
     void StopMicrophone()
     {
-        //Microphone.End (_device);
+        Microphone.End (_device);
     }
 
     float LevelMax()
@@ -65,13 +70,13 @@ public class MicInput : MonoBehaviour{
     void Start()
     {
         InitMic ();
-        _isInitialized = true;
+        //_isInitialized = true;
     }
 
-    void OnDisable()
-    {
-        StopMicrophone ();
-    }
+    // void OnDisable()
+    // {
+    //     StopMicrophone ();
+    // }
 
     void OnDestory()
     {

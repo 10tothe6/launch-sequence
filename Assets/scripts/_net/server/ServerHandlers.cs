@@ -27,6 +27,40 @@ public class ServerHandlers : MonoBehaviour
         Instance = this;
     }
 
+    [MessageHandler((ushort)ClientToServerId.voice_packet)]
+    private static void HandleVoicePacket(ushort fromClientId, Message message)
+    {
+        int index = message.GetInt();
+        double timestamp = message.GetDouble();
+        float additionalLatency = message.GetFloat();
+        byte[] array = message.GetBytes();
+
+
+        // TODO: find a more efficient way of doing this than unpackaging and re-packaging the message????
+
+
+        // anyways, send this to everybody except the one we got it from
+        Message newMessage = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.voice_packet);
+
+
+        // the client doesn't need to tell us who's speaking - if we're getting voice info from them, they're the one speaking
+        newMessage.AddUShort(fromClientId); 
+
+
+        newMessage.AddInt(index);
+        newMessage.AddDouble(timestamp);
+        newMessage.AddFloat(additionalLatency);
+        newMessage.AddBytes(array);
+
+        // so that the other players can get the audio
+        ServerSenders.SendToAllExcept(fromClientId, newMessage);
+
+        //ServerNetworkManager.Instance.server.SendToAll(newMessage);
+    }
+
+
+
+
     [MessageHandler((ushort)ClientToServerId.key_presses)]
     private static void HandleKeyPresses(ushort fromClientId, Message message)
     {

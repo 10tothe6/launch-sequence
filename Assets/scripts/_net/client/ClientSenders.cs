@@ -27,7 +27,18 @@ public class ClientSenders : MonoBehaviour
         Instance = this;
     }
 
+    // sends a packet containing the user's voice (proximity chat) to the server
+    public void SendVoicePacketToServer(audio_voiceframe packet)
+    {
+        Message message = Message.Create(MessageSendMode.Unreliable, (ushort)ClientToServerId.voice_packet);
 
+        message.AddInt(packet.index);
+        message.AddDouble(packet.timestamp);
+        message.AddFloat(packet.additionalLatency);
+        message.AddBytes(packet.array);
+
+        ClientNetworkManager.Instance.client.Send(message);
+    }
 
 
     public void SendKeyPressesToServer()

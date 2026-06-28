@@ -84,6 +84,8 @@ namespace MetaVoiceChat
             {
                 encoder = new(config, maxDataBytesPerPacket);
 
+                cmd.LogRaw("starting local player...", Color.orange);
+
                 audioInput.OnFrameReady += SendFrame;
                 audioInput.StartLocalPlayer();
             }
@@ -162,6 +164,8 @@ namespace MetaVoiceChat
 
         public void ReceiveFrame(int index, double timestamp, float additionalLatency, ReadOnlySpan<byte> data)
         {
+            if (this.jitter == null) {return;}
+
             float targetLatency = (config.secondsPerFrame * config.outputMinBufferSize) + Time.deltaTime + additionalLatency;
 
             if (!isLocalPlayer)
@@ -190,7 +194,12 @@ namespace MetaVoiceChat
                     bool hasDecodedYet = decoder.HasDecodedYet;
                     codecStopwatch.Start();
                     var samples = decoder.DecodeFrame(data);
-                    codecStopwatch.Stop(maxCodecMilliseconds, CodecTimeOverrunMessage, !hasDecodedYet, allowMultipleCodecWarningsPerFrame);
+
+                    if (samples == null)
+                    {
+                        codecStopwatch.Stop(maxCodecMilliseconds, CodecTimeOverrunMessage, !hasDecodedYet, allowMultipleCodecWarningsPerFrame);
+                        return;
+                    }
 
                     if (samples.Length == config.samplesPerFrame)
                     {

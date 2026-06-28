@@ -510,6 +510,7 @@ GameObject:
   - component: {fileID: 1461875249874814483}
   - component: {fileID: 3092532290964612513}
   - component: {fileID: 6867292380420441980}
+  - component: {fileID: 8495638983981313670}
   m_Layer: 0
   m_Name: e_robot
   m_TagString: Untagged
@@ -713,3 +714,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VcNetworkProvider
   ins_metaVC: {fileID: 534270277882014880}
+--- !u!114 &8495638983981313670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782933785179873280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34471ad4da59e64ea403976c33cc4d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::audio_vcmicinput
+  input: {fileID: 1324148226412108789}

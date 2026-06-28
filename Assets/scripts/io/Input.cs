@@ -48,6 +48,10 @@ public class Input : MonoBehaviour
 
     public static Vector2 mousePosition;
 
+    // the mic zone
+    public static string selectedMicDevice;
+    public static float micPeakValue; // updated from the prox chat network script
+
     void Update()
     {
         UpdateValues(Time.deltaTime);

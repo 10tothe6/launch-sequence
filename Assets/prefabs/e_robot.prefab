@@ -846,6 +846,37 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 786e0f0625c28ad4ea851090790e9b9e, type: 3}
   talkingThreshold: 0.0025
   updateFromLocal: 0
+--- !u!1 &8550050159121403408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6672191437422186469}
+  m_Layer: 0
+  m_Name: carry point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6672191437422186469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8550050159121403408}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.298, z: 1.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7571074227628741643}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8782933785179873280
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,6 +893,8 @@ GameObject:
   - component: {fileID: 6380978893164895525}
   - component: {fileID: 6867292380420441980}
   - component: {fileID: 8495638983981313670}
+  - component: {fileID: 5693410121584777411}
+  - component: {fileID: 2372632739411071456}
   m_Layer: 0
   m_Name: e_robot
   m_TagString: Untagged
@@ -887,6 +920,7 @@ Transform:
   - {fileID: 3478920282292739920}
   - {fileID: 247361107508239407}
   - {fileID: 6968844325591128102}
+  - {fileID: 6672191437422186469}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8184121651257132309
@@ -961,6 +995,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad9ce86291c3364faf86db3023ee7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::player_genericcontroller
+  ins_mostRecentPacket:
+    forward: 0
+    left: 0
+    back: 0
+    right: 0
+    jump: 0
+    crouch: 0
+    sprint: 0
+    horizontalMouse: 0
+    verticalMouse: 0
+    mouseLeft: 0
+    mouseRight: 0
+    up: 0
+    down: 0
   onPacketUpate:
     m_PersistentCalls:
       m_Calls: []
@@ -1037,7 +1085,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8782933785179873280}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1094,3 +1142,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::audio_vcmicinput
   input: {fileID: 1324148226412108789}
+--- !u!114 &5693410121584777411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782933785179873280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2412b51251e7604db72336a3f08394e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::int_interactionsource
+  src: {fileID: 4364858803652921769}
+--- !u!114 &2372632739411071456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782933785179873280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4909aacfa77731d40a05e01c88b87c41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::int_objectcarrier
+  carryParent: {fileID: 6672191437422186469}

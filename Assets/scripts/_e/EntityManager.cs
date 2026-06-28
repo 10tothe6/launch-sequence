@@ -252,6 +252,7 @@ public class EntityManager : MonoBehaviour
         allEntities.Add(genericComp);
         genericComp.data.index = allEntities.Count;
         genericComp.data.SetPosition(spawnPosition);
+        genericComp.transform.position = Coord.GetUnityPosition(genericComp);
 
         // better just to have the logic automatically here instead of making a whole separate function
         if (ServerNetworkManager.Instance.isServerActive)

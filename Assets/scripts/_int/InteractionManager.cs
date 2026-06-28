@@ -26,6 +26,8 @@ public class InteractionManager : MonoBehaviour
 
     void Update()
     {
+        // showing the prompt on the LOCAL device
+        // ***
         InteractableObject3D interactingWith = CheckLocalPlayerForInteractableObject();
 
         if (interactingWith != null)
@@ -35,6 +37,44 @@ public class InteractionManager : MonoBehaviour
         } else
         {
             interactionPrompt.DisplayPrompt("");
+        }
+        // ***
+
+        // now for actual interaction HANDLING, only runs on server
+        if (ServerNetworkManager.Instance.isServerActive)
+        {
+            for (int i = 0; i < ServerNetworkManager.Instance.connectedClients.Count; i++)
+            {
+                // first we check if they're controlling something
+                if (ServerNetworkManager.Instance.connectedClients[i].controllingEntity == null) {continue;}
+
+                // then we check if they have a player_genericcontroller on them
+                player_genericcontroller comp = ServerNetworkManager.Instance.connectedClients[i].controllingEntity.GetComponent<player_genericcontroller>();
+                if (comp != null)
+                {
+                    // and we check if they're pressing the interaction button
+                    if (comp.mostRecentPacket == null) {continue;}
+                    if (comp.mostRecentPacket.up) // the name for the 'e' key
+                    {
+                        // so they're attempting to interact, now we do the raycast check
+                        RaycastHit hit; 
+
+                        Vector3 pos = comp.GetComponent<int_interactionsource>().src.position;
+                        Vector3 dir = comp.GetComponent<int_interactionsource>().src.forward;
+
+                        if (Physics.Raycast(pos, dir, out hit))
+                        {
+                            if (hit.collider.gameObject.GetComponent<InteractableObject3D>() != null)
+                            {
+                                hit.collider.gameObject.GetComponent<InteractableObject3D>().HandleInteractByObject(comp.gameObject);
+                            } else if (hit.collider.gameObject.GetComponent<InteractCollider>() != null)
+                            {
+                                hit.collider.gameObject.GetComponent<InteractCollider>().parentObject.HandleInteractByObject(comp.gameObject);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

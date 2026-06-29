@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1828589127458159643}
   - component: {fileID: 2582746992918916799}
   - component: {fileID: 6591504142312680776}
+  - component: {fileID: 6984601180657136291}
   m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
@@ -111,6 +112,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6984601180657136291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7233673629498055700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1318597684b1c24dab54b70b71b2d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractCollider
+  parentObject: {fileID: -4972700898857821428}
 --- !u!1 &7415345247471772869
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +136,7 @@ GameObject:
   - component: {fileID: 5181277051763429519}
   - component: {fileID: 2299938871442457569}
   - component: {fileID: 6752202325692073924}
+  - component: {fileID: -4972700898857821428}
   m_Layer: 8
   m_Name: part_portable_drill
   m_TagString: Untagged
@@ -173,6 +188,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237e751e0dcb4a24b9b9249c03045b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::crft_drill
+  isDrillRunning: 0
+--- !u!114 &-4972700898857821428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415345247471772869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb72d9494664291449da362dc3af3687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject3D
+  hoverPrompt: press E to toggle drill
+  onInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6752202325692073924}
+        m_TargetAssemblyTypeName: crft_drill, Assembly-CSharp
+        m_MethodName: ToggleDrill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onInteractByObject:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9159825670303276409
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class e_applyphysics : MonoBehaviour
 {
+    public bool useGravity = true;
     public e_genericentity eComp;
     private Rigidbody rb;
     public Vector3 gravityDirection = -Vector3.right;
@@ -28,6 +29,10 @@ public class e_applyphysics : MonoBehaviour
     void EntityUpdate()
     {
         if (rb.isKinematic) {return;}
-        rb.linearVelocity += gravityDirection * gravitationalAcceleration * Time.deltaTime;
+        
+        if (useGravity)
+        {
+            rb.linearVelocity += gravityDirection * gravitationalAcceleration * Time.deltaTime;
+        }
     }
 }

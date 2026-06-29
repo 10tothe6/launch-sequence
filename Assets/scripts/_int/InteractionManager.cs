@@ -54,7 +54,10 @@ public class InteractionManager : MonoBehaviour
                 {
                     // and we check if they're pressing the interaction button
                     if (comp.mostRecentPacket == null) {continue;}
-                    if (comp.mostRecentPacket.up) // the name for the 'e' key
+
+                    if (!comp.mostRecentPacket.mouseLeft) {comp.GetComponent<int_interactionsource>().StopDraggingObject();}
+
+                    if (comp.mostRecentPacket.up || comp.mostRecentPacket.mouseLeft) // the name for the 'e' key
                     {
                         // so they're attempting to interact, now we do the raycast check
                         RaycastHit hit; 
@@ -62,14 +65,30 @@ public class InteractionManager : MonoBehaviour
                         Vector3 pos = comp.GetComponent<int_interactionsource>().src.position;
                         Vector3 dir = comp.GetComponent<int_interactionsource>().src.forward;
 
+                        InteractableObject3D ioComp = null;
+
                         if (Physics.Raycast(pos, dir, out hit))
                         {
                             if (hit.collider.gameObject.GetComponent<InteractableObject3D>() != null)
                             {
-                                hit.collider.gameObject.GetComponent<InteractableObject3D>().HandleInteractByObject(comp.gameObject);
+                                ioComp = hit.collider.gameObject.GetComponent<InteractableObject3D>();
                             } else if (hit.collider.gameObject.GetComponent<InteractCollider>() != null)
                             {
-                                hit.collider.gameObject.GetComponent<InteractCollider>().parentObject.HandleInteractByObject(comp.gameObject);
+                                ioComp = hit.collider.gameObject.GetComponent<InteractCollider>().parentObject;
+                            }
+                        }
+
+                        if (ioComp != null)
+                        {
+                            if (comp.mostRecentPacket.up)
+                            {
+                                ioComp.HandleInteractByObject(comp.gameObject);
+                            } else if (comp.mostRecentPacket.mouseLeft)
+                            {
+                                // dragging is implemented separately from the rest of the interaction system,
+                                // because basically every interactable object can be dragged
+
+                                comp.GetComponent<int_interactionsource>().StartDraggingObject(ioComp.gameObject);
                             }
                         }
                     }

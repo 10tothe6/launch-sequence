@@ -17,6 +17,8 @@ but the InteractCollider class exists so that that's not necessary
 
 public class InteractableObject3D : MonoBehaviour
 {
+    public bool isDraggable = true;
+    
     [Header("Config")]
     //public bool logInteractionEvents;
     public string hoverPrompt; // might change this for a more robust system, but it certainly works for now

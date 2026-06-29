@@ -39,11 +39,11 @@ public class AudioManager : MonoBehaviour
         PlayStaticSound(0);
     }
 
-    public void PlayStaticSound(int index)
+    public void PlayStaticSound(int index, bool loop = false)
     {
         SpawnAudioTrack(staticSounds[index]);
     }
-    public void PlayVariableSound(int index)
+    public void PlayVariableSound(int index, bool loop = false)
     {
         SpawnAudioTrack(variableSounds[index].Get());
     }

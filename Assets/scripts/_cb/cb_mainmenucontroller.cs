@@ -30,10 +30,33 @@ public class cb_mainmenucontroller : MonoBehaviour
     public float rotSpeed;
     public float camRotSpeed;
 
+    public GameObject p_menuCraft;
+    public Transform t_craftContainer;
+
+    // ***
+    // CRAFT SPAWNING
+    // every time you boot up the game, a random craft will be floating in front of the planet
+    // (stealing this idea from KSP 2)
+    // ***
+
+
+    // assembles a random craft
+    private void SpawnRandomCraft()
+    {
+        GameObject g_newCraft = Instantiate(p_menuCraft, t_craftContainer);
+
+        g_newCraft.GetComponent<e_craft>().Initialize(rw_craft.ReadCraftDataFromFile(util_file.GetWorkingDirectory() + "menu craft/one.craft"));
+        g_newCraft.transform.localScale = Vector3.one * 20;
+
+        g_newCraft.transform.localPosition = Vector3.zero;
+    }
+
     public void Setup()
     {
         CameraController.SetControlMode(CameraControlMode.MainMenu);
         transform.GetChild(0).GetComponent<test_drawmeshbody>().Draw();
+
+        SpawnRandomCraft();
     }
 
     public void Hide()

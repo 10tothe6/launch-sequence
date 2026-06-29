@@ -110,11 +110,11 @@ public class e_craft : MonoBehaviour
 
 
     // TODO: some way of doing part connections
-    public void Initialize(crft_genericpartdata[] partData)
+    public void Initialize(crft_craftdata data)
     {
-        for (int i = 0; i < partData.Length; i++)
+        for (int i = 0; i < data.parts.Length; i++)
         {
-            AddPart(partData[i]);
+            AddPart(data.parts[i]);
         }
     }
 

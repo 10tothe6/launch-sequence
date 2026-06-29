@@ -101,7 +101,7 @@ public class EntityManager : MonoBehaviour
         GameObject g_newSpaceCraft = Instance.SpawnNewEntity("craft", spawnPosition);
 
         e_craft comp = g_newSpaceCraft.GetComponent<e_craft>();
-        comp.Initialize(partData);
+        comp.Initialize(new crft_craftdata("craft", partData));
     }
 
 

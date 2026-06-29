@@ -29,6 +29,9 @@ public class e_cargodrop : MonoBehaviour
             if (hit.collider.gameObject == transform.GetChild(0).GetChild(0).gameObject) {return;}
             hasBeenPositioned = true;
             GetComponent<e_genericentity>().data.SetPosition(GetComponent<e_genericentity>().data.GetPosition().Add(hit.point - transform.position).Add(Vector3.right * 0.075f));
+
+            // spawning the crates
+            EntityManager.Instance.SpawnNewEntity("package", GetComponent<e_genericentity>().data.GetPosition().Add(num_precisevector3.Right().Mul(1f)));  
         }
     }
 }

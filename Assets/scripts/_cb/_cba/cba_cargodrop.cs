@@ -38,8 +38,5 @@ public class cba_cargodrop : MonoBehaviour
         pos = pos.Add(new num_precisevector3(1d, 0d, 0d).Mul(cb_solarsystem.Instance.monoBodies[2].data.tConfig.equitorialRadius + WorldManager.Instance.GetHeightAtDirection(Vector3.right, 2)));
 
         g_cargoDrop = EntityManager.Instance.SpawnNewEntity("cargodrop", pos);
-
-        // now for the packages IN the cargo drop
-        EntityManager.Instance.SpawnNewEntity("package", pos.Add(num_precisevector3.Right().Mul(2f)));
     }
 }

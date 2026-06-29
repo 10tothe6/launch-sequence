@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 543851255527583493}
   - component: {fileID: 4392696380597488986}
   - component: {fileID: 3871981283933494900}
-  - component: {fileID: 2837777736226518418}
   m_Layer: 8
   m_Name: e_package
   m_TagString: Untagged
@@ -143,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb72d9494664291449da362dc3af3687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject3D
+  isDraggable: 1
   hoverPrompt: press E to pick up
   onInteract:
     m_PersistentCalls:
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6dbbf9fe9ff94b4cbea422ce9f45fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_applyphysics
+  useGravity: 1
   eComp: {fileID: 0}
   gravityDirection: {x: -1, y: -0, z: -0}
   gravitationalAcceleration: 0.981
@@ -199,18 +200,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::int_colliderlist
   colliders:
   - {fileID: 7756049894033971194}
---- !u!114 &2837777736226518418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3168682715140342083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 358a34650cf27044db77d94cf63b6794, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::int_draggable
 --- !u!1 &3647960924039420796
 GameObject:
   m_ObjectHideFlags: 0

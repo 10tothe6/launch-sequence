@@ -85,6 +85,8 @@ public class UIManager : MonoBehaviour
 
         AudioManager.Instance.PlayMusic(0);
 
+        inventory.SetActive(false);
+
         cb_mainmenucontroller.Instance.Setup();
     }
 

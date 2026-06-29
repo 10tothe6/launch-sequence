@@ -2,12 +2,33 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+// reading/writing functions related to spacecraft
+
 public class rw_craft : MonoBehaviour
 {
     public static void WriteCraftDataToFile(crft_craftdata data, string filePath)
     {
         // craft data is stored in plain text
-        
+        List<string> lines = new List<string>();
+
+        lines.Add(data.craft_name);
+
+        // each part is stored on one line, 
+        // without keywords because these files aren't really meant for human eyes other than mine
+        for (int i = 0; i < data.parts.Length; i++)
+        {
+            string partData = "";
+
+            partData += data.parts[i].partName;
+
+            partData += data.parts[i].position.x;
+            partData += data.parts[i].position.y;
+            partData += data.parts[i].position.z;
+
+            lines.Add(partData);
+        }
+
+        File.WriteAllLines(filePath, lines.ToArray());
     }
 
 

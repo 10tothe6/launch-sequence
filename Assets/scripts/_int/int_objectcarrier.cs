@@ -61,6 +61,7 @@ public class int_objectcarrier : MonoBehaviour
             g.GetComponent<int_colliderlist>().EnableAll();
         }
 
+        g.GetComponent<int_carryable>().OnDrop();
         g.GetComponent<int_carryable>().DropCooldown();
     }
 }

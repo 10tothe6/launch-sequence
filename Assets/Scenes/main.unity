@@ -20707,6 +20707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1665721751}
+  - component: {fileID: 1665721752}
   m_Layer: 0
   m_Name: craft parts
   m_TagString: Untagged
@@ -20729,6 +20730,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2144568379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1665721752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665721750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034c84fbd62e6914eb3d0e405d5afa7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartManager
+  p_parts: []
 --- !u!1 &1678076552
 GameObject:
   m_ObjectHideFlags: 0
@@ -26034,6 +26048,7 @@ MonoBehaviour:
   variableSounds: []
   staticSounds:
   - {fileID: 8300000, guid: 4ea83376b7dbb5a4c9ab78f1a06a4673, type: 3}
+  - {fileID: 8300000, guid: 3c711a1f29743564486b63ac458944f2, type: 3}
 --- !u!1 &2103198240
 GameObject:
   m_ObjectHideFlags: 0

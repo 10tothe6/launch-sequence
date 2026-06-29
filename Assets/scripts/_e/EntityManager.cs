@@ -52,11 +52,6 @@ public class EntityManager : MonoBehaviour
         allEntities = new List<e_genericentity>();
     }
 
-    void Start()
-    {
-        
-    }
-
     public GameObject p_debugText;
 
     // the master lists for all entities
@@ -74,6 +69,18 @@ public class EntityManager : MonoBehaviour
 
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
+
+
+    // rides on top of the below function
+    public static void SpawnNewSinglePartSpaceCraft(GameObject part)
+    {
+        
+    }
+    public static void SpawnNewSpaceCraft()
+    {
+        
+    }
+
 
 
     // probably one of the most important functions in this script
@@ -161,6 +168,8 @@ public class EntityManager : MonoBehaviour
         // updating all the other clients of the murder
         ServerSenders.Instance.SendKillEntity(entityIndex);
     }
+
+    // TODO: function for deleting all entities for when you leave a server
 
 
     public net_packagedentitydata[] PackageAllEntityData()
@@ -260,6 +269,8 @@ public class EntityManager : MonoBehaviour
             // since we're on a server, we need to tell everyone BUT the local clients
             ServerSenders.Instance.SendNewEntity(g_newEntity);
         }
+
+        onSpawnEntity.Invoke();
 
         return g_newEntity;
     }

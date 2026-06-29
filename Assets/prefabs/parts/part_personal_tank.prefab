@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 5181277051763429519}
   - component: {fileID: 2299938871442457569}
   - component: {fileID: -4972700898857821428}
-  - component: {fileID: 6539367813615883474}
+  - component: {fileID: 6691106965790480813}
   m_Layer: 8
   m_Name: part_personal_tank
   m_TagString: Untagged
@@ -241,7 +241,7 @@ MonoBehaviour:
   onInteractByObject:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6539367813615883474
+--- !u!114 &6691106965790480813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,9 +250,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7415345247471772869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acc3e6077e6020045a84e6c2e85a898d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ad7c1c2e31d8ca4787133ef49a11d29, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::crft_gascontainer
+  m_EditorClassIdentifier: Assembly-CSharp::crft_resourcecontainer
 --- !u!1 &8481655606585296729
 GameObject:
   m_ObjectHideFlags: 0

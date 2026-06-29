@@ -5,7 +5,6 @@ public enum mtrl_resourcetype
     Solid,
     Liquid,
     Gas,
-    Plasma, // you never know...
 }
 
 [System.Serializable]
@@ -22,6 +21,13 @@ public class mtrl_generic
         this.name = name;
         this.type = (ushort)type;
         this.color = SerializableColor.white;
+    }
+
+    public mtrl_generic(string name, mtrl_resourcetype type, SerializableColor color)
+    {
+        this.name = name;
+        this.type = (ushort)type;
+        this.color = color;
     }
 
     // public static mtrl_generic Get(string name)

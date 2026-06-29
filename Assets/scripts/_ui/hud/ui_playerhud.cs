@@ -56,16 +56,19 @@ public class ui_playerhud : MonoBehaviour
     // electricity, temperature, and health right now
     public void UpdatePlayerBars()
     {
+        if (LocalPlayer.localClient == null) {return;}
+        if (LocalPlayer.localClient.controllingEntity == null) {return;}
+
         // first, get the values you need
-        // TODO: this
+        // TODO: proper temperature readings
         float playerTemperature = 30f; // in degrees celcius
         float playerTempChange = 1; // in deg C/sec
 
-        float playerElectricity = 1000f; // in "units of charge"
-        float playerMaxElectricity = 1500f; // in "units of charge"
+        float playerElectricity = LocalPlayer.localClient.controllingEntity.GetComponent<e_craft>().GetResourceAmount("electricity"); // in "units of charge"
+        float playerMaxElectricity = LocalPlayer.localClient.controllingEntity.GetComponent<e_craft>().GetResourceCapacity("electricity"); // in "units of charge"
 
-        float playerOxygen = 5.5f; // in m^3
-        float playerMaxOxygen = 20f; // in m^3
+        float playerOxygen = LocalPlayer.localClient.controllingEntity.GetComponent<e_craft>().GetResourceAmount("oxygen"); // in m^3
+        float playerMaxOxygen = LocalPlayer.localClient.controllingEntity.GetComponent<e_craft>().GetResourceCapacity("oxygen"); // in m^3
 
 
 

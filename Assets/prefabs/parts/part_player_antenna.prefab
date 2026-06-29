@@ -42,9 +42,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5181277051763429519}
   - component: {fileID: 2299938871442457569}
-  - component: {fileID: 7448697492128442888}
+  - component: {fileID: 2799739201666059962}
   m_Layer: 8
-  m_Name: part_player_inventory
+  m_Name: part_player_antenna
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
     partName: 
     position: {x: 0, y: 0, z: 0}
   connectedParts: []
---- !u!114 &7448697492128442888
+--- !u!114 &2799739201666059962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,14 +92,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7415345247471772869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3911074abfd3e6d4682967fb0dcc07cb, type: 3}
+  m_Script: {fileID: 11500000, guid: bcfa4551d4f9b8c4bac4e14c17587d21, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::crft_inventory
-  data:
-    inventory_width: 0
-    inventory_height: 0
-    cellsTaken: 
-    items: []
+  m_EditorClassIdentifier: Assembly-CSharp::crft_antenna
+  antenna_range: 10
 --- !u!1 &8158663411790936945
 GameObject:
   m_ObjectHideFlags: 0

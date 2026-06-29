@@ -67,6 +67,18 @@ public class ClientNetworkManager : MonoBehaviour
     public bool isClientActive;
     public Client client {get; private set;}
 
+    public void ResetAfterDisconnect()
+    {
+        // first, clear all of the entity data that we had
+        EntityManager.Instance.ClearAllEntityData();
+
+        // then, we clear out the solar system in a similar manner
+        cb_solarsystem.Instance.ClearAllSolarSystemData();
+
+        // we need to make sure the ServerNetworkManager is reset too
+        ServerNetworkManager.Instance.ClearAllServerData();
+    }
+
     private void Start()
     {
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
@@ -99,10 +111,12 @@ public class ClientNetworkManager : MonoBehaviour
         cmd.LogRaw("[Client] Found server at ip: " + ServerNetworkManager.Instance.serverIP + ". Sending handshake...", NetworkResources.Instance.clientUpdateColor);
         ClientSenders.Instance.SendJoinRequestToServer();
     }
+    // called if you try to join a server and it can't find the server at all
     private void FailedToConnect(object sender, EventArgs e)
     {
         // back to the menu
         UIManager.Instance.SwitchMenu("join server menu");
+        
         ui_infoalerts.Instance.ShowFullscreenAlert("connection failed!",Color.orange);
 
         isClientActive = false;
@@ -111,6 +125,10 @@ public class ClientNetworkManager : MonoBehaviour
     {
         // back to the menu
         isClientActive = false;
+
+        // make sure we delete all of the objects, resetting for when we join the next server
+        // IT IS VITAL WE GET THIS RIGHT
+        ResetAfterDisconnect();
     }
 
     private void FixedUpdate()

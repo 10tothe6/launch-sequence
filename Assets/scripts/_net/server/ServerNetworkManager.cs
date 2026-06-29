@@ -88,6 +88,14 @@ public class ServerNetworkManager : MonoBehaviour
     private float lastControlledUpdate;
     // independent is FREQUENT updates (no timer)
 
+
+    public void ClearAllServerData()
+    {
+        connectedClients.Clear();
+    }
+
+
+
     public ushort GetRandomClientIndex()
     {
         int rand = Random.Range(0,connectedClients.Count);

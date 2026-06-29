@@ -13,6 +13,7 @@ public class rw_savedata
     public int worldSeed;
 
     // TODO: storing entity data and craft data somehow
+    public e_genericentitydata[] entities; // this will include crafts ig???
 
     public rw_savedata() {}
 }

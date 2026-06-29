@@ -70,6 +70,21 @@ public class EntityManager : MonoBehaviour
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
 
+    public void ClearAllEntityData()
+    {
+        DestroyAllEntities();
+        allEntities.Clear();
+    }
+
+
+    public void DestroyAllEntities()
+    {
+        for (int i = allEntities.Count - 1; i>=0; i--)
+        {
+            Destroy(allEntities[i].gameObject);
+        }
+    }
+
 
     // rides on top of the below function
     public static void SpawnNewSinglePartSpaceCraft(string partName, num_precisevector3 spawnPosition)

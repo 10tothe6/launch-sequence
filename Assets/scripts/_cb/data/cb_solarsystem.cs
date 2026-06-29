@@ -143,7 +143,7 @@ public class cb_solarsystem : MonoBehaviour
 
     public float terranExoticGasChance;
 
-
+    // jovian planets ALWAYS have two exotic gasses, sometimes more
     public float jovianThirdExoticGasChance;
     public float jovianFourthExoticGasChance;
     public float jovianFifthExoticGasChance;
@@ -151,6 +151,21 @@ public class cb_solarsystem : MonoBehaviour
 
     [Header("ACTUAL DATA")]
     public cb_solarsystemdata data;
+
+
+
+    public void ClearAllSolarSystemData()
+    {
+        // first, destroy everything
+        for (int i = monoBodies.Count - 1; i>=0; i--)
+        {
+            Destroy(monoBodies[i].gameObject);
+        }
+
+        // then, clear the list
+        monoBodies.Clear();
+    }
+
 
     public int GetPlanetCount()
     {

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class e_craft : MonoBehaviour
 {
+    public Transform t_partContainer;
     private e_genericentity eComp;
 
     public crft_genericpart[] parts;
@@ -24,7 +25,7 @@ public class e_craft : MonoBehaviour
     public void AddPart(crft_genericpartdata partData)
     {
         GameObject g_newPart = Instantiate(PartManager.Instance.GetPartPrefabFromName(partData.partName));
-        g_newPart.transform.SetParent(transform);
+        g_newPart.transform.SetParent(t_partContainer);
 
         g_newPart.transform.localPosition = partData.position;
     }

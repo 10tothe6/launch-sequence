@@ -35,6 +35,12 @@ public class int_objectcarrier : MonoBehaviour
         g.transform.localRotation = Quaternion.identity;
 
         isCarryingObject = true;
+
+        // disable the object's colliders
+        if (g.GetComponent<int_colliderlist>() != null)
+        {
+            g.GetComponent<int_colliderlist>().DisableAll();
+        }
     }
 
     public void DropObject()
@@ -47,6 +53,12 @@ public class int_objectcarrier : MonoBehaviour
         if (g.GetComponent<Rigidbody>() != null)
         {
             g.GetComponent<Rigidbody>().isKinematic = false;
+        }
+
+        // re-enable the object's colliders
+        if (g.GetComponent<int_colliderlist>() != null)
+        {
+            g.GetComponent<int_colliderlist>().EnableAll();
         }
     }
 }

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 204110608091449127}
+  - component: {fileID: 8609944887404605232}
   m_Layer: 0
   m_Name: e_craft
   m_TagString: Untagged
@@ -31,3 +32,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8609944887404605232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215003058766359385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544819138c988de4892ac2bafe9d6540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_craft

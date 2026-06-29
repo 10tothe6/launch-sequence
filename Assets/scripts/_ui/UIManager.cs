@@ -62,6 +62,8 @@ public class UIManager : MonoBehaviour
     public ui_bugreporter bugReporter;
     public ui_pausemenu pauseMenu;
 
+    public GameObject inventory;
+
     public void SetBugReporterActive(bool active)
     {
         bugReporter.gameObject.SetActive(active);
@@ -70,6 +72,10 @@ public class UIManager : MonoBehaviour
     public void TogglePauseMenu()
     {
         pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
+    }
+    public void ToggleInventory()
+    {
+        inventory.gameObject.SetActive(!inventory.gameObject.activeSelf);
     }
 
     public void EnterMainMenu()
@@ -118,7 +124,7 @@ public class UIManager : MonoBehaviour
 
             if (Keyboard.current.iKey.wasPressedThisFrame)
             {
-                //ToggleInventory();
+                ToggleInventory();
             }
 
             if (Keyboard.current.bKey.wasPressedThisFrame)

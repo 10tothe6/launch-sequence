@@ -10,9 +10,25 @@ using UnityEngine.Events;
 // because their inventory only needs to be displayed when you "open" them
 // in which case copies of this class are created as necessary
 
-public class inv_inventory : MonoBehaviour
+public class inv_inventoryui : MonoBehaviour
 {
     public Func<inv_inventorydata> source;
+    private inv_inventorydata cachedSourceData;
     
     public UnityAction<List<inv_iteminstance>> onUpdateInventoryData;
+
+
+    public void BuildMenu(Func<inv_inventorydata> source)
+    {
+        this.source = source;
+        UpdateCachedData();
+
+
+        
+    }
+
+    void UpdateCachedData()
+    {
+        cachedSourceData = source.Invoke();
+    }
 }

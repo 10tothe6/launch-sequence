@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// does NOT include data for items as well, that's ItemManager.cs
+
 public class PartManager : MonoBehaviour
 {
     private static PartManager _instance;

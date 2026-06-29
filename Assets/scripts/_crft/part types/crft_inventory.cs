@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class crft_inventory : MonoBehaviour
 {
-    
+    public inv_inventorydata data;
 }

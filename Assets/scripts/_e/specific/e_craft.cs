@@ -23,6 +23,9 @@ public class e_craft : MonoBehaviour
 
     public void AddPart(crft_genericpartdata partData)
     {
-        
+        GameObject g_newPart = Instantiate(PartManager.Instance.GetPartPrefabFromName(partData.partName));
+        g_newPart.transform.SetParent(transform);
+
+        g_newPart.transform.localPosition = partData.position;
     }
 }

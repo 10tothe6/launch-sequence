@@ -23,9 +23,11 @@ public class e_package : MonoBehaviour
             {
                 carryComp.ForceDrop();
                 // now that we've dropped the thing, we can spawn the spacecraft...
-                EntityManager.SpawnNewSinglePartSpaceCraft(PartManager.Instance.GetPartPrefabFromName(containedPartName));
+                EntityManager.SpawnNewSinglePartSpaceCraft(containedPartName, eComp.data.GetPosition());
                 // ...and destroy this object
                 EntityManager.Instance.RemoveEntity(eComp.data.index);
+
+                AudioManager.Instance.PlayStaticSound(1); // box opening sound (TEMP)
             }
         }
     }

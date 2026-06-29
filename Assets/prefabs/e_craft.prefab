@@ -9,6 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 204110608091449127}
+  - component: {fileID: 8030781481928937691}
+  - component: {fileID: 1583668294209743497}
+  - component: {fileID: 7602911794818770133}
+  - component: {fileID: 718751088114100927}
   - component: {fileID: 8609944887404605232}
   m_Layer: 0
   m_Name: e_craft
@@ -32,6 +36,98 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &8030781481928937691
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215003058766359385}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1583668294209743497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215003058766359385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3aaa985ed445f43861b5c96dd856ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
+  data:
+    isPhysicsBased: 0
+    monoComp: {fileID: 0}
+    entityType: 0
+    state: 0
+    entityPrefabIndex: 0
+    index: 0
+    parent: {fileID: 0}
+    velocity:
+      x:
+        numDecimalDigits: 4
+      y:
+        numDecimalDigits: 4
+      z:
+        numDecimalDigits: 4
+    hasTransformBeenUpdated: 0
+  onEnterControl:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitControl:
+    m_PersistentCalls:
+      m_Calls: []
+  showEntityId: 0
+  onEntityUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7602911794818770133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215003058766359385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0204c3b3fe1ce6d4ead30851d4e9f180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_physicsbased
+--- !u!114 &718751088114100927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215003058766359385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6dbbf9fe9ff94b4cbea422ce9f45fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::e_applyphysics
+  eComp: {fileID: 0}
+  gravityDirection: {x: -1, y: -0, z: -0}
+  gravitationalAcceleration: 0.981
 --- !u!114 &8609944887404605232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,3 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544819138c988de4892ac2bafe9d6540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_craft
+  parts: []

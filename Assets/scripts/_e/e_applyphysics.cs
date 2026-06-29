@@ -10,7 +10,7 @@ public class e_applyphysics : MonoBehaviour
     public e_genericentity eComp;
     private Rigidbody rb;
     public Vector3 gravityDirection = -Vector3.right;
-    public float gravitationalAcceleration = 9.81f;
+    public float gravitationalAcceleration = 0.981f;
 
     void Awake()
     {

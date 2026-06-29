@@ -72,13 +72,21 @@ public class EntityManager : MonoBehaviour
 
 
     // rides on top of the below function
-    public static void SpawnNewSinglePartSpaceCraft(GameObject part)
+    public static void SpawnNewSinglePartSpaceCraft(string partName, num_precisevector3 spawnPosition)
     {
-        
+        crft_genericpartdata data = new crft_genericpartdata();
+
+        data.partName = partName;
+        data.position = Vector3.zero;
+
+        SpawnNewSpaceCraft(new crft_genericpartdata[]{data}, spawnPosition);
     }
-    public static void SpawnNewSpaceCraft()
+    public static void SpawnNewSpaceCraft(crft_genericpartdata[] partData, num_precisevector3 spawnPosition)
     {
-        
+        GameObject g_newSpaceCraft = Instance.SpawnNewEntity("craft", spawnPosition);
+
+        e_craft comp = g_newSpaceCraft.GetComponent<e_craft>();
+        comp.Initialize(partData);
     }
 
 

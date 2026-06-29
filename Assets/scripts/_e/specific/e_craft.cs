@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 
 public class e_craft : MonoBehaviour
@@ -50,6 +52,30 @@ public class e_craft : MonoBehaviour
         }
 
         cachedResources.Add(new mtrl_containedresource(resource.resource_name, resource.current_capacity, resource.max_capacity));
+    }
+
+
+    public void FillAllResourceContainers()
+    {
+        for (int i = 0; i < parts.Count; i++)
+        {
+            crft_resourcecontainer comp = parts[i].GetComponent<crft_resourcecontainer>();
+
+            if (comp == null) {continue;}
+
+            for (int j = 0; j  < comp.containedResources.Count; j++)
+            {
+                comp.containedResources[j].current_capacity = comp.containedResources[j].max_capacity;
+            }
+        }
+    }
+
+
+
+    // TODO: this
+    public void AddResource(string resource_name, float resource_amount)
+    {
+        
     }
 
 

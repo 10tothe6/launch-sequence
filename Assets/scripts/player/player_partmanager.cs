@@ -25,6 +25,9 @@ public class player_partmanager : MonoBehaviour
             crft_genericpartdata newPartData = new crft_genericpartdata(defaultPartNames[i], Vector3.zero);
 
             craftComp.AddPart(newPartData);
+
+            // adding the default resources
+            craftComp.FillAllResourceContainers();
         }
     }
 }

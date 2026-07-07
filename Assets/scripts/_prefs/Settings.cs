@@ -5,6 +5,9 @@ using UnityEngine;
 
 // TODO: figure out how to group settings by category
 
+// 07/06:
+// achievements are a part of this now cuz im not making another one of these scripts for that
+
 public class Settings : MonoBehaviour
 {
     private static Settings _instance;
@@ -51,6 +54,25 @@ public class Settings : MonoBehaviour
     public  List<prefs_genericentry> ins_settings;
     // realistically, this will never be accessed directly
     public static List<prefs_genericentry> settings;
+
+
+    // the hard-coded data
+    public static List<adv_advancementdata> advancementData;
+
+    // the "soft" data (which ones the player has gotten)
+    // this is separate for ease of use (and better version control)
+    public static List<adv_trackedadvancement> trackedAdvancements;
+
+    #region ADVANCEMENTS
+
+
+    public void UnlockAdvancement()
+    {
+        
+    }
+
+
+    #endregion
 
 
     // annoying conversion, but the modular menu system does need to be standardized

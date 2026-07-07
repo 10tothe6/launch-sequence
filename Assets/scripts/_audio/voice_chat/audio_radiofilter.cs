@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 public class audio_radiofilter : MonoBehaviour
 {
     // Example of applying a simple mathematical filter to PCM audio samples

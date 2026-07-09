@@ -23,7 +23,14 @@ public class ui_advancementwidget : MonoBehaviour
             comp.tx_description.text = Settings.advancementData[i].description;
             comp.icon.texture = Settings.advancementData[i].icon;
 
-            // checking if the player has an achievement
+            // checking if the player has an achievement, and changing the background color
+            if (Settings.DoesPlayerHaveAdvancement(Settings.advancementData[i].name))
+            {
+                comp.bg.color = Color.darkGreen;
+            } else
+            {
+                comp.bg.color = Color.darkRed;
+            }
         }
     }
 }

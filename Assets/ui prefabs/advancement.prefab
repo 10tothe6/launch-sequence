@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeedf7090dd8e1249a717a9ba46232da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_advancementelement
+  bg: {fileID: 1900790004904506739}
   tx_name: {fileID: 7780568574961223438}
   tx_description: {fileID: 2640018392319596945}
   icon: {fileID: 4853340654872628982}

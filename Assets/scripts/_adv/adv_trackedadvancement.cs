@@ -7,4 +7,7 @@ public class adv_trackedadvancement
     public bool hasGotten;
 
     // todo: more tracking data like in factorio
+
+
+    public adv_trackedadvancement() {}
 }

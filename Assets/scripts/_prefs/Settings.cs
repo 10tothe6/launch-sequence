@@ -46,6 +46,15 @@ public class Settings : MonoBehaviour
     void Start()
     {
         ReadSettingsFile();
+
+        if (Program.Instance.resetAdvancements)
+        {
+            trackedAdvancements = new List<adv_trackedadvancement>();
+            SaveTrackedAdvancements();
+        } else
+        {
+            LoadTrackedAdvancements();
+        }
     }
 
     public static string emptyString = "err";
@@ -69,9 +78,93 @@ public class Settings : MonoBehaviour
     #region ADVANCEMENTS
 
 
-    public void UnlockAdvancement(string advancement_name)
+    public static void UnlockAdvancement(string advancement_name)
     {
-        
+        adv_trackedadvancement newData = new adv_trackedadvancement();
+
+        newData.hasGotten = true;
+        newData.advancement_name = advancement_name;
+
+        trackedAdvancements.Add(newData);
+        // file will be written when game closes, 
+        // but we do it now to be safe (making sure a crash doesn't erase progress)
+        Instance.SaveTrackedAdvancements();
+    }
+
+    public static bool DoesPlayerHaveAdvancement(string advancement_name)
+    {
+        for (int i = 0; i < trackedAdvancements.Count; i++)
+        {
+            if (trackedAdvancements[i].advancement_name == advancement_name)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void LoadTrackedAdvancements()
+    {
+        trackedAdvancements = new List<adv_trackedadvancement>();
+
+        string actualFilePath = "";
+        string theoreticalFilePath = util_file.GetWorkingDirectory() + "user.advancements";
+
+        if (File.Exists(theoreticalFilePath))
+        {
+            // oh cool we found the file, read it
+            actualFilePath = theoreticalFilePath;
+        } else
+        {
+            // ah well we didn't find the file
+            // now we look in the previous version
+            string backupPath = util_file.GetRawWorkingDirectory() + Program.Instance.GetPreviousVersion() + "/user.advancements";
+
+            if (File.Exists(backupPath)) {actualFilePath = backupPath;}
+        }
+
+        if (actualFilePath.Length > 0)
+        {
+            // somewhere we found a file, so let's read what we can
+            string[] lines = File.ReadLines(actualFilePath).ToArray();
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string[] elements = util_string.SplitByChar(lines[i],',');
+
+                adv_trackedadvancement newData = new adv_trackedadvancement();
+
+                newData.advancement_name = elements[0];
+                bool parsedValue = false;
+                if (bool.TryParse(elements[1], out parsedValue))
+                {
+                    newData.hasGotten = parsedValue;
+                }
+
+                trackedAdvancements.Add(newData);
+            }
+        }
+    }
+
+    private void SaveTrackedAdvancements()
+    {
+        if (!Directory.Exists(util_file.GetWorkingDirectory())) {Directory.CreateDirectory(util_file.GetWorkingDirectory());}
+        string filePath = util_file.GetWorkingDirectory() + "user.advancements";
+
+        if (!File.Exists(filePath))
+        {
+            File.Create(filePath);
+        }
+
+        List<string> lines = new List<string>();
+
+        for (int i = 0; i < trackedAdvancements.Count; i++)
+        {
+            lines.Add(trackedAdvancements[i].advancement_name  + "," + trackedAdvancements[i].hasGotten);
+        }
+
+        File.WriteAllLines(filePath, lines.ToArray());
     }
 
 
@@ -172,11 +265,6 @@ public class Settings : MonoBehaviour
         return null;
     }
 
-    public void WriteSettingsFile()
-    {
-        
-    }
-
     // unlike before, this is read line-by-line
     // we don't actually need to pass in a file path, because we know where the file will be
     public void ReadSettingsFile()
@@ -234,7 +322,8 @@ public class Settings : MonoBehaviour
     }
     void OnApplicationQuit()
     {
-        Settings.Instance.WriteToSettingsFile();
+        WriteToSettingsFile();
+        SaveTrackedAdvancements();
     }
 
     public void WriteToSettingsFile()

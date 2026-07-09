@@ -48,7 +48,14 @@ public class GameManager : MonoBehaviour
     // into the main menu - this is what player's get
     public static void StartFullGame()
     {
-        Instance.StartCoroutine(UIManager.Instance.RunIntro());
+        if (Settings.GetBool("dev_mode"))
+        {
+            SwitchToMainMenu();
+        }
+        else
+        {
+            Instance.StartCoroutine(UIManager.Instance.RunIntro());
+        }
     }
 
     // straight into the sandbox of a singleplayer server

@@ -23,8 +23,17 @@ public class int_interactionsource : MonoBehaviour
         if (isDraggingObject) {return;} // don't want to call repeatedly
 
         isDraggingObject = true;
-        objectToDrag = obj.GetComponent<Rigidbody>();
+        
+        if (obj.GetComponent<crft_genericpart>() != null)
+        {
+            objectToDrag = obj.transform.parent.parent.GetComponent<Rigidbody>();
+        } else
+        {
+            objectToDrag = obj.GetComponent<Rigidbody>();
+        }
 
+        if (objectToDrag == null) {return;}
+    
         if (objectToDrag.GetComponent<e_applyphysics>() != null)
         {
             objectToDrag.GetComponent<e_applyphysics>().useGravity = false;

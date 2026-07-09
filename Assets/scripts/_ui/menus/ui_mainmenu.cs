@@ -20,6 +20,7 @@ public class ui_mainmenu : MonoBehaviour
             g_devButtons.SetActive(true);
             g_normalButtonContainer.SetActive(false);
             g_foregroundObjectContainer.SetActive(false);
+            UIManager.Instance.HardSetTransition(false);
 
         } else
         {

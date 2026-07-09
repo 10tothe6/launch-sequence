@@ -8663,6 +8663,7 @@ MonoBehaviour:
   transitionSpeed: 0.0025
   g_introUsernameText: {fileID: 926936381}
   g_advancementsWidget: {fileID: 896377906}
+  p_advancementPopup: {fileID: 523340440535313090, guid: b53cb9a52e0da614f8854fb11dea5c02, type: 3}
 --- !u!114 &657973543
 MonoBehaviour:
   m_ObjectHideFlags: 0

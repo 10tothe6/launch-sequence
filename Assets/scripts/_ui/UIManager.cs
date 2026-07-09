@@ -86,14 +86,21 @@ public class UIManager : MonoBehaviour
     public GameObject g_introUsernameText;
 
     public GameObject g_advancementsWidget;
+    public GameObject p_advancementPopup;
 
 
     #region ADVANCEMENTS
 
 
-    public void ShowAdvancementPopup()
+    public IEnumerator ShowAdvancementPopup(adv_advancementdata data)
     {
-        
+        Transform t_popup = Instantiate(p_advancementPopup, t_canvas).transform;
+
+        t_popup.position = Vector3.zero + Vector3.up * t_popup.GetComponent<ui_instantiatable>().effectiveHeight;
+
+        yield return new WaitForSeconds(2f);
+
+        Destroy(t_popup.gameObject);
     }
 
 

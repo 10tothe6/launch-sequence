@@ -80,6 +80,8 @@ public class Settings : MonoBehaviour
 
     public static void UnlockAdvancement(string advancement_name)
     {
+        cmd.LogRaw("UNLOCKED ADVANCEMENT: " + advancement_name, Color.skyBlue);
+
         adv_trackedadvancement newData = new adv_trackedadvancement();
 
         newData.hasGotten = true;
@@ -89,6 +91,21 @@ public class Settings : MonoBehaviour
         // file will be written when game closes, 
         // but we do it now to be safe (making sure a crash doesn't erase progress)
         Instance.SaveTrackedAdvancements();
+
+        Instance.StartCoroutine(UIManager.Instance.ShowAdvancementPopup(Instance.GetAdvancementDataFromName(advancement_name)));
+    }
+
+    public adv_advancementdata GetAdvancementDataFromName(string name)
+    {
+        for (int i = 0; i < advancementData.Count; i++)
+        {
+            if (advancementData[i].name == name)
+            {
+                return advancementData[i];
+            }
+        }
+
+        return null;
     }
 
     public static bool DoesPlayerHaveAdvancement(string advancement_name)

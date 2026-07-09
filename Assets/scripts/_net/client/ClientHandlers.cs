@@ -190,6 +190,9 @@ public class ClientHandlers : MonoBehaviour
 
         // saying the local player has joined the game
         ui_chat.Instance.AddChatMessage($"{LocalPlayer.localClient.username} joined the game", NetworkResources.Instance.clientUpdateColor);
+
+        // TEMP TEMP TEMP
+        Settings.UnlockAdvancement("Planetfall");
     }
 
     [MessageHandler((ushort)ServerToClientId.player_connected)]

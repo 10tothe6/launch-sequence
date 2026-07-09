@@ -80,6 +80,14 @@ public class Settings : MonoBehaviour
 
     public static void UnlockAdvancement(string advancement_name)
     {
+        // if we have already unlocked the advancement, no need to do any of this
+        if (DoesPlayerHaveAdvancement(advancement_name))
+        {
+            // may as well log it still
+            cmd.LogRaw("ALREADY UNLOCKED: " + advancement_name, Color.skyBlue);
+            return;
+        }
+
         cmd.LogRaw("UNLOCKED ADVANCEMENT: " + advancement_name, Color.skyBlue);
 
         adv_trackedadvancement newData = new adv_trackedadvancement();
@@ -92,7 +100,7 @@ public class Settings : MonoBehaviour
         // but we do it now to be safe (making sure a crash doesn't erase progress)
         Instance.SaveTrackedAdvancements();
 
-        Instance.StartCoroutine(UIManager.Instance.ShowAdvancementPopup(Instance.GetAdvancementDataFromName(advancement_name)));
+        Instance.StartCoroutine(UIManager.Instance.ShowAdvancementPopup(Instance.GetAdvancementDataFromName(advancement_name)));Instance.StartCoroutine(UIManager.Instance.ShowAdvancementPopup(Instance.GetAdvancementDataFromName(advancement_name)));
     }
 
     public adv_advancementdata GetAdvancementDataFromName(string name)

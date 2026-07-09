@@ -46,4 +46,9 @@ public class inv_itemstack
         this.extendHorizontal = ItemManager.Instance.items[itemIndex].occupyWidth;
         this.extendVertical = ItemManager.Instance.items[itemIndex].occupyHeight;
     }
+
+    public inv_itemdata GetData()
+    {
+        return ItemManager.Instance.items[itemIndex];
+    }
 }

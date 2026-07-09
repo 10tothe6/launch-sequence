@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1583668294209743497}
   - component: {fileID: 8609944887404605232}
   - component: {fileID: 3941726688771298364}
+  - component: {fileID: 2745186766441749581}
   m_Layer: 0
   m_Name: menu craft
   m_TagString: Untagged
@@ -127,8 +128,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef6977a24d3ae874bae3b2999584bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::randomangularvelocity
+  useLocalAxes: 1
+  rotationAxis: 2
   max: 2
   min: 0.25
+--- !u!114 &2745186766441749581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215003058766359385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0aa8e3850768c74ca64adcd6faba1e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::randomtransform
 --- !u!1 &7050732985772941874
 GameObject:
   m_ObjectHideFlags: 0

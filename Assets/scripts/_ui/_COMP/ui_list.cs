@@ -27,7 +27,10 @@ public class ui_list : MonoBehaviour
         GameObject g_newElement = Instantiate(p_listElement, t_listContainer);
         g_newElement.name = "element " + ( t_listContainer.childCount - 1);
 
-        g_newElement.GetComponent<ui_instantiatable>().SetData(data);
+        if (g_newElement.GetComponent<ui_instantiatable>() != null)
+        {
+            g_newElement.GetComponent<ui_instantiatable>().SetData(data);
+        }
         
         if (overlapListElements)
         {
@@ -91,7 +94,7 @@ public class ui_list : MonoBehaviour
     {
         for (int i = t_listContainer.childCount - 1; i >= 0; i--)
         {
-            Destroy(t_listContainer.GetChild(i).gameObject);
+            DestroyImmediate(t_listContainer.GetChild(i).gameObject);
         }
     }
 

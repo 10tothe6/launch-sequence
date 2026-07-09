@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
         HardSetTransition(false);
+        g_advancementsWidget.SetActive(false);
         
         LoadMenuObjects();
 
@@ -83,6 +84,46 @@ public class UIManager : MonoBehaviour
 
 
     public GameObject g_introUsernameText;
+
+    public GameObject g_advancementsWidget;
+
+
+    #region ADVANCEMENTS
+
+
+    public void ShowAdvancementPopup()
+    {
+        
+    }
+
+
+    // these two are so that I have a space to run any additional logic needed
+    public void OpenAdvancementsWidget()
+    {
+        g_advancementsWidget.SetActive(true);
+        g_advancementsWidget.GetComponent<ui_advancementwidget>().RenderAchievements();
+    }
+    public void CloseAdvancementsWidget()
+    {
+        g_advancementsWidget.SetActive(false);
+    }
+
+
+
+
+    public void ToggleAdvancementsWidget()
+    {
+        if (g_advancementsWidget.activeSelf)
+        {
+            CloseAdvancementsWidget();
+        } else
+        {
+            OpenAdvancementsWidget();
+        }
+    }
+
+
+    #endregion
 
 
     public IEnumerator RunIntro()
@@ -190,6 +231,14 @@ public class UIManager : MonoBehaviour
     
     public void TogglePauseMenu()
     {
+        if (pauseMenu.gameObject.activeSelf)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        } else {Cursor.lockState = CursorLockMode.None;}
+
+
+
+
         pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
     }
     public void ToggleInventory()

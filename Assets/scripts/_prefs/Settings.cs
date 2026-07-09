@@ -34,6 +34,8 @@ public class Settings : MonoBehaviour
         Instance = this;
         settings = ins_settings; // this sets the parameters of the settings, we'll have to read the file to get the actual values
 
+        advancementData = ins_advancementData;
+
         // just in case
         for (int i = 0; i < settings.Count;i++)
         {
@@ -57,6 +59,7 @@ public class Settings : MonoBehaviour
 
 
     // the hard-coded data
+    public List<adv_advancementdata> ins_advancementData;
     public static List<adv_advancementdata> advancementData;
 
     // the "soft" data (which ones the player has gotten)
@@ -66,7 +69,7 @@ public class Settings : MonoBehaviour
     #region ADVANCEMENTS
 
 
-    public void UnlockAdvancement()
+    public void UnlockAdvancement(string advancement_name)
     {
         
     }

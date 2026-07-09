@@ -68,6 +68,9 @@ public class Program : MonoBehaviour
 
     public string version;
 
+    // forces all advancement progress to reset on program boot
+    // this totally won't cause problems when I forget to turn this off
+    public bool resetAdvancements;
     public ProgramBuildMode ins_buildMode;
     public static ProgramBuildMode buildMode;
     public ProgramStartMode ins_startMode;

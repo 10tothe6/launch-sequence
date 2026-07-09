@@ -1,6 +1,10 @@
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
+using System;
+using System.Collections;
 
 // 2nd in command, basically, after Program.cs
 
@@ -29,8 +33,11 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        HardSetTransition(false);
         
         LoadMenuObjects();
+
+        actionsToRunOnceFinishedTransition = new List<UnityAction>();
     }
 
     public static bool isTyping;
@@ -61,8 +68,120 @@ public class UIManager : MonoBehaviour
     public ui_connectedclients connectedclients;
     public ui_bugreporter bugReporter;
     public ui_pausemenu pauseMenu;
+    public ui_mainmenu mainMenu;
 
     public GameObject inventory;
+
+
+    // TODO: this but via a shader
+    public GameObject g_transitionScreen;
+    public Image i_transition;
+    private float transitionTargetOpacity; 
+    public float transitionSpeed;
+    private bool currentlyRunningTransition;
+    private List<UnityAction> actionsToRunOnceFinishedTransition;
+
+
+    public GameObject g_introUsernameText;
+
+
+    public IEnumerator RunIntro()
+    {
+        HardSetTransition(true);
+        g_introUsernameText.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+
+        // show the '10tothe6' username
+        g_introUsernameText.SetActive(true);
+
+
+        yield return new WaitForSeconds(2f);
+
+
+        g_introUsernameText.SetActive(false);
+        // go to the main menu
+        GameManager.SwitchToMainMenu(); // this will change the gameState to InMenu
+    }
+
+
+
+
+    // ***
+    // transition functions
+    // ***
+
+
+    public void FadeInTransition()
+    {
+        // making sure its actually off
+        HardSetTransition(false);
+
+        transitionTargetOpacity = 1;
+        currentlyRunningTransition = true;
+    }
+    public void FadeInTransitionAndThen(UnityAction toRunOnceFinished)
+    {
+        FadeInTransition();
+        actionsToRunOnceFinishedTransition.Add(toRunOnceFinished);
+    }
+
+    public void FadeOutTransition()
+    {
+        HardSetTransition(true);
+
+        transitionTargetOpacity = 0;
+
+        currentlyRunningTransition = true;
+    }
+    public void FadeOutTransitionAndThen(UnityAction toRunOnceFinished)
+    {
+        FadeOutTransition();
+        actionsToRunOnceFinishedTransition.Add(toRunOnceFinished);
+    }
+
+    public void HardSetTransition(bool shouldBeActive)
+    {
+        g_transitionScreen.SetActive(shouldBeActive);
+        i_transition.gameObject.SetActive(true);
+    }
+
+    private void RunAllPostTransitionActions()
+    {
+        for (int i = 0; i < actionsToRunOnceFinishedTransition.Count; i++)
+        {
+            actionsToRunOnceFinishedTransition[i].Invoke();
+        }
+
+        actionsToRunOnceFinishedTransition.Clear();
+    }
+
+    private void UpdateTransition()
+    {
+        if (currentlyRunningTransition)
+        {
+            Color c = i_transition.color;
+            i_transition.color = new Color(c.r, c.g, c.b, c.a + Mathf.Clamp(transitionTargetOpacity - c.a, -transitionSpeed, transitionSpeed));
+            if (i_transition.color.a <= 0)
+            {
+                i_transition.gameObject.SetActive(false);
+            }
+
+
+
+            // note - I hate how these two are separate if statements
+            if (i_transition.color.a <= 0.75f || i_transition.color.a >= 1)
+            {
+                RunAllPostTransitionActions();
+            }
+            if (i_transition.color.a <= 0f || i_transition.color.a >= 1)
+            {
+                currentlyRunningTransition = false;
+            }
+        }
+    }
+
+    // ***
 
     public void SetBugReporterActive(bool active)
     {
@@ -81,9 +200,8 @@ public class UIManager : MonoBehaviour
     public void EnterMainMenu()
     {
         SwitchMenu("main menu");
+        mainMenu.LoadMainMenu();
         g_console.SetActive(false);
-
-        AudioManager.Instance.PlayMusic(0);
 
         inventory.SetActive(false);
 
@@ -98,6 +216,7 @@ public class UIManager : MonoBehaviour
 
     public void InMenuUpdate()
     {
+        UpdateTransition();
         CameraController.Instance.UpdateCamera();
     }
 
@@ -105,6 +224,7 @@ public class UIManager : MonoBehaviour
     // not just 'update', because i only want to run this sometimes
     public void InGameUpdate()
     {
+        UpdateTransition();
         CameraController.Instance.UpdateCamera();
 
         if (Keyboard.current.backquoteKey.wasPressedThisFrame)

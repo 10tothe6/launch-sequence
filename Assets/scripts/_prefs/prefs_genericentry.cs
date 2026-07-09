@@ -20,6 +20,10 @@ public enum prefs_entrytype
 [System.Serializable]
 public class prefs_genericentry
 {
+    // some preferences do not appear in the settings menu, and can only be changed by editing the file
+    public bool isHidden; // TODO
+
+    
     public prefs_entrytype type;
     public uim_displaytype displayType;
 

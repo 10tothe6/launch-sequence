@@ -1,2 +1,10 @@
 space_1 --> "Over The Horizon" 
 space_2 --> "Exosphere"
+space_3 --> "Signal Range"
+
+surface_1 --> "Outpost"
+surface_2 --> "Drilling Operations"
+
+ocean_1 --> "
+
+star_1 --> "Bathed In Light"

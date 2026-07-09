@@ -5,5 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class audio_musictrack
 {
+    public string name; // for organization reasons
     public AudioClip[] layers;
 }

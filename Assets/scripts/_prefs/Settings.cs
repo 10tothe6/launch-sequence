@@ -116,6 +116,19 @@ public class Settings : MonoBehaviour
         return entry.value;
     }
 
+    public static bool GetBool(string key)
+    {
+        prefs_genericentry entry = Instance.GetEntryByName(key);
+        if (entry == null) {return false;}
+
+        bool parsedValue = false;
+        if (bool.TryParse(entry.value,out parsedValue))
+        {
+            return parsedValue;
+        }
+        return false;
+    }
+
 
     public static double GetDouble(string key)
     {

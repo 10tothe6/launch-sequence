@@ -23,6 +23,8 @@ public class ui_boundingbox : MonoBehaviour
     [HideInInspector]
     public RectTransform bottomEdge;
 
+    public Sprite borderSprite;
+
     void Awake()
     {
         Initialize();
@@ -75,20 +77,28 @@ public class ui_boundingbox : MonoBehaviour
         float verticalSize = Vector3.Distance(upperPos, lowerPos);
 
         topEdge.position = upperPos;
-        topEdge.sizeDelta = new Vector2(horizontalSize, lineThickness);
+        topEdge.sizeDelta = new Vector2(lineThickness, horizontalSize);
+        topEdge.eulerAngles = new Vector3(topEdge.eulerAngles.x, topEdge.eulerAngles.y, 90);
         topEdge.GetComponent<Image>().color = col;
+        topEdge.GetComponent<Image>().sprite = borderSprite;
 
         bottomEdge.position = lowerPos;
-        bottomEdge.sizeDelta = new Vector2(horizontalSize, lineThickness);
+        bottomEdge.sizeDelta = new Vector2(lineThickness, horizontalSize);
+        bottomEdge.eulerAngles = new Vector3(bottomEdge.eulerAngles.x, bottomEdge.eulerAngles.y, 90);
         bottomEdge.GetComponent<Image>().color = col;
+        bottomEdge.GetComponent<Image>().sprite = borderSprite;
 
         rightEdge.position = rightPos;
         rightEdge.sizeDelta = new Vector2(lineThickness, verticalSize);
+        rightEdge.eulerAngles = new Vector3(rightEdge.eulerAngles.x, rightEdge.eulerAngles.y, 0);
         rightEdge.GetComponent<Image>().color = col;
+        rightEdge.GetComponent<Image>().sprite = borderSprite;
 
 
         leftEdge.position = leftPos;
         leftEdge.sizeDelta = new Vector2(lineThickness, verticalSize);
+        leftEdge.eulerAngles = new Vector3(leftEdge.eulerAngles.x, leftEdge.eulerAngles.y, 0);
         leftEdge.GetComponent<Image>().color = col;
+        leftEdge.GetComponent<Image>().sprite = borderSprite;
     }
 }

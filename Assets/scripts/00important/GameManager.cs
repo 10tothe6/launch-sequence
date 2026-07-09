@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     // into the main menu - this is what player's get
     public static void StartFullGame()
     {
-        SwitchToMainMenu(); // this will change the gameState to InMenu
+        Instance.StartCoroutine(UIManager.Instance.RunIntro());
     }
 
     // straight into the sandbox of a singleplayer server

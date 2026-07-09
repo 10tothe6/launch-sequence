@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class util_math
 {
+
     public static UnityEngine.Vector3 GenerateRandomDirection()
     {
         UnityEngine.Vector3 pointInsideUnitCube = new UnityEngine.Vector3(
@@ -14,8 +15,6 @@ public class util_math
 
         return pointInsideUnitCube.normalized;
     }
-
-
 
     public static float ExpandToRange(float val, float min, float max)
     {

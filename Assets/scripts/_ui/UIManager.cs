@@ -33,8 +33,8 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        HardSetTransition(false);
-        g_advancementsWidget.SetActive(false);
+        if (g_transitionScreen != null) {HardSetTransition(false);}
+        if (g_advancementsWidget != null) {g_advancementsWidget.SetActive(false);}
         
         LoadMenuObjects();
 

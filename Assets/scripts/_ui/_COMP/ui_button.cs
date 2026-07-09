@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ui_button : MonoBehaviour
 {
+    public bool isClickable = true;
     private bool isPressed;
 
     [Space(6)]
@@ -27,6 +28,8 @@ public class ui_button : MonoBehaviour
     public Color pressedColor;
 
     void Update() {
+        //if (!isClickable) {return;}
+
         if (Input.mouseButtonDownLeft && ui_canvasutils.IsCursorInteract(gameObject, true)) {
             isPressed = true;
         }

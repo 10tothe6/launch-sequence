@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7353655538150194144}
   - component: {fileID: 3365585945365668118}
   - component: {fileID: 897797620534142853}
+  - component: {fileID: 6339561820454241625}
   m_Layer: 5
   m_Name: item icon
   m_TagString: Untagged
@@ -75,3 +76,38 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6339561820454241625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220874882846320418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7851ece1a85ff4fa8c0032bfce3217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ui_button
+  isClickable: 1
+  onPress:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrag:
+    m_PersistentCalls:
+      m_Calls: []
+  whilePress:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverExit:
+    m_PersistentCalls:
+      m_Calls: []
+  whileHover:
+    m_PersistentCalls:
+      m_Calls: []
+  colorSwitch: 1
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
+  pressedColor: {r: 0.8117647, g: 0.8117647, b: 0.8117647, a: 1}

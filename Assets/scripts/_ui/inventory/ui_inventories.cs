@@ -22,7 +22,7 @@ public class ui_inventories : MonoBehaviour
             GameObject g_newInventory = Instantiate(p_inventory, t_inventoryContainer);
 
             // TODO: fix this reference
-            inv_inventoryui comp = g_newInventory.GetComponent<inv_inventoryui>();
+            ui_inventorywidget comp = g_newInventory.GetComponent<ui_inventorywidget>();
             comp.BuildMenu(() => {return internalInventories[i];});
         }
     }

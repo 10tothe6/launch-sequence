@@ -1,5 +1,8 @@
 using UnityEngine;
 
+// singleton script that stores static data for all the items in the game,
+// as well as their prefabs (if they're not spacecraft parts)
+
 public class ItemManager : MonoBehaviour
 {
     private static ItemManager _instance;

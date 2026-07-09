@@ -18,4 +18,14 @@ public class inv_itemdata
         this.occupyWidth = occupyWidth;
         this.occupyHeight = occupyHeight;
     }
+
+    public inv_itemdata(bool isPart, string item_name, int occupyWidth, int occupyHeight)
+    {
+        this.isPart = isPart;
+        this.item_name = item_name;
+
+        
+        this.occupyWidth = occupyWidth;
+        this.occupyHeight = occupyHeight;
+    }
 }

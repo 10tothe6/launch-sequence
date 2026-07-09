@@ -253,6 +253,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3911074abfd3e6d4682967fb0dcc07cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::crft_inventory
+  data:
+    inventory_width: 4
+    inventory_height: 4
+    cellsTaken: 
+    items: []
 --- !u!1 &8481655606585296729
 GameObject:
   m_ObjectHideFlags: 0

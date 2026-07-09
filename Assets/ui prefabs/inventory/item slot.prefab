@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7353655538150194144}
   - component: {fileID: 3365585945365668118}
   - component: {fileID: 7198838437626189645}
+  - component: {fileID: 4053292180608286989}
   m_Layer: 5
   m_Name: item slot
   m_TagString: Untagged
@@ -33,11 +34,11 @@ RectTransform:
   - {fileID: 5341980993800468511}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 910, y: -490}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3365585945365668118
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -76,6 +77,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4053292180608286989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220874882846320418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1913c4d288f4fc4f9f948cb4570d2ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ui_inventoryslot
 --- !u!1 &8622799278329696368
 GameObject:
   m_ObjectHideFlags: 0

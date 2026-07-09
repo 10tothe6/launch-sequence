@@ -28,6 +28,7 @@ public class ui_inventories : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        ClearCursor();
     }
 
     public Transform t_inventoryContainer;
@@ -47,6 +48,24 @@ public class ui_inventories : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        cursor.transform.position = Input.mousePosition + new Vector2(-cursor.inventoryCellSize / 2f, cursor.inventoryCellSize / 2f);
+    }
+
+    // ***
+    // item taking/giving 
+    // ***
+
+    public bool IsHoldingItem()
+    {
+        return cursor.heldItem != null;
+    }
+
+    public void ClearCursor()
+    {
+        cursor.ClearItem();
+    }
     public void GiveItemToCursor(inv_itemstack itemData)
     {
         if (cursor.heldItem != null)
@@ -54,6 +73,6 @@ public class ui_inventories : MonoBehaviour
             return;
         }
 
-        cursor.GrabItem(itemData);
+        cursor.SetItem(itemData);
     }
 }

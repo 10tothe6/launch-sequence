@@ -23,9 +23,17 @@ public class ui_button : MonoBehaviour
     [Space(6)]
     [Header("Color Settings")]
     public bool colorSwitch;
+    public bool leaveAlpha = true; // don't change the alpha of the button (allows other scripts to control it)
     public Color defaultColor;
     public Color hoverColor;
     public Color pressedColor;
+
+    private Image i;
+
+    void Awake()
+    {
+        i = GetComponent<Image>();
+    }
 
     void Update() {
         //if (!isClickable) {return;}
@@ -37,15 +45,15 @@ public class ui_button : MonoBehaviour
         if (isPressed) {
             whilePress.Invoke(); // Invoke the event that runs when the button is held
 
-             if (colorSwitch) { GetComponent<Image>().color = pressedColor; }
+             if (colorSwitch) { SetColor(pressedColor); }
         }
         else if (ui_canvasutils.IsCursorInteract(gameObject, true)) {
-            if (colorSwitch) { GetComponent<Image>().color = hoverColor; }
+            if (colorSwitch) { SetColor(hoverColor); }
             whileHover.Invoke();
             if (!isHovering) {onHoverEnter.Invoke(); isHovering = true;}
         }
         else {
-            if (colorSwitch) { GetComponent<Image>().color = defaultColor; }
+            if (colorSwitch) { SetColor(defaultColor); }
             if (isHovering) {onHoverExit.Invoke(); isHovering = false;}
         }   
 
@@ -57,6 +65,17 @@ public class ui_button : MonoBehaviour
         if (isPressed && !ui_canvasutils.IsCursorInteract(gameObject, true)) {
             onDrag.Invoke(); // Invoke the unity event that runs when you click and drag the button
             isPressed = false;
+        }
+    }
+
+    public void SetColor(Color col)
+    {
+        if (leaveAlpha)
+        {
+            i.color = new Color(col.r, col.g, col.b, i.color.a);
+        } else
+        {
+            i.color = col;
         }
     }
 

@@ -10,13 +10,20 @@ public class ui_inventoryslot : MonoBehaviour
     private RectTransform rt_itemIcon;
     public GameObject p_itemIcon;
 
+    private int cellIndex;
+    private ui_inventorywidget parentWidget;
+
     void Awake()
     {
         rt = GetComponent<RectTransform>();
     }
 
-    public void Initialize(Transform t_itemIconContainer)
+    public void Initialize(Transform t_itemIconContainer, ui_inventorywidget parentWidget, int cellIndex)
     {
+        this.parentWidget = parentWidget;
+        this.cellIndex = cellIndex;
+
+
         GameObject g_itemIcon = Instantiate(p_itemIcon, t_itemIconContainer);
 
         g_itemIcon.transform.position = transform.position;
@@ -24,30 +31,36 @@ public class ui_inventoryslot : MonoBehaviour
         i_itemIcon = g_itemIcon.GetComponent<Image>();
         rt_itemIcon = g_itemIcon.GetComponent<RectTransform>();
 
-        g_itemIcon.SetActive(false); // no item
+        g_itemIcon.SetActive(true); // no item
+        i_itemIcon.color = new Color(1,1,1,0f); // transparent, but there, icon
+        rt_itemIcon.sizeDelta = new Vector2(rt.sizeDelta.x * 1, rt.sizeDelta.y * 1);
     }
 
+    // THERE IS NO CLEAR ITEM FUNCTION, JUST PASS 'null' IN HERE
     public void SetItem(inv_itemstack data)
     {
         cachedItemData = data;
 
         // first, the dimensions
-        rt_itemIcon.sizeDelta = new Vector2(rt.sizeDelta.x * data.extendHorizontal, rt.sizeDelta.y * data.extendVertical);
-        i_itemIcon.gameObject.SetActive(true);
+        if (data != null)
+        {
+            rt_itemIcon.sizeDelta = new Vector2(rt.sizeDelta.x * data.extendHorizontal, rt.sizeDelta.y * data.extendVertical);
+        } else
+        {
+            rt_itemIcon.sizeDelta = new Vector2(rt.sizeDelta.x * 1, rt.sizeDelta.y * 1);
+        }
+        i_itemIcon.gameObject.SetActive(data != null);
         i_itemIcon.color = Color.white;
 
         // setting what the button does
-        i_itemIcon.GetComponent<ui_button>().onPress.AddListener(() => GrabItemFromSlot());
+        if (data != null)
+        {
+            i_itemIcon.GetComponent<ui_button>().onPress.AddListener(() => HandleInteractionWithSlot());
+        }
     }
 
-    public void GrabItemFromSlot()
+    public void HandleInteractionWithSlot()
     {
-        i_itemIcon.gameObject.SetActive(false); // no item
-
-        // TODO: tell the inventory
-
-        ui_inventories.Instance.GiveItemToCursor(cachedItemData);
-
-        cachedItemData = null;
+        parentWidget.HandleInteractionAtCell(cellIndex, false);
     }
 }

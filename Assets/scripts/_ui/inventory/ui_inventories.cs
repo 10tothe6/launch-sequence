@@ -48,6 +48,14 @@ public class ui_inventories : MonoBehaviour
         }
     }
 
+    public void ClearMenus()
+    {
+        for (int i = t_inventoryContainer.childCount - 1; i >= 0; i--)
+        {
+            Destroy(t_inventoryContainer.GetChild(i).gameObject);
+        }
+    }
+
     void Update()
     {
         cursor.transform.position = Input.mousePosition + new Vector2(-ItemManager.rawInventoryCellSize / 2f, ItemManager.rawInventoryCellSize / 2f);

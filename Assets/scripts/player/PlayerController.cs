@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
     public bool lockCameraHorizontal = false;
     public bool lockCameraVertical = false;
     public bool lockMovement = false;
-    public bool lockCursor = true;
     #endregion
 
     #region parameters

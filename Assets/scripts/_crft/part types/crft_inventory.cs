@@ -17,4 +17,10 @@ public class crft_inventory : MonoBehaviour
         data.cellsTaken = new bool[data.inventory_width * data.inventory_height];
         data.items = new List<inv_itemstack>();
     }
+
+    public void OpenInventory()
+    {
+        UIManager.Instance.OpenInventory();
+        ui_inventories.Instance.BuildMenus(new System.Func<inv_inventorydata>[] {() => {return data;}});
+    }
 }

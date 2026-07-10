@@ -10,12 +10,18 @@ public class player_genericcontroller : MonoBehaviour
 {
     public player_keypresspacket ins_mostRecentPacket;
     public player_keypresspacket mostRecentPacket {get; private set;}
+    public player_keypresspacket oldPacket {get; private set;}
+
+
 
     public UnityEvent onPacketUpate;
     public UnityEvent onTeleport;
 
     public void AcceptKeyPresses(player_keypresspacket packet)
     {
+        oldPacket = mostRecentPacket;
+
+        
         mostRecentPacket = packet;
         ins_mostRecentPacket = packet;
 

@@ -80,7 +80,7 @@ public class InteractionManager : MonoBehaviour
 
                         if (ioComp != null)
                         {
-                            if (comp.mostRecentPacket.up)
+                            if (comp.mostRecentPacket.up && !comp.oldPacket.up)
                             {
                                 ioComp.HandleInteractByObject(comp.gameObject);
                             } else if (comp.mostRecentPacket.mouseLeft)

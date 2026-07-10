@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
         LoadMenuObjects();
 
         actionsToRunOnceFinishedTransition = new List<UnityAction>();
+
+        inventory.SetActive(false);
     }
 
     public static bool isTyping;
@@ -248,9 +250,46 @@ public class UIManager : MonoBehaviour
 
         pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
     }
+
+
     public void ToggleInventory()
     {
-        inventory.gameObject.SetActive(!inventory.gameObject.activeSelf);
+        if (inventory.gameObject.activeSelf)
+        {
+            CloseInventory();
+        } else
+        {
+            OpenInventory();
+        }
+    }
+    public void OpenInventory()
+    {
+        inventory.gameObject.SetActive(true);
+
+        // freeze player movement and looking
+        PlayerController comp = LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>();
+
+        comp.lockCameraHorizontal = true;
+        comp.lockCameraVertical = true;
+        comp.lockMovement = true;
+
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void CloseInventory()
+    {
+        ui_inventories.Instance.ClearMenus();
+        
+
+        inventory.gameObject.SetActive(false);
+
+        // unlock everything from the above function
+        PlayerController comp = LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>();
+
+        comp.lockCameraHorizontal = false;
+        comp.lockCameraVertical = false;
+        comp.lockMovement = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void EnterMainMenu()

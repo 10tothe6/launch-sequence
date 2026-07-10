@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e568a7dbb7926cc458742aa1d70bca3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_package
-  containedPartName: portable_drill
+  containedPartName: small_crate
 --- !u!114 &5685730239862828029
 MonoBehaviour:
   m_ObjectHideFlags: 0

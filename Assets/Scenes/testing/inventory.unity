@@ -802,7 +802,7 @@ MonoBehaviour:
   items:
   - isPart: 0
     item_name: test_item
-    stackSize: 2
+    stackSize: 100
     occupyWidth: 1
     occupyHeight: 2
     icon: {fileID: 21300000, guid: d823f8d8a1788f545978eef0c291a973, type: 3}

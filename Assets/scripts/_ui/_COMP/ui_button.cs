@@ -4,8 +4,17 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+public enum ui_clicktype
+{
+    Primary, // LMB usually
+    Secondary, // RMB usually
+    Either,
+}
+
 public class ui_button : MonoBehaviour
 {
+    public ui_clicktype clickType;
+
     public bool isClickable = true;
     public bool enablePassthrough = false;
     public bool logWhenClicked = false;
@@ -14,6 +23,7 @@ public class ui_button : MonoBehaviour
     [Space(6)]
     [Header("Interactions")]
     public UnityEvent onPress; // Click (runs once)
+    public UnityEvent<ushort> onPressSpecific;
     public UnityEvent onDrag; // Click and then move mouse away (runs once)
     public UnityEvent whilePress; // Hold click (repeats)
 
@@ -29,6 +39,8 @@ public class ui_button : MonoBehaviour
     public Color defaultColor;
     public Color hoverColor;
     public Color pressedColor;
+
+    private ushort cachedClickType;
 
     private Image i;
 
@@ -48,10 +60,35 @@ public class ui_button : MonoBehaviour
         }
     }
 
+    private bool IsClicking()
+    {
+        if (clickType == ui_clicktype.Primary)
+        {
+            return Input.mouseButtonDownLeft;
+        } else if (clickType == ui_clicktype.Secondary)
+        {
+            return Input.mouseButtonDownRight;
+        } else if (clickType == ui_clicktype.Either)
+        {
+            return Input.mouseButtonDownRight || Input.mouseButtonDownLeft;
+        }
+
+        return false;
+    }
+
     void Update() {
+        if (Input.mouseButtonDownLeft)
+        {
+            cachedClickType = 0;
+        } else if (Input.mouseButtonDownRight)
+        {
+            cachedClickType = 1;
+        }
+
+
         //if (!isClickable) {return;}
 
-        if (Input.mouseButtonDownLeft && CheckInteraction()) {
+        if (IsClicking() && CheckInteraction()) {
             isPressed = true;
         }
 
@@ -70,8 +107,8 @@ public class ui_button : MonoBehaviour
             if (isHovering) {onHoverExit.Invoke(); isHovering = false;}
         }   
 
-        if (!Input.mouseButtonDownLeft) {
-            if (isPressed && CheckInteraction()) { onPress.Invoke(); if (logWhenClicked){Debug.Log("Click!");}}
+        if (!IsClicking()) {
+            if (isPressed && CheckInteraction()) { onPress.Invoke(); onPressSpecific.Invoke(cachedClickType); if (logWhenClicked){Debug.Log("Click!");}}
             isPressed = false;
         }
 

@@ -29,7 +29,21 @@ public class inv_inventorydata
         
     }
 
+    // returns a COPY, not the real thing
     public inv_itemstack GetItemAtCell(int cellIndex)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].cellIndex == cellIndex)
+            {
+                return new inv_itemstack(items[i]);
+            }
+        }
+
+        return null;
+    }
+    // returns the ACTUAL REFERENCE
+    public inv_itemstack GetItemReferenceAtCell(int cellIndex)
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -42,7 +56,8 @@ public class inv_inventorydata
         return null;
     }
 
-    #region ADDING/REMOVING
+    #region CHECKS
+
 
     // looking for a quantity of an item type
     // the cell index of 'data' doesn't matter here
@@ -68,6 +83,29 @@ public class inv_inventorydata
     }
 
 
+    public bool CanFitItem(inv_itemstack data)
+    {
+        for (int x = 0; x < data.extendHorizontal; x++)
+        {
+            for (int y = 0; y < data.extendVertical; y++)
+            {
+                int indexOffset = x + y * inventory_width;
+
+                if (cellsTaken[data.cellIndex + indexOffset])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    #endregion
+
+    #region ADDING/REMOVING
+
+
     // removing a SPECIFIC ITEM from a cell
     
     // the item count matters here, if the count is less than the number in the cell we only remove that amt
@@ -82,16 +120,12 @@ public class inv_inventorydata
                 {
                     items.RemoveAt(i);
 
-                    // TODO: only do this if the item was actually removed, not just partly removed
                     UpdateSelectedCellsForItem(data, false);
 
                     return; // we're done, so we do this to avoid loop issues
                 } else
                 {
                     items[i].itemCount -= data.itemCount;
-                    
-                    // TODO: only do this if the item was actually removed, not just partly removed
-                    UpdateSelectedCellsForItem(data, false);
                     
                     return; // same story, we're done
                 }
@@ -108,7 +142,7 @@ public class inv_inventorydata
         {
             if (GetItemAtCell(data.cellIndex).itemIndex == data.itemIndex)
             {
-                GetItemAtCell(data.cellIndex).itemCount = Mathf.Min(GetItemAtCell(data.cellIndex).GetData().stackSize, GetItemAtCell(data.cellIndex).itemCount + data.itemCount);
+                GetItemReferenceAtCell(data.cellIndex).itemCount = Mathf.Min(GetItemAtCell(data.cellIndex).GetData().stackSize, GetItemAtCell(data.cellIndex).itemCount + data.itemCount);
             } else
             {
                 return; // can't add

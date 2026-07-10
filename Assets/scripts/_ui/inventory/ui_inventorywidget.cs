@@ -100,17 +100,57 @@ public class ui_inventorywidget : MonoBehaviour
             {
                 if (isRightClick)
                 {
-                    
+                    // needs to be the same type to combine stacks
+                    if (ui_inventories.Instance.cursor.heldItem.itemIndex == cachedSourceData.GetItemAtCell(cellIndex).itemIndex)
+                    {
+                        inv_itemstack data = new inv_itemstack(ui_inventories.Instance.cursor.heldItem);
+                        data.itemCount = 1;
+                        data.cellIndex = cellIndex;
+
+                        inv_itemstack newCursorData = new inv_itemstack(ui_inventories.Instance.cursor.heldItem);
+                        newCursorData.itemCount -= 1;
+
+                        if (newCursorData.itemCount > 0)
+                        {
+                            ui_inventories.Instance.GiveItemToCursor(newCursorData);
+                        } else
+                        {
+                            ui_inventories.Instance.ClearCursor();
+                        }
+
+                        // add the item to the inventory
+                        cachedSourceData.AddItem(data);
+
+                        RefreshWidget();
+                    }
                 } else
                 {
-                    
+                    // needs to be the same type to combine stacks
+                    if (ui_inventories.Instance.cursor.heldItem.itemIndex == cachedSourceData.GetItemAtCell(cellIndex).itemIndex)
+                    {
+                        inv_itemstack data = ui_inventories.Instance.cursor.heldItem;
+                        data.cellIndex = cellIndex;
+
+                        // remove the held item stack from the cursor
+                        ui_inventories.Instance.ClearCursor();
+                        // add the item to the inventory
+                        cachedSourceData.AddItem(data);
+
+                        RefreshWidget();
+                    }
                 }
             } else
             {
                 
                 if (isRightClick)
                 {
-                    
+                    inv_itemstack data = cachedSourceData.GetItemAtCell(cellIndex);
+                    data.itemCount = Mathf.CeilToInt((float)data.itemCount / 2f);
+
+                    ui_inventories.Instance.GiveItemToCursor(data);
+                    cachedSourceData.RemoveItem(data);
+
+                    RefreshWidget();
                 } else
                 {
                     
@@ -130,11 +170,41 @@ public class ui_inventorywidget : MonoBehaviour
             {
                 if (isRightClick)
                 {
-                    
+                    inv_itemstack data = new inv_itemstack(ui_inventories.Instance.cursor.heldItem);
+                    data.itemCount = 1;
+                    data.cellIndex = cellIndex;
+
+                    if (!cachedSourceData.CanFitItem(data))
+                    {
+                        return;
+                    }
+
+                    inv_itemstack newCursorData = new inv_itemstack(ui_inventories.Instance.cursor.heldItem);
+                    newCursorData.itemCount -= 1;
+
+                    if (newCursorData.itemCount > 0)
+                    {
+                        ui_inventories.Instance.GiveItemToCursor(newCursorData);
+                    } else
+                    {
+                        ui_inventories.Instance.ClearCursor();
+                    }
+
+                    // add the item to the inventory
+                    cachedSourceData.AddItem(data);
+
+                    RefreshWidget();
                 } else
                 {
                     inv_itemstack data = ui_inventories.Instance.cursor.heldItem;
                     data.cellIndex = cellIndex;
+
+                    // before we do anything, we need to make sure that placing an item here will not cause any overlaps
+                    // we do this by checking the cellsTaken[] array
+                    if (!cachedSourceData.CanFitItem(data))
+                    {
+                        return;
+                    }
 
                     // remove the held item stack from the cursor
                     ui_inventories.Instance.ClearCursor();
@@ -147,10 +217,10 @@ public class ui_inventorywidget : MonoBehaviour
             {
                 if (isRightClick)
                 {
-                    
+                    // nothing happens
                 } else
                 {
-                    
+                    // nothing happens
                 }
             }
         }

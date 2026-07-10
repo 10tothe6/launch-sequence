@@ -35,16 +35,29 @@ public class inv_itemstack
         this.extendVertical = ItemManager.Instance.items[itemIndex].occupyHeight;
     }
 
-    public inv_itemstack(int itemIndex, int itemCount, int cellIndex, int rotationIndex)
+
+    // TODO: actually factor in rotation index
+    // public inv_itemstack(int itemIndex, int itemCount, int cellIndex, int rotationIndex)
+    // {
+    //     this.itemIndex = itemIndex;
+    //     this.itemCount = itemCount;
+
+    //     this.cellIndex = cellIndex;
+
+    //     // filling out the extend horizontal and vertical based on the item's static data
+    //     this.extendHorizontal = ItemManager.Instance.items[itemIndex].occupyWidth;
+    //     this.extendVertical = ItemManager.Instance.items[itemIndex].occupyHeight;
+    // }
+
+    public inv_itemstack(inv_itemstack src)
     {
-        this.itemIndex = itemIndex;
-        this.itemCount = itemCount;
+        this.itemIndex = src.itemIndex;
+        this.itemCount = src.itemCount;
 
-        this.cellIndex = cellIndex;
+        this.cellIndex = src.cellIndex;
 
-        // filling out the extend horizontal and vertical based on the item's static data
-        this.extendHorizontal = ItemManager.Instance.items[itemIndex].occupyWidth;
-        this.extendVertical = ItemManager.Instance.items[itemIndex].occupyHeight;
+        this.extendHorizontal = src.extendHorizontal;
+        this.extendVertical = src.extendVertical;
     }
 
     public inv_itemdata GetData()

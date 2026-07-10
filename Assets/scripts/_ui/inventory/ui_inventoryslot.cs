@@ -35,7 +35,7 @@ public class ui_inventoryslot : MonoBehaviour
         itemDisplay.Draw(null);
         UpdateHiddenState();
 
-        itemDisplay.GetComponent<ui_button>().onPress.AddListener(() => HandleInteractionWithSlot());
+        itemDisplay.GetComponent<ui_button>().onPressSpecific.AddListener((x) => HandleInteractionWithSlot(x));
     }
 
     // THERE IS NO CLEAR ITEM FUNCTION, JUST PASS 'null' IN HERE
@@ -67,8 +67,8 @@ public class ui_inventoryslot : MonoBehaviour
         }
     }
 
-    public void HandleInteractionWithSlot()
+    public void HandleInteractionWithSlot(ushort clickType)
     {
-        parentWidget.HandleInteractionAtCell(cellIndex, false);
+        parentWidget.HandleInteractionAtCell(cellIndex, clickType == 1);
     }
 }

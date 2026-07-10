@@ -68,11 +68,6 @@ public class ui_inventories : MonoBehaviour
     }
     public void GiveItemToCursor(inv_itemstack itemData)
     {
-        if (cursor.heldItem != null)
-        {
-            return;
-        }
-
         cursor.SetItem(itemData);
     }
 }

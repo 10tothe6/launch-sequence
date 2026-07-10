@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc7851ece1a85ff4fa8c0032bfce3217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_button
+  clickType: 2
   isClickable: 1
   enablePassthrough: 1
   logWhenClicked: 0

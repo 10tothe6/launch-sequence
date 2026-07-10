@@ -15,6 +15,6 @@ public class test_drawinventory : MonoBehaviour
     {
         // actual script logic
 
-        comp.BuildMenu(() => {return inventoryPart.data;});
+        comp.BuildMenu(() => {return inventoryPart.data;}, Vector3.zero);
     }
 }

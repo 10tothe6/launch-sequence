@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Net.Security;
 using UnityEngine;
 
 // plural, because you'll have many crates on you in addition to whatever you're interacting with
@@ -38,14 +40,44 @@ public class ui_inventories : MonoBehaviour
 
     public void BuildMenus(Func<inv_inventorydata>[] sources)
     {
+        Vector3 v = new Vector3(Screen.width / 2f, 200f, 0);
+
         for (int i = 0; i < sources.Length; i++)
         {
             // TODO: proper positioning
 
             GameObject g_newWidget = Instantiate(p_inventory, t_inventoryContainer);
 
-            g_newWidget.GetComponent<ui_inventorywidget>().BuildMenu(sources[i]);
+            g_newWidget.GetComponent<ui_inventorywidget>().BuildMenu(sources[i], v);
+
+            v += Vector3.up * 500f;
         }
+    }
+
+    public void OpenPlayerInventory()
+    {
+        Func<inv_inventorydata>[] playerInventorySources = LocalPlayer.localClient.controllingEntity.GetComponent<player_partmanager>().GetInventorySources();
+
+        BuildMenus(playerInventorySources);
+    }
+
+    public void OpenExternalInventory(Func<inv_inventorydata> source)
+    {
+        List<Func<inv_inventorydata>> toBuild = new List<Func<inv_inventorydata>>();
+
+        // first we add the player inventories
+        Func<inv_inventorydata>[] playerInventorySources = LocalPlayer.localClient.controllingEntity.GetComponent<player_partmanager>().GetInventorySources();
+
+        for (int i = 0; i < playerInventorySources.Length; i++)
+        {
+            toBuild.Add(playerInventorySources[i]);
+        }
+
+        // finally we add the external inventory (crate or whatever)
+        toBuild.Add(source);
+
+        // then we can build all the menus
+        BuildMenus(toBuild.ToArray());
     }
 
     public void ClearMenus()

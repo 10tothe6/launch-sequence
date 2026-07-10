@@ -21,6 +21,6 @@ public class crft_inventory : MonoBehaviour
     public void OpenInventory()
     {
         UIManager.Instance.OpenInventory();
-        ui_inventories.Instance.BuildMenus(new System.Func<inv_inventorydata>[] {() => {return data;}});
+        ui_inventories.Instance.OpenExternalInventory(() => {return data;});
     }
 }

@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::crft_inventory
   data:
-    inventory_width: 0
-    inventory_height: 0
+    inventory_width: 8
+    inventory_height: 1
     cellsTaken: 
     items: []
 --- !u!1 &8158663411790936945

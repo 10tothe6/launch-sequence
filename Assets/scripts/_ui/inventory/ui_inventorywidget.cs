@@ -26,8 +26,10 @@ public class ui_inventorywidget : MonoBehaviour
 
     //public float spaceBetweenCells;
 
-    public void BuildMenu(Func<inv_inventorydata> source)
+    public void BuildMenu(Func<inv_inventorydata> source, Vector3 position)
     {
+        transform.position = position;
+        
         this.source = source;
         UpdateCachedData();
 

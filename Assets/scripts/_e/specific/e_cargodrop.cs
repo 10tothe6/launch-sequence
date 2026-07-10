@@ -32,6 +32,7 @@ public class e_cargodrop : MonoBehaviour
 
             // spawning the crates
             EntityManager.Instance.SpawnNewEntity("package", GetComponent<e_genericentity>().data.GetPosition().Add(num_precisevector3.Right().Mul(1f)));  
+            EntityManager.Instance.SpawnNewEntity("package", GetComponent<e_genericentity>().data.GetPosition().Add(num_precisevector3.Right().Mul(2f)));
         }
     }
 }

@@ -260,6 +260,7 @@ public class UIManager : MonoBehaviour
         } else
         {
             OpenInventory();
+            ui_inventories.Instance.OpenPlayerInventory();
         }
     }
     public void OpenInventory()

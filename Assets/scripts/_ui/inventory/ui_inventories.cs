@@ -50,7 +50,7 @@ public class ui_inventories : MonoBehaviour
 
     void Update()
     {
-        cursor.transform.position = Input.mousePosition + new Vector2(-cursor.inventoryCellSize / 2f, cursor.inventoryCellSize / 2f);
+        cursor.transform.position = Input.mousePosition + new Vector2(-ItemManager.rawInventoryCellSize / 2f, ItemManager.rawInventoryCellSize / 2f);
     }
 
     // ***

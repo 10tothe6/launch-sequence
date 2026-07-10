@@ -27,6 +27,8 @@ public class ItemManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+
+        rawInventoryCellSize = ins_rawInventoryCellSize;
     }
 
     public inv_itemdata[] items;
@@ -34,4 +36,26 @@ public class ItemManager : MonoBehaviour
 
     // for the items that are NOT spacecraft parts
     public GameObject[] p_items;
+
+    
+
+    public inv_itembackground[] item_bgs;
+    
+
+    public float ins_rawInventoryCellSize;
+    public static float rawInventoryCellSize;
+
+
+    public static Sprite GetItemBackground(int width, int height)
+    {
+        for (int i = 0; i < Instance.item_bgs.Length; i++)
+        {
+            if (Instance.item_bgs[i].width == width && Instance.item_bgs[i].height == height)
+            {
+                return Instance.item_bgs[i].img;
+            }
+        }
+
+        return Instance.item_bgs[0].img; // should never get here
+    }
 }

@@ -739,6 +739,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7353655538150194144, guid: a886673f397089b409447d7e9cfcd52f, type: 3}
   m_PrefabInstance: {fileID: 1620445390}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1620445392 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6077894948534541180, guid: a886673f397089b409447d7e9cfcd52f, type: 3}
+  m_PrefabInstance: {fileID: 1620445390}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84681ec949d9e0a4aa54612193fd93e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ui_itemdisplay
 --- !u!1 &1658960364
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,8 +801,34 @@ MonoBehaviour:
     stackSize: 2
     occupyWidth: 1
     occupyHeight: 2
-    icon: {fileID: 21300000, guid: 722c7e15f37a6d94eafe336b944862b8, type: 3}
+    icon: {fileID: 21300000, guid: d823f8d8a1788f545978eef0c291a973, type: 3}
   p_items: []
+  item_bgs:
+  - width: 1
+    height: 1
+    img: {fileID: 21300000, guid: 2e6e1e9372b8f0842b6cdf04a87bcfcf, type: 3}
+  - width: 1
+    height: 2
+    img: {fileID: 21300000, guid: a276a859ba3bc744093f778f63785484, type: 3}
+  - width: 1
+    height: 3
+    img: {fileID: 21300000, guid: e250262b27cb3f0498f0210289fec60f, type: 3}
+  - width: 2
+    height: 1
+    img: {fileID: 21300000, guid: a0aead3711721b840b66ecc119bb528b, type: 3}
+  - width: 2
+    height: 2
+    img: {fileID: 21300000, guid: 6d80a946fd91cde4aabe13eeabd1dd42, type: 3}
+  - width: 2
+    height: 3
+    img: {fileID: 21300000, guid: ba455439692ac2a4f9c4aeba27e55435, type: 3}
+  - width: 3
+    height: 1
+    img: {fileID: 21300000, guid: d581fd5248a7df643835726d4238de4d, type: 3}
+  - width: 3
+    height: 2
+    img: {fileID: 21300000, guid: 5d80b4103dacea34fb415f7ab0969825, type: 3}
+  ins_rawInventoryCellSize: 100
 --- !u!114 &1658960367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,9 +976,7 @@ MonoBehaviour:
     cellIndex: 0
     extendHorizontal: 0
     extendVertical: 0
-  rt_itemIcon: {fileID: 1620445391}
-  i_itemIcon: {fileID: 0}
-  inventoryCellSize: 100
+  itemDisplay: {fileID: 1620445392}
   originOfHeldItem: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -16,7 +16,7 @@ public class ui_inventorywidget : MonoBehaviour
 
 
     public Func<inv_inventorydata> source;
-    private inv_inventorydata cachedSourceData;
+    public inv_inventorydata cachedSourceData;
 
     public Transform t_cellContainer;
 

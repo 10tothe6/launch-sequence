@@ -6,12 +6,15 @@ public class ui_inventoryslot : MonoBehaviour
     private inv_itemstack cachedItemData;
     private RectTransform rt;
 
-    private Image i_itemIcon;
-    private RectTransform rt_itemIcon;
+
+
     public GameObject p_itemIcon;
+    private ui_itemdisplay itemDisplay;
 
     private int cellIndex;
     private ui_inventorywidget parentWidget;
+
+
 
     void Awake()
     {
@@ -28,34 +31,43 @@ public class ui_inventoryslot : MonoBehaviour
 
         g_itemIcon.transform.position = transform.position;
 
-        i_itemIcon = g_itemIcon.GetComponent<Image>();
-        rt_itemIcon = g_itemIcon.GetComponent<RectTransform>();
-
-        g_itemIcon.SetActive(true); // no item
-        i_itemIcon.color = new Color(1,1,1,0f); // transparent, but there, icon
-        rt_itemIcon.sizeDelta = new Vector2(rt.sizeDelta.x * 1, rt.sizeDelta.y * 1);
+        itemDisplay = g_itemIcon.GetComponent<ui_itemdisplay>();
+        itemDisplay.Draw(null);
+        UpdateHiddenState();
     }
 
     // THERE IS NO CLEAR ITEM FUNCTION, JUST PASS 'null' IN HERE
     public void SetItem(inv_itemstack data)
     {
+        // update the cache
         cachedItemData = data;
 
-        // first, the dimensions
-        if (data != null)
-        {
-            rt_itemIcon.sizeDelta = new Vector2(rt.sizeDelta.x * data.extendHorizontal, rt.sizeDelta.y * data.extendVertical);
-        } else
-        {
-            rt_itemIcon.sizeDelta = new Vector2(rt.sizeDelta.x * 1, rt.sizeDelta.y * 1);
-        }
-        i_itemIcon.gameObject.SetActive(data != null);
-        i_itemIcon.color = Color.white;
+        // literally everything else is handled by ui_itemdisplay
+        itemDisplay.Draw(data);
 
         // setting what the button does
         if (data != null)
         {
-            i_itemIcon.GetComponent<ui_button>().onPress.AddListener(() => HandleInteractionWithSlot());
+            itemDisplay.GetComponent<ui_button>().onPress.AddListener(() => HandleInteractionWithSlot());
+        }
+
+        UpdateHiddenState();
+    }
+
+    private void UpdateHiddenState()
+    {
+        if (parentWidget.cachedSourceData.cellsTaken[cellIndex])
+        {
+            if (cachedItemData != null)
+            {
+                itemDisplay.Show();
+            } else
+            {
+                itemDisplay.Hide();
+            }
+        } else
+        {
+            itemDisplay.Show();
         }
     }
 

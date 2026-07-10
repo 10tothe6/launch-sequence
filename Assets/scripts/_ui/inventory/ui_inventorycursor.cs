@@ -6,10 +6,7 @@ public class ui_inventorycursor : MonoBehaviour
     [HideInInspector]
     public inv_itemstack heldItem;
 
-    public RectTransform rt_itemIcon;
-    public Image i_itemIcon;
-
-    public float inventoryCellSize;
+    public ui_itemdisplay itemDisplay;
 
     public crft_inventory originOfHeldItem;
 
@@ -33,17 +30,12 @@ public class ui_inventorycursor : MonoBehaviour
     {
         if (heldItem == null)
         {
-            // just show nothing
-            rt_itemIcon.sizeDelta = new Vector2(inventoryCellSize * 1, inventoryCellSize * 1); // is this really needed?
-            i_itemIcon.gameObject.SetActive(false);
+            itemDisplay.Hide();
         } else
         {
-            // first, the dimensions
-            rt_itemIcon.sizeDelta = new Vector2(inventoryCellSize * heldItem.extendHorizontal, inventoryCellSize * heldItem.extendVertical);
-            i_itemIcon.gameObject.SetActive(true);
-            i_itemIcon.color = Color.white;
-
-            // no button on the cursor
+            itemDisplay.Show();
         }
+
+        itemDisplay.Draw(heldItem);
     }
 }

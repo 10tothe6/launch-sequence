@@ -13,6 +13,8 @@ public class inv_itemdata
     public int occupyWidth;
     public int occupyHeight;
 
+    public Sprite icon;
+
     public inv_itemdata() {}
 
     public inv_itemdata(int occupyWidth, int occupyHeight)

@@ -576,7 +576,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -725,6 +725,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8230470478508286129, guid: a886673f397089b409447d7e9cfcd52f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000022888184
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -735,17 +739,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7353655538150194144, guid: a886673f397089b409447d7e9cfcd52f, type: 3}
   m_PrefabInstance: {fileID: 1620445390}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1620445392 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 897797620534142853, guid: a886673f397089b409447d7e9cfcd52f, type: 3}
-  m_PrefabInstance: {fileID: 1620445390}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &1658960364
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +790,7 @@ MonoBehaviour:
     stackSize: 2
     occupyWidth: 1
     occupyHeight: 2
+    icon: {fileID: 21300000, guid: 722c7e15f37a6d94eafe336b944862b8, type: 3}
   p_items: []
 --- !u!114 &1658960367
 MonoBehaviour:
@@ -946,8 +940,9 @@ MonoBehaviour:
     extendHorizontal: 0
     extendVertical: 0
   rt_itemIcon: {fileID: 1620445391}
-  i_itemIcon: {fileID: 1620445392}
+  i_itemIcon: {fileID: 0}
   inventoryCellSize: 100
+  originOfHeldItem: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

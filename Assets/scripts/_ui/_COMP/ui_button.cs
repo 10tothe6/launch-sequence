@@ -25,6 +25,7 @@ public class ui_button : MonoBehaviour
     public UnityEvent onPress; // Click (runs once)
     public UnityEvent<ushort> onPressSpecific;
     public UnityEvent onDrag; // Click and then move mouse away (runs once)
+    public UnityEvent<ushort> onDragSpecific;
     public UnityEvent whilePress; // Hold click (repeats)
 
     public UnityEvent onHoverEnter;
@@ -114,6 +115,7 @@ public class ui_button : MonoBehaviour
 
         if (isPressed && !CheckInteraction()) {
             onDrag.Invoke(); // Invoke the unity event that runs when you click and drag the button
+            onDragSpecific.Invoke(cachedClickType);
             isPressed = false;
         }
     }

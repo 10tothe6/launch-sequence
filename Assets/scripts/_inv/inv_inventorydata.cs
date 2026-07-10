@@ -91,6 +91,10 @@ public class inv_inventorydata
             {
                 int indexOffset = x + y * inventory_width;
 
+                if (indexOffset + data.cellIndex >= cellsTaken.Length)
+                {
+                    return false;
+                }
                 if (cellsTaken[data.cellIndex + indexOffset])
                 {
                     return false;

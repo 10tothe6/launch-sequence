@@ -36,6 +36,7 @@ public class ui_inventoryslot : MonoBehaviour
         UpdateHiddenState();
 
         itemDisplay.GetComponent<ui_button>().onPressSpecific.AddListener((x) => HandleInteractionWithSlot(x));
+        itemDisplay.GetComponent<ui_button>().onDragSpecific.AddListener((x) => HandleInteractionWithSlot(x));
     }
 
     // THERE IS NO CLEAR ITEM FUNCTION, JUST PASS 'null' IN HERE

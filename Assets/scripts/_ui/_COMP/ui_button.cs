@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class ui_button : MonoBehaviour
 {
     public bool isClickable = true;
+    public bool enablePassthrough = false;
+    public bool logWhenClicked = false;
     private bool isPressed;
 
     [Space(6)]
@@ -35,10 +37,21 @@ public class ui_button : MonoBehaviour
         i = GetComponent<Image>();
     }
 
+    private bool CheckInteraction()
+    {
+        if (enablePassthrough)
+        {
+            return ui_canvasutils.IsCursorInBounds(gameObject, true);
+        } else
+        {
+            return ui_canvasutils.IsCursorInteract(gameObject, true);
+        }
+    }
+
     void Update() {
         //if (!isClickable) {return;}
 
-        if (Input.mouseButtonDownLeft && ui_canvasutils.IsCursorInteract(gameObject, true)) {
+        if (Input.mouseButtonDownLeft && CheckInteraction()) {
             isPressed = true;
         }
 
@@ -47,7 +60,7 @@ public class ui_button : MonoBehaviour
 
              if (colorSwitch) { SetColor(pressedColor); }
         }
-        else if (ui_canvasutils.IsCursorInteract(gameObject, true)) {
+        else if (CheckInteraction()) {
             if (colorSwitch) { SetColor(hoverColor); }
             whileHover.Invoke();
             if (!isHovering) {onHoverEnter.Invoke(); isHovering = true;}
@@ -58,11 +71,11 @@ public class ui_button : MonoBehaviour
         }   
 
         if (!Input.mouseButtonDownLeft) {
-            if (isPressed && ui_canvasutils.IsCursorInBounds(gameObject, true)) { onPress.Invoke(); }
+            if (isPressed && CheckInteraction()) { onPress.Invoke(); if (logWhenClicked){Debug.Log("Click!");}}
             isPressed = false;
         }
 
-        if (isPressed && !ui_canvasutils.IsCursorInteract(gameObject, true)) {
+        if (isPressed && !CheckInteraction()) {
             onDrag.Invoke(); // Invoke the unity event that runs when you click and drag the button
             isPressed = false;
         }

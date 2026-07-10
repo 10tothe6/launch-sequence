@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +15,7 @@ public class ui_inventorywidget : MonoBehaviour
 
 
     public Func<inv_inventorydata> source;
+    //[HideInInspector]
     public inv_inventorydata cachedSourceData;
 
     public Transform t_cellContainer;
@@ -89,6 +89,7 @@ public class ui_inventorywidget : MonoBehaviour
     // if not right click, then left click
     public void HandleInteractionAtCell(int cellIndex, bool isRightClick)
     {
+        Debug.Log("handling interation with cell " + cellIndex + "...");
         // remember, we only update the data once an item has been PLACED, not removed
         // and the update is done through  an inv_inventorytransfer, NEVER here
 
@@ -97,7 +98,13 @@ public class ui_inventorywidget : MonoBehaviour
             
             if (ui_inventories.Instance.IsHoldingItem())
             {
-                
+                if (isRightClick)
+                {
+                    
+                } else
+                {
+                    
+                }
             } else
             {
                 
@@ -121,10 +128,30 @@ public class ui_inventorywidget : MonoBehaviour
         {
             if (ui_inventories.Instance.IsHoldingItem())
             {
-                
+                if (isRightClick)
+                {
+                    
+                } else
+                {
+                    inv_itemstack data = ui_inventories.Instance.cursor.heldItem;
+                    data.cellIndex = cellIndex;
+
+                    // remove the held item stack from the cursor
+                    ui_inventories.Instance.ClearCursor();
+                    // add the item to the inventory
+                    cachedSourceData.AddItem(data);
+
+                    RefreshWidget();
+                }
             } else
             {
-                
+                if (isRightClick)
+                {
+                    
+                } else
+                {
+                    
+                }
             }
         }
     }

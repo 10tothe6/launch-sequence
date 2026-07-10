@@ -81,17 +81,22 @@ public class inv_inventorydata
                 if (data.itemCount >= items[i].itemCount)
                 {
                     items.RemoveAt(i);
+
+                    // TODO: only do this if the item was actually removed, not just partly removed
+                    UpdateSelectedCellsForItem(data, false);
+
                     return; // we're done, so we do this to avoid loop issues
                 } else
                 {
                     items[i].itemCount -= data.itemCount;
+                    
+                    // TODO: only do this if the item was actually removed, not just partly removed
+                    UpdateSelectedCellsForItem(data, false);
+                    
                     return; // same story, we're done
                 }
             }
         }
-
-        // TODO: only do this if the item was actually removed, not just partly removed
-        UpdateSelectedCellsForItem(data, false);
     }
 
     // adding an item to the inventory

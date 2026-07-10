@@ -641,6 +641,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: item icon
       objectReference: {fileID: 0}
+    - target: {fileID: 3065029052639281319, guid: a886673f397089b409447d7e9cfcd52f, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282664043
+      objectReference: {fileID: 0}
     - target: {fileID: 6339561820454241625, guid: a886673f397089b409447d7e9cfcd52f, type: 3}
       propertyPath: isClickable
       value: 0

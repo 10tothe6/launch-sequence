@@ -34,6 +34,8 @@ public class ui_inventoryslot : MonoBehaviour
         itemDisplay = g_itemIcon.GetComponent<ui_itemdisplay>();
         itemDisplay.Draw(null);
         UpdateHiddenState();
+
+        itemDisplay.GetComponent<ui_button>().onPress.AddListener(() => HandleInteractionWithSlot());
     }
 
     // THERE IS NO CLEAR ITEM FUNCTION, JUST PASS 'null' IN HERE
@@ -44,12 +46,6 @@ public class ui_inventoryslot : MonoBehaviour
 
         // literally everything else is handled by ui_itemdisplay
         itemDisplay.Draw(data);
-
-        // setting what the button does
-        if (data != null)
-        {
-            itemDisplay.GetComponent<ui_button>().onPress.AddListener(() => HandleInteractionWithSlot());
-        }
 
         UpdateHiddenState();
     }

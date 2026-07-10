@@ -24,12 +24,15 @@ public class ui_inventorywidget : MonoBehaviour
 
     public Transform t_itemIconContainer;
 
+    [HideInInspector]
+    public float effectiveHeight;
+
     //public float spaceBetweenCells;
 
     public void BuildMenu(Func<inv_inventorydata> source, Vector3 position)
     {
         transform.position = position;
-        
+
         this.source = source;
         UpdateCachedData();
 
@@ -50,7 +53,7 @@ public class ui_inventorywidget : MonoBehaviour
     private void BuildCellGrid()
     {
         float spaceBetweenCells = 0; // has to be zero, really
-        float cellSize = p_cell.GetComponent<RectTransform>().sizeDelta.x; // can just use x or y cuz they're square
+        float cellSize = 100f; // can just use x or y cuz they're square
 
         Vector3 positionOffset = Vector3.zero;
         if (drawCentered)
@@ -69,6 +72,9 @@ public class ui_inventorywidget : MonoBehaviour
                 g_newCell.GetComponent<ui_inventoryslot>().Initialize(t_itemIconContainer, this, i);
             }
         }
+
+        // no space between cells
+        effectiveHeight = cachedSourceData.inventory_height * cellSize;
     }
 
     void UpdateCachedData()

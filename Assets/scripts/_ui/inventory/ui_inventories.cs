@@ -38,19 +38,26 @@ public class ui_inventories : MonoBehaviour
 
     public ui_inventorycursor cursor;
 
+    public float spacingBetweenInventories;
+
     public void BuildMenus(Func<inv_inventorydata>[] sources)
     {
         Vector3 v = new Vector3(Screen.width / 2f, 200f, 0);
 
         for (int i = 0; i < sources.Length; i++)
         {
-            // TODO: proper positioning
+            if (i > 0)
+            {
+                v += Vector3.up * (t_inventoryContainer.GetChild(i-1).GetComponent<ui_inventorywidget>().effectiveHeight/2f);
+            }
 
             GameObject g_newWidget = Instantiate(p_inventory, t_inventoryContainer);
 
             g_newWidget.GetComponent<ui_inventorywidget>().BuildMenu(sources[i], v);
 
-            v += Vector3.up * 500f;
+            v += Vector3.up * (g_newWidget.GetComponent<ui_inventorywidget>().effectiveHeight/2f + spacingBetweenInventories);
+
+            g_newWidget.transform.position = v;
         }
     }
 

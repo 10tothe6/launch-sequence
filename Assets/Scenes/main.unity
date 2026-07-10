@@ -25987,6 +25987,7 @@ MonoBehaviour:
   t_inventoryContainer: {fileID: 1758688494}
   p_inventory: {fileID: 4025877094327617562, guid: dd2e240aa7e8bf8458f935b97f5c5cff, type: 3}
   cursor: {fileID: 983561693}
+  spacingBetweenInventories: 0
 --- !u!1 &2000053511
 GameObject:
   m_ObjectHideFlags: 0

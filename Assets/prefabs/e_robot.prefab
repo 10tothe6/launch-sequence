@@ -994,7 +994,6 @@ MonoBehaviour:
   lockCameraHorizontal: 0
   lockCameraVertical: 0
   lockMovement: 0
-  lockCursor: 1
   t_foot: {fileID: 3478920282292739920}
   raycastDistanceFromFoot: 0.075
   crouchPercentHeight: 0.5
@@ -1233,5 +1232,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::player_partmanager
   defaultPartNames:
   - player_tank
-  - player_inventory
   - player_antenna
+  - player_inventory
+  - player_inventory

@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         if (g_transitionScreen != null) {HardSetTransition(false);}
         if (g_advancementsWidget != null) {g_advancementsWidget.SetActive(false);}
+        if (g_characterEditor != null) {g_characterEditor.SetActive(false);}
         
         LoadMenuObjects();
 
@@ -89,6 +90,61 @@ public class UIManager : MonoBehaviour
 
     public GameObject g_advancementsWidget;
     public GameObject p_advancementPopup;
+
+    public GameObject g_characterEditor;
+
+    #region LOCKING
+
+    public void LockPlayer()
+    {
+        // freeze player movement and looking
+        PlayerController comp = LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>();
+
+        comp.lockCameraHorizontal = true;
+        comp.lockCameraVertical = true;
+        comp.lockMovement = true;
+
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void UnlockPlayer()
+    {
+        // freeze player movement and looking
+        PlayerController comp = LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>();
+
+        comp.lockCameraHorizontal = false;
+        comp.lockCameraVertical = false;
+        comp.lockMovement = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    # endregion
+
+    public void ToggleCharacterEditor()
+    {
+        if (g_characterEditor.activeSelf)
+        {
+            CloseCharacterEditor();
+        } else
+        {
+            OpenCharacterEditor();
+        }
+    }
+
+    public void OpenCharacterEditor()
+    {
+        g_characterEditor.SetActive(true);
+
+        // change the player's camera
+        CameraController.SetControlMode(CameraControlMode.CharacterEditor);
+    }
+    public void CloseCharacterEditor()
+    {
+        g_characterEditor.SetActive(false);
+
+        CameraController.SetControlMode(CameraControlMode.PlayerFirstPerson);
+    }
 
 
     #region ADVANCEMENTS
@@ -267,14 +323,7 @@ public class UIManager : MonoBehaviour
     {
         inventory.gameObject.SetActive(true);
 
-        // freeze player movement and looking
-        PlayerController comp = LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>();
-
-        comp.lockCameraHorizontal = true;
-        comp.lockCameraVertical = true;
-        comp.lockMovement = true;
-
-        Cursor.lockState = CursorLockMode.None;
+        LockPlayer();
     }
     public void CloseInventory()
     {
@@ -283,14 +332,7 @@ public class UIManager : MonoBehaviour
 
         inventory.gameObject.SetActive(false);
 
-        // unlock everything from the above function
-        PlayerController comp = LocalPlayer.localClient.controllingEntity.GetComponent<PlayerController>();
-
-        comp.lockCameraHorizontal = false;
-        comp.lockCameraVertical = false;
-        comp.lockMovement = false;
-
-        Cursor.lockState = CursorLockMode.Locked;
+        UnlockPlayer();
     }
 
     public void EnterMainMenu()
@@ -347,12 +389,13 @@ public class UIManager : MonoBehaviour
 
             if (Keyboard.current.bKey.wasPressedThisFrame)
             {
-                
+                // toggle build menu
             }
 
             if (Keyboard.current.cKey.wasPressedThisFrame)
             {
-                // TODO: enter character editor
+               // enter/exit the character editor
+               ToggleCharacterEditor();
             }
 
             // map-related keypress checks

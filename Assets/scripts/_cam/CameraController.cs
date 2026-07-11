@@ -9,6 +9,7 @@ public enum CameraControlMode
     PlayerFirstPerson,
     BodyEditor,
     MainMenu,
+    CharacterEditor,
 }
 
 public class CameraController : MonoBehaviour

@@ -42,7 +42,7 @@ public class ui_inventories : MonoBehaviour
 
     public void BuildMenus(Func<inv_inventorydata>[] sources)
     {
-        Vector3 v = new Vector3(Screen.width / 2f, 200f, 0);
+        Vector3 v = new Vector3(Screen.width / 2f, 100f, 0);
 
         for (int i = 0; i < sources.Length; i++)
         {

@@ -10241,7 +10241,7 @@ MonoBehaviour:
   t_player: {fileID: 0}
   cullingMask:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 1399
 --- !u!114 &751265232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10256,7 +10256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::cam_firstperson
   cullingMask:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 1399
   t_controlling: {fileID: 0}
   controller: {fileID: 0}
 --- !u!114 &751265233
@@ -27826,6 +27826,12 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 13a8d56f18e9d9848b0f5c937485f5f1, type: 3}
   - isPart: 0
     item_name: test_item_3
+    stackSize: 100
+    occupyWidth: 1
+    occupyHeight: 1
+    icon: {fileID: 21300000, guid: 707af0890d673bb45a2d57b9f788af8e, type: 3}
+  - isPart: 0
+    item_name: portable_battery
     stackSize: 100
     occupyWidth: 1
     occupyHeight: 1

@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5181277051763429519}
   - component: {fileID: 2299938871442457569}
   - component: {fileID: 7448697492128442888}
+  - component: {fileID: 4626843371475963148}
   m_Layer: 8
   m_Name: part_player_inventory
   m_TagString: Untagged
@@ -100,6 +101,24 @@ MonoBehaviour:
     inventory_height: 1
     cellsTaken: 
     items: []
+--- !u!114 &4626843371475963148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415345247471772869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2132ad59f84fa86409e5f9d031e8102c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::test_fillwithitems
+  items:
+  - itemIndex: 3
+    itemCount: 1
+    cellIndex: 0
+    extendHorizontal: 1
+    extendVertical: 1
 --- !u!1 &8158663411790936945
 GameObject:
   m_ObjectHideFlags: 0

@@ -138,6 +138,9 @@ public class UIManager : MonoBehaviour
 
         // change the player's camera
         CameraController.SetControlMode(CameraControlMode.CharacterEditor);
+
+        OpenInventory();
+        ui_inventories.Instance.OpenPlayerInventory();
     }
     public void CloseCharacterEditor()
     {

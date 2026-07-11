@@ -118,7 +118,15 @@ public class e_craft : MonoBehaviour
         }
     }
 
-    public void AddPart(crft_genericpartdata partData)
+
+    // wrapper function
+    public GameObject AddPart(string partName)
+    {
+        crft_genericpartdata data = new crft_genericpartdata(partName, Vector3.zero);
+        return AddPart(data);
+    }
+
+    public GameObject AddPart(crft_genericpartdata partData)
     {
         GameObject g_newPart = Instantiate(PartManager.Instance.GetPartPrefabFromName(partData.partName));
         g_newPart.transform.SetParent(t_partContainer);
@@ -128,5 +136,7 @@ public class e_craft : MonoBehaviour
         parts.Add(g_newPart.GetComponent<crft_genericpart>());
 
         UpdateCachedResourceCounts();
+
+        return g_newPart;
     }
 }

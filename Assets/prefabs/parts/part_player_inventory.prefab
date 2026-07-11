@@ -115,7 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::test_fillwithitems
   items:
   - itemIndex: 3
-    itemCount: 1
+    itemCount: 50
     cellIndex: 0
     extendHorizontal: 1
     extendVertical: 1

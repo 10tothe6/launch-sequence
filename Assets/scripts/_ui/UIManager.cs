@@ -141,10 +141,15 @@ public class UIManager : MonoBehaviour
 
         OpenInventory();
         ui_inventories.Instance.OpenPlayerInventory();
+
+        g_characterEditor.GetComponent<ui_charactereditor>().isActive = true;
     }
     public void CloseCharacterEditor()
     {
+        g_characterEditor.GetComponent<ui_charactereditor>().isActive = false;
+
         g_characterEditor.SetActive(false);
+        UIManager.Instance.CloseInventory();
 
         CameraController.SetControlMode(CameraControlMode.PlayerFirstPerson);
     }

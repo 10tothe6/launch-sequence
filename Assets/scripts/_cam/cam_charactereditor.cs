@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class cam_charactereditor : MonoBehaviour
 {
-
+    public LayerMask cullingMask; 
 
     public float cameraRotateSpeed;
     [HideInInspector]
@@ -34,6 +34,8 @@ public class cam_charactereditor : MonoBehaviour
 
     public void EnterControl()
     {
+        CameraController.cam_main.cullingMask = cullingMask;
+        
         // (keeping the camera as a child of the player)
 
         transform.parent.localEulerAngles = Vector3.zero;

@@ -1,14 +1,17 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ui_scannerwidget : MonoBehaviour
 {
-
+    public TextMeshProUGUI tx_frequencyDisplay;
     public Transform t_scannerParent;
     public Transform[] t_scannerNestPoints;
 
     [Range(0,1)]
     public float signalStrength;
+    [Range(0,1.99f)]
+    public float frequency;
 
     public ui_linerenderer waveform;
     public int waveformPointCount;
@@ -18,6 +21,7 @@ public class ui_scannerwidget : MonoBehaviour
     public float freq;
     public float amp;
     public float time_scale;
+    public float frequency_scroll_speed;
 
     [Space(12)]
     public RectTransform rt_strengthBar;
@@ -31,6 +35,20 @@ public class ui_scannerwidget : MonoBehaviour
 
     void Update()
     {
+        tx_frequencyDisplay.text = (Mathf.Round(frequency * 100f) / 100f).ToString();
+
+        if (tx_frequencyDisplay.text.Length > 4)
+        {
+            tx_frequencyDisplay.text = tx_frequencyDisplay.text.Substring(0, 4);
+        }
+        else if (tx_frequencyDisplay.text.Length < 3)
+        {
+            tx_frequencyDisplay.text += ".00";
+        } else if (tx_frequencyDisplay.text.Length < 4)
+        {
+            tx_frequencyDisplay.text += 0;
+        }
+
         // here is the actual logic that decides what the signal strength should be
         num_precisevector3[] signalEmitterPositions = new num_precisevector3[] {new num_precisevector3(Vector3.zero)};
 
@@ -67,6 +85,10 @@ public class ui_scannerwidget : MonoBehaviour
         if (Keyboard.current.leftAltKey.isPressed)
         {
             t_scannerParent.position = t_scannerNestPoints[1].position;
+
+            // scrolling to change the frequency
+            frequency += Mathf.Round(Input.scrollWheelAxis * frequency_scroll_speed * 100f) / 100f;
+            frequency = Mathf.Clamp(frequency, 0, 1.99f);
         } else
         {
             t_scannerParent.position = t_scannerNestPoints[0].position;

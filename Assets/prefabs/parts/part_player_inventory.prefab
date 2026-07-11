@@ -84,6 +84,7 @@ MonoBehaviour:
     partName: 
     position: {x: 0, y: 0, z: 0}
   connectedParts: []
+  t_snapPoints: []
 --- !u!114 &7448697492128442888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,8 +116,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::test_fillwithitems
   items:
   - itemIndex: 3
-    itemCount: 50
+    itemCount: 3
     cellIndex: 0
+    extendHorizontal: 1
+    extendVertical: 1
+  - itemIndex: 2
+    itemCount: 2
+    cellIndex: 1
     extendHorizontal: 1
     extendVertical: 1
 --- !u!1 &8158663411790936945

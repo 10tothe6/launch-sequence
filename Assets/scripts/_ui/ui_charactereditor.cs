@@ -26,13 +26,16 @@ public class ui_charactereditor : MonoBehaviour
             {
                 if (inventoryCursor.heldItem != null)
                 {
-                    // the player is hovering an item over the player, so we take the item from the cursor,
-                    //  and spawn in a part so they can see where they're placing
-                    itemCache = new inv_itemstack(inventoryCursor.heldItem);
-                    ui_inventories.Instance.ClearCursor();
+                    if (inventoryCursor.heldItem.GetData().isPart) // obv can't place the "part" if its not a fucking part
+                    {
+                        // the player is hovering an item over the player, so we take the item from the cursor,
+                        //  and spawn in a part so they can see where they're placing
+                        itemCache = new inv_itemstack(inventoryCursor.heldItem);
+                        ui_inventories.Instance.ClearCursor();
 
-                    // just add a part to the player's craft, and keep a reference so that we can
-                   g_previewPart = LocalPlayer.localClient.controllingEntity.GetComponent<e_craft>().AddPart(itemCache.GetData().item_name);
+                        // just add a part to the player's craft, and keep a reference so that we can
+                        g_previewPart = LocalPlayer.localClient.controllingEntity.GetComponent<e_craft>().AddPart(itemCache.GetData().item_name);
+                    }   
                 } else if (g_previewPart != null)
                 {
                     RaycastHit hit;
@@ -40,7 +43,7 @@ public class ui_charactereditor : MonoBehaviour
                     // the 1f should be replaced with the viewdistance from the camera script
                     if (util_physics.MouseRaycast(out hit, 10f, whatIsPlaceable))
                     {
-                        g_previewPart.transform.position = hit.point;
+                        g_previewPart.GetComponent<crft_genericpart>().PositionPart(hit.point, hit.normal);
                         
 
                         if (Input.mouseButtonDownLeft)

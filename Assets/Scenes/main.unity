@@ -27768,7 +27768,7 @@ MonoBehaviour:
     occupyWidth: 1
     occupyHeight: 1
     icon: {fileID: 21300000, guid: 707af0890d673bb45a2d57b9f788af8e, type: 3}
-  - isPart: 0
+  - isPart: 1
     item_name: personal_battery
     stackSize: 100
     occupyWidth: 1

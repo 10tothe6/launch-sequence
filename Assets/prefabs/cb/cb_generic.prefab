@@ -401,19 +401,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ae2ee8f5ab4a44faeb03806e3ea3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_marchedbody
+  eComp: {fileID: 0}
   enableChunkCulling: 0
   chunkCullingAngle: 0
-  updateChunksPeriodically: 0
+  updateChunksPeriodically: 1
   useDirectObject: 0
   t_decidingObject: {fileID: 0}
   p_chunk: {fileID: 6930918290991104834, guid: 1789123385bc86441b212c3470db02c2, type: 3}
   t_chunkContainer: {fileID: 4434315889086815086}
-  startingResolution: 20
+  startingResolution: 5
   chunks: []
   newChunks: []
   parentChunk: {fileID: 0}
   detailLevelThresholds:
   - 0
+  - 450000
 --- !u!114 &4949187247040308731
 MonoBehaviour:
   m_ObjectHideFlags: 0

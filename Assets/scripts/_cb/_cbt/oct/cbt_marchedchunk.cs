@@ -28,6 +28,12 @@ public class cbt_marchedchunk : MonoBehaviour
     public string hashCode; // also not super used, but i still feel its important
     public int levelOfDetail; // the LOD level of the chunk
 
+
+    private bool hasBeenConstructed; // whether the mesh has been made yet or not
+
+    private num_precisevector3 bounds_min;
+    private num_precisevector3 bounds_max;
+
     public void InitializeDirect(int startingResolution, float directRadius)
     {
         this.bodyIndex = -1;
@@ -50,6 +56,8 @@ public class cbt_marchedchunk : MonoBehaviour
 
     private void ConstructMesh()
     {
+        hasBeenConstructed = true;
+
         // here we are creating the bounds of the chunk
         // in order to fit the planet, the square must have a side length equal to the planet's equatorial radius plus a bit to allow for mountains and such
 
@@ -63,6 +71,9 @@ public class cbt_marchedchunk : MonoBehaviour
         num_precisevector3 min = new num_precisevector3(-box_extent, -box_extent, -box_extent);
         num_precisevector3 max = new num_precisevector3(box_extent, box_extent, box_extent);
 
+        this.bounds_min = min;
+        this.bounds_max = max;
+
         mcu.Generate(min, max, resolution);
     }
 
@@ -74,5 +85,25 @@ public class cbt_marchedchunk : MonoBehaviour
     public void Subdivide()
     {
         mcu.Split();
+    }
+
+
+    // used to check for subdivision
+    public bool IsLocalPlayerInBounds()
+    {
+        if (!hasBeenConstructed) {return false;}
+        if (LocalPlayer.localClient == null) {return false;}
+        if (LocalPlayer.localClient.controllingEntity == null) {return false;}
+
+        num_precisevector3 playerPos = LocalPlayer.localClient.controllingEntity.data.GetPosition();
+
+        num_precisevector3 actual_min = bounds_min.Add(body.eComp.data.GetPosition());
+        num_precisevector3 actual_max = bounds_max.Add(body.eComp.data.GetPosition());
+
+        // Debug.Log(actual_min.AsString());
+        // Debug.Log(actual_max.AsString());
+        // Debug.Log(playerPos.AsString());
+
+        return num_precisevector3.BoundingBoxCheck(actual_min, actual_max, playerPos);
     }
 }

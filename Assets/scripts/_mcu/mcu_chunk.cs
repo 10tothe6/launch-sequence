@@ -31,9 +31,9 @@ public class mcu_chunk : MonoBehaviour
 
         size = Mathf.Abs(max.x.Sub(min.x).AsFloat());
 
-        Debug.Log(min.x.AsFloat());
-        Debug.Log(max.x.AsFloat());
-        Debug.Log(size);
+        // Debug.Log(min.x.AsFloat());
+        // Debug.Log(max.x.AsFloat());
+        // Debug.Log(size);
 
         // Debug.Log(minimumPoint.ToVector3());
         // Debug.Log(maximumPoint.ToVector3());

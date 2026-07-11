@@ -15,6 +15,8 @@ using System.Collections.Generic;
 
 public class cbt_marchedbody : MonoBehaviour
 {
+    public e_genericentity eComp;
+
     public bool enableChunkCulling;
     public float chunkCullingAngle; // anything at a greater angle will be culled
     public bool updateChunksPeriodically;
@@ -45,6 +47,13 @@ public class cbt_marchedbody : MonoBehaviour
 
 
     public float[] detailLevelThresholds;
+
+
+    void Awake()
+    {
+        eComp = GetComponent<e_genericentity>();
+    }
+
 
     public void Initialize(int bodyIndex)
     {
@@ -109,10 +118,20 @@ public class cbt_marchedbody : MonoBehaviour
     void UpdateAllChunks()
     {
         // here is where the LOD management gets done
+        
+        // note that this process is different from the quadtree system:
+        // instead of checking distances to chunks we're simply checking which chunks the player is "inside" of,
+        // and subdividing those ones
 
         foreach (cbt_marchedchunk current in chunks)
         {
-            
+            if (current.levelOfDetail > 0 && current.IsLocalPlayerInBounds() && current.mcu.isVisible)
+            {
+                // player is within the bounds of the chunk, meaning we subdivide
+                current.Subdivide();
+
+                cmd.LogRaw("SUBDIVIDING...", Color.limeGreen);
+            }
         }
     }
 }

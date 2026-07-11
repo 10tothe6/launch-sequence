@@ -94,6 +94,8 @@ public class cbt_marchedbody : MonoBehaviour
 
         // we do still have hashcodes though
         parentChunk.hashCode = null;
+
+        chunks.Add(parentChunk);
     }
 
     void FixedUpdate()

@@ -65,4 +65,9 @@ public class cbt_marchedchunk : MonoBehaviour
 
         mcu.Generate(min, max, resolution);
     }
+
+    public void SetDebugColor(Color col)
+    {
+        mcu.rend.mr.material.color = col;
+    }
 }

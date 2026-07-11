@@ -16,6 +16,7 @@ public class mcu_drawmesh : MonoBehaviour
     public bool showGridLines;
 
     public MeshFilter mf;
+    public MeshRenderer mr;
 
     // these are more like resolutions
     public int xSize;
@@ -48,6 +49,7 @@ public class mcu_drawmesh : MonoBehaviour
     void Awake()
     {
         mf = GetComponent<MeshFilter>();
+        mr = GetComponent<MeshRenderer>();
     }
 
     public void Initialize(float[,,] points, 

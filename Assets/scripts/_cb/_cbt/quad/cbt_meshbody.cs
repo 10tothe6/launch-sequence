@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 // replacing the 'Planet.cs' script from previous iterations with this more organized, better-named one
 
+// 07/10:
+// I'm making a SEPARATE script for the marching cubes implementation
+
 public class cbt_meshbody : MonoBehaviour
 {
     public bool useTemporaryPerlin;
@@ -114,7 +117,7 @@ public class cbt_meshbody : MonoBehaviour
 
     public void UpdateAllChunks()
     {
-        // oh god, remember when I used to use foreach loops?
+        // oh god, remember when I used to use foreach loops? (for EVERYTHING)
         // fuck it im keeping it in
         foreach (cbt_meshchunk current in chunks)
         {   

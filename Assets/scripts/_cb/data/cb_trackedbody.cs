@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Data.Common;
-using NUnit.Framework;
 using UnityEngine;
 
 public class cb_trackedbody : MonoBehaviour
@@ -13,53 +11,14 @@ public class cb_trackedbody : MonoBehaviour
     // a way of storing moons so they don't need to be accessed through the function all the time
     public cb_trackedbody[] naturalSatellites;
 
-    public void Initialize(string name, int parentIndex, ushort bodyType,float baseRadius)
-    {
-        data = new cb_trackedbodydata();
-        
-        gameObject.name = name;
-        data.name = name;
-
-        // basic data
-        if (bodyType == (ushort)cb_bodytype.Stellar || bodyType == (ushort)cb_bodytype.Null)
-        {
-            data.mass = 10000000f;
-        } else if (bodyType == (ushort)cb_bodytype.Jovian || bodyType == (ushort)cb_bodytype.Terran)
-        {
-            data.mass = 20f;
-        } else
-        {
-            data.mass = 1f;
-        }
-        data.pConfig.isGrandparent = data.bodyType == (ushort)cb_bodytype.Null;
-        data.pConfig.parentIndex = parentIndex;
-        data.pConfig.selfIndex = cb_solarsystem.Instance.monoBodies.Count - 1;
-        
-
-        GenerateOrbit(baseRadius);
-        FillDataBasedOnBodyType(bodyType);
-        // this generates the actual object mesh
-        GenerateModel();
-
-        // floating entity parent (only applies to celestial bodies)
-        if (parentIndex != -1)
-        {
-            pose.data.parent = cb_solarsystem.Instance.monoBodies[parentIndex].pose;
-        }
-        
-        gameObject.GetComponent<cbr_litbody>().useIndex = true;
-        gameObject.GetComponent<cbr_litbody>().bodyIndex = data.pConfig.selfIndex;
-
-        pose.data.SetDataEntry("scaleFactor","1");
-        pose.data.SetDataEntry("defaultScale","1");
-    }
-
     public void SetActive(bool active)
     {
         // any logic to do before changing
             
         gameObject.SetActive(active);
     }
+
+    #region HELPER FUNCTIONS
     
     public bool IsSamePlanetarySystem(int otherIndex)
     {
@@ -129,12 +88,73 @@ public class cb_trackedbody : MonoBehaviour
         return sum;
     }
 
+    #endregion
+
+
+
+
+
+
+
+
+
+    #region INITIALIZATION
+
+
+    // the MASTER FUNCTION that is called to create all the planet-y things
+    public void Initialize(string name, int parentIndex, ushort bodyType,float baseRadius)
+    {
+        data = new cb_trackedbodydata();
+        
+        gameObject.name = name;
+        data.name = name;
+
+        // basic data
+        if (bodyType == (ushort)cb_bodytype.Stellar || bodyType == (ushort)cb_bodytype.Null)
+        {
+            data.mass = 10000000f;
+        } else if (bodyType == (ushort)cb_bodytype.Jovian || bodyType == (ushort)cb_bodytype.Terran)
+        {
+            data.mass = 20f;
+        } else
+        {
+            data.mass = 1f;
+        }
+        data.pConfig.isGrandparent = data.bodyType == (ushort)cb_bodytype.Null;
+        data.pConfig.parentIndex = parentIndex;
+        data.pConfig.selfIndex = cb_solarsystem.Instance.monoBodies.Count - 1;
+        
+
+        GenerateOrbit(baseRadius);
+        FillDataBasedOnBodyType(bodyType);
+        // this generates the actual object mesh
+        GenerateModel();
+
+        // floating entity parent (only applies to celestial bodies)
+        if (parentIndex != -1)
+        {
+            pose.data.parent = cb_solarsystem.Instance.monoBodies[parentIndex].pose;
+        }
+        
+        gameObject.GetComponent<cbr_litbody>().useIndex = true;
+        gameObject.GetComponent<cbr_litbody>().bodyIndex = data.pConfig.selfIndex;
+
+        pose.data.SetDataEntry("scaleFactor","1");
+        pose.data.SetDataEntry("defaultScale","1");
+    }
+
     // the physical mesh that the body will use
     public void GenerateModel()
     {
+        // approach 1: single mesh made of unity sphere
         //t_model.GetChild(0).localScale = Vector3.one * data.tConfig.equitorialRadius;
 
-        GetComponent<cbt_meshbody>().Initialize(data.pConfig.selfIndex);
+
+        // approach 2: quadtree LOD system
+        //GetComponent<cbt_meshbody>().Initialize(data.pConfig.selfIndex);
+
+        // approach 3: marching cubes motherfuckers
+        GetComponent<cbt_marchedbody>().Initialize(data.pConfig.selfIndex);
     }
 
     // handles: 
@@ -354,4 +374,6 @@ public class cb_trackedbody : MonoBehaviour
         pose.data.SetPosition(new num_precisevector3(data.pConfig.iPosition));
         pose.data.velocity = new num_precisevector3(data.pConfig.iVelocity);
     }
+
+    #endregion
 }

@@ -21,6 +21,7 @@ public class mcu_chunk : MonoBehaviour
     public Vector3 maximumPoint;
 
     public float size; // length of an edge of the cube
+    private int resolution;
 
     public void SetBounds(Vector3 min,Vector3 max)
     {
@@ -30,17 +31,19 @@ public class mcu_chunk : MonoBehaviour
         size = max.x - min.x;
     }
 
-    public void Generate(Vector3 min, Vector3 max)
+    public void Generate(Vector3 min, Vector3 max, int resolution)
     {
+        this.resolution = resolution;
         SetBounds(min,max);
-        Generate();
+        Generate(resolution);
     }
 
-    public void Generate()
+    public void Generate(int resolution)
     {
         isVisible = true;
 
-        int res = mcu_utils.chunkResolution;
+        int res = resolution;
+
         //constructing the points array for the rend
         float[,,] points = new float[res,res,res];
 
@@ -113,7 +116,7 @@ public class mcu_chunk : MonoBehaviour
 
         for (int i = 0; i < daughterChunks.Length; i++)
         {
-            daughterChunks[i].Generate();
+            daughterChunks[i].Generate(resolution);
         }
 
         rend.gameObject.SetActive(false);
@@ -134,13 +137,6 @@ public class mcu_chunk : MonoBehaviour
     // sort of a temporary way of getting point data
     float GetPoint(Vector3 pos)
     {
-        // float freq = 0.1f;
-        // float amp = 10f;
-
-        return -(Vector3.Distance(pos, Vector3.one * 5) - 4);
-
-        //return (float)p.Noise(pos.x * freq,0,pos.z * freq) * amp - pos.y + 5;
-
-        //return Mathf.Clamp(5f - pos.y,0,1);
+        return GetComponent<cbt_marchedchunk>().actualRadius - pos.x;
     }
 }

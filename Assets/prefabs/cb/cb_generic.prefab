@@ -112,6 +112,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &4737093942372561460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4434315889086815086}
+  m_Layer: 0
+  m_Name: marched chunks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4434315889086815086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4737093942372561460}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3056679450261237978}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5802140516558475203
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,6 +174,7 @@ Transform:
   m_Children:
   - {fileID: 6987787813210316347}
   - {fileID: 8116052590345554806}
+  - {fileID: 4434315889086815086}
   m_Father: {fileID: 1298731031599254677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8460234261487516770
@@ -159,6 +191,7 @@ GameObject:
   - component: {fileID: 6011434511242130393}
   - component: {fileID: -7358400810771844880}
   - component: {fileID: 5558296614578897552}
+  - component: {fileID: 7740052085127725904}
   m_Layer: 0
   m_Name: cb_generic
   m_TagString: Untagged
@@ -313,14 +346,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::e_genericentity
   data:
+    isPhysicsBased: 0
     monoComp: {fileID: 0}
-    reference: {fileID: 0}
     entityType: 1
     state: 0
     entityPrefabIndex: 0
     index: 0
     parent: {fileID: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
     velocity:
       x:
         numDecimalDigits: 4
@@ -328,10 +360,15 @@ MonoBehaviour:
         numDecimalDigits: 4
       z:
         numDecimalDigits: 4
+    hasTransformBeenUpdated: 0
   onEnterControl:
     m_PersistentCalls:
       m_Calls: []
   onExitControl:
+    m_PersistentCalls:
+      m_Calls: []
+  showEntityId: 0
+  onEntityUpdate:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5558296614578897552
@@ -351,6 +388,31 @@ MonoBehaviour:
   useIndex: 0
   bodyIndex: 0
   fullbright: 1
+--- !u!114 &7740052085127725904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ae2ee8f5ab4a44faeb03806e3ea3c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cbt_marchedbody
+  enableChunkCulling: 0
+  chunkCullingAngle: 0
+  updateChunksPeriodically: 0
+  useDirectObject: 0
+  t_decidingObject: {fileID: 0}
+  p_chunk: {fileID: 6930918290991104834, guid: 1789123385bc86441b212c3470db02c2, type: 3}
+  t_chunkContainer: {fileID: 4434315889086815086}
+  startingResolution: 5
+  chunks: []
+  newChunks: []
+  parentChunk: {fileID: 0}
+  detailLevelThresholds:
+  - 0
 --- !u!1 &8827367443003885876
 GameObject:
   m_ObjectHideFlags: 0

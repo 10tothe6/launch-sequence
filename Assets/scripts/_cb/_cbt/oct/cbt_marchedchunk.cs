@@ -75,6 +75,8 @@ public class cbt_marchedchunk : MonoBehaviour
         this.bounds_max = max;
 
         mcu.Generate(min, max, resolution);
+
+        mcu.t_chunkContainer = transform.parent;
     }
 
     public void SetDebugColor(Color col)

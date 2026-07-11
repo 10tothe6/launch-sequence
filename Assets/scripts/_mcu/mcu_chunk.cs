@@ -77,7 +77,7 @@ public class mcu_chunk : MonoBehaviour
     }
 
     // make four chunks out of a single chunk
-    public void Split()
+    public mcu_chunk[] Split(bool generateImmediately = true)
     {
         isVisible = false;
         mcu_chunk[] daughterChunks = new mcu_chunk[8];
@@ -93,8 +93,6 @@ public class mcu_chunk : MonoBehaviour
         num_precisevector3 min = minimumPoint;
         num_precisevector3 max = maximumPoint;
         num_precisevector3 half = minimumPoint.Add(maximumPoint).Div(2f);
-
-        Debug.Log(half.ToVector3());
 
         //daughterChunks[0].transform.position = new num_precisevector3(min.x,min.y,min.z).ToVector3();
         daughterChunks[0].transform.localPosition =  Vector3.zero;
@@ -139,12 +137,17 @@ public class mcu_chunk : MonoBehaviour
         daughterChunks[7].SetBounds(new num_precisevector3(min.x,half.y,half.z),
         new num_precisevector3(half.x,max.y,max.z));
 
-        for (int i = 0; i < daughterChunks.Length; i++)
+        if (generateImmediately)
         {
-            daughterChunks[i].Generate(resolution);
+            for (int i = 0; i < daughterChunks.Length; i++)
+            {
+                daughterChunks[i].Generate(resolution);
+            }
         }
 
         rend.gameObject.SetActive(false);
+
+        return daughterChunks;
     }
 
     // converting a vertex index to a 3D position,

@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
         if (g_transitionScreen != null) {HardSetTransition(false);}
         if (g_advancementsWidget != null) {g_advancementsWidget.SetActive(false);}
         if (g_characterEditor != null) {g_characterEditor.SetActive(false);}
+        if (signalScanner != null) {signalScanner.gameObject.SetActive(false);}
         
         LoadMenuObjects();
 
@@ -96,6 +97,8 @@ public class UIManager : MonoBehaviour
     // ui for the charger part (electricity)
     public ui_charger charger;
 
+    public ui_scannerwidget signalScanner;
+
 
     public void OpenChargerMenu()
     {
@@ -105,6 +108,11 @@ public class UIManager : MonoBehaviour
     {
         charger.gameObject.SetActive(false);
         // TODO: update the part
+    }
+
+    public void ToggleScanner()
+    {
+        signalScanner.gameObject.SetActive(!signalScanner.gameObject.activeSelf);
     }
 
 
@@ -419,6 +427,11 @@ public class UIManager : MonoBehaviour
             {
                // enter/exit the character editor
                ToggleCharacterEditor();
+            }
+
+            if (Keyboard.current.tKey.wasPressedThisFrame)
+            {
+                ToggleScanner();
             }
 
             // map-related keypress checks

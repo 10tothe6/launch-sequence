@@ -70,4 +70,9 @@ public class cbt_marchedchunk : MonoBehaviour
     {
         mcu.rend.mr.material.color = col;
     }
+
+    public void Subdivide()
+    {
+        mcu.Split();
+    }
 }

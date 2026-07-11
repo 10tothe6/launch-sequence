@@ -29,17 +29,19 @@ public class mcu_chunk : MonoBehaviour
         minimumPoint = min;
         maximumPoint = max;
 
-        size = max.x.Sub(min.x).AsFloat();
+        size = Mathf.Abs(max.x.Sub(min.x).AsFloat());
+
+        Debug.Log(min.x.AsFloat());
+        Debug.Log(max.x.AsFloat());
+        Debug.Log(size);
 
         // Debug.Log(minimumPoint.ToVector3());
         // Debug.Log(maximumPoint.ToVector3());
 
-        originOffset = min.Add(max).Div(2f);
-
         // could do this, but instead I'm telling the mcu chunk to move its vertices
         //transform.localPosition += min.ToVector3() - originOffset.ToVector3();
 
-        rend.SetOffset(min.ToVector3() - originOffset.ToVector3());
+        rend.SetOffset(min.ToVector3());
     }
 
     public void Generate(num_precisevector3 min, num_precisevector3 max, int resolution)
@@ -51,6 +53,8 @@ public class mcu_chunk : MonoBehaviour
 
     public void Generate(int resolution)
     {
+        this.resolution = resolution;
+        
         isVisible = true;
 
         int res = resolution;
@@ -88,40 +92,50 @@ public class mcu_chunk : MonoBehaviour
 
         num_precisevector3 min = minimumPoint;
         num_precisevector3 max = maximumPoint;
-        num_precisevector3 half = minimumPoint.Add((maximumPoint.Sub(minimumPoint))).Div(2f);
+        num_precisevector3 half = minimumPoint.Add(maximumPoint).Div(2f);
 
-        daughterChunks[0].transform.position = new num_precisevector3(min.x,min.y,min.z).ToVector3();
+        Debug.Log(half.ToVector3());
+
+        //daughterChunks[0].transform.position = new num_precisevector3(min.x,min.y,min.z).ToVector3();
+        daughterChunks[0].transform.localPosition =  Vector3.zero;
         daughterChunks[0].SetBounds(new num_precisevector3(min.x,min.y,min.z),
         new num_precisevector3(half.x,half.y,half.z));
 
-        daughterChunks[1].transform.position = new num_precisevector3(half.x,min.y,min.z).ToVector3();
+        //daughterChunks[1].transform.position = new num_precisevector3(half.x,min.y,min.z).ToVector3();
+        daughterChunks[1].transform.localPosition =  Vector3.zero;
         daughterChunks[1].SetBounds(new num_precisevector3(half.x,min.y,min.z),
         new num_precisevector3(max.x,half.y,half.z));
 
-        daughterChunks[2].transform.position = new num_precisevector3(half.x,min.y,half.z).ToVector3();
+        //daughterChunks[2].transform.position = new num_precisevector3(half.x,min.y,half.z).ToVector3();
+        daughterChunks[2].transform.localPosition =  Vector3.zero;
         daughterChunks[2].SetBounds(new num_precisevector3(half.x,min.y,half.z),
         new num_precisevector3(max.x,half.y,max.z));
 
-        daughterChunks[3].transform.position = new num_precisevector3(min.x,min.y,half.z).ToVector3();
+        //daughterChunks[3].transform.position = new num_precisevector3(min.x,min.y,half.z).ToVector3();
+        daughterChunks[3].transform.localPosition =  Vector3.zero;
         daughterChunks[3].SetBounds(new num_precisevector3(min.x,min.y,half.z),
         new num_precisevector3(half.x,half.y,max.z));
 
 
 
 
-        daughterChunks[4].transform.position = new num_precisevector3(min.x,half.y,min.z).ToVector3();
+        //daughterChunks[4].transform.position = new num_precisevector3(min.x,half.y,min.z).ToVector3();
+        daughterChunks[4].transform.localPosition =  Vector3.zero;
         daughterChunks[4].SetBounds(new num_precisevector3(min.x,half.y,min.z),
         new num_precisevector3(half.x,max.y,half.z));
 
-        daughterChunks[5].transform.position = new num_precisevector3(half.x,half.y,min.z).ToVector3();
+        //daughterChunks[5].transform.position = new num_precisevector3(half.x,half.y,min.z).ToVector3();
+        daughterChunks[5].transform.localPosition =  Vector3.zero;
         daughterChunks[5].SetBounds(new num_precisevector3(half.x,half.y,min.z),
         new num_precisevector3(max.x,max.y,half.z));
 
-        daughterChunks[6].transform.position = new num_precisevector3(half.x,half.y,half.z).ToVector3();
+        //daughterChunks[6].transform.position = new num_precisevector3(half.x,half.y,half.z).ToVector3();
+        daughterChunks[6].transform.localPosition =  Vector3.zero;
         daughterChunks[6].SetBounds(new num_precisevector3(half.x,half.y,half.z),
         new num_precisevector3(max.x,max.y,max.z));
 
-        daughterChunks[7].transform.position = new num_precisevector3(min.x,half.y,half.z).ToVector3();
+        //daughterChunks[7].transform.position = new num_precisevector3(min.x,half.y,half.z).ToVector3();
+        daughterChunks[7].transform.localPosition =  Vector3.zero;
         daughterChunks[7].SetBounds(new num_precisevector3(min.x,half.y,half.z),
         new num_precisevector3(half.x,max.y,max.z));
 

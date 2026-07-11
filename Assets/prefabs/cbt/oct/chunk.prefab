@@ -168,6 +168,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   children: []
   directRadius: 0
+  actualRadius: 0
   hashCode: 
   levelOfDetail: 0
 --- !u!114 &3982085352551527038
@@ -186,6 +187,18 @@ MonoBehaviour:
   p_chunk: {fileID: 6930918290991104834}
   t_chunkContainer: {fileID: 0}
   rend: {fileID: 4782539174737545612}
-  minimumPoint: {x: 0, y: 0, z: 0}
-  maximumPoint: {x: 0, y: 0, z: 0}
+  minimumPoint:
+    x:
+      numDecimalDigits: 4
+    y:
+      numDecimalDigits: 4
+    z:
+      numDecimalDigits: 4
+  maximumPoint:
+    x:
+      numDecimalDigits: 4
+    y:
+      numDecimalDigits: 4
+    z:
+      numDecimalDigits: 4
   size: 10

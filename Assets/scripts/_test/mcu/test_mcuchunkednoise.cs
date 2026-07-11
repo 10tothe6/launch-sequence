@@ -17,7 +17,7 @@ public class test_mcuchunkednoise : MonoBehaviour
     void Test()
     {
         // last number (10) is resolution
-        chunk.Generate(Vector3.zero, Vector3.one * 10f, 10);
+        chunk.Generate(num_precisevector3.Zero(), num_precisevector3.One().Mul(10f), 10);
     }
 
     void Update()

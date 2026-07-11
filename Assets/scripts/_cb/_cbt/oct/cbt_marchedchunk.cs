@@ -28,6 +28,15 @@ public class cbt_marchedchunk : MonoBehaviour
     public string hashCode; // also not super used, but i still feel its important
     public int levelOfDetail; // the LOD level of the chunk
 
+    public void InitializeDirect(int startingResolution, float directRadius)
+    {
+        this.bodyIndex = -1;
+        
+        this.resolution = startingResolution;
+        this.directRadius = directRadius;
+
+        ConstructMesh();
+    }
 
     public void Initialize(int startingResolution, int bodyIndex)
     {
@@ -48,10 +57,11 @@ public class cbt_marchedchunk : MonoBehaviour
         this.actualRadius = rad;
 
         // this 'extent' value is half of the side length
-        float box_extent = rad + 5000 * WorldData.universalScaleFactor; // 5 km margin
+        //float box_extent = rad + 5000 * WorldData.universalScaleFactor; // 5 km margin
+        float box_extent = rad;
 
-        Vector3 min = new Vector3(-box_extent, -box_extent, -box_extent);
-        Vector3 max = new Vector3(box_extent, box_extent, box_extent);
+        num_precisevector3 min = new num_precisevector3(-box_extent, -box_extent, -box_extent);
+        num_precisevector3 max = new num_precisevector3(box_extent, box_extent, box_extent);
 
         mcu.Generate(min, max, resolution);
     }

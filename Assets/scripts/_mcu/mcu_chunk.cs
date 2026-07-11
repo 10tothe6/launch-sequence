@@ -17,21 +17,28 @@ public class mcu_chunk : MonoBehaviour
 
     // the coordinates that the chunk represents, in whatever space we're dealing with
     // for testing this is just engine-space but in-game this is planet-space
-    public Vector3 minimumPoint;
-    public Vector3 maximumPoint;
+    public num_precisevector3 minimumPoint;
+    public num_precisevector3 maximumPoint;
+    private num_precisevector3 originOffset;
 
     public float size; // length of an edge of the cube
     private int resolution;
 
-    public void SetBounds(Vector3 min,Vector3 max)
+    public void SetBounds(num_precisevector3 min,num_precisevector3 max)
     {
         minimumPoint = min;
         maximumPoint = max;
 
-        size = max.x - min.x;
+        size = max.x.Sub(min.x).AsFloat();
+
+        // Debug.Log(minimumPoint.ToVector3());
+        // Debug.Log(maximumPoint.ToVector3());
+
+        originOffset = min.Add(max).Div(2f);
+        transform.localPosition += min.ToVector3() - originOffset.ToVector3();
     }
 
-    public void Generate(Vector3 min, Vector3 max, int resolution)
+    public void Generate(num_precisevector3 min, num_precisevector3 max, int resolution)
     {
         this.resolution = resolution;
         SetBounds(min,max);
@@ -75,44 +82,44 @@ public class mcu_chunk : MonoBehaviour
         // daughter chunks are indexed in exactly the same way as vertices on a cube
         // see (mcu_utils for the convention)
 
-        Vector3 min = minimumPoint;
-        Vector3 max = maximumPoint;
-        Vector3 half = minimumPoint + (maximumPoint - minimumPoint) / 2f;
+        num_precisevector3 min = minimumPoint;
+        num_precisevector3 max = maximumPoint;
+        num_precisevector3 half = minimumPoint.Add((maximumPoint.Sub(minimumPoint))).Div(2f);
 
-        daughterChunks[0].transform.position = new Vector3(min.x,min.y,min.z);
-        daughterChunks[0].SetBounds(new Vector3(min.x,min.y,min.z),
-        new Vector3(half.x,half.y,half.z));
+        daughterChunks[0].transform.position = new num_precisevector3(min.x,min.y,min.z).ToVector3();
+        daughterChunks[0].SetBounds(new num_precisevector3(min.x,min.y,min.z),
+        new num_precisevector3(half.x,half.y,half.z));
 
-        daughterChunks[1].transform.position = new Vector3(half.x,min.y,min.z);
-        daughterChunks[1].SetBounds(new Vector3(half.x,min.y,min.z),
-        new Vector3(max.x,half.y,half.z));
+        daughterChunks[1].transform.position = new num_precisevector3(half.x,min.y,min.z).ToVector3();
+        daughterChunks[1].SetBounds(new num_precisevector3(half.x,min.y,min.z),
+        new num_precisevector3(max.x,half.y,half.z));
 
-        daughterChunks[2].transform.position = new Vector3(half.x,min.y,half.z);
-        daughterChunks[2].SetBounds(new Vector3(half.x,min.y,half.z),
-        new Vector3(max.x,half.y,max.z));
+        daughterChunks[2].transform.position = new num_precisevector3(half.x,min.y,half.z).ToVector3();
+        daughterChunks[2].SetBounds(new num_precisevector3(half.x,min.y,half.z),
+        new num_precisevector3(max.x,half.y,max.z));
 
-        daughterChunks[3].transform.position = new Vector3(min.x,min.y,half.z);
-        daughterChunks[3].SetBounds(new Vector3(min.x,min.y,half.z),
-        new Vector3(half.x,half.y,max.z));
-
-
+        daughterChunks[3].transform.position = new num_precisevector3(min.x,min.y,half.z).ToVector3();
+        daughterChunks[3].SetBounds(new num_precisevector3(min.x,min.y,half.z),
+        new num_precisevector3(half.x,half.y,max.z));
 
 
-        daughterChunks[4].transform.position = new Vector3(min.x,half.y,min.z);
-        daughterChunks[4].SetBounds(new Vector3(min.x,half.y,min.z),
-        new Vector3(half.x,max.y,half.z));
 
-        daughterChunks[5].transform.position = new Vector3(half.x,half.y,min.z);
-        daughterChunks[5].SetBounds(new Vector3(half.x,half.y,min.z),
-        new Vector3(max.x,max.y,half.z));
 
-        daughterChunks[6].transform.position = new Vector3(half.x,half.y,half.z);
-        daughterChunks[6].SetBounds(new Vector3(half.x,half.y,half.z),
-        new Vector3(max.x,max.y,max.z));
+        daughterChunks[4].transform.position = new num_precisevector3(min.x,half.y,min.z).ToVector3();
+        daughterChunks[4].SetBounds(new num_precisevector3(min.x,half.y,min.z),
+        new num_precisevector3(half.x,max.y,half.z));
 
-        daughterChunks[7].transform.position = new Vector3(min.x,half.y,half.z);
-        daughterChunks[7].SetBounds(new Vector3(min.x,half.y,half.z),
-        new Vector3(half.x,max.y,max.z));
+        daughterChunks[5].transform.position = new num_precisevector3(half.x,half.y,min.z).ToVector3();
+        daughterChunks[5].SetBounds(new num_precisevector3(half.x,half.y,min.z),
+        new num_precisevector3(max.x,max.y,half.z));
+
+        daughterChunks[6].transform.position = new num_precisevector3(half.x,half.y,half.z).ToVector3();
+        daughterChunks[6].SetBounds(new num_precisevector3(half.x,half.y,half.z),
+        new num_precisevector3(max.x,max.y,max.z));
+
+        daughterChunks[7].transform.position = new num_precisevector3(min.x,half.y,half.z).ToVector3();
+        daughterChunks[7].SetBounds(new num_precisevector3(min.x,half.y,half.z),
+        new num_precisevector3(half.x,max.y,max.z));
 
         for (int i = 0; i < daughterChunks.Length; i++)
         {
@@ -124,19 +131,25 @@ public class mcu_chunk : MonoBehaviour
 
     // converting a vertex index to a 3D position,
     // based on the min and max points
-    public Vector3 IndexToPosition(int x,int y,int z)
+    public num_precisevector3 IndexToPosition(int x,int y,int z)
     {
         //Debug.Log((float)(mcu_utils.chunkResolution-1) / (float)x / 5f);
-        return new Vector3(
-            Mathf.Lerp(minimumPoint.x,maximumPoint.x,1f / (float)(mcu_utils.chunkResolution-1) * (float)x),
-            Mathf.Lerp(minimumPoint.y,maximumPoint.y,1f / (float)(mcu_utils.chunkResolution-1) * (float)y),
-            Mathf.Lerp(minimumPoint.z,maximumPoint.z,1f / (float)(mcu_utils.chunkResolution-1) * (float)z)
+
+        return new num_precisevector3(
+            Mathf.Lerp(minimumPoint.x.AsFloat(),maximumPoint.x.AsFloat(),1f / (float)(resolution-1) * (float)x),
+            Mathf.Lerp(minimumPoint.y.AsFloat(),maximumPoint.y.AsFloat(),1f / (float)(resolution-1) * (float)y),
+            Mathf.Lerp(minimumPoint.z.AsFloat(),maximumPoint.z.AsFloat(),1f / (float)(resolution-1) * (float)z)
         );
+
+        //Debug.Log(new num_precise(1f / (float)(resolution-1) * (float)x).AsFloat());
+        //Debug.Log(num_precise.Lerp(minimumPoint.x,maximumPoint.x,new num_precise(1f / (float)(resolution-1) * (float)x)).AsFloat());
     }
 
     // sort of a temporary way of getting point data
-    float GetPoint(Vector3 pos)
+    float GetPoint(num_precisevector3 pos)
     {
-        return GetComponent<cbt_marchedchunk>().actualRadius - pos.x;
+        //return -(pos.Mag().AsFloat() - 20f);
+
+        return -(pos.Mag().AsFloat() - GetComponent<cbt_marchedchunk>().actualRadius);
     }
 }

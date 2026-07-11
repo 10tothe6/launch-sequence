@@ -1,5 +1,8 @@
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
+
+// TODO: FIX MULTIPLICATION AND DIVISION (you fucking dumbass)
 
 // should be simple enough?
 // we can replace this system with a compound double system if we need to, in any case
@@ -53,6 +56,13 @@ public class num_precise
     // DO NOT return this; YOU FUCKING DUMBASS
     // that is all
 
+    public static num_precise Lerp(num_precise min, num_precise max, num_precise t)
+    {
+        num_precise gap = max.Sub(min).Mul(t);
+        Debug.Log(new num_precise(1f).Div(0.42d).AsFloat());
+        return min.Add(gap);
+    }
+
     // ********************
     // division
     // ********************
@@ -65,7 +75,7 @@ public class num_precise
     {
         if (num < 1f)
         {
-            return new num_precise(raw * new BigInteger(1/num));
+            return new num_precise(raw * new BigInteger(1f/num));
         }
         else
         {
@@ -83,7 +93,7 @@ public class num_precise
     {
         if (num.AsDouble() < 1 && num.AsDouble() > 0)
         {
-            return Div(1 / num.AsDouble()); // again, just manipulating the raw numbers should be fine
+            return Div(1d / num.AsDouble()); // again, just manipulating the raw numbers should be fine
         }
         else
         {
@@ -92,7 +102,14 @@ public class num_precise
     }
     public num_precise Mul(double num)
     {
-        return new num_precise(raw * new BigInteger(num));
+        if (num < 1 && num > 0)
+        {
+            return Div(1d / num); // again, just manipulating the raw numbers should be fine
+        }
+        else
+        {
+            return new num_precise(raw * new BigInteger(num)); // again, just manipulating the raw numbers should be fine
+        }
     }
     public num_precise Mul(float num)
     {

@@ -43,6 +43,8 @@ public class mcu_drawmesh : MonoBehaviour
     List<Vector3> verts;
     List<Vector3> norms;
 
+    private num_precisevector3 offset;
+
     void Awake()
     {
         mf = GetComponent<MeshFilter>();
@@ -142,7 +144,7 @@ public class mcu_drawmesh : MonoBehaviour
                 for (int z = 0; z < zSize; z++)
                 {
                     // TODO: offset this properly
-                    Gizmos.DrawSphere(transform.position + new Vector3(x,y,z)*xScaleFactor, rad);
+                    Gizmos.DrawSphere(transform.position + new Vector3(x,y,z)*xScaleFactor , rad);
                 }
             }
         }

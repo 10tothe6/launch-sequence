@@ -407,7 +407,7 @@ MonoBehaviour:
   t_decidingObject: {fileID: 0}
   p_chunk: {fileID: 6930918290991104834, guid: 1789123385bc86441b212c3470db02c2, type: 3}
   t_chunkContainer: {fileID: 4434315889086815086}
-  startingResolution: 5
+  startingResolution: 20
   chunks: []
   newChunks: []
   parentChunk: {fileID: 0}

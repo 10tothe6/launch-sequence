@@ -12,7 +12,11 @@ public class ui_charactereditor : MonoBehaviour
     private inv_itemstack itemCache;
     private GameObject g_previewPart;
 
+
+    // layer mask for placeable surfaces
     public LayerMask whatIsPlaceable;
+    // layer mask for parts themselves
+    public LayerMask whatIsPart;
 
     void Update()
     {
@@ -46,6 +50,41 @@ public class ui_charactereditor : MonoBehaviour
                             g_previewPart = null;
                         }
                     }
+                } else
+                {
+                    // I'm not holding a part, or dragging one
+
+                    // what happens here is I'm taking a part off of the player
+
+                    if (Input.mouseButtonDownLeft)
+                    {
+                        RaycastHit hit;
+
+
+                        if (util_physics.MouseRaycast(out hit, 10f, whatIsPart))
+                        {
+                            // we clicked on a part, so grab it
+                            g_previewPart = hit.collider.GetComponent<InteractCollider>().parentObject.gameObject;
+                        }
+                    }
+                }
+            } else
+            {
+                if (g_previewPart != null)
+                {
+                    // turning the preview part back into an inventory item
+
+                    inv_itemstack itemData = new inv_itemstack();
+
+                    itemData.itemIndex = ItemManager.GetItemIndexFromName(g_previewPart.GetComponent<crft_genericpart>().GetPartName());
+                    itemData.itemCount = 1;
+
+                    itemData.extendHorizontal = 1;
+                    itemData.extendVertical = 1;
+
+                    ui_inventories.Instance.GiveItemToCursor(itemData);
+
+                    LocalPlayer.localClient.controllingEntity.GetComponent<e_craft>().RemovePart(g_previewPart);
                 }
             }
         }

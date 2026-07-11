@@ -45,6 +45,19 @@ public class ItemManager : MonoBehaviour
     public float ins_rawInventoryCellSize;
     public static float rawInventoryCellSize;
 
+    public static int GetItemIndexFromName(string itemName)
+    {
+        for (int i = 0; i < Instance.items.Length; i++)
+        {
+            if (Instance.items[i].item_name == itemName)
+            {
+                return i;
+            }
+        }
+
+        return -1; // ideally we never get here, but if we do we'll know cuz it will likely throw an error
+    }
+
 
     public static Sprite GetItemBackground(int width, int height)
     {

@@ -118,6 +118,15 @@ public class e_craft : MonoBehaviour
         }
     }
 
+    public void RemovePart(GameObject part)
+    {
+        parts.Remove(part.GetComponent<crft_genericpart>());
+
+        Destroy(part);
+
+        UpdateCachedResourceCounts();
+    }
+
 
     // wrapper function
     public GameObject AddPart(string partName)

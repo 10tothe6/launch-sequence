@@ -43,7 +43,7 @@ public class mcu_drawmesh : MonoBehaviour
     List<Vector3> verts;
     List<Vector3> norms;
 
-    private num_precisevector3 offset;
+    private Vector3 offset;
 
     void Awake()
     {
@@ -68,6 +68,11 @@ public class mcu_drawmesh : MonoBehaviour
         zScaleFactor = zSizeActual / ((float)zSize-1);
 
         DrawMesh();
+    }
+
+    public void SetOffset(Vector3 offset)
+    {
+        this.offset = offset;
     }
     
     // just making all the points 0
@@ -144,7 +149,7 @@ public class mcu_drawmesh : MonoBehaviour
                 for (int z = 0; z < zSize; z++)
                 {
                     // TODO: offset this properly
-                    Gizmos.DrawSphere(transform.position + new Vector3(x,y,z)*xScaleFactor , rad);
+                    Gizmos.DrawSphere(transform.position + new Vector3(x,y,z)*xScaleFactor + offset, rad);
                 }
             }
         }
@@ -252,7 +257,7 @@ public class mcu_drawmesh : MonoBehaviour
 
         Vector3 vi = GetPositionFromPointIndex(initial);
         Vector3 vf = GetPositionFromPointIndex(final);
-        verts.Add(Vector3.Lerp(vi,vf, GetZero(points[Mathf.RoundToInt(vi.x),Mathf.RoundToInt(vi.y),Mathf.RoundToInt(vi.z)],points[Mathf.RoundToInt(vf.x),Mathf.RoundToInt(vf.y),Mathf.RoundToInt(vf.z)]))*xScaleFactor);
+        verts.Add(offset + Vector3.Lerp(vi,vf, GetZero(points[Mathf.RoundToInt(vi.x),Mathf.RoundToInt(vi.y),Mathf.RoundToInt(vi.z)],points[Mathf.RoundToInt(vf.x),Mathf.RoundToInt(vf.y),Mathf.RoundToInt(vf.z)]))*xScaleFactor);
     }
 
     public Vector3 GetPositionFromPointIndex(int pointIndex)

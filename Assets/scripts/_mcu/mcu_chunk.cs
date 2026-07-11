@@ -35,7 +35,11 @@ public class mcu_chunk : MonoBehaviour
         // Debug.Log(maximumPoint.ToVector3());
 
         originOffset = min.Add(max).Div(2f);
-        transform.localPosition += min.ToVector3() - originOffset.ToVector3();
+
+        // could do this, but instead I'm telling the mcu chunk to move its vertices
+        //transform.localPosition += min.ToVector3() - originOffset.ToVector3();
+
+        rend.SetOffset(min.ToVector3() - originOffset.ToVector3());
     }
 
     public void Generate(num_precisevector3 min, num_precisevector3 max, int resolution)

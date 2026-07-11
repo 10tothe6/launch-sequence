@@ -1,9 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ui_scannerwidget : MonoBehaviour
 {
+    public TextMeshProUGUI tx_distanceDisplay;
     public TextMeshProUGUI tx_frequencyDisplay;
     public Transform t_scannerParent;
     public Transform[] t_scannerNestPoints;
@@ -54,20 +56,36 @@ public class ui_scannerwidget : MonoBehaviour
         num_precisevector3[] signalEmitterPositions = EntityManager.GetSignalEmitterPositionsForFrequencyWithinRange(frequency, LocalPlayer.localClient.controllingEntity.data.GetPosition());
 
 
-        // find the signal emitter that has the smallest angle (from where the player is looking)
-        int kingIndex = 0;
-        float kingAngle = Vector3.Angle(CameraController.t_cam.forward, signalEmitterPositions[0].Sub(LocalPlayer.localClient.controllingEntity.data.GetPosition()).ToVector3());
-        for (int i = 1; i < signalEmitterPositions.Length; i++)
+        if (signalEmitterPositions.Length > 0)
         {
-            float theta = Vector3.Angle(CameraController.t_cam.forward, signalEmitterPositions[i].Sub(LocalPlayer.localClient.controllingEntity.data.GetPosition()).ToVector3());
-            if (theta < kingAngle)
+            // find the signal emitter that has the smallest angle (from where the player is looking)
+            int kingIndex = 0;
+            float kingAngle = Vector3.Angle(CameraController.t_cam.forward, signalEmitterPositions[0].Sub(LocalPlayer.localClient.controllingEntity.data.GetPosition()).ToVector3());
+            for (int i = 1; i < signalEmitterPositions.Length; i++)
             {
-                kingIndex = i;
-                kingAngle = theta;
+                float theta = Vector3.Angle(CameraController.t_cam.forward, signalEmitterPositions[i].Sub(LocalPlayer.localClient.controllingEntity.data.GetPosition()).ToVector3());
+                if (theta < kingAngle)
+                {
+                    kingIndex = i;
+                    kingAngle = theta;
+                }
             }
-        }
 
-        signalStrength = Mathf.Cos(kingAngle * Mathf.PI / 180);
+            signalStrength = Mathf.Cos(kingAngle * Mathf.PI / 180);
+
+            if (signalStrength > 0.8f)
+            {
+                tx_distanceDisplay.gameObject.SetActive(true);
+                tx_distanceDisplay.text = Math.Round(signalEmitterPositions[kingIndex].Sub(LocalPlayer.localClient.controllingEntity.data.GetPosition()).Mag().AsDouble()) + "m";
+            } else
+            {
+                tx_distanceDisplay.gameObject.SetActive(false);
+            }
+        } else
+        {
+            signalStrength = 0;
+            tx_distanceDisplay.gameObject.SetActive(false);
+        }
 
         Vector2[] waveform_points = new Vector2[waveformPointCount];
 
@@ -76,10 +94,10 @@ public class ui_scannerwidget : MonoBehaviour
             float offset = actual_size / (waveform_points.Length - 1) * i;
             waveform_points[i] = new Vector2(offset, amp*Mathf.Sin(Time.time*time_scale + offset*freq));
 
-            waveform_points[i] = new Vector2(waveform_points[i].x, Mathf.Lerp(waveform_points[i].y, Random.Range(-amp, amp), 1-signalStrength));
+            waveform_points[i] = new Vector2(waveform_points[i].x, Mathf.Lerp(waveform_points[i].y, UnityEngine.Random.Range(-amp, amp), 1-signalStrength));
         }
 
-        rt_strengthBar.sizeDelta = new Vector2(rt_strengthBar.sizeDelta.x, signalStrength * max_bar_scale + Random.Range(0, bar_jitter) * (1-signalStrength));
+        rt_strengthBar.sizeDelta = new Vector2(rt_strengthBar.sizeDelta.x, signalStrength * max_bar_scale + UnityEngine.Random.Range(0, bar_jitter) * (1-signalStrength));
 
         waveform.Draw(waveform_points);
 

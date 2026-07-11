@@ -62,7 +62,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.025, y: 0.05, z: 0.025}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3915527243382701847}
@@ -100,7 +100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 593e245f0e3c9704c876ff5114786fc9, type: 2}
+  - {fileID: 2100000, guid: 09b1ac46e76eb6e4b875e75e806ea333, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -168,9 +168,9 @@ GameObject:
   - component: {fileID: 5181277051763429519}
   - component: {fileID: 2299938871442457569}
   - component: {fileID: -4972700898857821428}
-  - component: {fileID: 4068816673534202045}
+  - component: {fileID: 6863085056707556108}
   m_Layer: 8
-  m_Name: part_small_battery
+  m_Name: part_charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,6 +209,9 @@ MonoBehaviour:
     partName: 
     position: {x: 0, y: 0, z: 0}
   connectedParts: []
+  t_snapPointContainer: {fileID: 0}
+  t_snapPoints: []
+  eComp: {fileID: 0}
 --- !u!114 &-4972700898857821428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject3D
   isDraggable: 1
-  hoverPrompt: press E to toggle drill
+  hoverPrompt: press E to configure
   onInteract:
     m_PersistentCalls:
       m_Calls:
@@ -241,7 +244,7 @@ MonoBehaviour:
   onInteractByObject:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4068816673534202045
+--- !u!114 &6863085056707556108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,13 +253,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7415345247471772869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad7c1c2e31d8ca4787133ef49a11d29, type: 3}
+  m_Script: {fileID: 11500000, guid: 87ebf6b7fb8bbfe46af803f0b246f5de, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::crft_resourcecontainer
-  containedResources:
-  - resource_name: electricity
-    current_capacity: 0
-    max_capacity: 100
+  m_EditorClassIdentifier: Assembly-CSharp::crft_charger
 --- !u!1 &8481655606585296729
 GameObject:
   m_ObjectHideFlags: 0

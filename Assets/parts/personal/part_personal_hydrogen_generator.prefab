@@ -100,7 +100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7d398a9716e6e00498a25f7793ba129c, type: 2}
+  - {fileID: 2100000, guid: 09b1ac46e76eb6e4b875e75e806ea333, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -168,9 +168,9 @@ GameObject:
   - component: {fileID: 5181277051763429519}
   - component: {fileID: 2299938871442457569}
   - component: {fileID: -4972700898857821428}
-  - component: {fileID: 8645941306782063383}
+  - component: {fileID: 5350661877482427468}
   m_Layer: 8
-  m_Name: part_personal_crate
+  m_Name: part_personal_hydrogen_generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,6 +209,9 @@ MonoBehaviour:
     partName: 
     position: {x: 0, y: 0, z: 0}
   connectedParts: []
+  t_snapPointContainer: {fileID: 0}
+  t_snapPoints: []
+  eComp: {fileID: 0}
 --- !u!114 &-4972700898857821428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,26 +225,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject3D
   isDraggable: 1
-  hoverPrompt: press E to toggle drill
+  hoverPrompt: press E to toggle generator
   onInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: crft_drill, Assembly-CSharp
-        m_MethodName: ToggleDrill
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onInteractByObject:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8645941306782063383
+--- !u!114 &5350661877482427468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,9 +241,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7415345247471772869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3911074abfd3e6d4682967fb0dcc07cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 952c8ad2d9612d74b90d519058505fa6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::crft_inventory
+  m_EditorClassIdentifier: Assembly-CSharp::crft_processor
 --- !u!1 &8481655606585296729
 GameObject:
   m_ObjectHideFlags: 0

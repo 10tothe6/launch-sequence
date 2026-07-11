@@ -1713,5 +1713,5 @@ MonoBehaviour:
   defaultPartNames:
   - player_tank
   - player_antenna
-  - player_inventory
+  - player_charger
   - player_inventory

@@ -93,6 +93,21 @@ public class UIManager : MonoBehaviour
 
     public GameObject g_characterEditor;
 
+    // ui for the charger part (electricity)
+    public ui_charger charger;
+
+
+    public void OpenChargerMenu()
+    {
+        charger.gameObject.SetActive(true);
+    }
+    public void CloseChargerMenu()
+    {
+        charger.gameObject.SetActive(false);
+        // TODO: update the part
+    }
+
+
     #region LOCKING
 
     public void LockPlayer()

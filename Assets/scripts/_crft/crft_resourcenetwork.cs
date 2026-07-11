@@ -33,7 +33,7 @@ public class crft_resourcenetwork : MonoBehaviour
         // step 2: modify the counts in every part
         for (int i = 0; i < network_elements.Count; i++)
         {
-            float percentOfNetwork = network_elements[i].GetResourceCapacity(resource_name) / current_resource_cap;
+            float percentOfNetwork = (network_elements[i].GetResourceCapacity(resource_name) - network_elements[i].GetResourceAmount(resource_name)) / (current_resource_cap - current_resource_amt);
 
             network_elements[i].AddResource(resource_name, amt * percentOfNetwork);
         }

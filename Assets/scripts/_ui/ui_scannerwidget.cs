@@ -50,7 +50,8 @@ public class ui_scannerwidget : MonoBehaviour
         }
 
         // here is the actual logic that decides what the signal strength should be
-        num_precisevector3[] signalEmitterPositions = new num_precisevector3[] {new num_precisevector3(Vector3.zero)};
+        // ALSO ACCOUNTS FOR ANTENNA PING RANGE
+        num_precisevector3[] signalEmitterPositions = EntityManager.GetSignalEmitterPositionsForFrequencyWithinRange(frequency, LocalPlayer.localClient.controllingEntity.data.GetPosition());
 
 
         // find the signal emitter that has the smallest angle (from where the player is looking)

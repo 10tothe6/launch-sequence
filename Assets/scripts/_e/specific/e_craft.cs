@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 
 public class e_craft : MonoBehaviour
@@ -11,11 +10,17 @@ public class e_craft : MonoBehaviour
     public List<crft_genericpart> parts;
 
     private List<mtrl_containedresource> cachedResources;
+    
+
+    // cached lists of all part types for easy access
+    public List<crft_antenna> antennas;
 
     void Awake()
     {
         eComp = GetComponent<e_genericentity>();
         cachedResources = new List<mtrl_containedresource>();
+
+        antennas = new List<crft_antenna>();
     }
 
 

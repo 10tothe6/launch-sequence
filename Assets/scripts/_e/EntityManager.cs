@@ -70,6 +70,141 @@ public class EntityManager : MonoBehaviour
     public Transform t_sandboxEntityContainer;
     public Transform t_entityContainer;
 
+    #region PINGS
+
+    // signals that can be emitted by antenna parts, and picked up by the player's scanner
+    
+    // noting here that I could have an entirely different part do the ping-emitting, 
+    // but why not just build it into the crft_antenna script? I don't want 5 million tiny scripts anyways, and it makes sense logically
+
+
+
+
+
+    // NOTE - all of these functions could just return lists to avoid the array conversion cuz it don't really matter
+    // TODO: this ^^ ?
+
+    
+
+
+    // wrapper for the below function
+    public static crft_antenna[] GetSignalEmittersForFrequency(float frequency)
+    {
+        crft_antenna[] all_emitters = GetAllSignalEmitters();
+
+        List<crft_antenna> emitters_with_correct_frequency = new List<crft_antenna>();
+
+        for (int i = 0; i < all_emitters.Length; i++)
+        {
+            if (all_emitters[i].ping_frequency == frequency)
+            {
+                emitters_with_correct_frequency.Add(all_emitters[i]);
+            }
+        }
+
+        return emitters_with_correct_frequency.ToArray();
+    }
+    // this function, unlike the others that build off of it,
+    // actually needs to check to make sure the antennas ARE emitting a ping in the first place
+    // (they may not be)
+    // they may also not be powered
+    public static crft_antenna[] GetAllSignalEmitters()
+    {
+        List<crft_antenna> emitterList = new List<crft_antenna>();
+
+
+        // our job is easy because of the cached arrays of different part types
+        // no need to look through every part and check the components
+        for (int i = 0; i < Instance.allEntities.Count; i++)
+        {
+            e_craft comp = Instance.allEntities[i].GetComponent<e_craft>();
+
+            if (comp != null)
+            {
+                for (int j = 0; j < comp.antennas.Count; j++)
+                {
+                    if (comp.antennas[j].IsEmittingPing())
+                    {
+                        emitterList.Add(comp.antennas[j]);
+                    }
+                }
+            }
+        }
+
+        return emitterList.ToArray();
+    }
+
+    public static crft_antenna[] GetSignalEmittersForFrequencyWithinRange(float frequency, num_precisevector3 checkPosition)
+    {
+        List<crft_antenna> valid_emitters = new List<crft_antenna>();
+
+        // i guess technically we're doing double the work here?
+        // could make some sort of struct to contain the data together, but that seems like too much effort
+        crft_antenna[] emitters = GetSignalEmittersForFrequency(frequency);
+        num_precisevector3[] emitter_positions = GetSignalEmitterPositionsForFrequency(frequency);
+
+        for (int i = 0; i < emitters.Length; i++)
+        {
+            if (emitter_positions[i].Sub(checkPosition).Mag().AsDouble() < emitters[i].ping_range)
+            {
+                valid_emitters.Add(emitters[i]);
+            }
+        }
+
+        return valid_emitters.ToArray();
+    }
+
+
+    public static num_precisevector3[] GetSignalEmitterPositionsForFrequency(float frequency)
+    {
+        crft_antenna[] emitters = GetSignalEmittersForFrequency(frequency);
+
+        List<num_precisevector3> emitterPositions = new List<num_precisevector3>();
+
+        for (int i = 0; i < emitters.Length; i++)
+        {
+            emitterPositions.Add(emitters[i].GetComponent<crft_genericpart>().eComp.GetComponent<e_genericentity>().data.GetPosition());
+        }
+
+        return emitterPositions.ToArray();
+    }
+    public static num_precisevector3[] GetAllSignalEmitterPositions()
+    {
+        crft_antenna[] emitters = GetAllSignalEmitters();
+
+        List<num_precisevector3> emitterPositions = new List<num_precisevector3>();
+
+        for (int i = 0; i < emitters.Length; i++)
+        {
+            emitterPositions.Add(emitters[i].GetComponent<crft_genericpart>().eComp.GetComponent<e_genericentity>().data.GetPosition());
+        }
+
+        return emitterPositions.ToArray();
+    }
+
+    // holy hell of a function name
+    public static num_precisevector3[] GetSignalEmitterPositionsForFrequencyWithinRange(float frequency, num_precisevector3 checkPosition)
+    {
+        List<num_precisevector3> valid_positions = new List<num_precisevector3>();
+
+        // i guess technically we're doing double the work here?
+        // could make some sort of struct to contain the data together, but that seems like too much effort
+        crft_antenna[] emitters = GetSignalEmittersForFrequency(frequency);
+        num_precisevector3[] emitter_positions = GetSignalEmitterPositionsForFrequency(frequency);
+
+        for (int i = 0; i < emitters.Length; i++)
+        {
+            if (emitter_positions[i].Sub(checkPosition).Mag().AsDouble() < emitters[i].ping_range)
+            {
+                valid_positions.Add(emitter_positions[i]);
+            }
+        }
+
+        return valid_positions.ToArray();
+    }
+
+    #endregion
+
     public void ClearAllEntityData()
     {
         DestroyAllEntities();

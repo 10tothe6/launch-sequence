@@ -10,6 +10,9 @@ public class crft_genericpart : MonoBehaviour
     public Transform t_snapPointContainer;
     public Transform[] t_snapPoints;
     private Transform surfaceMount;
+    
+    [HideInInspector] 
+    public e_craft eComp;
 
     void Awake()
     {

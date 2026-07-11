@@ -13,7 +13,15 @@ public class e_craft : MonoBehaviour
     
 
     // cached lists of all part types for easy access
+    public List<crft_resourcecontainer> resource_containers; // DOES NOT INCLUDE BATTERIES
+    public List<crft_resourcecontainer> batteries;
+    public List<crft_inventory> inventories;
     public List<crft_antenna> antennas;
+
+
+    // resource networks, basically trying to do what KSP did with its resource system but cleaner
+    // (most significant difference being that we can have many resource networks on a single craft)
+    public List<crft_resourcenetwork> resource_networks;
 
     void Awake()
     {
@@ -21,10 +29,58 @@ public class e_craft : MonoBehaviour
         cachedResources = new List<mtrl_containedresource>();
 
         antennas = new List<crft_antenna>();
+        resource_containers = new List<crft_resourcecontainer>();
+        batteries = new List<crft_resourcecontainer>();
+        inventories = new List<crft_inventory>();
     }
 
 
-    public void UpdateCachedResourceCounts()
+    // called whenever a part is added or removed (or moved?? )
+    private void OnPartListModified()
+    {
+        UpdateCachedResourceCounts();
+        UpdateCachedPartLists();
+    }
+
+
+    // TODO: add some sort of way to only modify the parts in the lists that were changed, instead of rescanning the whole ship every time
+    // a simple and easy optimization, esp. for large ships
+    private void UpdateCachedPartLists()
+    {
+        antennas.Clear();
+        resource_containers.Clear();
+        batteries.Clear();
+        inventories.Clear();
+
+        for (int i = 0; i < parts.Count; i++)
+        {
+            if (parts[i].GetComponent<crft_antenna>() != null)
+            {
+                antennas.Add(parts[i].GetComponent<crft_antenna>());
+            }
+            if (parts[i].GetComponent<crft_inventory>() != null)
+            {
+                inventories.Add(parts[i].GetComponent<crft_inventory>());
+            }
+            if (parts[i].GetComponent<crft_resourcecontainer>() != null)
+            {
+                int lengthOffset = 0;
+                if (parts[i].GetComponent<crft_resourcecontainer>().GetResourceAmount("electricity") > 0)
+                {
+                    lengthOffset = 1;
+                    batteries.Add(parts[i].GetComponent<crft_resourcecontainer>());
+                }
+
+                if (parts[i].GetComponent<crft_resourcecontainer>().containedResources.Count - lengthOffset > 0)
+                {
+                    resource_containers.Add(parts[i].GetComponent<crft_resourcecontainer>());
+                }
+            }
+        }
+    }
+
+
+    private void UpdateCachedResourceCounts()
     {
         cachedResources.Clear();
 
@@ -129,7 +185,7 @@ public class e_craft : MonoBehaviour
 
         Destroy(part);
 
-        UpdateCachedResourceCounts();
+        OnPartListModified();
     }
 
 
@@ -149,7 +205,7 @@ public class e_craft : MonoBehaviour
 
         parts.Add(g_newPart.GetComponent<crft_genericpart>());
 
-        UpdateCachedResourceCounts();
+        OnPartListModified();
 
         return g_newPart;
     }

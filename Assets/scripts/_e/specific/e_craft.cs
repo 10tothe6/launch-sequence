@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class e_craft : MonoBehaviour
 {
@@ -20,6 +22,9 @@ public class e_craft : MonoBehaviour
     // resource networks, basically trying to do what KSP did with its resource system but cleaner
     // (most significant difference being that we can have many resource networks on a single craft)
     public List<crft_resourcenetwork> resource_networks;
+
+    public UnityEvent onCraftBuilt;
+    public List<Func<string>> partDataCollectors;
 
     void Awake()
     {
@@ -181,6 +186,8 @@ public class e_craft : MonoBehaviour
         {
             AddPart(data.parts[i]);
         }
+
+        onCraftBuilt.Invoke();
     }
 
     public void RemovePart(GameObject part)
@@ -207,11 +214,24 @@ public class e_craft : MonoBehaviour
 
         g_newPart.transform.localPosition = partData.position;
 
+        // this is information for any specific part components (inventory, resource container, etc.)
+        g_newPart.GetComponent<crft_genericpart>().AcceptPartData(partData.additional_part_data);
+
         parts.Add(g_newPart.GetComponent<crft_genericpart>());
 
         OnPartListModified();
 
         return g_newPart;
+    }
+
+    public crft_craftdata AssembleCraftData()
+    {
+        crft_craftdata data = new crft_craftdata();
+
+
+        
+
+        return data;
     }
 
     #endregion

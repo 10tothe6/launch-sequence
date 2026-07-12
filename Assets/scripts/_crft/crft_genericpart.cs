@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class crft_genericpart : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class crft_genericpart : MonoBehaviour
     
     [HideInInspector] 
     public e_craft eComp;
+
+    // telling all the components to go collect their part data
+    public UnityEvent onRecievePartData;
 
     void Awake()
     {
@@ -77,6 +81,19 @@ public class crft_genericpart : MonoBehaviour
 
             partDataKeys.Add(split[0]);
             partDataValues.Add(split[1]);
+        }
+
+        onRecievePartData.Invoke();
+    }
+
+    public string GetAdditionalPartData(string key)
+    {
+        if (partDataKeys.Contains(key))
+        {
+            return partDataValues[partDataKeys.IndexOf(key)];
+        } else
+        {
+            return "";
         }
     }
 }

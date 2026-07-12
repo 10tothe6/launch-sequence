@@ -67,7 +67,7 @@ public class crft_drill : MonoBehaviour
 
     public void ProcessPartData()
     {
-        string data = gp.GetAdditionalPartData("antenna");
+        string data = gp.GetAdditionalPartData("drill");
         if (string.IsNullOrEmpty(data)) {return;} // should really never happen
 
         // we really only need a few things here,
@@ -84,7 +84,9 @@ public class crft_drill : MonoBehaviour
 
     public string CreateAdditionalPartData()
     {
-        string data = "";
+        string data = "drill:";
+
+        data += "none";
 
         return data;
     }

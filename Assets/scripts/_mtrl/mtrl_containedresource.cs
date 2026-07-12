@@ -25,4 +25,22 @@ public class mtrl_containedresource
     {
         return ItemManager.GetResourceDataFromName(resource_name);
     }
+
+    public static mtrl_containedresource ParseFromString(string data)
+    {
+        mtrl_containedresource r = new mtrl_containedresource();
+
+        string[] splitData = util_string.SplitByChar(data, '#');
+
+        r.resource_name = splitData[0];
+        r.resource_amount = float.Parse(splitData[1]);
+
+        return r;
+    }
+
+    public string FormatAsString()
+    {
+        string data = resource_name + "#" + resource_amount;
+        return data;
+    }
 }

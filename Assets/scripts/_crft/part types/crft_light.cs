@@ -18,7 +18,7 @@ public class crft_light : MonoBehaviour
 
     public void ProcessPartData()
     {
-        string data = gp.GetAdditionalPartData("antenna");
+        string data = gp.GetAdditionalPartData("light");
         if (string.IsNullOrEmpty(data)) {return;} // should really never happen
 
         // we really only need a few things here,
@@ -35,7 +35,9 @@ public class crft_light : MonoBehaviour
 
     public string CreateAdditionalPartData()
     {
-        string data = "";
+        string data = "light:";
+
+        data += "none";
 
         return data;
     }

@@ -49,6 +49,39 @@ public class inv_itemstack
     //     this.extendVertical = ItemManager.Instance.items[itemIndex].occupyHeight;
     // }
 
+    public static inv_itemstack ParseFromString(string s)
+    {
+        inv_itemstack i = new inv_itemstack();
+
+        string[] split = util_string.SplitByChar(s, '#');
+
+        i.itemIndex = int.Parse(split[0]);
+        i.itemCount = int.Parse(split[1]);
+
+        i.cellIndex = int.Parse(split[2]);
+
+        i.extendHorizontal = int.Parse(split[3]);
+        i.extendVertical = int.Parse(split[4]);
+
+        return i;
+    }
+
+    public string FormatAsString()
+    {
+        string s = "";
+
+        s += itemIndex + "#";
+        s += itemCount + "#";
+
+        s += cellIndex + "#";
+
+
+        s += extendHorizontal + "#";
+        s += extendVertical + "#";
+
+        return s;
+    }
+
     public inv_itemstack(inv_itemstack src)
     {
         this.itemIndex = src.itemIndex;

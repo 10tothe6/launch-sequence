@@ -54,9 +54,11 @@ public class crft_antenna : MonoBehaviour
 
     public string CreateAdditionalPartData()
     {
-        string data = "";
+        string data = "antenna:";
 
-
+        // same two variables as function above
+        data += is_emitting_ping + ";";
+        data += ping_frequency;
 
         return data;
     }

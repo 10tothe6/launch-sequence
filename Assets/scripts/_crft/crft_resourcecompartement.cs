@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Jobs;
 
 [System.Serializable]
 public class crft_resourcecompartement
@@ -16,6 +15,41 @@ public class crft_resourcecompartement
     public float cached_fill_level; // the total amount of resources in the compartment right now
 
     public List<mtrl_containedresource> contained_resources;
+
+    public crft_resourcecompartement() {contained_resources = new List<mtrl_containedresource>();}
+
+    public static crft_resourcecompartement ParseFromString(string data)
+    {
+        crft_resourcecompartement c = new crft_resourcecompartement();
+
+        string[] resources_data = util_string.SplitByChar(data, '&');
+
+        for (int i = 0; i < resources_data.Length; i++)
+        {
+            c.contained_resources.Add(mtrl_containedresource.ParseFromString(resources_data[i]));
+        }
+
+        return c;
+    }
+
+    public string FormatAsString()
+    {
+        string data_string = "";
+
+        // the 'allowed resources' is something that's static, so we can ignore it
+        // the rest can be figured out by deduction like it usually is
+
+        for (int i = 0; i < contained_resources.Count; i++)
+        {
+            data_string += contained_resources[i].FormatAsString();
+            if (i < contained_resources.Count - 1)
+            {
+                data_string += "&"; // weird separator char because the normal ones were taken
+            }
+        }
+
+        return data_string;
+    }
 
     private void OnResourceCountsUpdated()
     {

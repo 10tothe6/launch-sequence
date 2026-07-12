@@ -16,7 +16,7 @@ public class inv_inventorydata
     public bool[] cellsTaken;
     public List<inv_itemstack> items;
 
-    public inv_inventorydata(){}
+    public inv_inventorydata(){items = new List<inv_itemstack>();}
 
     public inv_inventorydata(int inventory_width, int inventory_height)
     {
@@ -24,9 +24,40 @@ public class inv_inventorydata
         this.inventory_height = inventory_height;
     }
 
-    public void UpdateInventoryData(List<inv_itemstack> newItemData)
+    public static inv_inventorydata ParseFromString(string data)
     {
-        
+        inv_inventorydata i = new inv_inventorydata();
+
+        string[] items_data = util_string.SplitByChar(data, '&');
+
+        for (int j = 0; j < items_data.Length; j++)
+        {
+            i.items.Add(inv_itemstack.ParseFromString(items_data[j]));
+        }
+
+        return i;
+    }
+
+
+    public string FormatAsString()
+    {
+        // cells taken can be deduced, and width and height are static
+        // so we just have to package up the items list, which shouldn't be too bad
+
+
+        string data = "";
+
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            data += items[i].FormatAsString();
+            if (i < items.Count-1)
+            {
+                data += "&";
+            }
+        }
+
+        return data;
     }
 
     // returns a COPY, not the real thing

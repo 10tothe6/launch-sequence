@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Experimental.AI;
 
 public class e_craft : MonoBehaviour
 {
@@ -155,6 +156,18 @@ public class e_craft : MonoBehaviour
     {
         UpdateCachedResourceCounts();
         UpdateCachedPartLists();
+    }
+
+
+    public int GetPartIndexOf(crft_genericpart part)
+    {
+        if (parts.Contains(part))
+        {
+            return parts.IndexOf(part);
+        } else
+        {
+            return -1; // -1 in this context means an "unset" connection
+        }
     }
 
 

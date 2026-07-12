@@ -40,7 +40,7 @@ public class crft_charger : MonoBehaviour
 
     public void ProcessPartData()
     {
-        string data = gp.GetAdditionalPartData("antenna");
+        string data = gp.GetAdditionalPartData("charger");
         if (string.IsNullOrEmpty(data)) {return;} // should really never happen
 
         // we really only need a few things here,
@@ -64,7 +64,11 @@ public class crft_charger : MonoBehaviour
 
     public string CreateAdditionalPartData()
     {
-        string data = "";
+        string data = "charger:";
+
+        data += mode + ";";
+        data += gp.eComp.GetPartIndexOf(a.gp) + ";";
+        data += gp.eComp.GetPartIndexOf(b.gp);
 
         return data;
     }

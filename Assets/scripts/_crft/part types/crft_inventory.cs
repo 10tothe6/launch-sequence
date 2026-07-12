@@ -37,26 +37,32 @@ public class crft_inventory : MonoBehaviour
 
     public void ProcessPartData()
     {
-        string data = gp.GetAdditionalPartData("antenna");
-        if (string.IsNullOrEmpty(data)) {return;} // should really never happen
+        string string_data = gp.GetAdditionalPartData("inventory");
+        if (string.IsNullOrEmpty(string_data)) {return;} // should really never happen
 
         // we really only need a few things here,
         // basically just matches up with the variables up top
 
         // mind you some are constant, like antenna_range
 
-        string[] splitData = util_string.SplitByChar(data, ';');
+        string[] splitData = util_string.SplitByChar(string_data, ';');
 
         // TODO: exception handling for literally all of this
 
-        
+        data = inv_inventorydata.ParseFromString(splitData[0]);
     }
 
     public string CreateAdditionalPartData()
     {
-        string data = "";
+        string string_data = "inventory:";
 
-        return data;
+
+        // this is one of the harder ones to do
+        // so im putting it all in its own function, this function:
+        string_data += data.FormatAsString();
+        
+
+        return string_data;
     }
 
 

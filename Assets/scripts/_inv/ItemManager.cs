@@ -52,6 +52,19 @@ public class ItemManager : MonoBehaviour
 
     #region RESOURCES
 
+    public static mtrl_generic GetResourceDataFromName(string resource_name)
+    {
+        for (int i = 0; i < Instance.resources.Length; i++)
+        {
+            if (Instance.resources[i].name == resource_name)
+            {
+                return Instance.resources[i];
+            }
+        }
+
+        return null;
+    }
+
 
     public static List<string> GetAllResourceNamesWithTag(string tag)
     {

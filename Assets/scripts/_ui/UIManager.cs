@@ -100,6 +100,9 @@ public class UIManager : MonoBehaviour
     public ui_scannerwidget signalScanner;
 
 
+    public ui_canisterwidget canister;
+
+
     public void OpenChargerMenu()
     {
         charger.gameObject.SetActive(true);

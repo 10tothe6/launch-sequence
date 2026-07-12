@@ -37,16 +37,16 @@ public class ui_scannerwidget : MonoBehaviour
 
     void Update()
     {
-        tx_frequencyDisplay.text = (Mathf.Round(frequency * 100f) / 100f).ToString();
+        tx_frequencyDisplay.text = "f: " + (Mathf.Round(frequency * 100f) / 100f).ToString();
 
-        if (tx_frequencyDisplay.text.Length > 4)
+        if (tx_frequencyDisplay.text.Length > 7)
         {
-            tx_frequencyDisplay.text = tx_frequencyDisplay.text.Substring(0, 4);
+            tx_frequencyDisplay.text = tx_frequencyDisplay.text.Substring(0, 7);
         }
-        else if (tx_frequencyDisplay.text.Length < 3)
+        else if (tx_frequencyDisplay.text.Length < 6)
         {
             tx_frequencyDisplay.text += ".00";
-        } else if (tx_frequencyDisplay.text.Length < 4)
+        } else if (tx_frequencyDisplay.text.Length < 7)
         {
             tx_frequencyDisplay.text += 0;
         }
@@ -76,7 +76,7 @@ public class ui_scannerwidget : MonoBehaviour
             if (signalStrength > 0.8f)
             {
                 tx_distanceDisplay.gameObject.SetActive(true);
-                tx_distanceDisplay.text = Math.Round(signalEmitterPositions[kingIndex].Sub(LocalPlayer.localClient.controllingEntity.data.GetPosition()).Mag().AsDouble()) + "m";
+                tx_distanceDisplay.text = "dist: " + Math.Round(signalEmitterPositions[kingIndex].Sub(LocalPlayer.localClient.controllingEntity.data.GetPosition()).Mag().AsDouble()) + "m";
             } else
             {
                 tx_distanceDisplay.gameObject.SetActive(false);

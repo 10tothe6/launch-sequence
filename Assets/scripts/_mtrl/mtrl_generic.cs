@@ -7,32 +7,34 @@ public class mtrl_generic
     public string name;
     public List<string> tags; // "fluid", "solid", etc.
 
-    public SerializableColor color; // has to be serializable so we can write to disk
+    public Color color; // has to be serializable so we can write to disk
+
+    public Sprite icon;
 
     public mtrl_generic() { }
 
     public mtrl_generic(string name)
     {
         this.name = name;
-        this.color = SerializableColor.white;
+        this.color = Color.white;
         this.tags = new List<string>();
     }
 
     public mtrl_generic(string name, List<string> tags)
     {
         this.name = name;
-        this.color = SerializableColor.white;
+        this.color = Color.white;
         this.tags = tags;
     }
 
-    public mtrl_generic(string name, SerializableColor color)
+    public mtrl_generic(string name, Color color)
     {
         this.name = name;
         this.color = color;
         this.tags = new List<string>();
     }
 
-    public mtrl_generic(string name, SerializableColor color, List<string> tags)
+    public mtrl_generic(string name, Color color, List<string> tags)
     {
         this.name = name;
         this.color = color;

@@ -35,6 +35,9 @@ public enum ProgramStartMode
     // but not the planet editor
     // THIS IS STRICTLY A DEV TOOL
     BodyEditor, 
+
+    // another strictly DEV FEATURE
+    CraftEditor,
 }
 
 public class Program : MonoBehaviour

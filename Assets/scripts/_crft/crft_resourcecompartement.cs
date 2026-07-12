@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Jobs;
 
 [System.Serializable]
-public class crft_resourcecompartement : MonoBehaviour
+public class crft_resourcecompartement
 {
     // this is basically a whitelist
     // if empty, the compartement can hold any resource

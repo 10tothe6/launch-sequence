@@ -20,4 +20,9 @@ public class mtrl_containedresource
         this.resource_name = data.resource_name;
         this.resource_amount = data.resource_amount;
     }
+
+    public mtrl_generic GetData()
+    {
+        return ItemManager.GetResourceDataFromName(resource_name);
+    }
 }

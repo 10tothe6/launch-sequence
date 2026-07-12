@@ -1,33 +1,42 @@
+using System.Collections.Generic;
 using UnityEngine;
-
-public enum mtrl_resourcetype
-{
-    Solid,
-    Liquid,
-    Gas,
-}
 
 [System.Serializable]
 public class mtrl_generic
 {
     public string name;
-    public ushort type; // use the enum for referencing, please
+    public List<string> tags; // "fluid", "solid", etc.
+
     public SerializableColor color; // has to be serializable so we can write to disk
 
     public mtrl_generic() { }
 
-    public mtrl_generic(string name, mtrl_resourcetype type)
+    public mtrl_generic(string name)
     {
         this.name = name;
-        this.type = (ushort)type;
         this.color = SerializableColor.white;
+        this.tags = new List<string>();
     }
 
-    public mtrl_generic(string name, mtrl_resourcetype type, SerializableColor color)
+    public mtrl_generic(string name, List<string> tags)
     {
         this.name = name;
-        this.type = (ushort)type;
+        this.color = SerializableColor.white;
+        this.tags = tags;
+    }
+
+    public mtrl_generic(string name, SerializableColor color)
+    {
+        this.name = name;
         this.color = color;
+        this.tags = new List<string>();
+    }
+
+    public mtrl_generic(string name, SerializableColor color, List<string> tags)
+    {
+        this.name = name;
+        this.color = color;
+        this.tags = tags;
     }
 
     // public static mtrl_generic Get(string name)

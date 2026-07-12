@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // singleton script that stores static data for all the items in the game,
@@ -31,6 +32,9 @@ public class ItemManager : MonoBehaviour
         rawInventoryCellSize = ins_rawInventoryCellSize;
     }
 
+    public mtrl_generic[] resources;
+
+
     public inv_itemdata[] items;
 
 
@@ -44,6 +48,32 @@ public class ItemManager : MonoBehaviour
 
     public float ins_rawInventoryCellSize;
     public static float rawInventoryCellSize;
+
+
+    #region RESOURCES
+
+
+    public static List<string> GetAllResourceNamesWithTag(string tag)
+    {
+        List<string> toReturn = new List<string>();
+
+        for (int i = 0; i < Instance.resources.Length; i++)
+        {
+            if (Instance.resources[i].tags.Contains(tag))
+            {
+                toReturn.Add(Instance.resources[i].name);
+            }
+        }
+
+        return toReturn;
+    }
+
+
+    #endregion
+
+
+    #region ITEMS
+
 
     public static int GetItemIndexFromName(string itemName)
     {
@@ -71,4 +101,7 @@ public class ItemManager : MonoBehaviour
 
         return Instance.item_bgs[0].img; // should never get here
     }
+
+
+    #endregion
 }

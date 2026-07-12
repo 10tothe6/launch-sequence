@@ -3,53 +3,72 @@ using UnityEngine;
 
 public class crft_resourcecontainer : MonoBehaviour
 {
-    public List<mtrl_containedresource> containedResources;
+    public List<crft_resourcecompartement> compartements;
+    
 
-    public void AddResource(string resource_name, float amt)
+
+    // wrapper
+    public void AddResource(string name, float amt)
     {
-        for (int i = 0; i < containedResources.Count; i++)
+        AddResource(new mtrl_containedresource(name, amt));
+    }
+    private void AddResource(mtrl_containedresource resource)
+    {
+        for (int i = 0; i < compartements.Count; i++)
         {
-            if (containedResources[i].resource_name == resource_name)
+            mtrl_containedresource leftovers = compartements[i].AddResource(resource);
+
+            resource.resource_amount = leftovers.resource_amount;
+
+            if (resource.resource_amount <= 0)
             {
-                containedResources[i].current_capacity += amt;
-                containedResources[i].current_capacity = Mathf.Clamp(containedResources[i].current_capacity, 0f, containedResources[i].max_capacity);
+                return;
             }
         }
     }
-    public void RemoveResource(string resource_name, float amt)
+
+    // wrapper
+    public void RemoveResource(string name, float amt)
     {
-        for (int i = 0; i < containedResources.Count; i++)
+        RemoveResource(new mtrl_containedresource(name, amt));
+    }
+    private void RemoveResource(mtrl_containedresource resource)
+    {
+        for (int i = 0; i < compartements.Count; i++)
         {
-            if (containedResources[i].resource_name == resource_name)
+            mtrl_containedresource leftovers = compartements[i].RemoveResource(resource);
+
+            resource.resource_amount = leftovers.resource_amount;
+
+            if (resource.resource_amount <= 0)
             {
-                containedResources[i].current_capacity -= amt;
-                containedResources[i].current_capacity = Mathf.Clamp(containedResources[i].current_capacity, 0f, containedResources[i].max_capacity);
+                return;
             }
         }
     }
+
+
 
     public float GetResourceAmount(string resource_name)
     {
-        for (int i = 0; i < containedResources.Count; i++)
+        float sum = 0;
+
+        for (int i = 0; i < compartements.Count; i++)
         {
-            if (containedResources[i].resource_name == resource_name)
-            {
-                return containedResources[i].current_capacity;
-            }
+            sum += compartements[i].GetCurrentResourceAmount(resource_name);
         }
 
-        return 0;
+        return sum;
     }
+
     public float GetResourceCapacity(string resource_name)
     {
-        for (int i = 0; i < containedResources.Count; i++)
-        {
-            if (containedResources[i].resource_name == resource_name)
-            {
-                return containedResources[i].max_capacity;
-            }
-        }
+        float sum = 0;
 
-        return 0;
+
+
+
+
+        return sum;
     }
 }

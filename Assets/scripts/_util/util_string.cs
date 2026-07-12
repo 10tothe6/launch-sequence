@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class util_string
 {   
+    
     public static char[] illegalChars = new char[]
     {
         ',',
@@ -12,6 +13,26 @@ public class util_string
         ')',
         '(',
     };
+
+
+    // simplest and easiest way I could think to do this (maybe not the easiest for the computer, but ah well)
+    public static List<string> RemoveDuplicatesFromList(List<string> raw)
+    {
+        List<string> toReturn = new List<string>();
+
+
+        for (int i = 0; i < raw.Count; i++)
+        {
+            if (!toReturn.Contains(raw[i]))
+            {
+                toReturn.Add(raw[i]);
+            }
+        }
+
+
+        return toReturn;
+    }
+
 
 
     public static bool CheckForIlligelCharacters(string toCheck)

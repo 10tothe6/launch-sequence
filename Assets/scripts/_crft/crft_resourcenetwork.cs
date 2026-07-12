@@ -5,13 +5,19 @@ public class crft_resourcenetwork : MonoBehaviour
 {
     // showing which resources we have, making it easier for other scripts to quickly check
     // makes it easy to see capacity and amount of the whole network too
-    public List<mtrl_containedresource> cachedResources;
+    public List<mtrl_resourcecapacity> cachedResources;
+
+    // the below 2 variables can be used to easily figure out how much free space the network has left
+    public float cached_fill_level; // total amount of resources in the network
+    public float cached_network_capacity; // total capacity of the network
 
     // every part in the network
     public List<crft_resourcecontainer> network_elements;
 
     # region ADD/REMOVE
 
+
+    // TODO: below two functions have no way of knowing whether or not there is enough resources to remove
     public void AddResource(string resource_name, float amt)
     {
         // step 1: figure out how much of that resource we have, and CAN have
@@ -22,8 +28,8 @@ public class crft_resourcenetwork : MonoBehaviour
         {
             if (cachedResources[i].resource_name == resource_name)
             {
-                current_resource_amt = cachedResources[i].current_capacity;
-                current_resource_cap = cachedResources[i].max_capacity;
+                current_resource_amt = cachedResources[i].resource_amount;
+                current_resource_cap = cachedResources[i].max_available_space;
             }
         }
 
@@ -52,8 +58,8 @@ public class crft_resourcenetwork : MonoBehaviour
         {
             if (cachedResources[i].resource_name == resource_name)
             {
-                current_resource_amt = cachedResources[i].current_capacity;
-                current_resource_cap = cachedResources[i].max_capacity;
+                current_resource_amt = cachedResources[i].resource_amount;
+                current_resource_cap = cachedResources[i].max_available_space;
             }
         }
 

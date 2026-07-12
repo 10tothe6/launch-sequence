@@ -126,6 +126,13 @@ public class Program : MonoBehaviour
                 // not talking to the game manager for this one, because it's outside the game
                 BodyEditor.Instance.SetupEditor();
             }
+
+
+            else if (startMode == ProgramStartMode.CraftEditor)
+            {
+                // not talking to the game manager for this one, because it's outside the game
+                crft_deveditor.Instance.OpenEditor();
+            }
         } 
         else if (buildMode == ProgramBuildMode.ServerBuild) {/* not really relevant rn*/}
     }

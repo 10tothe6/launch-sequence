@@ -44,7 +44,9 @@ public class rw_craft : MonoBehaviour
         {
             string[] elements = util_string.SplitByChar(lines[i], ',');
 
-            if (elements.Length != 4) {continue;}
+            // anything LARGER than 4 simply has part data associated with it
+            // if its SMALLER than 4 its wrong and will be skipped
+            if (elements.Length < 4) {continue;}
 
             float x = 0;
             float y = 0;
@@ -53,7 +55,13 @@ public class rw_craft : MonoBehaviour
             if (!float.TryParse(elements[2], out y)) {continue;}
             if (!float.TryParse(elements[3], out z)) {continue;}
 
-            readParts.Add(new crft_genericpartdata(elements[0], new Vector3(x,y,z)));
+            string partData = "";
+            if (elements.Length > 4)
+            {
+                partData = elements[4];
+            }
+
+            readParts.Add(new crft_genericpartdata(elements[0], new Vector3(x,y,z), partData));
         }
 
         result.parts = readParts.ToArray();

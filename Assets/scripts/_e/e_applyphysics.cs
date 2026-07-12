@@ -35,4 +35,14 @@ public class e_applyphysics : MonoBehaviour
             rb.linearVelocity += gravityDirection * gravitationalAcceleration * Time.deltaTime;
         }
     }
+
+    public void Freeze()
+    {
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+    }
+
+    public void UnFreeze()
+    {
+        rb.constraints = RigidbodyConstraints.None;
+    }
 }

@@ -1,7 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class crft_genericpart : MonoBehaviour
 {
+
+    // I must be allergic to dictionaries or something
+    public List<string> partDataKeys;
+    public List<string> partDataValues;
+
     public crft_genericpartdata data;
     public crft_genericpart[] connectedParts;
 
@@ -51,6 +57,26 @@ public class crft_genericpart : MonoBehaviour
             transform.rotation *= surfaceMount.localRotation;
 
             transform.position = point - (surfaceMount.position - transform.position);
+        }
+    }
+
+
+    // whenever loading a craft, each part receieves a data string
+
+    // this contains literally EVERY bit of data for the part, like inventory contents and so on
+    public void AcceptPartData(string data)
+    {
+        string[] elements = util_string.SplitByChar(data, '|');
+
+        partDataKeys.Clear();
+        partDataValues.Clear();
+        
+        for (int i = 0; i < elements.Length; i++)
+        {
+            string[] split = util_string.SplitByChar(elements[i], ':');
+
+            partDataKeys.Add(split[0]);
+            partDataValues.Add(split[1]);
         }
     }
 }

@@ -5,7 +5,11 @@ public class crft_resourcecontainer : MonoBehaviour
 {
     public List<crft_resourcecompartement> compartements;
     
+    // each resource container has a set of connections, 
+    // and together they all make up a resource network
 
+    // this is especially useful for batteries
+    public List<crft_resourcecontainer> connected_containers;
 
     // wrapper
     public void AddResource(string name, float amt)

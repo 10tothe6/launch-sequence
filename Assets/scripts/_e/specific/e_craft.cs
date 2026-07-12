@@ -30,6 +30,15 @@ public class e_craft : MonoBehaviour
         inventories = new List<crft_inventory>();
     }
 
+    public void DisablePhysics()
+    {
+        GetComponent<e_applyphysics>().Freeze();
+    }
+    public void EnablePhysics()
+    {
+        GetComponent<e_applyphysics>().UnFreeze();
+    }
+
     #region RESOURCES
 
 

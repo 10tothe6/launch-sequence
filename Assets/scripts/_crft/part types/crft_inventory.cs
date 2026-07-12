@@ -17,7 +17,7 @@ public class crft_inventory : MonoBehaviour
 
 
         gp.onRecievePartData.AddListener(ProcessPartData);
-        gp.eComp.partDataCollectors.Add(CreateAdditionalPartData);
+        gp.partDataCollectors.Add(CreateAdditionalPartData);
     }
 
     private void InitializeInventoryData()

@@ -18174,8 +18174,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a39597f6373bd43a4c2580a0db7e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::crft_deveditor
-  spawnNewCraft: 0
   p_craft: {fileID: 4215003058766359385, guid: 21738b6ada1521f4988833a6708d8ef0, type: 3}
+  spawnNewCraft: 0
+  focusedCraft: {fileID: 0}
+  partName: small_battery
+  addPart: 0
+  writeCraftToFile: 0
+  craftName: bob
+  loadCraftFromFile: 0
 --- !u!4 &1206389568
 Transform:
   m_ObjectHideFlags: 0
@@ -24140,6 +24146,7 @@ MonoBehaviour:
   - {fileID: 7415345247471772869, guid: 6c3b12af0d853b845b905ac318ae3560, type: 3}
   - {fileID: 7415345247471772869, guid: 851b2d7b0f37ff24da7523cd2c42a274, type: 3}
   - {fileID: 7415345247471772869, guid: 1dfba999295447440ac18474b5950586, type: 3}
+  - {fileID: 7415345247471772869, guid: 27e4606e120b5d14ca35d77f9b3610e7, type: 3}
 --- !u!1 &1678076552
 GameObject:
   m_ObjectHideFlags: 0

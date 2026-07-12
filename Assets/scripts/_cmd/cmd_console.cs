@@ -107,6 +107,13 @@ public class cmd_console : MonoBehaviour
         new cmd_consolecommand(new string[]{"kill"},false,false), // killing an entity
 
 
+
+
+        // spawning a craft directly from the 'saved craft' folder, with the filename as one argument of the command
+        new cmd_consolecommand(new string[]{"spawncraft"},false,false), // killing an entity
+
+
+
         // FUTURE:
         new cmd_consolecommand(new string[]{"timeset","t"},false,false), // set time 
         new cmd_consolecommand(new string[]{"title"},false,false), // big text for all players
@@ -365,6 +372,11 @@ public class cmd_console : MonoBehaviour
                 {
                     ServerNetworkManager.Instance.ChangeClientPermissions(items[1], newPermissionLevel);
                 }
+            }
+
+            else if (GetCommandData("spawncraft").IsValid(items[0])) // spawning a craft
+            {
+                string craft_name = items[1];
             }
             
             

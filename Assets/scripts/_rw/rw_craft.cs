@@ -19,11 +19,13 @@ public class rw_craft : MonoBehaviour
         {
             string partData = "";
 
-            partData += data.parts[i].partName;
+            partData += data.parts[i].partName + ",";
 
-            partData += data.parts[i].position.x;
-            partData += data.parts[i].position.y;
-            partData += data.parts[i].position.z;
+            partData += data.parts[i].position.x + ",";
+            partData += data.parts[i].position.y + ",";
+            partData += data.parts[i].position.z + ",";
+
+            partData += data.parts[i].additional_part_data;
 
             lines.Add(partData);
         }

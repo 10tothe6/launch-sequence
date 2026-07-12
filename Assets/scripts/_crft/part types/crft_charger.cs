@@ -21,8 +21,15 @@ public class crft_charger : MonoBehaviour
     {
         gp = GetComponent<crft_genericpart>();
 
+        gp.onInitialize.AddListener(Initialize);
+    }
+
+    void Initialize()
+    {
+        gp = GetComponent<crft_genericpart>();
+
         gp.onRecievePartData.AddListener(ProcessPartData);
-        gp.eComp.partDataCollectors.Add(CreateAdditionalPartData);
+        gp.partDataCollectors.Add(CreateAdditionalPartData);
 
         gp.eComp.onCraftBuilt.AddListener(SetConnectingPartReferences);
     }

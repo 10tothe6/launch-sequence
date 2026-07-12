@@ -31,13 +31,13 @@ public class crft_deveditor : MonoBehaviour
     public e_craft focusedCraft;
     public string partName;
     public bool addPart;
-    
-    [Space(12)]
-    [Header("SAVING")]
+
+
+
+
+    [Space(14)]
+    [Header("SAVING + LOADING")]
     public bool writeCraftToFile;
-    
-    [Space(12)]
-    [Header("LOADING")]
     public string craftName;
     public bool loadCraftFromFile;
     
@@ -76,6 +76,7 @@ public class crft_deveditor : MonoBehaviour
                 writeCraftToFile = false;
                 
                 // writing the craft to the 'saved crafts' folder on disk
+                rw_craft.WriteCraftDataToFile(focusedCraft.AssembleCraftData(craftName), util_file.GetWorkingDirectory() + "saved craft/" + craftName + ".craft");
             }
         }
 
@@ -85,15 +86,24 @@ public class crft_deveditor : MonoBehaviour
 
             // (trying to) loading a craft from a file based on the name specified by the player
             crft_craftdata readData = rw_craft.ReadCraftDataFromFile(util_file.GetWorkingDirectory() + "saved craft/" + craftName + ".craft");
+
+            SpawnNewCraft(readData);
         }
     }
 
-    private void SpawnNewCraft()
+    private void SpawnNewCraft(crft_craftdata data = null)
     {
         // normally one would reference the EntityManager, but not here
         GameObject g_newCraft = Instantiate(p_craft, transform);
 
         g_newCraft.GetComponent<e_craft>().DisablePhysics();
         g_newCraft.transform.localPosition = Vector3.zero;
+
+        focusedCraft = g_newCraft.GetComponent<e_craft>();
+
+        if (data != null)
+        {
+            g_newCraft.GetComponent<e_craft>().Initialize(data);
+        }
     }
 }

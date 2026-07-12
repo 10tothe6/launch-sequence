@@ -21,9 +21,13 @@ public class crft_resourcecontainer : MonoBehaviour
     {
         gp = GetComponent<crft_genericpart>();
 
+        gp.onInitialize.AddListener(Initialize);
+    }
 
+    private void Initialize()
+    {
         gp.onRecievePartData.AddListener(ProcessPartData);
-        gp.eComp.partDataCollectors.Add(CreateAdditionalPartData);
+        gp.partDataCollectors.Add(CreateAdditionalPartData);
     }
 
 
@@ -109,8 +113,17 @@ public class crft_resourcecontainer : MonoBehaviour
 
         // TODO: exception handling for literally all of this
 
-        string[] connection_references = util_string.SplitByChar(splitData[0], ';');
-        string[] compartements_data = util_string.SplitByChar(splitData[1], ';');
+        string[] connection_references = new string[0];
+        string[] compartements_data = new string[0];
+
+        if (splitData.Length > 1)
+        {
+            connection_references = util_string.SplitByChar(splitData[0], ';');
+            compartements_data = util_string.SplitByChar(splitData[1], ';');
+        } else if (splitData.Length > 0)
+        {
+            compartements_data = util_string.SplitByChar(splitData[0], ';');
+        }
 
         connected_container_indices = new List<int>();
         for (int i = 0; i < connection_references.Length; i++)
@@ -119,10 +132,9 @@ public class crft_resourcecontainer : MonoBehaviour
             connected_container_indices.Add(int.Parse(connection_references[i]));
         }
 
-        compartements = new  List<crft_resourcecompartement>();
         for (int i = 0; i < compartements_data.Length; i++)
         {
-            compartements.Add(crft_resourcecompartement.ParseFromString(compartements_data[i]));
+            compartements[i].FillWithResources(crft_resourcecompartement.ParseFromString(compartements_data[i]));
         }
     }
 

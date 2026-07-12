@@ -18,6 +18,11 @@ public class crft_resourcecompartement
 
     public crft_resourcecompartement() {contained_resources = new List<mtrl_containedresource>();}
 
+    public void FillWithResources(crft_resourcecompartement data)
+    {
+        contained_resources = data.contained_resources;
+    }
+
     public static crft_resourcecompartement ParseFromString(string data)
     {
         crft_resourcecompartement c = new crft_resourcecompartement();

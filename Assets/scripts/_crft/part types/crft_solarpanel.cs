@@ -10,7 +10,7 @@ public class crft_solarpanel : MonoBehaviour
         gp = GetComponent<crft_genericpart>();
 
         gp.onRecievePartData.AddListener(ProcessPartData);
-        gp.eComp.partDataCollectors.Add(CreateAdditionalPartData);
+        gp.partDataCollectors.Add(CreateAdditionalPartData);
     }
 
     #region DATA

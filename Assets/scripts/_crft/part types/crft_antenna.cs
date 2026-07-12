@@ -20,7 +20,7 @@ public class crft_antenna : MonoBehaviour
         gp = GetComponent<crft_genericpart>();
 
         gp.onRecievePartData.AddListener(ProcessPartData);
-        gp.eComp.partDataCollectors.Add(CreateAdditionalPartData);
+        gp.partDataCollectors.Add(CreateAdditionalPartData);
     }
 
     public bool IsEmittingPing()

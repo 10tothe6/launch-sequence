@@ -25,7 +25,6 @@ public class e_craft : MonoBehaviour
     public List<crft_resourcenetwork> resource_networks;
 
     public UnityEvent onCraftBuilt;
-    public List<Func<string>> partDataCollectors;
 
     void Awake()
     {
@@ -227,6 +226,9 @@ public class e_craft : MonoBehaviour
 
         g_newPart.transform.localPosition = partData.position;
 
+        g_newPart.GetComponent<crft_genericpart>().eComp = this;
+        g_newPart.GetComponent<crft_genericpart>().Initialize();
+
         // this is information for any specific part components (inventory, resource container, etc.)
         g_newPart.GetComponent<crft_genericpart>().AcceptPartData(partData.additional_part_data);
 
@@ -237,11 +239,23 @@ public class e_craft : MonoBehaviour
         return g_newPart;
     }
 
-    public crft_craftdata AssembleCraftData()
+    #endregion
+
+
+    #region DATA
+
+    public crft_craftdata AssembleCraftData(string craft_name)
     {
         crft_craftdata data = new crft_craftdata();
 
+        data.craft_name = craft_name;
 
+        data.parts = new crft_genericpartdata[parts.Count];
+
+        for (int i = 0; i < parts.Count; i++)
+        {
+            data.parts[i] = parts[i].AssemblePartData();
+        }
         
 
         return data;

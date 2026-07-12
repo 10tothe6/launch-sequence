@@ -10,7 +10,7 @@ public class crft_light : MonoBehaviour
 
 
         gp.onRecievePartData.AddListener(ProcessPartData);
-        gp.eComp.partDataCollectors.Add(CreateAdditionalPartData);
+        gp.partDataCollectors.Add(CreateAdditionalPartData);
     }
 
     #region DATA

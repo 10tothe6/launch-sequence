@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,11 +22,16 @@ public class crft_genericpart : MonoBehaviour
     [HideInInspector] 
     public e_craft eComp;
 
+    public UnityEvent onInitialize;
+
     // telling all the components to go collect their part data
     public UnityEvent onRecievePartData;
+    public List<Func<string>> partDataCollectors;
 
-    void Awake()
+    public void Initialize()
     {
+        partDataCollectors = new List<Func<string>>();
+
         if (t_snapPointContainer != null)
         {
             t_snapPoints = new Transform[t_snapPointContainer.childCount];
@@ -41,6 +47,8 @@ public class crft_genericpart : MonoBehaviour
                 }
             }
         }
+
+        onInitialize.Invoke();
     }
 
     public string GetPartName()
@@ -64,6 +72,17 @@ public class crft_genericpart : MonoBehaviour
         }
     }
 
+    public crft_genericpartdata AssemblePartData()
+    {
+        data.partName = GetPartName();
+
+        data.position = transform.localPosition;
+
+        data.additional_part_data = MakeAdditionalPartData();
+
+        return data;
+    }
+
 
     // whenever loading a craft, each part receieves a data string
 
@@ -84,6 +103,18 @@ public class crft_genericpart : MonoBehaviour
         }
 
         onRecievePartData.Invoke();
+    }
+
+    public string MakeAdditionalPartData()
+    {
+        string part_data = "";
+
+        for (int i = 0; i < partDataCollectors.Count; i++)
+        {
+            part_data += partDataCollectors[i].Invoke();
+        }
+
+        return part_data;
     }
 
     public string GetAdditionalPartData(string key)

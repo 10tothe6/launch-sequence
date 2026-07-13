@@ -9,6 +9,12 @@ using UnityEngine;
 
 public class crft_solarpanel : MonoBehaviour
 {
+
+
+
+
+
+    
     [Header("CONFIG")]
     // assuming we are looking directly at the sun with nothing blocking the panel
     // and also the star has a brightness value of 1.00

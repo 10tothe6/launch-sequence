@@ -25,6 +25,10 @@ public class rw_craft : MonoBehaviour
             partData += data.parts[i].position.y + ",";
             partData += data.parts[i].position.z + ",";
 
+            partData += data.parts[i].euler_angles.x + ",";
+            partData += data.parts[i].euler_angles.y + ",";
+            partData += data.parts[i].euler_angles.z + ",";
+
             partData += data.parts[i].additional_part_data;
 
             lines.Add(partData);
@@ -48,22 +52,29 @@ public class rw_craft : MonoBehaviour
 
             // anything LARGER than 4 simply has part data associated with it
             // if its SMALLER than 4 its wrong and will be skipped
-            if (elements.Length < 4) {continue;}
+            if (elements.Length < 7) {continue;}
 
             float x = 0;
             float y = 0;
             float z = 0;
+            float rot_x = 0;
+            float rot_y = 0;
+            float rot_z = 0;
             if (!float.TryParse(elements[1], out x)) {continue;}
             if (!float.TryParse(elements[2], out y)) {continue;}
             if (!float.TryParse(elements[3], out z)) {continue;}
 
+            if (!float.TryParse(elements[4], out rot_x)) {continue;}
+            if (!float.TryParse(elements[5], out rot_y)) {continue;}
+            if (!float.TryParse(elements[6], out rot_z)) {continue;}
+
             string partData = "";
-            if (elements.Length > 4)
+            if (elements.Length > 7)
             {
-                partData = elements[4];
+                partData = elements[7];
             }
 
-            readParts.Add(new crft_genericpartdata(elements[0], new Vector3(x,y,z), partData));
+            readParts.Add(new crft_genericpartdata(elements[0], new Vector3(x,y,z), new Vector3(rot_x,rot_y,rot_z), partData));
         }
 
         result.parts = readParts.ToArray();

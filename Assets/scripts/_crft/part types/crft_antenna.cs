@@ -19,6 +19,10 @@ public class crft_antenna : MonoBehaviour
     {
         gp = GetComponent<crft_genericpart>();
 
+        gp.onInitialize.AddListener(Initialize);
+    }
+    private void Initialize()
+    {
         gp.onRecievePartData.AddListener(ProcessPartData);
         gp.partDataCollectors.Add(CreateAdditionalPartData);
     }

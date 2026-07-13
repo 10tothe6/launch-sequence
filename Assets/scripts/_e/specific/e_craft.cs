@@ -225,6 +225,7 @@ public class e_craft : MonoBehaviour
         g_newPart.transform.SetParent(t_partContainer);
 
         g_newPart.transform.localPosition = partData.position;
+        g_newPart.transform.localEulerAngles = partData.euler_angles;
 
         g_newPart.GetComponent<crft_genericpart>().eComp = this;
         g_newPart.GetComponent<crft_genericpart>().Initialize();

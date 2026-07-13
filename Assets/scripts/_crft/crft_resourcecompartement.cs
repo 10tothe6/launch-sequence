@@ -96,7 +96,7 @@ public class crft_resourcecompartement
 
         toReturn.resource_name = allowed[0];
         toReturn.resource_amount = GetCurrentResourceAmount(allowed[0]);
-        toReturn.max_available_space = 0;
+        toReturn.max_available_space = max_capacity;
 
         return toReturn;
     }

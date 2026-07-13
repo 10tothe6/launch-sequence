@@ -205,12 +205,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2287796486a6151499f91942866adbca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::crft_genericpart
+  partDataKeys: []
+  partDataValues: []
   data:
     partName: 
     position: {x: 0, y: 0, z: 0}
+    euler_angles: {x: 0, y: 0, z: 0}
+    additional_part_data: 
   connectedParts: []
   t_snapPointContainer: {fileID: 6832667981732421475}
   t_snapPoints: []
+  eComp: {fileID: 0}
+  onInitialize:
+    m_PersistentCalls:
+      m_Calls: []
+  onRecievePartData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-4972700898857821428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,10 +254,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad7c1c2e31d8ca4787133ef49a11d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::crft_resourcecontainer
-  containedResources:
-  - resource_name: electricity
-    current_capacity: 0
-    max_capacity: 50
+  gp: {fileID: 0}
+  compartements:
+  - allowed_resources:
+    - electricity
+    max_capacity: 100
+    cached_fill_level: 0
+    contained_resources: []
+  connected_containers: []
 --- !u!1 &8481655606585296729
 GameObject:
   m_ObjectHideFlags: 0

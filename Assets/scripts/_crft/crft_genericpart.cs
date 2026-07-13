@@ -77,6 +77,7 @@ public class crft_genericpart : MonoBehaviour
         data.partName = GetPartName();
 
         data.position = transform.localPosition;
+        data.euler_angles = transform.localEulerAngles;
 
         data.additional_part_data = MakeAdditionalPartData();
 

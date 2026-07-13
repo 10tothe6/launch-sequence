@@ -17,7 +17,9 @@ public class mcu_chunk : MonoBehaviour
 
     // the coordinates that the chunk represents, in whatever space we're dealing with
     // for testing this is just engine-space but in-game this is planet-space
+    public Vector3 ins_minimumPoint;
     public num_precisevector3 minimumPoint;
+    public Vector3 ins_maximumPoint;
     public num_precisevector3 maximumPoint;
     private num_precisevector3 originOffset;
 
@@ -28,6 +30,9 @@ public class mcu_chunk : MonoBehaviour
     {
         minimumPoint = min;
         maximumPoint = max;
+
+        ins_maximumPoint = maximumPoint.ToVector3();
+        ins_minimumPoint = minimumPoint.ToVector3();
 
         size = Mathf.Abs(max.x.Sub(min.x).AsFloat());
 

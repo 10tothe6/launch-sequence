@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4782539174737545612}
   - component: {fileID: 7161128569258154473}
   - component: {fileID: 2599592369055737115}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   showGridPoints: 0
   showGridLines: 0
   mf: {fileID: 7161128569258154473}
+  mr: {fileID: 0}
   xSize: 0
   ySize: 0
   zSize: 0
@@ -91,7 +92,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
+  - {fileID: 2100000, guid: c2e3edc7dd1e02e41b13e1797a8d1c79, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,7 +126,7 @@ GameObject:
   - component: {fileID: 3163179036977116591}
   - component: {fileID: 6762620394844962075}
   - component: {fileID: 3982085352551527038}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: chunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,6 +172,7 @@ MonoBehaviour:
   actualRadius: 0
   hashCode: 
   levelOfDetail: 0
+  hasBeenConstructed: 0
 --- !u!114 &3982085352551527038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +189,7 @@ MonoBehaviour:
   p_chunk: {fileID: 6930918290991104834}
   t_chunkContainer: {fileID: 0}
   rend: {fileID: 4782539174737545612}
+  ins_minimumPoint: {x: 0, y: 0, z: 0}
   minimumPoint:
     x:
       numDecimalDigits: 4
@@ -194,6 +197,7 @@ MonoBehaviour:
       numDecimalDigits: 4
     z:
       numDecimalDigits: 4
+  ins_maximumPoint: {x: 0, y: 0, z: 0}
   maximumPoint:
     x:
       numDecimalDigits: 4

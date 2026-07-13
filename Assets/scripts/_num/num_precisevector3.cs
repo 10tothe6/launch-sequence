@@ -98,18 +98,18 @@ public class num_precisevector3
     // ****************************************
 
 
-    public static bool BoundingBoxCheck(num_precisevector3 box_min, num_precisevector3 box_max, num_precisevector3 test_point)
+    public static bool BoundingBoxCheck(num_precisevector3 box_min, num_precisevector3 box_max, num_precisevector3 test_point, float buffer = 0)
     {
-        return test_point.x.AsDouble() > box_min.x.AsDouble() &&
-        test_point.x.AsDouble() < box_max.x.AsDouble() &&
+        return test_point.x.AsDouble() > box_min.x.AsDouble() - buffer &&
+        test_point.x.AsDouble() < box_max.x.AsDouble() + buffer &&
 
 
-        test_point.y.AsDouble() > box_min.y.AsDouble() &&
-        test_point.y.AsDouble() < box_max.y.AsDouble() &&
+        test_point.y.AsDouble() > box_min.y.AsDouble() - buffer &&
+        test_point.y.AsDouble() < box_max.y.AsDouble() + buffer &&
 
 
-        test_point.z.AsDouble() > box_min.z.AsDouble() &&
-        test_point.z.AsDouble() < box_max.z.AsDouble();
+        test_point.z.AsDouble() > box_min.z.AsDouble() - buffer &&
+        test_point.z.AsDouble() < box_max.z.AsDouble() + buffer;
     }
     
     // MATH FUNCTIONS

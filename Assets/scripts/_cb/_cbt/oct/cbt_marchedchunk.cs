@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class cbt_marchedchunk : MonoBehaviour
@@ -28,7 +29,7 @@ public class cbt_marchedchunk : MonoBehaviour
     public string hashCode; // also not super used, but i still feel its important
     public int levelOfDetail; // the LOD level of the chunk
 
-
+    [SerializeField]
     private bool hasBeenConstructed; // whether the mesh has been made yet or not
 
     private num_precisevector3 bounds_min;
@@ -65,8 +66,8 @@ public class cbt_marchedchunk : MonoBehaviour
         this.actualRadius = rad;
 
         // this 'extent' value is half of the side length
-        //float box_extent = rad + 5000 * WorldData.universalScaleFactor; // 5 km margin
-        float box_extent = rad;
+        float box_extent = rad + 5000 * WorldData.universalScaleFactor; // 5 km margin
+        //float box_extent = rad;
 
         num_precisevector3 min = new num_precisevector3(-box_extent, -box_extent, -box_extent);
         num_precisevector3 max = new num_precisevector3(box_extent, box_extent, box_extent);
@@ -86,16 +87,44 @@ public class cbt_marchedchunk : MonoBehaviour
 
     public void Subdivide()
     {
-        mcu.Split();
+        mcu_chunk[] new_chunks = mcu.Split();
+
+        for (int i = 0; i < new_chunks.Length; i++)
+        {
+            // setting up the chunk data once the mcu script has done its job
+            cbt_marchedchunk c = new_chunks[i].GetComponent<cbt_marchedchunk>();
+
+            c.levelOfDetail = levelOfDetail - 1;
+            c.body = body;
+            c.SetBoundsFromMCU();
+
+            if (body.detailLevelThresholds[c.levelOfDetail])
+            {
+                if (c.mcu.rend.GetComponent<MeshCollider>() != null)
+                {
+                    Destroy(c.mcu.rend.GetComponent<MeshCollider>());
+                }
+                c.mcu.rend.AddComponent<MeshCollider>();
+            }
+
+            body.chunks.Add(c);
+        }
+    }
+
+    public void SetBoundsFromMCU()
+    {
+        bounds_min = mcu.minimumPoint;
+        bounds_max = mcu.maximumPoint;
     }
 
 
     // used to check for subdivision
-    public bool IsLocalPlayerInBounds()
+    public bool IsLocalPlayerInBounds(float buffer)
     {
         if (!hasBeenConstructed) {return false;}
         if (LocalPlayer.localClient == null) {return false;}
         if (LocalPlayer.localClient.controllingEntity == null) {return false;}
+        if (body == null) {return false;}
 
         num_precisevector3 playerPos = LocalPlayer.localClient.controllingEntity.data.GetPosition();
 
@@ -106,6 +135,6 @@ public class cbt_marchedchunk : MonoBehaviour
         // Debug.Log(actual_max.AsString());
         // Debug.Log(playerPos.AsString());
 
-        return num_precisevector3.BoundingBoxCheck(actual_min, actual_max, playerPos);
+        return num_precisevector3.BoundingBoxCheck(actual_min, actual_max, playerPos, buffer);
     }
 }

@@ -102,9 +102,29 @@ public class UIManager : MonoBehaviour
 
     public ui_canisterwidget canister;
 
+    #region OPEN/CLOSE
 
-    public void OpenChargerMenu()
+    // can only be called if you pass in the proper part data
+    // and also a reference to the part
+    public void OpenCanisterMenu(crft_resourcecontainer part_reference)
     {
+        canister.gameObject.SetActive(true);
+
+        canister.BuildWidget(part_reference);
+    }
+
+    public void CloseCanisterMenu()
+    {
+        canister.gameObject.SetActive(false);
+    }
+
+
+
+
+    // really no reason why you would want to open the menu without a reference to the part
+    public void OpenChargerMenu(crft_charger part_reference)
+    {
+        charger.SetPartReference(part_reference);
         charger.gameObject.SetActive(true);
     }
     public void CloseChargerMenu()
@@ -117,6 +137,9 @@ public class UIManager : MonoBehaviour
     {
         signalScanner.gameObject.SetActive(!signalScanner.gameObject.activeSelf);
     }
+
+
+    #endregion
 
 
     #region LOCKING

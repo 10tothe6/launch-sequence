@@ -18,6 +18,18 @@ public class ui_canisterwidget : MonoBehaviour
 
     public TextMeshProUGUI tx_partName;
 
+    private crft_resourcecontainer part_reference;
+
+
+    // wrapper
+    public void BuildWidget(crft_resourcecontainer part)
+    {
+        // stored so that we can update its data when the menu closes
+        // (if we need to)
+        part_reference = part;
+
+        BuildWidget(part.gp.GetPartName(), part.compartements);
+    }
     public void BuildWidget(string part_name, List<crft_resourcecompartement> compartements)
     {
         tx_partName.text = part_name;
@@ -34,6 +46,8 @@ public class ui_canisterwidget : MonoBehaviour
             comp.BuildWidget(compartements[i]);
         }
     }
+
+
 
     void Update()
     {

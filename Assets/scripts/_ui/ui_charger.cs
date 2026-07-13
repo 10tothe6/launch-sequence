@@ -1,16 +1,13 @@
 using UnityEngine;
 
+// controller of the menu that allows you to change the charger's mode
+
 public class ui_charger : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    private crft_charger part_reference;
 
-    // Update is called once per frame
-    void Update()
+    public void SetPartReference(crft_charger part_reference)
     {
-        
+        this.part_reference = part_reference;
     }
 }

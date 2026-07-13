@@ -24,7 +24,16 @@ public class e_craft : MonoBehaviour
     // (most significant difference being that we can have many resource networks on a single craft)
     public List<crft_resourcenetwork> resource_networks;
 
+
+    [Header("EVENTS")]
+    // called after a craft is loaded from disk, when the craft finishes building
+    // mostly used (right now) for letting part scripts know they can assign references (now that all parts are there)
     public UnityEvent onCraftBuilt;
+
+    // this allows us to control when parts update themselves, like when solar panels actually add power to the system
+    public UnityEvent onPeriodicUpdate;
+    // sort of a "Time.deltaTime" for the periodic update
+    public float time_since_last_update; 
 
     void Awake()
     {

@@ -24,6 +24,11 @@ public class inv_inventorydata
         this.inventory_height = inventory_height;
     }
 
+    public void ApplyData(inv_inventorydata i)
+    {
+        items = i.items;
+    }
+
     public static inv_inventorydata ParseFromString(string data)
     {
         inv_inventorydata i = new inv_inventorydata();

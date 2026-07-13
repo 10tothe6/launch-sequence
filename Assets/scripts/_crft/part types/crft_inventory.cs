@@ -16,6 +16,11 @@ public class crft_inventory : MonoBehaviour
         gp = GetComponent<crft_genericpart>();
 
 
+        gp.onInitialize.AddListener(Initialize);
+    }
+
+    private void Initialize()
+    {
         gp.onRecievePartData.AddListener(ProcessPartData);
         gp.partDataCollectors.Add(CreateAdditionalPartData);
     }
@@ -49,7 +54,7 @@ public class crft_inventory : MonoBehaviour
 
         // TODO: exception handling for literally all of this
 
-        data = inv_inventorydata.ParseFromString(splitData[0]);
+        data.ApplyData(inv_inventorydata.ParseFromString(splitData[0]));
     }
 
     public string CreateAdditionalPartData()

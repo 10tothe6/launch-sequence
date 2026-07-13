@@ -169,7 +169,6 @@ GameObject:
   - component: {fileID: 2299938871442457569}
   - component: {fileID: -4972700898857821428}
   - component: {fileID: 8645941306782063383}
-  - component: {fileID: 8700907348535642234}
   m_Layer: 8
   m_Name: part_small_crate
   m_TagString: Untagged
@@ -206,10 +205,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2287796486a6151499f91942866adbca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::crft_genericpart
+  partDataKeys: []
+  partDataValues: []
   data:
     partName: 
     position: {x: 0, y: 0, z: 0}
+    additional_part_data: 
   connectedParts: []
+  t_snapPointContainer: {fileID: 0}
+  t_snapPoints: []
+  eComp: {fileID: 0}
+  onInitialize:
+    m_PersistentCalls:
+      m_Calls: []
+  onRecievePartData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-4972700898857821428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,18 +270,6 @@ MonoBehaviour:
     inventory_height: 4
     cellsTaken: 
     items: []
---- !u!114 &8700907348535642234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7415345247471772869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2132ad59f84fa86409e5f9d031e8102c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::test_fillwithitems
 --- !u!1 &8481655606585296729
 GameObject:
   m_ObjectHideFlags: 0

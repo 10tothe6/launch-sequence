@@ -414,6 +414,7 @@ MonoBehaviour:
   newChunks: []
   parentChunk: {fileID: 0}
   detailLevelThresholds: 010101010101010000000000000000000000
+  maxDetailLevels: 2
 --- !u!114 &4949187247040308731
 MonoBehaviour:
   m_ObjectHideFlags: 0

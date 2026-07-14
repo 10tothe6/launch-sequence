@@ -47,6 +47,7 @@ public class cbt_marchedbody : MonoBehaviour
 
     // each bool is whether it has a collider
     public bool[] detailLevelThresholds;
+    public int maxDetailLevels;
 
 
     void Awake()
@@ -125,7 +126,7 @@ public class cbt_marchedbody : MonoBehaviour
 
         foreach (cbt_marchedchunk current in chunks)
         {
-            if (current.levelOfDetail > 0 && current.IsLocalPlayerInBounds(0.1f) && current.mcu.isVisible)
+            if (current.levelOfDetail > (detailLevelThresholds.Length-maxDetailLevels) && current.IsLocalPlayerInBounds(0.1f) && current.mcu.isVisible)
             {
                 // player is within the bounds of the chunk, meaning we subdivide
                 current.Subdivide();

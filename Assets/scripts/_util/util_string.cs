@@ -14,6 +14,17 @@ public class util_string
         '(',
     };
 
+    public static string SetCharAtIndex(string raw, int index, char c)
+    {
+        string toReturn = raw.Substring(0, index);
+
+        toReturn += c;
+
+        toReturn += raw.Substring(index + 1, raw.Length - index - 1);
+
+        return toReturn;
+    }
+
 
     // simplest and easiest way I could think to do this (maybe not the easiest for the computer, but ah well)
     public static List<string> RemoveDuplicatesFromList(List<string> raw)

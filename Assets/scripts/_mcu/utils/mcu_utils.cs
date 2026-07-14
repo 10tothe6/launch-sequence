@@ -1,8 +1,131 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Numerics;
+using NUnit.Framework;
+
+// for the axes, underscores are stand-ins for the negative sign
+
+// 13 of these
+public enum mcu_translationaxis
+{
+    // 3 of the one-axis
+    X,
+    Y,
+    Z,
+
+    // 6 of the two-axis
+    XZ,
+    X_Z,
+
+    XY,
+    X_Y,
+
+    YZ,
+    Y_Z,
+
+
+    // four of the three-axis
+    XYZ,
+    XY_Z,
+    X_YZ,
+    _XYZ,
+}
 
 public class mcu_utils
 {   
+
+    public static mcu_vectortoaxis[] vector_conversions = new mcu_vectortoaxis[]
+    {
+        // X
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1,0,0), new List<int>(){0}, new List<bool>(){false}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1,0,0), new List<int>(){0}, new List<bool>(){true}),
+
+        // Y
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,-1,0), new List<int>(){1}, new List<bool>(){false}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,1,0), new List<int>(){1}, new List<bool>(){true}),
+
+        // Z
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,0,-1), new List<int>(){2}, new List<bool>(){false}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,0,1), new List<int>(){2}, new List<bool>(){true}),
+
+        // XZ
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1,0,1), new List<int>(){0, 2}, new List<bool>(){true, true}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1,0,-1), new List<int>(){0, 2}, new List<bool>(){false, false}),
+
+        // X-Z
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1,0,-1), new List<int>(){0, 2}, new List<bool>(){true, false}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1,0,1), new List<int>(){0, 2}, new List<bool>(){false, true}),
+
+        // XY
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1,1,0), new List<int>(){0, 1}, new List<bool>(){true, true}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1,-1,0), new List<int>(){0, 1}, new List<bool>(){false, false}),
+
+        // X-Y
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1,-1,0), new List<int>(){0, 1}, new List<bool>(){true, false}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1,1,0), new List<int>(){0, 1}, new List<bool>(){false, true}),
+
+        // YZ
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,1,1), new List<int>(){1, 2}, new List<bool>(){true, true}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,-1,-1), new List<int>(){1, 2}, new List<bool>(){false, false}),
+
+        // Y-Z
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,1,-1), new List<int>(){1, 2}, new List<bool>(){true, false}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,1,-1), new List<int>(){1, 2}, new List<bool>(){false, true}),
+
+        // XYZ
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1, 1, 1), new List<int>(){0, 1, 2}, new List<bool>(){true, true, true}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1, -1, -1), new List<int>(){0, 1, 2}, new List<bool>(){false, false, false}),
+
+        // XY-Z
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1, 1, -1), new List<int>(){0, 1, 2}, new List<bool>(){true, true, false}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1, -1, 1), new List<int>(){0, 1, 2}, new List<bool>(){false, false, true}),
+
+        // X-YZ
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1, -1, 1), new List<int>(){0, 1, 2}, new List<bool>(){true, false, true}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1,1, -1), new List<int>(){0, 1, 2}, new List<bool>(){false, true, false}),
+
+        // X-Y-Z
+        new mcu_vectortoaxis(new UnityEngine.Vector3(1, -1, -1), new List<int>(){0, 1, 2}, new List<bool>(){true, false, false}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(-1, 1, 1), new List<int>(){0, 1, 2}, new List<bool>(){false, true, true}),
+    };
+
+
+    // Y-UP
+    public static int[][] numbers = new int[3][]
+    {
+        new int[8] {1, 0, 3, 2, 5, 4, 7, 6},
+        new int[8] {4, 5, 6, 7, 0, 1, 2, 3},
+        new int[8] {3, 2, 1, 0, 7, 6, 5, 4},
+    };
+
+    // Y-UP
+    public static bool[][] directions = new bool[3][]
+    {
+        new bool[8] {true, false, false, true, true, false, false, true},
+        new bool[8] {true, true, true, true, false, false, false, false},
+        new bool[8] {true, true, false, false, true, true, false, false},
+    };
+
+    public static string GetAdjacentHashCode(string hash, int axis, bool isPositiveDirection)
+    {
+        // reading right-to-left
+        for (int i = hash.Length - 1; i >= 0; i--)
+        {   
+            int current_digit = int.Parse(hash[i].ToString());
+
+            util_string.SetCharAtIndex(hash, i, (char)numbers[axis][current_digit]);
+
+            if (directions[axis][current_digit] == isPositiveDirection)
+            {
+                // this is the last character we needed to edit, so return the hash
+                return hash;
+            }
+        }
+
+        return hash; // should never get here???
+    }
+
     // how many vertices per side of a chunk
     public static int chunkResolution = 3;
 
@@ -46,7 +169,43 @@ public class mcu_utils
     //         |  0------------|--1    
     //         | /             | /     
     //         |/              |/          
-    //         3---------------2            
+    //         3---------------2     
+
+
+
+
+
+
+    // CHUNK LAYOUT IN THE UNITY ENGINE
+
+    //       y
+    //       |
+    //       |
+    //       |
+    //       o-------> x
+    //      /
+    //     /
+    //   -z
+
+
+    //            7---------------6                 7---------------6 
+    //           /|              /|                /|              /| 
+    //          / |             / |               / |             / | 
+    //         4---------------5  |              4---------------5  |  
+    //         |  |            |  |              |  |            |  |  
+    //         |  3------------|--2              |  3------------|--2    
+    //         | /             | /               | /             | /    
+    //         |/              |/                |/              |/        
+    //         0---------------1                 0---------------1   
+    //       7---------------6                 7---------------6 
+    //      /|              /|                /|              /| 
+    //     / |             / |               / |             / | 
+    //    4---------------5  |              4---------------5  |  
+    //    |  |            |  |              |  |            |  |  
+    //    |  3------------|--2              |  3------------|--2    
+    //    | /             | /               | /             | /    
+    //    |/              |/                |/              |/        
+    //    0---------------1                 0---------------1       
 
     // just pray that none of the below values are wrong
 

@@ -5,6 +5,11 @@ using UnityEngine;
 public class util_math
 {
 
+    public static double Lerp(double a, double b, double t)
+    {
+        return a + (b-a) * t;
+    }
+
     public static UnityEngine.Vector3 GenerateRandomDirection()
     {
         UnityEngine.Vector3 pointInsideUnitCube = new UnityEngine.Vector3(

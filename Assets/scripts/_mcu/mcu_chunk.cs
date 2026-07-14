@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // this is really the important class in the mcu system
@@ -46,7 +47,8 @@ public class mcu_chunk : MonoBehaviour
         // could do this, but instead I'm telling the mcu chunk to move its vertices
         //transform.localPosition += min.ToVector3() - originOffset.ToVector3();
 
-        rend.SetOffset(min.ToVector3());
+        transform.position += min.ToVector3();
+        rend.SetOffset(Vector3.zero);
     }
 
     public void Generate(num_precisevector3 min, num_precisevector3 max, int resolution)
@@ -65,7 +67,7 @@ public class mcu_chunk : MonoBehaviour
         int res = resolution;
 
         //constructing the points array for the rend
-        float[,,] points = new float[res,res,res];
+        double[,,] points = new double[res,res,res];
 
         for (int x = 0; x < res; x++)
         {
@@ -157,14 +159,14 @@ public class mcu_chunk : MonoBehaviour
 
     // converting a vertex index to a 3D position,
     // based on the min and max points
-    public num_precisevector3 IndexToPosition(int x,int y,int z)
+    public DoubleVector3 IndexToPosition(int x,int y,int z)
     {
         //Debug.Log((float)(mcu_utils.chunkResolution-1) / (float)x / 5f);
 
-        return new num_precisevector3(
-            Mathf.Lerp(minimumPoint.x.AsFloat(),maximumPoint.x.AsFloat(),1f / (float)(resolution-1) * (float)x),
-            Mathf.Lerp(minimumPoint.y.AsFloat(),maximumPoint.y.AsFloat(),1f / (float)(resolution-1) * (float)y),
-            Mathf.Lerp(minimumPoint.z.AsFloat(),maximumPoint.z.AsFloat(),1f / (float)(resolution-1) * (float)z)
+        return new DoubleVector3(
+            minimumPoint.x.AsDouble() + size * ((float)x / (resolution-1)),
+            minimumPoint.y.AsDouble() + size * ((float)y / (resolution-1)),
+            minimumPoint.z.AsDouble() + size * ((float)z / (resolution-1))
         );
 
         //Debug.Log(new num_precise(1f / (float)(resolution-1) * (float)x).AsFloat());
@@ -172,10 +174,10 @@ public class mcu_chunk : MonoBehaviour
     }
 
     // sort of a temporary way of getting point data
-    float GetPoint(num_precisevector3 pos)
+    double GetPoint(DoubleVector3 pos)
     {
         //return -(pos.Mag().AsFloat() - 20f);
 
-        return -(pos.Mag().AsFloat() - GetComponent<cbt_marchedchunk>().actualRadius);
+        return -(pos.Mag() - GetComponent<cbt_marchedchunk>().actualRadius);
     }
 }

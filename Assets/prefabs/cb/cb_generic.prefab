@@ -413,7 +413,7 @@ MonoBehaviour:
   chunks: []
   newChunks: []
   parentChunk: {fileID: 0}
-  detailLevelThresholds: 0101010100000000000000000000000000000000
+  detailLevelThresholds: 010101010000000000000000000000000000
 --- !u!114 &4949187247040308731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13828b0344fbeae43b9d3f00b15d7d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cbt_coloredmarchedchunks
-  coloringMode: 0
+  coloringMode: 1
   refreshOnUpdate: 1
   debugColors:
   - {r: 1, g: 0.4509434, b: 0.4509434, a: 1}
@@ -444,10 +444,8 @@ MonoBehaviour:
   - {r: 0.44244823, g: 0.28627452, b: 0.5529412, a: 1}
   - {r: 0.5529412, g: 0.28627452, b: 0.37603283, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0.63404465, b: 0, a: 1}
-  - {r: 0.9519005, g: 1, b: 0, a: 1}
-  - {r: 0, g: 1, b: 0.046533108, a: 1}
-  - {r: 0, g: 0.9465637, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.010727882, a: 1}
+  - {r: 0.0088124275, g: 0, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &8827367443003885876
 GameObject:

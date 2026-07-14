@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 // ************  INFO ON THIS CLASS: ************
 
@@ -11,6 +12,15 @@ using System.Collections.Generic;
 
 public class mcu_drawmesh : MonoBehaviour
 {
+    [Header("DEBUG")]
+    public int indexToLog_x;
+    public int indexToLog_y;
+    public int indexToLog_z;
+    public bool logPoint;
+
+    public float pointRadius;
+
+    [Space(20)]
     [Header("Config")]
     public bool showGridPoints;
     public bool showGridLines;
@@ -22,17 +32,17 @@ public class mcu_drawmesh : MonoBehaviour
     public int xSize;
     public int ySize;
     public int zSize;
-    public float[,,] points;
+    public double[,,] points;
 
     // these are the actual sizes
-    public float xSizeActual;
-    public float ySizeActual;
-    public float zSizeActual;
-    public float xScaleFactor;
+    public double xSizeActual;
+    public double ySizeActual;
+    public double zSizeActual;
+    public double xScaleFactor;
 
-    public float yScaleFactor;
+    public double yScaleFactor;
 
-    public float zScaleFactor;
+    public double zScaleFactor;
 
     // THESE INDICES ARE ALL ONE GREATER THAN THE ACTUAL INDEX
     // the first index is the beginning point,
@@ -52,7 +62,16 @@ public class mcu_drawmesh : MonoBehaviour
         mr = GetComponent<MeshRenderer>();
     }
 
-    public void Initialize(float[,,] points, 
+    void Update()
+    {
+        if(logPoint)
+        {
+            logPoint = false;
+            Debug.Log(points[indexToLog_x, indexToLog_y, indexToLog_z]);
+        }
+    }
+
+    public void Initialize(double[,,] points, 
     int xSize, int ySize, int zSize, 
     float xSizeActual, float ySizeActual, float zSizeActual)
     {
@@ -81,7 +100,7 @@ public class mcu_drawmesh : MonoBehaviour
     public void InitializeEmpty(int xSize, int ySize, int zSize,
     float xSizeActual, float ySizeActual, float zSizeActual)
     {
-        Initialize(new float[xSize,ySize,zSize], xSize, ySize, zSize, xSizeActual,ySizeActual,zSizeActual);
+        Initialize(new double[xSize,ySize,zSize], xSize, ySize, zSize, xSizeActual,ySizeActual,zSizeActual);
     }
 
     void OnDrawGizmos()
@@ -142,8 +161,6 @@ public class mcu_drawmesh : MonoBehaviour
     // draws the 3D grid of points that represents the area taken up by this component
     public void DrawGridPoints()
     {
-        float rad = 0.15f;
-
         for (int x = 0; x < xSize; x++)
         {
             for (int y = 0; y < ySize; y++)
@@ -151,7 +168,7 @@ public class mcu_drawmesh : MonoBehaviour
                 for (int z = 0; z < zSize; z++)
                 {
                     // TODO: offset this properly
-                    Gizmos.DrawSphere(transform.position + new Vector3(x,y,z)*xScaleFactor + offset, rad);
+                    Gizmos.DrawSphere(transform.position + new Vector3(x,y,z)*(float)xScaleFactor + offset, pointRadius);
                 }
             }
         }
@@ -179,7 +196,7 @@ public class mcu_drawmesh : MonoBehaviour
                 {
                     // might be a bad thing to initialize an array every step?
                     // ah what the hell this'll be a shader eventually anyways
-                    float[] cellValues = new float[8];
+                    double[] cellValues = new double[8];
                     cellValues[0] = points[x,y,z];
                     cellValues[1] = points[x+1,y,z];
                     cellValues[2] = points[x+1,y+1,z];
@@ -191,14 +208,26 @@ public class mcu_drawmesh : MonoBehaviour
 
                     Vector3[] cellVertices = new Vector3[]
                     {
-                        new Vector3(x,y,z)*xScaleFactor,
-                        new Vector3(x+1,y,z)*xScaleFactor,
-                        new Vector3(x+1,y+1,z)*xScaleFactor,
-                        new Vector3(x,y+1,z)*xScaleFactor,
-                        new Vector3(x,y,z+1)*xScaleFactor,
-                        new Vector3(x+1,y,z+1)*xScaleFactor,
-                        new Vector3(x+1,y+1,z+1)*xScaleFactor,
-                        new Vector3(x,y+1,z+1)*xScaleFactor,
+                        new Vector3(x,y,z)*(float)xScaleFactor,
+                        new Vector3(x+1,y,z)*(float)xScaleFactor,
+                        new Vector3(x+1,y+1,z)*(float)xScaleFactor,
+                        new Vector3(x,y+1,z)*(float)xScaleFactor,
+                        new Vector3(x,y,z+1)*(float)xScaleFactor,
+                        new Vector3(x+1,y,z+1)*(float)xScaleFactor,
+                        new Vector3(x+1,y+1,z+1)*(float)xScaleFactor,
+                        new Vector3(x,y+1,z+1)*(float)xScaleFactor,
+                    };
+
+                    Vector3[] cellVertices_raw = new Vector3[]
+                    {
+                        new Vector3(x,y,z),
+                        new Vector3(x+1,y,z),
+                        new Vector3(x+1,y+1,z),
+                        new Vector3(x,y+1,z),
+                        new Vector3(x,y,z+1),
+                        new Vector3(x+1,y,z+1),
+                        new Vector3(x+1,y+1,z+1),
+                        new Vector3(x,y+1,z+1),
                     };
 
                     int configurationIndex = GetConfigIndex(cellValues);
@@ -219,21 +248,21 @@ public class mcu_drawmesh : MonoBehaviour
                         int f = GetPointIndexFromPosition(cellVertices[a[1]]);
                         int aIndex = GetVertexIndex(i,f);
                         if (aIndex == 0) {aIndex = verts.Count;
-                            AddVertex(i,f);
+                            AddVertex(i,f, cellVertices_raw[a[0]], cellVertices_raw[a[1]]);
                         } else {aIndex--;}
 
                         i = GetPointIndexFromPosition(cellVertices[b[0]]);
                         f = GetPointIndexFromPosition(cellVertices[b[1]]);
                         int bIndex = GetVertexIndex(i,f);
                         if (bIndex == 0) {bIndex = verts.Count;
-                            AddVertex(i,f);
+                            AddVertex(i,f, cellVertices_raw[b[0]], cellVertices_raw[b[1]]);
                         } else {bIndex--;}
 
                         i = GetPointIndexFromPosition(cellVertices[c[0]]);
                         f = GetPointIndexFromPosition(cellVertices[c[1]]);
                         int cIndex = GetVertexIndex(i,f);
                         if (cIndex == 0) {cIndex = verts.Count;
-                            AddVertex(i,f);
+                            AddVertex(i,f, cellVertices_raw[c[0]], cellVertices_raw[c[1]]);
                         } else {cIndex--;}
 
                         tris.Add(aIndex);
@@ -251,33 +280,25 @@ public class mcu_drawmesh : MonoBehaviour
         mf.mesh = result;
     }
 
-    void AddVertex(int initial, int final) {
+    void AddVertex(int initial, int final, Vector3 initial_pos, Vector3 final_pos) {
         existingVertexIndices[initial,final] = verts.Count + 1;
         existingVertexIndices[final,initial] = verts.Count + 1;
         
         norms.Add(Vector3.up);
 
-        Vector3 vi = GetPositionFromPointIndex(initial);
-        Vector3 vf = GetPositionFromPointIndex(final);
-        verts.Add(offset + Vector3.Lerp(vi,vf, GetZero(points[Mathf.RoundToInt(vi.x),Mathf.RoundToInt(vi.y),Mathf.RoundToInt(vi.z)],points[Mathf.RoundToInt(vf.x),Mathf.RoundToInt(vf.y),Mathf.RoundToInt(vf.z)]))*xScaleFactor);
-    }
-
-    public Vector3 GetPositionFromPointIndex(int pointIndex)
-    {
-        int z = Mathf.FloorToInt((float)pointIndex / ((float)xSize * (float)ySize));
-        int y = Mathf.FloorToInt((pointIndex - z * xSize * ySize) / (float)xSize);
-        int x = pointIndex - z * xSize * ySize - y * xSize;
-        return new Vector3(x, y, z);
+        Vector3 vi = initial_pos;
+        Vector3 vf = final_pos;
+        verts.Add(offset + Vector3.Lerp(vi,vf, (float)GetZero(points[Mathf.RoundToInt(vi.x),Mathf.RoundToInt(vi.y),Mathf.RoundToInt(vi.z)],points[Mathf.RoundToInt(vf.x),Mathf.RoundToInt(vf.y),Mathf.RoundToInt(vf.z)]))*(float)xScaleFactor);
     }
 
     public int GetPointIndexFromPosition(Vector3 pos)
     {
-        return Mathf.RoundToInt(pos.x/xScaleFactor) + Mathf.RoundToInt(pos.y/xScaleFactor) * xSize + Mathf.RoundToInt(pos.z/xScaleFactor) * xSize * ySize;
+        return Mathf.RoundToInt(pos.x/(float)xScaleFactor) + Mathf.RoundToInt(pos.y/(float)xScaleFactor) * xSize + Mathf.RoundToInt(pos.z/(float)xScaleFactor) * xSize * ySize;
     }
 
-    public int GetConfigIndex(float[] cellValues)
+    public int GetConfigIndex(double[] cellValues)
     {
-        float surfaceHeight = 0.1f;
+        float surfaceHeight = 0;
 
         int sum = 0;
 
@@ -302,10 +323,10 @@ public class mcu_drawmesh : MonoBehaviour
 
     // given two values, figure out the percentage along the line a --> b where 0 is
     // just a small step I wanted to remove from the larger logic
-    public float GetZero(float a, float b)
+    public double GetZero(double a, double b)
     {
-        float total = Mathf.Abs(a) + Mathf.Abs(b);
-        float dist = Mathf.Abs(a);
+        double total = Math.Abs(a) + Math.Abs(b);
+        double dist = Math.Abs(a);
 
         
         return dist / total;

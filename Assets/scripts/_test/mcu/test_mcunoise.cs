@@ -45,6 +45,6 @@ public class test_mcunoise : MonoBehaviour
             }
         }
 
-        GetComponent<mcu_drawmesh>().Initialize(noiseGrid, size,size,size,size,size,size);
+        //GetComponent<mcu_drawmesh>().Initialize(noiseGrid, size,size,size,size,size,size);
     }
 }

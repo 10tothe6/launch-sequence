@@ -16,34 +16,34 @@ public class num_precise
 
     public num_precise(string data)
     {
-        numDecimalDigits = 4;
+        numDecimalDigits = 6;
         raw = BigInteger.Parse(data);
     }
 
     // a few, very similar-looking constructors
     public num_precise(BigInteger raw)
     {
-        numDecimalDigits = 4;
+        numDecimalDigits = 6;
         this.raw = raw;
     }
     public num_precise()
     {
-        numDecimalDigits = 4;
+        numDecimalDigits = 6;
         raw = new BigInteger();
     }
     public num_precise(float num)
     {
-        numDecimalDigits = 4;
+        numDecimalDigits = 6;
         raw = new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
     }
     public num_precise(double num)
     {
-        numDecimalDigits = 4;
+        numDecimalDigits = 6;
         raw = new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
     }
     public num_precise(int num)
     {
-        numDecimalDigits = 4;
+        numDecimalDigits = 6;
         raw = new BigInteger(num * Mathf.Pow(10, numDecimalDigits));
     }
 
@@ -59,7 +59,7 @@ public class num_precise
     public static num_precise Lerp(num_precise min, num_precise max, num_precise t)
     {
         num_precise gap = max.Sub(min).Mul(t);
-        Debug.Log(new num_precise(1f).Div(0.42d).AsFloat());
+       
         return min.Add(gap);
     }
 

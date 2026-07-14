@@ -97,18 +97,18 @@ public class num_precise
         }
         else
         {
-            return Mul(num.AsDouble()); // again, just manipulating the raw numbers should be fine
+            return new num_precise(raw * num.raw / new BigInteger(Mathf.Pow(10, numDecimalDigits))); 
         }
     }
     public num_precise Mul(double num)
     {
         if (num < 1 && num > 0)
         {
-            return Div(1d / num); // again, just manipulating the raw numbers should be fine
+            return Div(1d / num);
         }
         else
         {
-            return new num_precise(raw * new BigInteger(num)); // again, just manipulating the raw numbers should be fine
+            return new num_precise(raw * new BigInteger(num * Mathf.Pow(10, numDecimalDigits)) / new BigInteger(Mathf.Pow(10, numDecimalDigits))); 
         }
     }
     public num_precise Mul(float num)

@@ -60,9 +60,6 @@ SubShader {
 
         o.Albedo = tex2D(_MainTex, uv) * _Color;
         o.worldPos = IN.worldPos;
-
-        fixed3 normal = UnpackNormal(tex2D(_NormalTex, uv));
-        o.Normal = normal;
     }
     ENDCG
     }

@@ -10,9 +10,21 @@ public class crft_craftdata
 
     public crft_craftdata() {}
 
+    public crft_craftdata(string craft_name)
+    {
+        this.craft_name = craft_name;
+        this.parts = new crft_genericpartdata[0];
+    }
+
     public crft_craftdata(string craft_name, crft_genericpartdata[] parts)
     {
         this.craft_name = craft_name;
+        this.parts = parts;
+    }
+
+    public crft_craftdata(crft_genericpartdata[] parts)
+    {
+        this.craft_name = "craft";
         this.parts = parts;
     }
 }

@@ -377,6 +377,10 @@ public class cmd_console : MonoBehaviour
             else if (GetCommandData("spawncraft").IsValid(items[0])) // spawning a craft
             {
                 string craft_name = items[1];
+
+                crft_craftdata data = rw_craft.ReadCraftDataFromFile(util_file.GetWorkingDirectory() + "saved craft/" + craft_name + ".craft");
+
+                EntityManager.SpawnCraftFromData(data, ServerNetworkManager.GetClient(fromClientIndex).controllingEntity.data.GetPosition());
             }
             
             

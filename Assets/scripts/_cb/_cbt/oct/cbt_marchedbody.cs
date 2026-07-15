@@ -149,6 +149,7 @@ public class cbt_marchedbody : MonoBehaviour
             {
                 // player is within the bounds of the chunk, meaning we subdivide
                 current.Subdivide();
+                GetComponent<cbr_litbody>().UpdateChildren();
 
                 //cmd.LogRaw("SUBDIVIDING...", Color.limeGreen);
                 break;

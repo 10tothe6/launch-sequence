@@ -91,6 +91,11 @@ public class mcu_drawmesh : MonoBehaviour
         DrawMesh();
     }
 
+    public void ReInitialize()
+    {
+        DrawMesh();
+    }
+
     public void SetOffset(Vector3 offset)
     {
         this.offset = offset;
@@ -278,6 +283,11 @@ public class mcu_drawmesh : MonoBehaviour
         result.SetTriangles(tris,0);
 
         mf.mesh = result;
+
+        if (GetComponent<MeshCollider>() != null)
+        {
+            GetComponent<MeshCollider>().sharedMesh = mf.mesh;
+        }
     }
 
     void AddVertex(int initial, int final, Vector3 initial_pos, Vector3 final_pos) {

@@ -8,7 +8,8 @@ public class player_terraineditor : MonoBehaviour
 
     void Update()
     {
-        if (Input.mouseButtonDownLeft)
+        bool can_edit_terrain = false;
+        if (Input.mouseButtonDownLeft && can_edit_terrain)
         {
             current_body = cb_solarsystem.Instance.monoBodies[WorldManager.Instance.GetSOIIndex()].GetComponent<cbt_marchedbody>();
 
@@ -22,12 +23,16 @@ public class player_terraineditor : MonoBehaviour
 
                     List<cbt_marchedchunk> others = GetAdjacentChunks(interactedWith);
 
+                    interactedWith.EditTerrain(hit.point - interactedWith.transform.position, 0.1f, true);
+
                     // hey look a foreach loop
                     foreach (cbt_marchedchunk c in others)
                     {
                         if (c.levelOfDetail == 0)
                         {
                             c.ShowChunkCenter();
+
+                            c.EditTerrain(hit.point - c.transform.position, 0.1f, true);
                         }
                     }
                 }

@@ -35,6 +35,17 @@ public class cbt_marchedchunk : MonoBehaviour
     private num_precisevector3 bounds_min;
     private num_precisevector3 bounds_max;
 
+    #region EDITING TERRAIN
+
+    public void EditTerrain(Vector3 position_relative_to_chunk, float radius, bool addRemove, float brush_strength = 0.1f)
+    {
+        float number_to_add = brush_strength * (addRemove ? 1f : -1f);
+
+        mcu.Modify(position_relative_to_chunk, radius, number_to_add);
+    }
+    
+    #endregion
+
     public void InitializeDirect(int startingResolution, float directRadius)
     {
         this.bodyIndex = -1;

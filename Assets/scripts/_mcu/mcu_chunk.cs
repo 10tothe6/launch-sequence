@@ -27,6 +27,24 @@ public class mcu_chunk : MonoBehaviour
     public float size; // length of an edge of the cube
     private int resolution;
 
+    public void Modify(Vector3 center_pos, float rad, float offset_number)
+    {
+        for (int x = 0; x < resolution; x++)
+        {
+            for (int y = 0; y < resolution; y++)
+            {
+                for (int z = 0; z < resolution; z++)
+                {
+                    float dist = Vector3.Distance(center_pos, IndexToLocalPosition(x,y,z));
+
+                    rend.points[x,y,z] = util_math.Lerp(rend.points[x,y,z], offset_number, Mathf.Clamp(1f - (dist/rad), 0f, 1f));
+
+                    rend.ReInitialize();
+                }
+            }
+        }
+    }
+
     public void SetBounds(num_precisevector3 min,num_precisevector3 max)
     {
         minimumPoint = min;
@@ -168,6 +186,18 @@ public class mcu_chunk : MonoBehaviour
             minimumPoint.y.AsDouble() + size * ((float)y / (resolution-1)),
             minimumPoint.z.AsDouble() + size * ((float)z / (resolution-1))
         );
+
+        //Debug.Log(new num_precise(1f / (float)(resolution-1) * (float)x).AsFloat());
+        //Debug.Log(num_precise.Lerp(minimumPoint.x,maximumPoint.x,new num_precise(1f / (float)(resolution-1) * (float)x)).AsFloat());
+    }
+
+    public Vector3 IndexToLocalPosition(int x,int y,int z)
+    {
+        //Debug.Log((float)(mcu_utils.chunkResolution-1) / (float)x / 5f);
+
+        float scale_factor = size / ((float)resolution-1);
+
+        return new Vector3(x,y,z)*(float)scale_factor;
 
         //Debug.Log(new num_precise(1f / (float)(resolution-1) * (float)x).AsFloat());
         //Debug.Log(num_precise.Lerp(minimumPoint.x,maximumPoint.x,new num_precise(1f / (float)(resolution-1) * (float)x)).AsFloat());

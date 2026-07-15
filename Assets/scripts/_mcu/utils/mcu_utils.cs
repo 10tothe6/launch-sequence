@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Numerics;
 using NUnit.Framework;
+using UnityEngine;
 
 // for the axes, underscores are stand-ins for the negative sign
 
@@ -71,7 +72,7 @@ public class mcu_utils
 
         // Y-Z
         new mcu_vectortoaxis(new UnityEngine.Vector3(0,1,-1), new List<int>(){1, 2}, new List<bool>(){true, false}),
-        new mcu_vectortoaxis(new UnityEngine.Vector3(0,1,-1), new List<int>(){1, 2}, new List<bool>(){false, true}),
+        new mcu_vectortoaxis(new UnityEngine.Vector3(0,-1,1), new List<int>(){1, 2}, new List<bool>(){false, true}),
 
         // XYZ
         new mcu_vectortoaxis(new UnityEngine.Vector3(1, 1, 1), new List<int>(){0, 1, 2}, new List<bool>(){true, true, true}),
@@ -107,21 +108,57 @@ public class mcu_utils
         new bool[8] {true, true, false, false, true, true, false, false},
     };
 
-    public static string GetAdjacentHashCode(string hash, int axis, bool isPositiveDirection)
+    public static mcu_vectortoaxis ConvertVector(UnityEngine.Vector3 v)
+    {
+        for (int i = 0; i < vector_conversions.Length; i++)
+        {
+            if (UnityEngine.Vector3.Distance(v, vector_conversions[i].vector) < 0.01f)
+            {
+                return vector_conversions[i];
+            }
+        }
+
+        return null;
+    }
+
+    public static string GetAdjacentHashCode(string hash, UnityEngine.Vector3 offset)
+    {
+        mcu_vectortoaxis moveset = ConvertVector(offset);
+
+        if (moveset == null) {/* Debug.Log("no moveset found for vector: " + offset.ToString()); */  return hash;}
+
+        for (int i = 0; i < moveset.moves.Count; i++)
+        {
+            hash = AdjustHashCode(hash, moveset.moves[i], moveset.directions[i]);
+        }
+
+        //Debug.Log("moveset found");
+
+        return hash;
+    }
+
+    public static string AdjustHashCode(string hash, int axis, bool isPositiveDirection)
     {
         // reading right-to-left
         for (int i = hash.Length - 1; i >= 0; i--)
         {   
             int current_digit = int.Parse(hash[i].ToString());
 
-            util_string.SetCharAtIndex(hash, i, (char)numbers[axis][current_digit]);
+            Debug.Log(hash);
+
+            hash = util_string.SetCharAtIndex(hash, i, numbers[axis][current_digit].ToString());
+
+            Debug.Log(hash);
 
             if (directions[axis][current_digit] == isPositiveDirection)
             {
                 // this is the last character we needed to edit, so return the hash
+                //Debug.Log(hash);
                 return hash;
             }
         }
+
+        Debug.Log("late return of hash");
 
         return hash; // should never get here???
     }

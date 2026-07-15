@@ -55,6 +55,22 @@ public class cbt_marchedchunk : MonoBehaviour
         ConstructMesh();
     }
 
+    // spawns a ball at the chunk's center for debug purposes
+    // TODO: make this ball render using the debug system so its on top of geometry
+    public void ShowChunkCenter()
+    {
+        //Debug.Log("hey there");
+
+        GameObject g_new = new GameObject();
+
+        g_new.transform.position = transform.position;
+        g_new.transform.SetParent(transform);
+        g_new.AddComponent<MeshFilter>().sharedMesh = util_mesh.cube;
+        g_new.AddComponent<MeshRenderer>().sharedMaterial = util_mesh.m_unlit;
+
+        g_new.transform.localScale = Vector3.one * 0.05f;
+    }
+
     private void ConstructMesh()
     {
         hasBeenConstructed = true;
@@ -88,6 +104,7 @@ public class cbt_marchedchunk : MonoBehaviour
     public void Subdivide()
     {
         mcu_chunk[] new_chunks = mcu.Split();
+        children = new cbt_marchedchunk[8];
 
         for (int i = 0; i < new_chunks.Length; i++)
         {
@@ -97,6 +114,11 @@ public class cbt_marchedchunk : MonoBehaviour
             c.levelOfDetail = levelOfDetail - 1;
             c.body = body;
             c.SetBoundsFromMCU();
+
+            c.parent = this;
+
+            c.hashCode = hashCode + i;
+            children[i] = c;
 
             if (body.detailLevelThresholds[c.levelOfDetail])
             {

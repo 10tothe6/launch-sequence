@@ -14,11 +14,11 @@ public class util_string
         '(',
     };
 
-    public static string SetCharAtIndex(string raw, int index, char c)
+    public static string SetCharAtIndex(string raw, int index, string c)
     {
         string toReturn = raw.Substring(0, index);
 
-        toReturn += c;
+        toReturn += c.ToString();
 
         toReturn += raw.Substring(index + 1, raw.Length - index - 1);
 

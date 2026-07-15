@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SocialPlatforms;
 
 // TURNS OUT THIS IS NOT A TEMP CLASS
 // it just functions as a sort of shortcut

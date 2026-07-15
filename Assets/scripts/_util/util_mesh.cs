@@ -3,7 +3,22 @@ using UnityEngine;
 
 public class util_mesh : MonoBehaviour
 {
-    
+    void Awake()
+    {
+        cube = ins_cube;
+        sphere = ins_sphere;
+
+        m_unlit = ins_m_unlit;
+    }
+
+    public Mesh ins_cube;
+    public static Mesh cube ;
+
+    public Mesh ins_sphere;
+    public static Mesh sphere ;
+
+    public Material ins_m_unlit;
+    public static Material m_unlit;
 
     public static Vector3[] CopyVectors(Vector3[] input)
     {

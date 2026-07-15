@@ -116,6 +116,25 @@ public class cbt_marchedbody : MonoBehaviour
         }
     }
 
+    public cbt_marchedchunk GetChunkFromHashCode(string hashcode)
+    {
+        // step through every character of the hash
+        cbt_marchedchunk chunk_ref = parentChunk;
+        for (int i = 0; i < hashcode.Length; i++)
+        {
+            //Debug.Log(hashcode[i].ToString());
+            if (chunk_ref.children.Length == 0)
+            {
+                return chunk_ref;
+            } else
+            {
+                chunk_ref = chunk_ref.children[int.Parse(hashcode[i].ToString())];
+            }
+        }
+
+        return chunk_ref;
+    }
+
     void UpdateAllChunks()
     {
         // here is where the LOD management gets done
@@ -131,7 +150,7 @@ public class cbt_marchedbody : MonoBehaviour
                 // player is within the bounds of the chunk, meaning we subdivide
                 current.Subdivide();
 
-                cmd.LogRaw("SUBDIVIDING...", Color.limeGreen);
+                //cmd.LogRaw("SUBDIVIDING...", Color.limeGreen);
                 break;
             }
         }

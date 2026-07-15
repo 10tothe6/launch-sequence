@@ -46,6 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e184e7c0d82f834f8001400861a3f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::mcu_drawmesh
+  indexToLog_x: 0
+  indexToLog_y: 0
+  indexToLog_z: 0
+  logPoint: 0
+  pointRadius: 0
   showGridPoints: 0
   showGridLines: 0
   mf: {fileID: 7161128569258154473}
@@ -92,7 +97,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60d8ef0c95d5cab40ab19bb87d5f21b9, type: 2}
+  - {fileID: 2100000, guid: 9b0c798dfac8a1046bd67d049e095888, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

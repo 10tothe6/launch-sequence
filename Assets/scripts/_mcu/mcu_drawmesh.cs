@@ -53,8 +53,14 @@ public class mcu_drawmesh : MonoBehaviour
     List<int> tris;
     List<Vector3> verts;
     List<Vector3> norms;
+    List<List<int>> tris_for_each_vert;
 
     private Vector3 offset;
+
+    [HideInInspector]
+    public float noise_amp;
+    [HideInInspector]
+    public float noise_freq;
 
     void Awake()
     {
@@ -69,6 +75,45 @@ public class mcu_drawmesh : MonoBehaviour
             logPoint = false;
             Debug.Log(points[indexToLog_x, indexToLog_y, indexToLog_z]);
         }
+    }
+
+    private void SetPointsAsSphere()
+    {
+        this.points = new double[xSize,ySize,zSize];
+
+        float rad = 6;
+
+        for (int x = 0; x < xSize; x++)
+        {
+            for (int y = 0; y < ySize; y++)
+            {
+                for (int z = 0; z < zSize; z++)
+                {
+                    points[x, y, z] = -((new Vector3(x,y, z) * (float)xScaleFactor - new Vector3(xSize/2f, ySize/2f, zSize/2f) * (float)xScaleFactor).magnitude - rad);
+
+                    points[x, y, z] += new Perlin().Noise((float)x * noise_freq, (float)y * noise_freq, (float)z * noise_freq) * noise_amp;
+                }
+            }
+        }
+    }
+
+    public void InitializeAsSphere(int xSize, int ySize, int zSize, 
+    float xSizeActual, float ySizeActual, float zSizeActual)
+    {
+        this.xSize = xSize;
+        this.ySize = ySize;
+        this.zSize = zSize;
+
+        this.xSizeActual = xSizeActual;
+        this.ySizeActual = ySizeActual;
+        this.zSizeActual = zSizeActual;
+
+        xScaleFactor = xSizeActual / ((float)xSize-1);
+        yScaleFactor = ySizeActual / ((float)ySize-1);
+        zScaleFactor = zSizeActual / ((float)zSize-1);
+
+        SetPointsAsSphere();
+        DrawMesh();
     }
 
     public void Initialize(double[,,] points, 
@@ -172,7 +217,6 @@ public class mcu_drawmesh : MonoBehaviour
             {
                 for (int z = 0; z < zSize; z++)
                 {
-                    // TODO: offset this properly
                     Gizmos.DrawSphere(transform.position + new Vector3(x,y,z)*(float)xScaleFactor + offset, pointRadius);
                 }
             }
@@ -187,6 +231,8 @@ public class mcu_drawmesh : MonoBehaviour
         tris = new List<int>();
         verts = new List<Vector3>();
         norms = new List<Vector3>();
+
+        tris_for_each_vert = new List<List<int>>();
 
         existingVertexIndices = new int[xSize*ySize*zSize,xSize*ySize*zSize];
         
@@ -251,6 +297,7 @@ public class mcu_drawmesh : MonoBehaviour
 
                         int i = GetPointIndexFromPosition(cellVertices[a[0]]);
                         int f = GetPointIndexFromPosition(cellVertices[a[1]]);
+
                         int aIndex = GetVertexIndex(i,f);
                         if (aIndex == 0) {aIndex = verts.Count;
                             AddVertex(i,f, cellVertices_raw[a[0]], cellVertices_raw[a[1]]);
@@ -258,6 +305,7 @@ public class mcu_drawmesh : MonoBehaviour
 
                         i = GetPointIndexFromPosition(cellVertices[b[0]]);
                         f = GetPointIndexFromPosition(cellVertices[b[1]]);
+
                         int bIndex = GetVertexIndex(i,f);
                         if (bIndex == 0) {bIndex = verts.Count;
                             AddVertex(i,f, cellVertices_raw[b[0]], cellVertices_raw[b[1]]);
@@ -265,10 +313,15 @@ public class mcu_drawmesh : MonoBehaviour
 
                         i = GetPointIndexFromPosition(cellVertices[c[0]]);
                         f = GetPointIndexFromPosition(cellVertices[c[1]]);
+
                         int cIndex = GetVertexIndex(i,f);
                         if (cIndex == 0) {cIndex = verts.Count;
                             AddVertex(i,f, cellVertices_raw[c[0]], cellVertices_raw[c[1]]);
                         } else {cIndex--;}
+
+                        tris_for_each_vert[aIndex].Add(tris.Count);
+                        tris_for_each_vert[bIndex].Add(tris.Count);
+                        tris_for_each_vert[cIndex].Add(tris.Count);
 
                         tris.Add(aIndex);
                         tris.Add(bIndex);
@@ -276,6 +329,28 @@ public class mcu_drawmesh : MonoBehaviour
                     }
                 }
             }
+        }
+
+        // the second pass that we use for vertex normals
+        for (int i = 0; i < verts.Count; i++)
+        {
+            Vector3 normal = Vector3.zero;
+
+            // add triangle normals for each triangle
+            for (int j = 0; j < tris_for_each_vert[i].Count; j++)
+            {
+                Vector3 a = verts[tris[tris_for_each_vert[i][j]]];
+                Vector3 b = verts[tris[tris_for_each_vert[i][j]+1]];
+                Vector3 c = verts[tris[tris_for_each_vert[i][j]+2]];
+
+                Vector3 tri_normal = Vector3.Cross(b-a, c-a).normalized;
+
+                normal += tri_normal;
+            }
+
+            normal = normal.normalized;
+
+            norms.Add(normal);
         }
 
         result.SetVertices(verts);
@@ -290,15 +365,22 @@ public class mcu_drawmesh : MonoBehaviour
         }
     }
 
-    void AddVertex(int initial, int final, Vector3 initial_pos, Vector3 final_pos) {
+    // adds a vertex to the collection of vertices that will form the mesh,
+    // based on two points and their values
+    
+    // the aim here is essentially to find the point at which zero would be between the values
+    private Vector3 AddVertex(int initial, int final, Vector3 initial_pos, Vector3 final_pos) {
         existingVertexIndices[initial,final] = verts.Count + 1;
         existingVertexIndices[final,initial] = verts.Count + 1;
-        
-        norms.Add(Vector3.up);
 
         Vector3 vi = initial_pos;
         Vector3 vf = final_pos;
-        verts.Add(offset + Vector3.Lerp(vi,vf, (float)GetZero(points[Mathf.RoundToInt(vi.x),Mathf.RoundToInt(vi.y),Mathf.RoundToInt(vi.z)],points[Mathf.RoundToInt(vf.x),Mathf.RoundToInt(vf.y),Mathf.RoundToInt(vf.z)]))*(float)xScaleFactor);
+
+        Vector3 vert = offset + Vector3.Lerp(vi,vf, (float)GetZero(points[Mathf.RoundToInt(vi.x),Mathf.RoundToInt(vi.y),Mathf.RoundToInt(vi.z)],points[Mathf.RoundToInt(vf.x),Mathf.RoundToInt(vf.y),Mathf.RoundToInt(vf.z)]))*(float)xScaleFactor;
+        verts.Add(vert);
+        tris_for_each_vert.Add(new List<int>());
+
+        return vert;
     }
 
     public int GetPointIndexFromPosition(Vector3 pos)

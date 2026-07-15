@@ -10,9 +10,9 @@ SubShader {
     #pragma surface surf SimpleLambert
     
     float3 sunPosition; // always (0,0,0) for now
-    int isStar;
-    float3 position;
-    float3 worldPosition;
+    int isStar; // whether or not the "planet" is actually a star
+    float3 position; // position of the centre of the planet
+    float3 worldPosition; // world position of the planet
 
     struct SurfaceOutputCustom {
         fixed3 Albedo;

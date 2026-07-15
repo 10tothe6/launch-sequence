@@ -26,7 +26,10 @@ public class inv_inventorydata
 
     public void ApplyData(inv_inventorydata i)
     {
-        items = i.items;
+        for (int n = 0; n < i.items.Count; n++)
+        {
+            AddItem(i.items[n]);
+        }
     }
 
     public static inv_inventorydata ParseFromString(string data)

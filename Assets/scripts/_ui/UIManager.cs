@@ -102,7 +102,45 @@ public class UIManager : MonoBehaviour
 
     public ui_canisterwidget canister;
 
+
+
+    // building mode
+    public GameObject g_buildModeHUD;
+    public ui_buildmodewidget buildWidget;
+
     #region OPEN/CLOSE
+
+
+    public void EnterBuildMode()
+    {
+        g_buildModeHUD.SetActive(true);
+    }
+    public void ExitBuildMode()
+    {
+        g_buildModeHUD.SetActive(false);
+    }
+    public void ToggleBuildMode()
+    {
+        if (g_buildModeHUD.activeSelf)
+        {
+            ExitBuildMode();
+        } else
+        {
+            EnterBuildMode();
+        }
+    }
+
+
+    public void OpenBuildMenu()
+    {
+        buildWidget.gameObject.SetActive(true);
+    }
+
+    public void CloseBuildMenu()
+    {
+        buildWidget.gameObject.SetActive(false);
+    }
+
 
     // can only be called if you pass in the proper part data
     // and also a reference to the part
@@ -461,6 +499,7 @@ public class UIManager : MonoBehaviour
             if (Keyboard.current.bKey.wasPressedThisFrame)
             {
                 // toggle build menu
+                ToggleBuildMode();
             }
 
             if (Keyboard.current.cKey.wasPressedThisFrame)

@@ -111,11 +111,15 @@ public class UIManager : MonoBehaviour
         canister.gameObject.SetActive(true);
 
         canister.BuildWidget(part_reference);
+
+        LockPlayer();
     }
 
     public void CloseCanisterMenu()
     {
         canister.gameObject.SetActive(false);
+
+        UnlockPlayer();
     }
 
 
@@ -126,11 +130,15 @@ public class UIManager : MonoBehaviour
     {
         charger.SetPartReference(part_reference);
         charger.gameObject.SetActive(true);
+
+        LockPlayer();
     }
     public void CloseChargerMenu()
     {
         charger.gameObject.SetActive(false);
-        // TODO: update the part
+        charger.UpdateModeOnPart();
+
+        UnlockPlayer();
     }
 
     public void ToggleScanner()
@@ -441,7 +449,13 @@ public class UIManager : MonoBehaviour
 
             if (Keyboard.current.iKey.wasPressedThisFrame)
             {
-                ToggleInventory();
+                if (canister.gameObject.activeSelf)
+                {
+                    CloseCanisterMenu();
+                } else
+                {
+                    ToggleInventory();
+                }
             }
 
             if (Keyboard.current.bKey.wasPressedThisFrame)

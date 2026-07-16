@@ -8,9 +8,19 @@ public class ui_snappable : MonoBehaviour
     private Vector3 targetPos;
     public float handleMoveSpeed;
 
+    public int current_index;
+
     void Awake()
     {
         targetPos = transform.position;
+    }
+
+    public void SetSnappingPoint(int index)
+    {
+        if (index < 0 || index > snappingPoints.Length-1) {return;}
+
+        current_index = index;
+        targetPos = snappingPoints[index].position;
     }
 
     private void Update()
@@ -37,6 +47,7 @@ public class ui_snappable : MonoBehaviour
                 if (Vector3.Distance(mousePos, snappingPoints[i].position) < kingDist)
                 {
                     kingIndex = i;
+                    current_index = i;
                     kingDist = Vector3.Distance(mousePos, snappingPoints[i].position);
                 }
             }
@@ -44,6 +55,9 @@ public class ui_snappable : MonoBehaviour
             Vector3 drag = (mousePos - snappingPoints[kingIndex].position);
             drag -= Vector3.Project(drag, Vector3.up);
             targetPos = snappingPoints[kingIndex].position +  drag* 0.25f;
+        } else
+        {
+            targetPos = snappingPoints[current_index].position;
         }
 
         transform.position = Vector3.Lerp(transform.position, targetPos, handleMoveSpeed);

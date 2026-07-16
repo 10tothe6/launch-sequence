@@ -596,6 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9b4d7c071cdb34ca4333fe49ded19d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_charger
+  mode_handle: {fileID: 1177956352}
 --- !u!1 &21257747
 GameObject:
   m_ObjectHideFlags: 0
@@ -17652,6 +17653,7 @@ MonoBehaviour:
   - {fileID: 993574290}
   - {fileID: 231733012}
   handleMoveSpeed: 0.2
+  current_index: 0
 --- !u!1 &1195660663
 GameObject:
   m_ObjectHideFlags: 0
@@ -30180,22 +30182,22 @@ MonoBehaviour:
   - name: electricity
     tags: []
     color: {r: 1, g: 0.94726104, b: 0.043396115, a: 1}
-    icon: {fileID: 21300000, guid: 52ea85da30167124b8c64dcfd9af8691, type: 3}
+    icon: {fileID: 21300000, guid: 5ac81e6bfcce15940adb100a394ef28f, type: 3}
   - name: hydrogen_gas
     tags:
     - fluid
     color: {r: 0.9098039, g: 0.652187, b: 0.40392154, a: 1}
-    icon: {fileID: 21300000, guid: 52ea85da30167124b8c64dcfd9af8691, type: 3}
+    icon: {fileID: 21300000, guid: f0ba4bde102a39c478084a1f0494ec92, type: 3}
   - name: oxygen_gas
     tags:
     - fluid
     color: {r: 0.5928017, g: 0.93236285, b: 0.98490566, a: 1}
-    icon: {fileID: 21300000, guid: 52ea85da30167124b8c64dcfd9af8691, type: 3}
+    icon: {fileID: 21300000, guid: 3575460f73a750f48bb55eb4c548b8f6, type: 3}
   - name: water
     tags:
     - fluid
     color: {r: 0.3226415, g: 0.44232273, b: 1, a: 1}
-    icon: {fileID: 21300000, guid: 52ea85da30167124b8c64dcfd9af8691, type: 3}
+    icon: {fileID: 21300000, guid: f02bc85df0390174a974395a9f57ea57, type: 3}
   items:
   - isPart: 0
     item_name: test_item

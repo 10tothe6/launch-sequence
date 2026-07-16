@@ -24,6 +24,13 @@ public class crft_charger : MonoBehaviour
         gp.onInitialize.AddListener(Initialize);
     }
 
+
+    // called upon the player interacting with the charger
+    public void DisplayChargerMenu()
+    {
+        UIManager.Instance.OpenChargerMenu(this);
+    }
+
     void Initialize()
     {
         gp = GetComponent<crft_genericpart>();

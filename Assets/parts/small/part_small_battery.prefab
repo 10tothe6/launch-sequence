@@ -210,11 +210,15 @@ MonoBehaviour:
   data:
     partName: 
     position: {x: 0, y: 0, z: 0}
+    euler_angles: {x: 0, y: 0, z: 0}
     additional_part_data: 
   connectedParts: []
   t_snapPointContainer: {fileID: 0}
   t_snapPoints: []
   eComp: {fileID: 0}
+  onInitialize:
+    m_PersistentCalls:
+      m_Calls: []
   onRecievePartData:
     m_PersistentCalls:
       m_Calls: []
@@ -231,10 +235,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject3D
   isDraggable: 1
-  hoverPrompt: 
+  hoverPrompt: press E to view contents
   onInteract:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4068816673534202045}
+        m_TargetAssemblyTypeName: crft_resourcecontainer, Assembly-CSharp
+        m_MethodName: DisplayContainerContents
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onInteractByObject:
     m_PersistentCalls:
       m_Calls: []

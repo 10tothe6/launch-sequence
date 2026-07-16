@@ -22,12 +22,20 @@ public class crft_resourcecontainer : MonoBehaviour
         gp = GetComponent<crft_genericpart>();
 
         gp.onInitialize.AddListener(Initialize);
+        
     }
 
     private void Initialize()
     {
         gp.onRecievePartData.AddListener(ProcessPartData);
         gp.partDataCollectors.Add(CreateAdditionalPartData);
+    }
+
+
+    // triggered upon the player interacting with the container
+    public void DisplayContainerContents()
+    {
+        UIManager.Instance.OpenCanisterMenu(this);
     }
 
 

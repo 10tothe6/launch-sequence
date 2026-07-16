@@ -11334,9 +11334,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d861d4f5bc184d409c5358544bd2b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cam_vehicleeditor
-  cameraRotateSpeed: 0
+  cameraRotateSpeed: 0.5
   viewDist: 0
-  scrollSpeed: 0
+  scrollSpeed: 0.25
 --- !u!1 &756680592
 GameObject:
   m_ObjectHideFlags: 0

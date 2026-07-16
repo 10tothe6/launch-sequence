@@ -54,7 +54,7 @@ public class player_partmanager : MonoBehaviour
             // clicking to actually place the part
             if (Input.mouseButtonDownLeft)
             {
-                EntityManager.SpawnNewSinglePartSpaceCraft(placing_part.GetPartName(), placing_part.transform.position);
+                EntityManager.SpawnNewSinglePartSpaceCraft(placing_part.GetPartName(), placing_part.transform.position, placing_part.transform.eulerAngles);
                 
                 // now for the clean-up
                 Destroy(placing_part.gameObject);

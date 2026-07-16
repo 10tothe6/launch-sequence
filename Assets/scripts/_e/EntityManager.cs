@@ -220,7 +220,19 @@ public class EntityManager : MonoBehaviour
         }
     }
 
-    // ALSO rides on top of the immediately below function
+    // ALSO ALSO rides on top of the immediately below function
+    public static void SpawnNewSinglePartSpaceCraft(string partName, Vector3 worldPosition, Vector3 eulerAngles)
+    {
+        crft_genericpartdata data = new crft_genericpartdata();
+
+        data.partName = partName;
+        data.position = Vector3.zero;
+        data.euler_angles = eulerAngles;
+
+        num_precisevector3 spawnPosition = new num_precisevector3(worldPosition).Add(Coord.originPosition);
+
+        SpawnCraftFromData(new crft_craftdata("craft", new crft_genericpartdata[]{data}), spawnPosition);
+    }
     public static void SpawnNewSinglePartSpaceCraft(string partName, Vector3 worldPosition)
     {
         crft_genericpartdata data = new crft_genericpartdata();

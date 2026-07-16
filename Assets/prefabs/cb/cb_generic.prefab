@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 5558296614578897552}
   - component: {fileID: 7740052085127725904}
   - component: {fileID: 4949187247040308731}
+  - component: {fileID: 2736963557302166282}
   m_Layer: 0
   m_Name: cb_generic
   m_TagString: Untagged
@@ -448,6 +449,20 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0.010727882, a: 1}
   - {r: 0.0088124275, g: 0, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &2736963557302166282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460234261487516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc97cb93d0a8a7488762de47016a243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cbt_terrainbody
+  mesh_terrain: {fileID: 7775331553818960751}
+  marched_terrain: {fileID: 7740052085127725904}
 --- !u!1 &8827367443003885876
 GameObject:
   m_ObjectHideFlags: 0

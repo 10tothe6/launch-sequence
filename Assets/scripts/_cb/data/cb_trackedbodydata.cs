@@ -11,6 +11,7 @@ public class cb_trackedbodydata
     // quick-and-easy checks
     public bool hasSurface;
     public bool hasAtmosphere;
+    public bool hasWater;
 
     public Color mapViewColor;
     public int iconIndex;

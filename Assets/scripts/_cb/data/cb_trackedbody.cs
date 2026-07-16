@@ -154,7 +154,12 @@ public class cb_trackedbody : MonoBehaviour
         //GetComponent<cbt_meshbody>().Initialize(data.pConfig.selfIndex);
 
         // approach 3: marching cubes motherfuckers
-        GetComponent<cbt_marchedbody>().Initialize(data.pConfig.selfIndex);
+        //GetComponent<cbt_marchedbody>().Initialize(data.pConfig.selfIndex);
+
+
+
+        // THE FINAL APPROACH: literally fucking everything except approach 1 cuz that was shit
+        GetComponent<cbt_terrainbody>().InitializeAll(data.pConfig.selfIndex);
     }
 
     // handles: 
@@ -241,6 +246,12 @@ public class cb_trackedbody : MonoBehaviour
         data.bodyType = type;
 
         data.hasSurface = !(type == (ushort)cb_bodytype.Jovian);
+
+
+        // temp
+        data.hasWater = false;
+
+
         // the only exception to the above rule is the COM
         if (type == (ushort)cb_bodytype.Null) {data.hasSurface = false;}
 

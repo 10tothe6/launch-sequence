@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 public class crft_genericpart : MonoBehaviour
 {
+    // used for thrust and general physics calculations
+    public float part_mass; // in kg
+
 
     // I must be allergic to dictionaries or something
     public List<string> partDataKeys;

@@ -33,11 +33,19 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+
+
+        // all of these are just me resetting UI objects when the game starts,
+        // so I dont have to remember to set all the gameobjects to false every time I want to test the game
         if (g_transitionScreen != null) {HardSetTransition(false);}
         if (g_advancementsWidget != null) {g_advancementsWidget.SetActive(false);}
         if (g_characterEditor != null) {g_characterEditor.SetActive(false);}
         if (signalScanner != null) {signalScanner.gameObject.SetActive(false);}
-        
+        if (g_buildModeHUD != null) {g_buildModeHUD.SetActive(false);}
+
+
+
+        // grabs every canvas object with the [m] tag and throws them in an array for easy access
         LoadMenuObjects();
 
         actionsToRunOnceFinishedTransition = new List<UnityAction>();
@@ -128,17 +136,6 @@ public class UIManager : MonoBehaviour
         {
             EnterBuildMode();
         }
-    }
-
-
-    public void OpenBuildMenu()
-    {
-        buildWidget.gameObject.SetActive(true);
-    }
-
-    public void CloseBuildMenu()
-    {
-        buildWidget.gameObject.SetActive(false);
     }
 
 

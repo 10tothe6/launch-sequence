@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ui_snappable : MonoBehaviour
 {
+    public bool canBeInteractedWith = true;
+    public bool canBeCycledThrough = false; // Tab to cycle right now
     public Transform[] snappingPoints;
 
     private bool isHolding;
@@ -25,12 +28,32 @@ public class ui_snappable : MonoBehaviour
 
     private void Update()
     {
-        if (Input.mouseButtonDownLeft && ui_canvasutils.IsCursorInteract(gameObject, true))
+        if (canBeCycledThrough)
         {
-            isHolding = true;
+            if (Keyboard.current.tabKey.wasPressedThisFrame)
+            {
+                if (current_index < snappingPoints.Length - 1)
+                {
+                    SetSnappingPoint(current_index + 1);
+                } else
+                {
+                    SetSnappingPoint(0);
+                }
+            }
         }
-        
-        if (!Input.mouseButtonLeft)
+
+        if (canBeInteractedWith)
+        {
+            if (Input.mouseButtonDownLeft && ui_canvasutils.IsCursorInteract(gameObject, true))
+            {
+                isHolding = true;
+            }
+            
+            if (!Input.mouseButtonLeft)
+            {
+                isHolding = false;
+            }
+        } else
         {
             isHolding = false;
         }

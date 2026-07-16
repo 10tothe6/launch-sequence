@@ -157,6 +157,9 @@ public class PlayerController : MonoBehaviour
 
         mode = player_movementmode.Walking;
         isActive = true;
+
+        // show the boot-up sequence
+        StartCoroutine(UIManager.Instance.RunRobotBootSequence(false));
     }
     public void ExitControl()
     {

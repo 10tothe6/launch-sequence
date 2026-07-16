@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour
         if (g_characterEditor != null) {g_characterEditor.SetActive(false);}
         if (signalScanner != null) {signalScanner.gameObject.SetActive(false);}
         if (g_buildModeHUD != null) {g_buildModeHUD.SetActive(false);}
+        if (g_ahclogo != null) {g_ahclogo.SetActive(false);}
 
 
 
@@ -115,6 +116,42 @@ public class UIManager : MonoBehaviour
     // building mode
     public GameObject g_buildModeHUD;
     public ui_buildmodewidget buildWidget;
+    public vfx_cameraglitch glitch_effect;
+
+    public GameObject g_ahclogo;
+
+
+    public IEnumerator RunRobotBootSequence(bool is_long_version = false)
+    {
+        // first, make the screen black
+        HardSetTransition(true);
+
+        yield return new WaitForSeconds(2f);
+
+        // then, show the AHC logo
+        g_ahclogo.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        glitch_effect.SetBadQuality();
+        
+        // then hide the transition, and we're in
+        HardSetTransition(false);
+        g_ahclogo.SetActive(false);
+
+        yield return new WaitForSeconds(0.5f);
+
+        glitch_effect.SetMediumQuality();
+
+        yield return new WaitForSeconds(0.5f);
+
+        glitch_effect.SetGoodQuality();
+
+        yield return new WaitForSeconds(0.5f);
+
+        glitch_effect.SetFullQuality();
+    }
+
 
     #region OPEN/CLOSE
 

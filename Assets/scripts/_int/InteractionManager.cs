@@ -83,7 +83,7 @@ public class InteractionManager : MonoBehaviour
                             if (comp.mostRecentPacket.up && !comp.oldPacket.up)
                             {
                                 ioComp.HandleInteractByObject(comp.gameObject);
-                            } else if (comp.mostRecentPacket.mouseLeft)
+                            } else if (comp.mostRecentPacket.mouseLeft && !comp.mostRecentPacket.isTyping)
                             {
                                 // dragging is implemented separately from the rest of the interaction system,
                                 // because basically every interactable object can be dragged

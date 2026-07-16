@@ -37,6 +37,7 @@ public class cam_charactereditor : MonoBehaviour
         CameraController.cam_main.cullingMask = cullingMask;
         
         // (keeping the camera as a child of the player)
+        // this means we do NOT change the parent
 
         transform.parent.localEulerAngles = Vector3.zero;
         transform.localPosition = Vector3.forward;

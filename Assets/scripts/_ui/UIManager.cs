@@ -121,6 +121,10 @@ public class UIManager : MonoBehaviour
     public GameObject g_ahclogo;
 
 
+    public ui_vehicleeditor vehicleEditor;
+    public GameObject g_vehicleEditorParent;
+
+
     public IEnumerator RunRobotBootSequence(bool is_long_version = false)
     {
     
@@ -155,6 +159,25 @@ public class UIManager : MonoBehaviour
 
 
     #region OPEN/CLOSE
+
+
+    public void OpenVehicleEditor(crft_vehiclespawner part_reference)
+    {
+        g_vehicleEditorParent.SetActive(true);
+
+        vehicleEditor.SetPartReference(part_reference);
+
+        // camera updated after, so it can actually access the part reference that we set
+        CameraController.SetControlMode(CameraControlMode.VehicleEditor);
+
+    }
+    public void CloseVehicleEditor()
+    {
+        g_vehicleEditorParent.SetActive(false);
+    }
+
+
+
 
 
     public void EnterBuildMode()

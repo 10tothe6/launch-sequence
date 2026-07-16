@@ -10,6 +10,7 @@ public enum CameraControlMode
     BodyEditor,
     MainMenu,
     CharacterEditor,
+    VehicleEditor,
 }
 
 public class CameraController : MonoBehaviour

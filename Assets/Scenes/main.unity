@@ -9709,6 +9709,8 @@ MonoBehaviour:
   buildWidget: {fileID: 262197298}
   glitch_effect: {fileID: 2044790579}
   g_ahclogo: {fileID: 1061644165}
+  vehicleEditor: {fileID: 766181409}
+  g_vehicleEditorParent: {fileID: 766181407}
 --- !u!114 &657973543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11166,6 +11168,7 @@ GameObject:
   - component: {fileID: 751265233}
   - component: {fileID: 751265234}
   - component: {fileID: 751265235}
+  - component: {fileID: 751265236}
   m_Layer: 0
   m_Name: cam controller
   m_TagString: Untagged
@@ -11319,6 +11322,21 @@ MonoBehaviour:
   cameraRotateSpeed: 0.5
   viewDist: 0
   scrollSpeed: 0.05
+--- !u!114 &751265236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751265227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d861d4f5bc184d409c5358544bd2b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cam_vehicleeditor
+  cameraRotateSpeed: 0
+  viewDist: 0
+  scrollSpeed: 0
 --- !u!1 &756680592
 GameObject:
   m_ObjectHideFlags: 0
@@ -11668,6 +11686,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764194791}
   m_CullTransparentMesh: 1
+--- !u!1 &766181407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 766181408}
+  - component: {fileID: 766181409}
+  m_Layer: 5
+  m_Name: vehicle editor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &766181408
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766181407}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1146640996}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &766181409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766181407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f8e28f08b09484585a49ca958d44bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ui_vehicleeditor
+  part_reference: {fileID: 0}
 --- !u!1 &772366265
 GameObject:
   m_ObjectHideFlags: 0
@@ -17772,6 +17839,7 @@ RectTransform:
   - {fileID: 15681332}
   - {fileID: 39903989}
   - {fileID: 1061644166}
+  - {fileID: 766181408}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -24724,6 +24792,7 @@ MonoBehaviour:
   - {fileID: 7415345247471772869, guid: 1dfba999295447440ac18474b5950586, type: 3}
   - {fileID: 7415345247471772869, guid: 27e4606e120b5d14ca35d77f9b3610e7, type: 3}
   - {fileID: 7415345247471772869, guid: 35ea32274c639224883df8c65ef00cf6, type: 3}
+  - {fileID: 7415345247471772869, guid: 2b2dae7954bed854db4edceb08ec40aa, type: 3}
   m_preview: {fileID: 2100000, guid: 1d3cf8527de1ca5448f0f6902f3ee04c, type: 2}
   m_badplacement: {fileID: 2100000, guid: e7532e0a0ae389f44adf7da2ae38a1fd, type: 2}
 --- !u!1 &1678076552

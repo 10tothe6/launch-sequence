@@ -11224,6 +11224,7 @@ MonoBehaviour:
   onCameraUpdate:
     m_PersistentCalls:
       m_Calls: []
+  fov_lerp_speed: 0.5
 --- !u!4 &751265230
 Transform:
   m_ObjectHideFlags: 0
@@ -29932,6 +29933,8 @@ MonoBehaviour:
   screen_resolution_x: 1920
   screen_resolution_y: 1080
   noise_scroll_speed: 0.5
+  uv_offset_speed: 0.5
+  max_uv_offset: 0.5
   m_effect: {fileID: 2100000, guid: 1b58bcaaa4e551c4e8b93f7b90682ddf, type: 2}
 --- !u!1 &2045696008
 GameObject:
@@ -31852,8 +31855,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da38d6fc5ad2cde43b43e8e2cb1d9a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Program
-  version: mptest-1.0-rc1
   resetAdvancements: 0
+  disable_robot_boot_sequence: 1
+  version: mptest-1.0-rc1
   ins_buildMode: 0
   ins_startMode: 4
 --- !u!114 &2144568381

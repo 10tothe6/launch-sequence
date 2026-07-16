@@ -54,7 +54,13 @@ public class cam_firstperson : MonoBehaviour
         // otherwise we'd just be running this constantly
         if (CameraController.Instance.ins_controlMode == (ushort)CameraControlMode.PlayerFirstPerson)
         {
-            
+            if (Input.mouseButtonRight)
+            {
+                CameraController.SetCameraFov(20);
+            } else
+            {
+                CameraController.SetCameraFov(60);
+            }
         }
     }
 }

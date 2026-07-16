@@ -69,11 +69,13 @@ public class Program : MonoBehaviour
         startMode = ins_startMode;
     }
 
-    public string version;
-
     // forces all advancement progress to reset on program boot
     // this totally won't cause problems when I forget to turn this off
     public bool resetAdvancements;
+    public bool disable_robot_boot_sequence;
+
+    public string version;
+
     public ProgramBuildMode ins_buildMode;
     public static ProgramBuildMode buildMode;
     public ProgramStartMode ins_startMode;

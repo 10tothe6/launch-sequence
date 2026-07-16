@@ -123,6 +123,7 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator RunRobotBootSequence(bool is_long_version = false)
     {
+    
         // first, make the screen black
         HardSetTransition(true);
 

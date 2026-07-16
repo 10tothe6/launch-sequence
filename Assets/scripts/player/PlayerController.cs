@@ -159,7 +159,12 @@ public class PlayerController : MonoBehaviour
         isActive = true;
 
         // show the boot-up sequence
-        StartCoroutine(UIManager.Instance.RunRobotBootSequence(false));
+        if (!Program.Instance.disable_robot_boot_sequence)
+        {
+            StartCoroutine(UIManager.Instance.RunRobotBootSequence(false));
+        } else {
+            UIManager.Instance.glitch_effect.SetFullQuality();
+        }
     }
     public void ExitControl()
     {

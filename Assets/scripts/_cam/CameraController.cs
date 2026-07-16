@@ -65,9 +65,31 @@ public class CameraController : MonoBehaviour
     public UnityEvent onChangeControlMode;
     public UnityEvent onCameraUpdate;
 
+
+
+    // fov-related stuff
+    // needs a bit of sysarch to make sure any sub-cameras obey the rules
+    private float target_fov;
+    [SerializeField]
+    private float fov_lerp_speed;
+
+    public static void SetCameraFov(float target_fov, bool should_lerp = true)
+    {
+        Instance.target_fov = target_fov;
+
+        if (!should_lerp)
+        {
+            // just set it immediately
+            cam_main.fieldOfView = target_fov;
+        }
+    }
+
     public void UpdateCamera()
     { 
         onCameraUpdate.Invoke();
+
+        // fov interpolation
+        cam_main.fieldOfView = Mathf.Lerp(cam_main.fieldOfView, target_fov, fov_lerp_speed);
     }
 
     public num_precisevector3 PositionRelativeToControlEntity()

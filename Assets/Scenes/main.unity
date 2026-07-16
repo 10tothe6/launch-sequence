@@ -1496,6 +1496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110ad09d311cb034fbcebbb686fad835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_list
+  num_columns: 1
   overlapListElements: 0
   spaceBetweenItems: 0
   listUpwards: 0
@@ -4965,6 +4966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc00d0b193faac44981ba8f1acf8737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_buildmodewidget
+  parts_list: {fileID: 1460402406}
+  snappable: {fileID: 262197300}
 --- !u!224 &262197299
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4983,7 +4986,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1703, y: 291}
+  m_AnchoredPosition: {x: -785, y: 291}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &262197300
@@ -5003,6 +5006,9 @@ MonoBehaviour:
   snappingPoints:
   - {fileID: 322054369}
   - {fileID: 722596813}
+  onChangeIndex:
+    m_PersistentCalls:
+      m_Calls: []
   handleMoveSpeed: 0.1
   current_index: 0
 --- !u!1001 &269408274
@@ -7091,6 +7097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110ad09d311cb034fbcebbb686fad835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_list
+  num_columns: 1
   overlapListElements: 0
   spaceBetweenItems: 10
   listUpwards: 1
@@ -15812,6 +15819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110ad09d311cb034fbcebbb686fad835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_list
+  num_columns: 1
   overlapListElements: 1
   spaceBetweenItems: 0
   listUpwards: 0
@@ -17936,6 +17944,9 @@ MonoBehaviour:
   - {fileID: 1058386243}
   - {fileID: 993574290}
   - {fileID: 231733012}
+  onChangeIndex:
+    m_PersistentCalls:
+      m_Calls: []
   handleMoveSpeed: 0.2
   current_index: 0
 --- !u!1 &1195660663
@@ -20430,6 +20441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110ad09d311cb034fbcebbb686fad835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_list
+  num_columns: 1
   overlapListElements: 0
   spaceBetweenItems: 10
   listUpwards: 0
@@ -21452,7 +21464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 28, y: -20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1460402406
@@ -21467,11 +21479,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110ad09d311cb034fbcebbb686fad835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_list
+  num_columns: 3
   overlapListElements: 0
-  spaceBetweenItems: 0
+  spaceBetweenItems: 25
   listUpwards: 0
-  p_listElement: {fileID: 0}
-  t_listContainer: {fileID: 0}
+  p_listElement: {fileID: 1846739956333468846, guid: f9b7cb07b6cf388439d38c8197b88bc2, type: 3}
+  t_listContainer: {fileID: 1460402405}
 --- !u!1 &1466235769
 GameObject:
   m_ObjectHideFlags: 0
@@ -24533,6 +24546,9 @@ MonoBehaviour:
   - {fileID: 7415345247471772869, guid: 851b2d7b0f37ff24da7523cd2c42a274, type: 3}
   - {fileID: 7415345247471772869, guid: 1dfba999295447440ac18474b5950586, type: 3}
   - {fileID: 7415345247471772869, guid: 27e4606e120b5d14ca35d77f9b3610e7, type: 3}
+  - {fileID: 7415345247471772869, guid: 35ea32274c639224883df8c65ef00cf6, type: 3}
+  m_preview: {fileID: 2100000, guid: 1d3cf8527de1ca5448f0f6902f3ee04c, type: 2}
+  m_badplacement: {fileID: 2100000, guid: e7532e0a0ae389f44adf7da2ae38a1fd, type: 2}
 --- !u!1 &1678076552
 GameObject:
   m_ObjectHideFlags: 0
@@ -31293,6 +31309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110ad09d311cb034fbcebbb686fad835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ui_list
+  num_columns: 1
   overlapListElements: 0
   spaceBetweenItems: 20
   listUpwards: 0

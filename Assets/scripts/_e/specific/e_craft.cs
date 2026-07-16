@@ -240,7 +240,10 @@ public class e_craft : MonoBehaviour
         g_newPart.GetComponent<crft_genericpart>().Initialize();
 
         // this is information for any specific part components (inventory, resource container, etc.)
-        g_newPart.GetComponent<crft_genericpart>().AcceptPartData(partData.additional_part_data);
+        if (!string.IsNullOrEmpty(partData.additional_part_data))
+        {
+            g_newPart.GetComponent<crft_genericpart>().AcceptPartData(partData.additional_part_data);
+        }
 
         parts.Add(g_newPart.GetComponent<crft_genericpart>());
 

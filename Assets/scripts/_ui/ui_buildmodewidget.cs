@@ -5,7 +5,43 @@ using UnityEngine;
 
 public class ui_buildmodewidget : MonoBehaviour
 {
-    ui_list parts_list;
+    public ui_list parts_list;
+    public ui_snappable snappable;
+
+    public void InitializeBuildHUD()
+    {
+        parts_list.SetItems(PartManager.Instance.GetBuildablePartNames());
+        
+        snappable.onChangeIndex.AddListener(SwitchToFromPartSelection);
+
+        // show the menu, to start
+        snappable.SetSnappingPoint(0);
+    }
+
+    public void SwitchToFromPartSelection(int snap_index)
+    {
+        if (snap_index == 0)
+        {
+            // parts list is open
+            UIManager.Instance.LockPlayer();
+        } else if (snap_index == 1)
+        {
+            // parts list is closed
+            UIManager.Instance.UnlockPlayer();
+        }
+    }
+
+    public void StartBuildingPart(string part_name)
+    {
+        // okay so basically the idea here is to spawn a part object (not as a proper entity, mind you)
+        // and have it tinted
+        // then we simply make it follow the player's mouse 
+        // and attach to whatever you're looking at when you click
+
+
+        // essentially just passing the word onto the player object
+        LocalPlayer.localClient.controllingEntity.GetComponent<player_partmanager>().StartPlacingPart(part_name);
+    }
 
     private void Update()
     {

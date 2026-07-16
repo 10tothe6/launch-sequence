@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class ui_snappable : MonoBehaviour
@@ -6,6 +7,8 @@ public class ui_snappable : MonoBehaviour
     public bool canBeInteractedWith = true;
     public bool canBeCycledThrough = false; // Tab to cycle right now
     public Transform[] snappingPoints;
+
+    public UnityEvent<int> onChangeIndex;
 
     private bool isHolding;
     private Vector3 targetPos;
@@ -24,6 +27,7 @@ public class ui_snappable : MonoBehaviour
 
         current_index = index;
         targetPos = snappingPoints[index].position;
+        onChangeIndex.Invoke(current_index);
     }
 
     private void Update()
@@ -71,6 +75,7 @@ public class ui_snappable : MonoBehaviour
                 {
                     kingIndex = i;
                     current_index = i;
+                    onChangeIndex.Invoke(current_index);
                     kingDist = Vector3.Distance(mousePos, snappingPoints[i].position);
                 }
             }

@@ -122,6 +122,7 @@ public class UIManager : MonoBehaviour
     public void EnterBuildMode()
     {
         g_buildModeHUD.SetActive(true);
+        buildWidget.InitializeBuildHUD();
     }
     public void ExitBuildMode()
     {

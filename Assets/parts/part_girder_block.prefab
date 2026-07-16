@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1052552475879909090}
+  - component: {fileID: 5539948582644544281}
   m_Layer: 8
   m_Name: b
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 473688335048285429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5539948582644544281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064085926302311857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551b00aa1cd5dfb46beb7fc5bb60836f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::crft_snappingpoint
+  canBeSurfaceMounted: 0
 --- !u!1 &2232297531422160426
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,6 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7879879044617230204}
+  - component: {fileID: 6352185069407520823}
   m_Layer: 8
   m_Name: e
   m_TagString: Untagged
@@ -62,6 +77,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 473688335048285429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6352185069407520823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2232297531422160426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551b00aa1cd5dfb46beb7fc5bb60836f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::crft_snappingpoint
+  canBeSurfaceMounted: 0
 --- !u!1 &5867597428464661367
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3567799829247706673}
+  - component: {fileID: 2144184296602945561}
   m_Layer: 8
   m_Name: c
   m_TagString: Untagged
@@ -130,6 +159,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 473688335048285429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2144184296602945561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6040456981255880761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551b00aa1cd5dfb46beb7fc5bb60836f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::crft_snappingpoint
+  canBeSurfaceMounted: 0
 --- !u!1 &6443815977761022298
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8750135944724205528}
+  - component: {fileID: 9057885175648162656}
   m_Layer: 8
   m_Name: f
   m_TagString: Untagged
@@ -161,6 +204,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 473688335048285429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9057885175648162656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6443815977761022298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551b00aa1cd5dfb46beb7fc5bb60836f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::crft_snappingpoint
+  canBeSurfaceMounted: 0
 --- !u!1 &7233673629498055700
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,13 +389,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2287796486a6151499f91942866adbca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::crft_genericpart
+  part_mass: 0
+  isBuildable: 1
+  part_icon: {fileID: 21300000, guid: 5ac81e6bfcce15940adb100a394ef28f, type: 3}
+  partDataKeys: []
+  partDataValues: []
   data:
     partName: 
     position: {x: 0, y: 0, z: 0}
+    euler_angles: {x: 0, y: 0, z: 0}
+    additional_part_data: 
   connectedParts: []
-  t_snapPointContainer: {fileID: 0}
+  t_snapPointContainer: {fileID: 473688335048285429}
   t_snapPoints: []
+  surfaceMount: {fileID: 0}
   eComp: {fileID: 0}
+  onInitialize:
+    m_PersistentCalls:
+      m_Calls: []
+  onRecievePartData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-4972700898857821428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,6 +439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4925594552426568609}
+  - component: {fileID: 2382882824506335309}
   m_Layer: 8
   m_Name: d
   m_TagString: Untagged
@@ -391,6 +462,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 473688335048285429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2382882824506335309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7758349718315461717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551b00aa1cd5dfb46beb7fc5bb60836f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::crft_snappingpoint
+  canBeSurfaceMounted: 0
 --- !u!1 &8158663411790936945
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8108077128464914866}
+  - component: {fileID: 5432186289554726229}
   m_Layer: 8
   m_Name: a
   m_TagString: Untagged
@@ -415,13 +500,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8158663411790936945}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.70710653, y: -0, z: -0, w: 0.7071071}
   m_LocalPosition: {x: 0, y: -0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 473688335048285429}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &5432186289554726229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8158663411790936945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551b00aa1cd5dfb46beb7fc5bb60836f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::crft_snappingpoint
+  canBeSurfaceMounted: 1
 --- !u!1 &9159825670303276409
 GameObject:
   m_ObjectHideFlags: 0

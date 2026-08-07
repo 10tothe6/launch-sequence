@@ -2685,7 +2685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &113384002
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19755,6 +19755,26 @@ MonoBehaviour:
     lowerLimit: 
     upperLimit: 
     defaultValue: false
+  - isHidden: 0
+    type: 2
+    displayType: 4
+    isFilled: 0
+    key: water_quality
+    value: 0
+    tags: []
+    lowerLimit: 
+    upperLimit: 
+    defaultValue: 0
+  - isHidden: 0
+    type: 2
+    displayType: 4
+    isFilled: 0
+    key: atmosphere_quality
+    value: 0
+    tags: []
+    lowerLimit: 
+    upperLimit: 
+    defaultValue: 0
   ins_advancementData:
   - name: Sunburn
     description: Get closer than Xkm to a star.

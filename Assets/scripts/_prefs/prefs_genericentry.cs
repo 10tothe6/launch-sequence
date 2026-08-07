@@ -6,6 +6,7 @@ public enum prefs_entrytype
 {
     Double,
     Float,
+    Int,
     String,
     Bool,
 }
